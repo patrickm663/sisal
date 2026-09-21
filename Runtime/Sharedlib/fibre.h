@@ -30,6 +30,35 @@ extern void    WriteFibreOutputs(POINTER);;
     fprintf( FibreOutFd, " " );                    \
 }
 
+/* Write*Vector() in vectorIO.c wraps its whole body in one of these: every
+ * WriteInt/WriteFlt/.../fprintf call it makes in between goes to an
+ * in-memory stream instead of one fprintf() per array element hitting the
+ * real (possibly piped, possibly contended with other threads) stream, and
+ * FIBRE_BUF_END flushes the lot with a single fwrite. Nests correctly for
+ * arrays of arrays/records, since it only ever redirects through whatever
+ * FibreOutFd currently is. Falls back to writing straight through, exactly
+ * as before, when open_memstream isn't available (MinGW) or fails (OOM).
+ */
+#ifdef HAVE_OPEN_MEMSTREAM
+#define FIBRE_BUF_BEGIN() \
+  FILE *_fibreRealFd = FibreOutFd; \
+  char *_fibreBufData = NULL; \
+  size_t _fibreBufSize = 0; \
+  FILE *_fibreMemFd = open_memstream(&_fibreBufData, &_fibreBufSize); \
+  if ( _fibreMemFd ) FibreOutFd = _fibreMemFd
+
+#define FIBRE_BUF_END() \
+  if ( _fibreMemFd ) { \
+    fclose( _fibreMemFd ); \
+    FibreOutFd = _fibreRealFd; \
+    fwrite( _fibreBufData, 1, _fibreBufSize, FibreOutFd ); \
+    free( _fibreBufData ); \
+  }
+#else
+#define FIBRE_BUF_BEGIN() ((void)0)
+#define FIBRE_BUF_END()   ((void)0)
+#endif
+
 extern char *iformat,*fformat,*dformat,*nformat,*cformat,*cformat2,*bformat;
 #define WriteInt(x)  {PrintIndent; fprintf( FibreOutFd, iformat, x );   }
 #define WriteFlt(x)  {PrintIndent; fprintf( FibreOutFd, fformat, x ); }

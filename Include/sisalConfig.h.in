@@ -35,6 +35,9 @@
 /* Define to 1 if you have the <minix/config.h> header file. */
 #undef HAVE_MINIX_CONFIG_H
 
+/* Define to 1 if you have the `open_memstream' function. */
+#undef HAVE_OPEN_MEMSTREAM
+
 /* Define to 1 if you have the `psignal' function. */
 #undef HAVE_PSIGNAL
 

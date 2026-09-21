@@ -7585,6 +7585,14 @@ then :
 fi
 
 
+ac_fn_c_check_func "$LINENO" "open_memstream" "ac_cv_func_open_memstream"
+if test "x$ac_cv_func_open_memstream" = xyes
+then :
+  printf "%s\n" "#define HAVE_OPEN_MEMSTREAM 1" >>confdefs.h
+
+fi
+
+
 # Check whether --enable-dist-dsa was given.
 if test ${enable_dist_dsa+y}
 then :

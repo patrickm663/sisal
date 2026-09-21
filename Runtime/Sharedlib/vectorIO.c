@@ -74,6 +74,8 @@ void WriteBoolVector(POINTER val)
   ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
+  FIBRE_BUF_BEGIN();
+
   PrintIndent;
   Lo2 = arr->LoBound;
   fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
@@ -85,7 +87,7 @@ void WriteBoolVector(POINTER val)
   Indent = 0;
   fprintf( FibreOutFd, " " );
 #endif
-  
+
   Indent++;
   Base2 = arr->Base;
   HiBound = Lo2 + arr->Size - 1;
@@ -98,6 +100,8 @@ void WriteBoolVector(POINTER val)
   PrintIndent;
 #endif
   fprintf( FibreOutFd, "]\n" );
+
+  FIBRE_BUF_END();
 }
 
 
@@ -158,6 +162,8 @@ void WriteCharVector(POINTER val)
     return;
   }
 
+  FIBRE_BUF_BEGIN();
+
   PrintIndent;
   if ( FibreStrings && Lo2 == 1 ) {
     fputc( '"', FibreOutFd );
@@ -202,6 +208,8 @@ void WriteCharVector(POINTER val)
     fputc( ']', FibreOutFd );
   }
   fputc( '\n', FibreOutFd );
+
+  FIBRE_BUF_END();
 }
 
 /* ------------------------------------------------------------ */
@@ -234,6 +242,8 @@ void WriteDoubleVector(POINTER val)
   ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
+  FIBRE_BUF_BEGIN();
+
   PrintIndent;
   Lo2 = arr->LoBound;
   fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
@@ -258,6 +268,8 @@ void WriteDoubleVector(POINTER val)
   PrintIndent;
 #endif
   fprintf( FibreOutFd, "]\n" );
+
+  FIBRE_BUF_END();
 }
 
 /* ------------------------------------------------------------ */
@@ -290,6 +302,8 @@ void WriteIntegerVector(POINTER val)
     ARRAYP arr = (ARRAYP) val;
     int saveIndent;
 
+    FIBRE_BUF_BEGIN();
+
     PrintIndent;
     Lo2 = arr->LoBound;
     fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
@@ -313,6 +327,8 @@ void WriteIntegerVector(POINTER val)
     PrintIndent;
 #endif
     fprintf( FibreOutFd, "]\n" );
+
+    FIBRE_BUF_END();
 }
 
 /* ------------------------------------------------------------ */
@@ -345,6 +361,8 @@ void WriteNullVector(POINTER val)
   ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
+  FIBRE_BUF_BEGIN();
+
   PrintIndent;
   Lo2 = arr->LoBound;
   fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
@@ -369,6 +387,8 @@ void WriteNullVector(POINTER val)
   PrintIndent;
 #endif
   fprintf( FibreOutFd, "]\n" );
+
+  FIBRE_BUF_END();
 }
 
 /* ------------------------------------------------------------ */
@@ -401,6 +421,8 @@ void WriteRealVector(POINTER val)
   ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
+  FIBRE_BUF_BEGIN();
+
   PrintIndent;
   Lo2 = arr->LoBound;
   fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
@@ -425,4 +447,6 @@ void WriteRealVector(POINTER val)
   PrintIndent;
 #endif
   fprintf( FibreOutFd, "]\n" );
+
+  FIBRE_BUF_END();
 }

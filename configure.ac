@@ -550,6 +550,15 @@ dnl -----------------------------------------------
 AC_CHECK_FUNCS(psignal)
 
 dnl -----------------------------------------------
+dnl open_memstream: used to batch each printed array literal into one
+dnl in-memory buffer instead of one fprintf() per element, then flush it
+dnl to the real stream with a single write. POSIX.1-2008 (glibc, macOS,
+dnl FreeBSD, OpenBSD all have it); MinGW/MSVCRT does not, so that build
+dnl falls back to writing elements straight through as before.
+dnl -----------------------------------------------
+AC_CHECK_FUNCS(open_memstream)
+
+dnl -----------------------------------------------
 dnl Distributed DSA (not used for a while)
 dnl -----------------------------------------------
 AC_ARG_ENABLE(dist-dsa, --enable-dist-dsa   Turn on the distributed memory allocation scheme (broken),[
