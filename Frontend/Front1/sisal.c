@@ -2954,12 +2954,29 @@ static int P_eoln(FILE *f)
 
 
 
+/* Each element of the set array `s` is a `long`, but the set representation
+   only ever uses its low SETBITS (32) bits -- p2c generated this arithmetic
+   when `long` meant "32 bits", and it still packs sets that way even now
+   that `long` is 64 bits on every platform this builds for.
+
+   That mismatch used to matter: bit==31 in the old code computed `1<<31`,
+   signed-int overflow (UB, and on every compiler in practice INT_MIN), which
+   then sign-extended to `long` and set bits 32-63 of the word as well as
+   bit 31 -- corrupting bits this representation promises are always zero.
+   `P_addsetr`'s range fills had the same problem one level further, via
+   `(-1)<<b1` and `~((-2)<<k)`, which are also left-shifts of a negative
+   value and so UB in their own right regardless of width. All four
+   functions below now compute purely in `unsigned long`, so every shift
+   amount is safely below the operand's width and every stored value is
+   zero-extended into the `long` array, leaving bits 32-63 untouched as the
+   comment above always said they should be. */
+
 static int P_inset(register unsigned val, register long *s)  /* val IN s */
 {
     register int bit;
     bit = val % SETBITS;
     val /= SETBITS;
-    if (val < *s++ && ((1<<bit) & s[val]))
+    if (val < (unsigned long)*s++ && ((1UL<<bit) & (unsigned long)s[val]))
         return 1;
     return 0;
 }
@@ -2978,7 +2995,7 @@ static long *P_addset(register long *s, register unsigned val)  /* s := s + [val
         *sbase = size;
     } else
         s += val;
-    *s |= 1<<bit;
+    *s |= (long)(1UL<<bit);
     return sbase;
 }
 
@@ -3005,12 +3022,15 @@ static long *P_addsetr(register long *s,
     }
     s += v1;
     if (v1 == v2) {
-        *s |= (~((-2)<<(b2-b1))) << b1;
+        /* bits b1..b2 of this word */
+        *s |= (long)(((1UL<<(b2-b1+1))-1UL) << b1);
     } else {
-        *s++ |= (-1) << b1;
+        /* bits b1..31 of the first word, all 32 bits of every word in
+           between, and bits 0..b2 of the last word */
+        *s++ |= (long)((0xFFFFFFFFUL<<b1) & 0xFFFFFFFFUL);
         while (++v1 < v2)
-            *s++ = -1;
-        *s |= ~((-2) << b2);
+            *s++ = (long)0xFFFFFFFFUL;
+        *s |= (long)((1UL<<(b2+1))-1UL);
     }
     return sbase;
 }
@@ -3021,8 +3041,8 @@ static long *P_remset(register long *s, register unsigned val)  /* s := s - [val
     register int bit;
     bit = val % SETBITS;
     val /= SETBITS;
-    if (++val <= *s) {
-        if (!(s[val] &= ~(1<<bit)))
+    if (++val <= (unsigned long)*s) {
+        if (!(s[val] &= ~(long)(1UL<<bit)))
             while (*s && !s[*s])
                 (*s)--;
     }
