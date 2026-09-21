@@ -21,6 +21,7 @@
    this instead.  <process.h> here is the system header -- this file has
    no header of its own by that name to collide with. */
 #include <process.h>
+#include <errno.h>
 #endif
 
 #define DEFAULT_OUTPUT_NAME "s.out"
@@ -393,9 +394,28 @@ int Submit(charStarQueue** queueP) {
      /* Windows has no fork(): _spawnvp is CreateProcess plus a wait,
         rolled into the one call fork+exec+wait were doing here.  Like
         execvp, the "p" means argv[0] is looked up on PATH when it is a
-        bare name (CC= and LD= usually are); the compiler phases, given
-        by absolute path, are unaffected by that search either way. */
+        bare name; the compiler phases, given by absolute path, do not
+        need that search.  CC does, though not for the reason it looks
+        like: when configure runs inside an MSYS2 shell, AC_PROG_CC
+        finds gcc as "/mingw64/bin/gcc", a path meaningful to MSYS's
+        POSIX emulation layer -- which sisalc, a native (non-MSYS)
+        binary, was never linked against, so the CreateProcess this
+        calls sees it as literally that string and fails to find it.
+        On that specific failure, retry with just the basename and let
+        _spawnvp's own PATH search -- which does see the real Windows
+        PATH MSYS2 setup put mingw64/bin on -- find it instead. */
      status = (int) _spawnvp( _P_WAIT, argv[0], (const char* const*)argv );
+     if ( status == -1 && errno == ENOENT ) {
+       char *base = strrchr(argv[0], '/');
+       char *base2 = strrchr(argv[0], '\\');
+       if ( base2 && (!base || base2 > base) ) base = base2;
+       if ( base && base[1] ) {
+         char *saved = argv[0];
+         argv[0] = base + 1;
+         status = (int) _spawnvp( _P_WAIT, argv[0], (const char* const*)argv );
+         argv[0] = saved;
+       }
+     }
      if ( status == -1 ) {
        perror(argv[0]);
        exit(1);
