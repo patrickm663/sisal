@@ -26,13 +26,13 @@ static int   SharedSize;
 struct shared_s *SRp;
 #endif
 
-void StartWorkers();
+void StartWorkers(void);
 
 #if !defined(NO_STATIC_SHARED)
-void (*Entry_point)();
+void (*Entry_point)(void);
 #endif
 
-void StartWorkersWithEntry(void (*entry)())
+void StartWorkersWithEntry(void (*entry)(void))
 {
         Entry_point = entry;
         StartWorkers();

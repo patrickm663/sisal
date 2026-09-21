@@ -72,7 +72,7 @@ static void AssignExportNames(PNODE n, char *pre)
         e1->dname = PrefixNameAlloc( pre );
 
         for ( e2 = e1->esucc; e2 != NULL; e2 = e2->esucc )
-            if ( (e2->eport == e1->eport) )
+            if ( e2->eport == e1->eport )
                 e2->dname = e1->dname;
         }
 }

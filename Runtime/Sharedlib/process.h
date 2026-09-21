@@ -200,7 +200,7 @@ extern POINTER SharedMalloc PROTO((int));
 extern void    AcquireSharedMemory PROTO((int));
 extern void    ReleaseSharedMemory PROTO((void));
 extern void    StartWorkers PROTO((void));
-extern void    StartWorkersWithEntry PROTO((void (*entry)()));
+extern void    StartWorkersWithEntry PROTO((void (*entry)(void)));
 extern void    StopWorkers PROTO((void));
 extern void    AbortParallel PROTO((void));
 

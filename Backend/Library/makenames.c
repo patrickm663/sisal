@@ -212,13 +212,11 @@ main(int argc, char** argv)
   /* ------------------------------------------------------------ */
   for(j=0; j<2; j++) {
     if ( j == 0 ) {
-      puts(  "char *GetNodeName(n)");
-      puts(  "  PNODE n;");
+      puts(  "char *GetNodeName(PNODE n)");
       puts(  "{");
       puts(  "  int opcode = n->type;");
     } else {
-      puts(  "char *OpCodeNameOf(opcode)");
-      puts(  "  int opcode;");
+      puts(  "char *OpCodeNameOf(int opcode)");
       puts(  "{");
     }
     printf("  if ( opcode>=IF_COMPOUND_FIRST && opcode<=IF_COMPOUND_LAST )\n");
@@ -234,8 +232,7 @@ main(int argc, char** argv)
     puts(  "}");
   }
 
-  puts("char *GetMacro(n)");
-  puts("PNODE n;");
+  puts("char *GetMacro(PNODE n)");
   puts("{");
   puts(  "  int opcode = n->type;");
   printf("  if ( opcode>=IF_SIMPLE_FIRST && opcode<=IF_SIMPLE_LAST )\n");
@@ -246,10 +243,10 @@ main(int argc, char** argv)
   puts("}\n");
 
 
-  puts("char *GraphName(i) int i; { return gnames[i]; }\n");
-  puts("char *SimpleName(i) int i; { return snames[i]; }\n");
-  puts("char *CompoundName(i) int i; { return cnames[i]; }\n");
-  puts("char *AtName(i) int i; { return snames[IFAAddLAT+i-IFAAddH]; }\n");
+  puts("char *GraphName(int i) { return gnames[i]; }\n");
+  puts("char *SimpleName(int i) { return snames[i]; }\n");
+  puts("char *CompoundName(int i) { return cnames[i]; }\n");
+  puts("char *AtName(int i) { return snames[IFAAddLAT+i-IFAAddH]; }\n");
 
   /* ------------------------------------------------------------ */
   /* See if we can verify the counts...                           */

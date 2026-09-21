@@ -15,7 +15,7 @@
 
 static void HandleSig(int SigCode)
 {
-  extern void InitSignalSystem();
+  extern void InitSignalSystem(void);
 
   if ( UsingSdbx )
     switch ( SigCode ) {

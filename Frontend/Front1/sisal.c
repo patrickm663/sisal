@@ -3912,10 +3912,13 @@ static void defaultfilename(stryng *name, stryng *defname)
 */
 boolean openread(FILE **fil, stryng *nom)
 {
+  /* The name used to be copied into a 256-byte buffer with a precision of
+     maxstringchars (1024) -- the stryng limit rather than the buffer's -- so
+     a long path overran it.  concatchar has already NUL-terminated s.str and
+     open() below is handed it directly, so the copy served no purpose. */
   boolean Result;
   stryng s;
   int mode, filedescriptor;
-  Char STR1[256];
 
   s = *nom;
   stripspaces(&s);
@@ -3927,11 +3930,9 @@ boolean openread(FILE **fil, stryng *nom)
   Result = true;
   filedescriptor = close(filedescriptor);
   if (*fil != NULL) {
-    sprintf(STR1, "%.*s", maxstringchars, s.str);
-    *fil = freopen(STR1, "r", *fil);
+    *fil = freopen(s.str, "r", *fil);
   } else {
-    sprintf(STR1, "%.*s", maxstringchars, s.str);
-    *fil = fopen(STR1, "r");
+    *fil = fopen(s.str, "r");
   }
   if (*fil == NULL)
     _EscIO(FileNotFound);
@@ -3944,7 +3945,6 @@ boolean openintread(FILE **fil, stryng *nom)
   boolean Result;
   stryng s;
   int mode, filedescriptor;
-  Char STR1[256];
 
   s = *nom;
   stripspaces(&s);
@@ -3956,11 +3956,9 @@ boolean openintread(FILE **fil, stryng *nom)
   Result = true;
   filedescriptor = close(filedescriptor);
   if (*fil != NULL) {
-    sprintf(STR1, "%.*s", maxstringchars, s.str);
-    *fil = freopen(STR1, "r", *fil);
+    *fil = freopen(s.str, "r", *fil);
   } else {
-    sprintf(STR1, "%.*s", maxstringchars, s.str);
-    *fil = fopen(STR1, "r");
+    *fil = fopen(s.str, "r");
   }
   if (*fil == NULL)
     _EscIO(FileNotFound);
@@ -3975,7 +3973,6 @@ boolean openwrite(FILE **fil, stryng *nom)
   boolean Result;
   int mode, filedescriptor;
   stryng s;
-  Char STR1[256];
 
   s = *nom;
   stripspaces(&s);
@@ -3990,11 +3987,9 @@ boolean openwrite(FILE **fil, stryng *nom)
     Result = true;
     filedescriptor = close(filedescriptor);
     if (*fil != NULL) {
-      sprintf(STR1, "%.*s", maxstringchars, s.str);
-      *fil = freopen(STR1, "w", *fil);
+      *fil = freopen(s.str, "w", *fil);
     } else {
-      sprintf(STR1, "%.*s", maxstringchars, s.str);
-      *fil = fopen(STR1, "w");
+      *fil = fopen(s.str, "w");
     }
     if (*fil == NULL)
       _EscIO(FileNotFound);
@@ -4003,11 +3998,9 @@ boolean openwrite(FILE **fil, stryng *nom)
   Result = true;
   filedescriptor = close(filedescriptor);
   if (*fil != NULL) {
-    sprintf(STR1, "%.*s", maxstringchars, s.str);
-    *fil = freopen(STR1, "w", *fil);
+    *fil = freopen(s.str, "w", *fil);
   } else {
-    sprintf(STR1, "%.*s", maxstringchars, s.str);
-    *fil = fopen(STR1, "w");
+    *fil = fopen(s.str, "w");
   }
   if (*fil == NULL)
     _EscIO(FileNotFound);

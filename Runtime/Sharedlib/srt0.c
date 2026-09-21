@@ -23,9 +23,7 @@ static char RCS_REVISION[SIZEOF(RCSVERSION)] = "?.?";
  * MAIN
 \************************************************************************/
 
-int main( argc, argv )
-     int argc;
-     char **argv;
+int main( int argc, char **argv )
 {
   int           i;
 

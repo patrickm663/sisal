@@ -30,6 +30,9 @@ AC_ARG_ENABLE(fortran, --disable-fortran   turn off FORTRAN support if you have 
 # -----------------------------------------------
 # Check for C and maybe FORTRAN
 # -----------------------------------------------
+dnl AC_USE_SYSTEM_EXTENSIONS has to come before anything that compiles a test
+dnl program, so that those tests see the same feature set as the build does.
+AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_CC
 dnl AM_PROG_AR is required by automake >= 1.12 before any _LIBRARIES target.
 AM_PROG_AR
@@ -45,8 +48,6 @@ fi
 CCARGUMENTS=`extraArguments $CC`
 AC_PATH_PROG(CC,$CC,$CC)
 CC="$CC $CCARGUMENTS"
-
-AC_USE_SYSTEM_EXTENSIONS
 
 dnl -----------------------------------------------
 dnl FORTRAN can be turned off
@@ -80,6 +81,30 @@ EOF
 fi
 
 # -----------------------------------------------
+# Optional developer warnings, off by default.  A plain ./configure builds
+# with no warnings at all; these turn on a wider set for working on the code.
+# -Wstrict-prototypes and -Wold-style-definition are the two that matter for
+# staying buildable -- C23 removes what they flag -- and the tree is clean
+# for both.  The rest still report code-quality issues worth working through.
+# -----------------------------------------------
+AC_ARG_ENABLE([warnings],
+  [AS_HELP_STRING([--enable-warnings],
+                  [build with additional compiler warnings])],
+  [enable_warnings=$enableval], [enable_warnings=no])
+
+if test "x$enable_warnings" = xyes; then
+  for sisal_w in -Wall -Wextra -Wno-unused-parameter -Wstrict-prototypes \
+                 -Wold-style-definition -Wmissing-prototypes; do
+    sisal_save_CFLAGS=$CFLAGS
+    CFLAGS="$CFLAGS $sisal_w"
+    AC_MSG_CHECKING([whether $CC accepts $sisal_w])
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
+      [AC_MSG_RESULT([yes])],
+      [AC_MSG_RESULT([no]); CFLAGS=$sisal_save_CFLAGS])
+  done
+fi
+
+# -----------------------------------------------
 # We need some helper tools
 # -----------------------------------------------
 AC_PROG_INSTALL
@@ -104,20 +129,21 @@ AH_TOP([/* sisalConfig.h -- generated from configure.ac.
 #define SISAL_CONFIG_H])
 AH_BOTTOM([
 #endif /* SISAL_CONFIG_H */])
-AC_HEADER_STDC
+dnl AC_HEADER_STDC and AC_HEADER_TIME are obsolete: every compiler this can
+dnl still be built with has the C89 headers, so <stdlib.h>, <string.h> and
+dnl <time.h> are included unconditionally and the STDC_HEADERS and
+dnl TIME_WITH_SYS_TIME conditionals are gone from sisalInfo.h.
 AC_CHECK_HEADERS(unistd.h)
-AC_CHECK_HEADERS(time.h)
 AC_CHECK_HEADERS(limits.h)
 AC_CHECK_HEADERS(float.h)
 AC_CHECK_HEADERS(fcntl.h)
-AC_CHECK_HEADERS(string.h)
 AC_CHECK_HEADERS(strings.h)
 AC_CHECK_HEADERS(sys/types.h)
+AC_CHECK_HEADERS(sys/time.h)
 AC_CHECK_HEADERS(sys/times.h)
 AC_CHECK_HEADERS(sys/resource.h)
 AC_CHECK_HEADERS(sys/stat.h)
 AC_CHECK_HEADERS(sys/wait.h)
-AC_HEADER_TIME
 
 # -----------------------------------------------
 # Library checks...

@@ -482,12 +482,18 @@ static int ReadLibrary(char *lib, namelink *Need)
       if ( InNameList(havename,Need) ) {
         for(p=line; *p; p++) if (*p=='\n') *p = '\0';
 
-        sprintf(command,"%s %d x %s %s\n",archiver,PID,lib,line);
+        /* archiver, lib and line are each bounded only by MAX_PATH, so
+           this could run off the end of command.  Truncating would hand
+           the shell a mangled command, so refuse instead. */
+        if ( snprintf(command,sizeof(command),"%s %d x %s %s\n",
+                      archiver,PID,lib,line) >= (int)sizeof(command) )
+          Error2("Archiver command too long for ",lib);
+
         if (verbose) fputs(command,stderr);
         stat = system(command);
         if ( stat ) Error2("Archiver command failed ",archiver);
 
-        sprintf(tmpfile,"#tmp%d.if1",PID);
+        snprintf(tmpfile,sizeof(tmpfile),"#tmp%d.if1",PID);
         LoadIF1File(tmpfile,line);
 
         stat = unlink(tmpfile);

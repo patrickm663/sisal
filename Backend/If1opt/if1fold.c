@@ -1514,7 +1514,9 @@ static void Fold(PNODE n)
             else if ( iop1 == '\'' )
                 SPRINTF( a, "\\'" );
             else
-                SPRINTF( a, "%lc", iop1 );
+                /* iop1 is a long and %lc wants a wint_t; this branch is
+                   already guarded to printable ASCII, so print one char. */
+                SPRINTF( a, "%c", (int)iop1 );
 
             break;
 

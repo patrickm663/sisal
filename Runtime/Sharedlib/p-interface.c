@@ -77,7 +77,7 @@ static void ParseFileParameters(char *filename)
 
     /*** Read the file into argc and argv. ***/
 
-    argv[0] = '\0';             /* no command was used */
+    argv[0] = NULL;             /* no command was used */
     argc = 1;
     optfile = fopen(filename, "r");
     if (optfile==NULL) {
@@ -85,31 +85,34 @@ static void ParseFileParameters(char *filename)
                    filename);
         return;
     }
-    while (fscanf(optfile, " %s", arg)==1 && argc<100) {
-        argv[argc++] = strcpy((char*)malloc(strlen(arg)+1), arg);
+
+    /* The field width has to be written into the format string: plain %s
+       has no bound and overran arg on a long word in the startup file. */
+    while (argc<100 && fscanf(optfile, " %511s", arg)==1) {
+        char *copy = (char*)malloc(strlen(arg)+1);
+
+        if (copy==NULL) {
+            (void)fclose(optfile);
+            SisalError("OUT OF MEMORY READING STARTUP FILE", filename);
+            return;
+        }
+        argv[argc++] = strcpy(copy, arg);
     }
-    fclose(optfile);
+    (void)fclose(optfile);
 
     ParseCommandLine(argc, argv);
     return;
 }
 
 #define SCONFIG_FUNCTION(x)                                                \
-void x( lsValue, gssValue, bValue, xftValue, axValue )                     \
-int *lsValue;                                                              \
-int *gssValue;                                                             \
-int *bValue;                                                               \
-int *xftValue;                                                             \
-int *axValue;                                                              \
+void x( int *lsValue, int *gssValue, int *bValue, int *xftValue,           \
+        int *axValue )                                                     \
 {                                                                          \
   ConfigureExecution( *lsValue, *gssValue, *bValue, *xftValue, *axValue ); \
 }
 
 #define SSTART_FUNCTION(x)                               \
-void x( wValue, dsValue, rValue )                        \
-int *wValue;                                             \
-int *dsValue;                                            \
-int *rValue;                                             \
+void x( int *wValue, int *dsValue, int *rValue )         \
 {                                                        \
   ParseInterfaceArguments( *wValue, *dsValue, *rValue ); \
   InitSisalRunTime();                                    \
@@ -117,9 +120,7 @@ int *rValue;                                             \
 }
 
 #define SPCALL_FUNCTION(x)                              \
-void x ( filename, entry )                              \
-char *filename;                                         \
-void (*entry)();                                        \
+void x ( char *filename, void (*entry)(void) )          \
 {                                                       \
   ParseFileParameters( filename );                      \
   InitSisalRunTime();                                   \
@@ -128,8 +129,7 @@ void (*entry)();                                        \
 
 
 #define SSTARTF_FUNCTION(x)                              \
-void x( filename )                                       \
-char *filename;                                          \
+void x( char *filename )                                 \
 {                                                        \
   ParseFileParameters( filename );                       \
   InitSisalRunTime();                                    \
@@ -137,7 +137,7 @@ char *filename;                                          \
 }
 
 #define SSTOP_FUNCTION(x) \
-void x()                  \
+void x(void)              \
 {                         \
   StopWorkers();          \
   ShutDownDsa();          \
@@ -217,11 +217,7 @@ SPCALL_FUNCTION( spcall_ )
 }
 
 
-void InitDimInfo( ronly, Dim, DimInfo, Info )
-int       ronly;
-int       Dim;
-DIMINFOP  DimInfo;
-int      *Info;
+void InitDimInfo( int ronly, int Dim, DIMINFOP DimInfo, int *Info )
 {
 #ifdef MUTABLE_DESCRIPTORS
   IDInfo( Dim, DimInfo, Info, Info[2] || ronly );

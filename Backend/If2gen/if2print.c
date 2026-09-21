@@ -490,8 +490,9 @@ static int IsComplex(PNODE g)
 static void PrintBuildSlices(int indent, PNODE n)
 {
   register PNODE f;
-  char     buf[100];
   char     ebuf[100];
+  /* buf holds ebuf plus a " -- Loop <id>" suffix, so it has to be larger. */
+  char     buf[sizeof(ebuf) + 32];
   char     *Style;
 
   int      size;
@@ -552,7 +553,7 @@ static void PrintBuildSlices(int indent, PNODE n)
     FPRINTF( output, ",");
     ExpandDollarFormula(f->MinSlice,n,ebuf);
     if ( ebuf[0] ) {
-      SPRINTF(buf,"%s -- Loop %d\n",ebuf,f->ID);
+      snprintf(buf,sizeof(buf),"%s -- Loop %d\n",ebuf,f->ID);
       Error1(buf);
     }
     FPRINTF( output, ",");
@@ -566,7 +567,7 @@ static void PrintBuildSlices(int indent, PNODE n)
   if ( f->LoopSlice ) {
     ExpandDollarFormula(f->LoopSlice,n,ebuf);
     if ( ebuf[0] ) {
-      SPRINTF(buf,"%s -- Loop %d\n",ebuf,f->ID);
+      snprintf(buf,sizeof(buf),"%s -- Loop %d\n",ebuf,f->ID);
       Error1(buf);
     }
   } else {
