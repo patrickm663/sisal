@@ -84,3 +84,61 @@ jobs:
           export PATH="$HOME/sisal/bin:$PATH"
           sisalc -C -w squares.sis
           clang -std=c2x -fsyntax-only -I"$HOME/sisal/include/sisal" squares.c
+
+  zig:
+    name: zig cc / --with-tuning=${{ matrix.tuning }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tuning: [baseline, aggressive]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install autotools
+        run: sudo apt-get update && sudo apt-get install -y automake autoconf
+
+      - uses: mlugg/setup-zig@v1
+        with:
+          version: 0.13.0
+
+      - name: Regenerate the build system
+        run: autoreconf -i
+
+      # zig cc is clang with its own bundled headers and libc, so this is the
+      # job that catches anything relying on a GCC-only extension.  The
+      # aggressive profile additionally exercises thin LTO, which only links
+      # if LD follows CC.
+      - name: Configure
+        run: |
+          ./configure --prefix="$HOME/sisal" --disable-fortran \
+                      CC="zig cc" --with-tuning=${{ matrix.tuning }}
+
+      - name: Build
+        run: make -j"$(getconf _NPROCESSORS_ONLN)"
+
+      - name: Install
+        run: make install
+
+      - name: Test
+        run: make check || { find . -name '*.log' -newer Makefile -exec tail -n 40 {} +; exit 1; }
+
+      # The tuning profile is baked into SISAL_CFLAGS, so a program compiled
+      # here picks it up with no flags of its own.  Check that it still gets
+      # the right answer.
+      - name: Compile and run a program with the tuned toolchain
+        run: |
+          export PATH="$HOME/sisal/bin:$PATH"
+          cat > squares.sis <<'SIS'
+          define Main
+          type IntArray = array [integer];
+          function Main(N: integer returns IntArray)
+            for i in 1, N
+              returns array of i * i
+            end for
+          end function
+          SIS
+          sisalc -o squares squares.sis
+          echo 8 | ./squares | tee out.txt
+          grep -q '1 4 9 16 25 36 49 64' out.txt

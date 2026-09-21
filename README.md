@@ -46,21 +46,61 @@ Useful options:
 | `--enable-warnings` | Build with a wider warning set, for working on the code |
 | `CC=...` | Choose the compiler, e.g. `CC=clang` |
 
-### Choosing a C compiler
+### Choosing a C compiler, and tuning
 
-Whatever compiler `configure` picks is also what `sisalc` will invoke for the C
-it generates, so it decides how fast your SISAL programs run. You can pick a
-different one per compilation:
+Whatever compiler `configure` picks is also what `sisalc` invokes on the C it
+generates, so it decides how fast your SISAL programs run. A SISAL program's
+hot loops end up in that generated C, which is why tuning is set once at
+configure time rather than on every compile:
+
+```sh
+./configure CC="zig cc" --with-tuning=aggressive
+```
+
+`--with-tuning` takes three values:
+
+| Profile | Adds | Use when |
+| --- | --- | --- |
+| `baseline` (default) | nothing | portable binaries, reproducible builds |
+| `native` | `-O3 -march=native`, loop interchange/distribution, vector width and interleave tuning | you are running on the machine you built on |
+| `aggressive` | the above plus thin LTO, `-ffast-math`, `-fno-math-errno` | numerical work where relaxed IEEE semantics are acceptable |
+
+Every flag is probed and dropped if your compiler rejects it, so the profiles
+are safe to use with GCC — it simply declines the LLVM-specific ones.
+
+`native` and `aggressive` produce binaries tied to the building CPU, and
+`aggressive` relaxes floating-point semantics: it permits reassociation and
+assumes no NaNs or infinities. Results can differ from a `baseline` build.
+
+Building with clang through [Zig](https://ziglang.org) is worth it for
+numerical code. Measured on the benchmarks in
+[patrickm663/sisal-benchmarks](https://github.com/patrickm663/sisal-benchmarks),
+single worker, `zig cc` 0.13 (clang 18) at `--with-tuning=aggressive` against
+gcc 13 at `-O2`, on a Xeon with AVX-512:
+
+| benchmark | gcc `-O2` | `zig cc` aggressive | speedup |
+| --- | --- | --- | --- |
+| matmul_tr (1000×1000) | 1115 ms | 392 ms | **2.8×** |
+| dcf (100k × 360) | 30.0 ms | 7.7 ms | **3.9×** |
+| matmul (800×800) | 1498 ms | 1111 ms | **1.35×** |
+| integral (4×10⁸) | 531 ms | 504 ms | 1.05× |
+| stream (2×10⁷) | 308 ms | 290 ms | 1.06× |
+| mandelbrot, nbodies | — | — | no change |
+
+All seven produce results identical to the GCC build.
+
+The profile matters more than it looks: with only `-O3 -march=native
+-funroll-loops`, matmul_tr came out *26% slower* than GCC. The loop and
+vector-width flags are what turn it around, which is why these ship as whole
+profiles rather than a single "optimise harder" switch.
+
+You can still override per compilation:
 
 ```sh
 sisalc CC=clang CFLAGS="-O3 -march=native" -o prog prog.sis
 ```
 
-Building the whole system with an optimising compiler and aggressive flags is
-worthwhile for numerical work — see
-[patrickm663/sisal-benchmarks](https://github.com/patrickm663/sisal-benchmarks),
-which builds with `zig cc` and reports a transposed 1000×1000 matrix multiply
-at 43 ms, ahead of threaded Julia on the same machine.
+`LD` follows `CC` unless you set it, which is what makes `-flto=thin` link.
 
 ## Writing and running a program
 
@@ -134,6 +174,11 @@ optimiser did; `-keep` retains the intermediates rather than deleting them.
   — matrix multiply, mandelbrot, n-body, STREAM, discounted cash flow, with
   timings and a container build
 - `Tests/` in this repo — the programs `make check` runs
+
+`Benchmarks/run-benchmarks.py` compiles the same programs with two or more
+installed builds and times them side by side; see
+[Benchmarks/README.md](Benchmarks/README.md). It is how the table above was
+produced.
 
 ## Further reading
 
