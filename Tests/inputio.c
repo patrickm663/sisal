@@ -12,6 +12,11 @@
 
 #include "sisalrt.h"
 
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+#endif
+
 /* Argument blocks, laid out exactly as the code generator emits them. */
 struct Args12 { struct ActRec *FirstAR; int Count; POINTER In1; POINTER Out1; };
 struct Args13 { struct ActRec *FirstAR; int Count; POINTER Out1; };
@@ -96,6 +101,13 @@ int main( int argc, char **argv )
   size_t        stdinLen;
 
   (void)argc; (void)argv;          /* run-test also invokes us with -w3 */
+
+#ifdef _WIN32
+  /* This test's own printf()s go through stdout same as the runtime's
+     FibreOutFd does, and hit the same default-text-mode CRLF translation;
+     see srt0.c for the fuller explanation. */
+  _setmode( _fileno( stdout ), _O_BINARY );
+#endif
 
   /* run-test drops the first line of output before diffing. */
   printf( "SISAL runtime input tests\n" );

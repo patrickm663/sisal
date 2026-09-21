@@ -16,6 +16,11 @@
 
 #include "sisalrt.h"
 
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+#endif
+
 static char RCSVERSION[] = "$State$";
 static char RCS_REVISION[SIZEOF(RCSVERSION)] = "?.?";
 
@@ -26,6 +31,17 @@ static char RCS_REVISION[SIZEOF(RCSVERSION)] = "?.?";
 int main( int argc, char **argv )
 {
   int           i;
+
+#ifdef _WIN32
+  /* Every SISAL program's whole output goes through FibreOutFd, and every
+     FIBRE-format argument comes in through FibreInFd -- both default to
+     stdin/stdout below, which Windows opens in text mode by default,
+     translating LF to CRLF on write (and, same as _READ/_PIPE/_STDIN,
+     mangling anything containing CR or 0x1A on read). Same fix as those:
+     ask for binary explicitly, since nothing here ever wants translation. */
+  _setmode( _fileno( stdin ), _O_BINARY );
+  _setmode( _fileno( stdout ), _O_BINARY );
+#endif
 
   FibreInFd = stdin;
   FibreOutFd = stdout;
