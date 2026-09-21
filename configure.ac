@@ -30,6 +30,11 @@ AC_ARG_ENABLE(fortran, --disable-fortran   turn off FORTRAN support if you have 
 # -----------------------------------------------
 # Check for C and maybe FORTRAN
 # -----------------------------------------------
+dnl Remember whether the user set CFLAGS themselves; AC_PROG_CC substitutes a
+dnl default of "-g -O2" when they did not, and --with-tuning needs to tell the
+dnl two apart so it never overrides a deliberate choice.
+sisal_user_CFLAGS=${CFLAGS+set}
+
 dnl AC_USE_SYSTEM_EXTENSIONS has to come before anything that compiles a test
 dnl program, so that those tests see the same feature set as the build does.
 AC_USE_SYSTEM_EXTENSIONS
@@ -79,6 +84,81 @@ EOF
     FDASHI_OK=0
   fi
 fi
+
+# -----------------------------------------------
+# Optimisation tuning profiles.
+#
+# CFLAGS reaches two places: this build, and -- through SISAL_CFLAGS in
+# sisalPaths.h -- the C compiler that sisalc runs on the code it generates.
+# The second is where the time actually goes, since the hot loops of a SISAL
+# program end up in generated C, so tuning belongs here rather than in each
+# user's command line.
+#
+# Every flag is probed with a link test and dropped if the compiler will not
+# take it, because these sets are LLVM-shaped: -mllvm options and thin LTO
+# come from clang (zig cc), and GCC rejects them outright.
+#
+# Measured on the benchmarks in patrickm663/sisal-benchmarks, single worker,
+# clang 18 via "zig cc" against gcc 13 -O2: matmul 0.68x, matmul_tr 0.36x,
+# dcf 0.25x.  The reduced set is not enough -- with only -O3/-march=native/
+# -funroll-loops, matmul_tr came out 26% SLOWER than GCC; the loop-interchange
+# and vector-width flags are what turn it around.  Hence whole profiles rather
+# than a single --enable-optimisation switch.
+# -----------------------------------------------
+AC_ARG_WITH([tuning],
+  [AS_HELP_STRING([--with-tuning=@<:@baseline|native|aggressive@:>@],
+     [optimisation profile for this build and for generated programs.
+      baseline (default) adds nothing; native adds -O3 -march=native and
+      loop tuning, producing binaries for this CPU only; aggressive adds
+      thin LTO and -ffast-math, which relaxes IEEE floating point])],
+  [with_tuning=$withval], [with_tuning=baseline])
+
+case $with_tuning in
+  baseline)
+    sisal_tune_list="" ;;
+  native)
+    sisal_tune_list="-O3|-march=native|-funroll-loops|-mllvm -enable-loopinterchange|-mllvm -enable-loop-distribute|-mprefer-vector-width=512|-mllvm -force-vector-interleave=8|-mllvm -prefetch-distance=8|-mllvm --loop-prefetch-writes" ;;
+  aggressive)
+    sisal_tune_list="-O3|-march=native|-funroll-loops|-mllvm -enable-loopinterchange|-mllvm -enable-loop-distribute|-mprefer-vector-width=512|-mllvm -force-vector-interleave=8|-mllvm -prefetch-distance=8|-mllvm --loop-prefetch-writes|-ffast-math|-fno-math-errno|-flto=thin" ;;
+  *)
+    AC_MSG_ERROR([--with-tuning must be baseline, native or aggressive]) ;;
+esac
+
+if test "x$with_tuning" != xbaseline; then
+  AC_MSG_NOTICE([applying "$with_tuning" tuning profile])
+
+  dnl Strip the -O that AC_PROG_CC defaulted to, so the profile's own -O3 is
+  dnl not preceded by a contradictory -O2.  If the user chose CFLAGS
+  dnl themselves, leave them exactly as given.
+  if test "x$sisal_user_CFLAGS" != xset; then
+    CFLAGS=`echo "$CFLAGS" | sed -e 's/ *-O[[0-9sgz]]*//g'`
+  fi
+
+  sisal_save_IFS=$IFS
+  IFS='|'
+  for sisal_f in $sisal_tune_list; do
+    IFS=$sisal_save_IFS
+    sisal_save_CFLAGS=$CFLAGS
+    CFLAGS="$CFLAGS $sisal_f"
+    AC_MSG_CHECKING([whether $CC accepts $sisal_f])
+    dnl A link test, not a compile test: -flto=thin only fails at link time,
+    dnl and a mismatched linker is exactly the failure worth catching here.
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[]], [[]])],
+      [AC_MSG_RESULT([yes])],
+      [AC_MSG_RESULT([no]); CFLAGS=$sisal_save_CFLAGS])
+    IFS='|'
+  done
+  IFS=$sisal_save_IFS
+fi
+
+# -----------------------------------------------
+# Capture the flags generated programs are compiled with, BEFORE any
+# maintainer warning flags are added below.  Warnings are for people working
+# on SISAL; passing them to a user's program means every compile of theirs
+# reports on code they did not write.
+# -----------------------------------------------
+SISAL_PROGRAM_CFLAGS=$CFLAGS
+AC_SUBST(SISAL_PROGRAM_CFLAGS)
 
 # -----------------------------------------------
 # Optional developer warnings, off by default.  A plain ./configure builds

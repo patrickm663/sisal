@@ -659,6 +659,7 @@ sisal_clock_tick
 LN_S
 RANLIB
 DIFF
+SISAL_PROGRAM_CFLAGS
 FLIBS
 FDASHI_OK
 ac_ct_F77
@@ -767,6 +768,7 @@ enable_option_checking
 enable_silent_rules
 enable_fortran
 enable_dependency_tracking
+with_tuning
 enable_warnings
 with_model
 enable_dist_dsa
@@ -1425,6 +1427,13 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-tuning=[baseline|native|aggressive]
+                          optimisation profile for this build and for
+                          generated programs. baseline (default) adds nothing;
+                          native adds -O3 -march=native and loop tuning,
+                          producing binaries for this CPU only; aggressive
+                          adds thin LTO and -ffast-math, which relaxes IEEE
+                          floating point
 --with-model=<parallelism model>
 
 Some influential environment variables:
@@ -3282,6 +3291,8 @@ fi
 # -----------------------------------------------
 # Check for C and maybe FORTRAN
 # -----------------------------------------------
+sisal_user_CFLAGS=${CFLAGS+set}
+
 
 
 
@@ -6581,6 +6592,98 @@ printf "%s\n" "no" >&6; }
     FDASHI_OK=0
   fi
 fi
+
+# -----------------------------------------------
+# Optimisation tuning profiles.
+#
+# CFLAGS reaches two places: this build, and -- through SISAL_CFLAGS in
+# sisalPaths.h -- the C compiler that sisalc runs on the code it generates.
+# The second is where the time actually goes, since the hot loops of a SISAL
+# program end up in generated C, so tuning belongs here rather than in each
+# user's command line.
+#
+# Every flag is probed with a link test and dropped if the compiler will not
+# take it, because these sets are LLVM-shaped: -mllvm options and thin LTO
+# come from clang (zig cc), and GCC rejects them outright.
+#
+# Measured on the benchmarks in patrickm663/sisal-benchmarks, single worker,
+# clang 18 via "zig cc" against gcc 13 -O2: matmul 0.68x, matmul_tr 0.36x,
+# dcf 0.25x.  The reduced set is not enough -- with only -O3/-march=native/
+# -funroll-loops, matmul_tr came out 26% SLOWER than GCC; the loop-interchange
+# and vector-width flags are what turn it around.  Hence whole profiles rather
+# than a single --enable-optimisation switch.
+# -----------------------------------------------
+
+# Check whether --with-tuning was given.
+if test ${with_tuning+y}
+then :
+  withval=$with_tuning; with_tuning=$withval
+else $as_nop
+  with_tuning=baseline
+fi
+
+
+case $with_tuning in
+  baseline)
+    sisal_tune_list="" ;;
+  native)
+    sisal_tune_list="-O3|-march=native|-funroll-loops|-mllvm -enable-loopinterchange|-mllvm -enable-loop-distribute|-mprefer-vector-width=512|-mllvm -force-vector-interleave=8|-mllvm -prefetch-distance=8|-mllvm --loop-prefetch-writes" ;;
+  aggressive)
+    sisal_tune_list="-O3|-march=native|-funroll-loops|-mllvm -enable-loopinterchange|-mllvm -enable-loop-distribute|-mprefer-vector-width=512|-mllvm -force-vector-interleave=8|-mllvm -prefetch-distance=8|-mllvm --loop-prefetch-writes|-ffast-math|-fno-math-errno|-flto=thin" ;;
+  *)
+    as_fn_error $? "--with-tuning must be baseline, native or aggressive" "$LINENO" 5 ;;
+esac
+
+if test "x$with_tuning" != xbaseline; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: applying \"$with_tuning\" tuning profile" >&5
+printf "%s\n" "$as_me: applying \"$with_tuning\" tuning profile" >&6;}
+
+        if test "x$sisal_user_CFLAGS" != xset; then
+    CFLAGS=`echo "$CFLAGS" | sed -e 's/ *-O[0-9sgz]*//g'`
+  fi
+
+  sisal_save_IFS=$IFS
+  IFS='|'
+  for sisal_f in $sisal_tune_list; do
+    IFS=$sisal_save_IFS
+    sisal_save_CFLAGS=$CFLAGS
+    CFLAGS="$CFLAGS $sisal_f"
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether $CC accepts $sisal_f" >&5
+printf %s "checking whether $CC accepts $sisal_f... " >&6; }
+            cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main (void)
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+else $as_nop
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }; CFLAGS=$sisal_save_CFLAGS
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+    IFS='|'
+  done
+  IFS=$sisal_save_IFS
+fi
+
+# -----------------------------------------------
+# Capture the flags generated programs are compiled with, BEFORE any
+# maintainer warning flags are added below.  Warnings are for people working
+# on SISAL; passing them to a user's program means every compile of theirs
+# reports on code they did not write.
+# -----------------------------------------------
+SISAL_PROGRAM_CFLAGS=$CFLAGS
+
 
 # -----------------------------------------------
 # Optional developer warnings, off by default.  A plain ./configure builds

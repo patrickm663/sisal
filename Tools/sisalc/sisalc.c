@@ -98,7 +98,7 @@ static char* CC = SISAL_CC; /* CC=flags () Compile using this C compiler */
 static char* CFLAGS = SISAL_CFLAGS; /* CFLAGS=flags () Use these C compiler flags */
 static char* F77 = SISAL_F77; /* F77=compiler () Compile using this FORTRAN compiler */
 static char* FFLAGS = SISAL_FFLAGS; /* FFLAGS=flags () Use these FORTRAN flags */
-static char* LD = SISAL_CC; /* LD=flags () Use these FORTRAN flags */
+static char* LD = 0; /* LD=linker () Link using this linker (defaults to CC) */
 static char* LDFLAGS = SISAL_LDFLAGS; /* LDFLAGS=flags () Add to link/loader */
 static char* target = 0; /* -o  () Executable (default s.out) or object output file name */
 static char* mainFunction = "main"; /* -main  () Name of main function (default main) */
@@ -239,8 +239,8 @@ static option_t options[] = {
     {"FFLAGS",0,fetchStringEqual,"Use these FORTRAN flags",
      "Use these FORTRAN flags",
      0,0,&FFLAGS,0},
-    {"LD",0,fetchStringEqual,"Use these FORTRAN flags",
-     "Use these FORTRAN flags",
+    {"LD",0,fetchStringEqual,"Link using this linker (defaults to CC)",
+     "Link using this linker (defaults to CC)",
      0,0,&LD,0},
     {"LDFLAGS",0,fetchStringEqual,"Add to link/loader",
      "Add to link/loader",
@@ -432,6 +432,15 @@ int main(int argc, char** argv) {
    
    setOptionDefaults(options);
    optionScan("sisalc",argc-1,argv+1,options,exitIfNotFound);
+
+   /* ----------------------------------------------- */
+   /* The linker defaults to whatever the C compiler  */
+   /* is, not to the one chosen at configure time.    */
+   /* Otherwise CC="zig cc" compiles with clang and   */
+   /* then links with the configured gcc, which fails */
+   /* outright on LTO objects it cannot read.         */
+   /* ----------------------------------------------- */
+   if ( LD == 0 ) LD = CC;
 
    /* ----------------------------------------------- */
    /* Set important directories                       */

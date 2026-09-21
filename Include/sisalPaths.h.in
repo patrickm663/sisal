@@ -17,7 +17,7 @@
 
 #define SISAL_CC "@CC@"
 #define SISAL_LDFLAGS "@LIBS@ @LDFLAGS@ @parallel_link@"
-#define SISAL_CFLAGS "@CFLAGS@ @parallel_compile@"
+#define SISAL_CFLAGS "@SISAL_PROGRAM_CFLAGS@ @parallel_compile@"
 
 #define SISAL_FORTRAN_ENABLED @fortran_enabled@
 #define SISAL_F77 "@F77@"
