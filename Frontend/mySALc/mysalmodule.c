@@ -231,7 +231,7 @@ static PyMethodDef methods[] = {
     {0,0}
 };
 
-void initmysal() {
+void initmysal(void) {
     PyObject* module = 0;
     module = Py_InitModule("mysal",methods);
 }

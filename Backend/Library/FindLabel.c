@@ -17,8 +17,7 @@
 /**************************************************************************/
 
 int
-FindLabel( type )
-  int   type;
+FindLabel(int type)
 {
   PINFO i;
 

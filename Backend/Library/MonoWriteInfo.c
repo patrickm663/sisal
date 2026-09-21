@@ -17,7 +17,7 @@
 /*          ONLY PRINTED IF ITS PRINT FIELD HAS NOT BEEN DISABLED.        */
 /**************************************************************************/
 
-void MonoWriteInfo()
+void MonoWriteInfo(void)
 {
   register PINFO i;
   register int   t;

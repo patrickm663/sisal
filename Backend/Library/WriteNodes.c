@@ -18,8 +18,7 @@
 /*          DONE BEFORE PRINTING.                                         */
 /**************************************************************************/
 
-void WriteNodes( g )
-PNODE g;
+void WriteNodes(PNODE g)
 {
   register PNODE  n;
   register PNODE  sg;

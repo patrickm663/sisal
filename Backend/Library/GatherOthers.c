@@ -18,9 +18,7 @@
 /*          THE PREDECESSOR OF r.                                         */
 /**************************************************************************/
 
-void GatherOthers( p, r )
-PINFO p;
-PINFO r;
+void GatherOthers(PINFO p, PINFO r)
 {
   register PINFO pm;
 

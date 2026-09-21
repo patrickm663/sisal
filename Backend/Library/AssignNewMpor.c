@@ -18,9 +18,7 @@
 /*          NEXT LEGAL PORT NUMBER IS RETURNED.                           */
 /**************************************************************************/
 
-int AssignNewMports( p, f )
-int   p;
-PNODE f;
+int AssignNewMports(int p, PNODE f)
 {
   register PEDGE i;
 

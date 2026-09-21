@@ -27,9 +27,7 @@ static void  ClassifyGraphEdges PROTO((PNODE));
 /*          RETURING TRUE IF A WRITE CLASSIFIED EDGE IS ENCOUNTERED.      */
 /**************************************************************************/
 
-static int IsWritten( n, eport )
-PNODE n;
-int   eport;
+static int IsWritten(PNODE n, int eport)
 {
     register PEDGE e;
 
@@ -49,8 +47,7 @@ int   eport;
 /*          WRITES.                                                       */
 /**************************************************************************/
 
-static void AssignWriteMarks( n )
-PNODE n;
+static void AssignWriteMarks(PNODE n)
 {
     register PEDGE i;
 
@@ -73,8 +70,7 @@ PNODE n;
 /*          A READ STATUS.                                                */
 /**************************************************************************/
 
-static void ClassifyKImports( c )
-PNODE c;
+static void ClassifyKImports(PNODE c)
 {
     register PNODE g;
     register PEDGE i;
@@ -143,8 +139,7 @@ PNODE c;
 /*                DURING GRAPH CONSTRUCTION.                              */
 /**************************************************************************/
 
-static void ClassifyGraphEdges( g )
-PNODE g;
+static void ClassifyGraphEdges(PNODE g)
 {
     register PNODE n;
     register PEDGE i;
@@ -261,7 +256,7 @@ PNODE g;
 /*          IS PROCESSED FROM THE LEAVES UP.                              */
 /**************************************************************************/
 
-void If2Classify()
+void If2Classify(void)
 {
     register PNODE f;
 

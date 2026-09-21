@@ -10,8 +10,7 @@
 #include "world.h"
 
 
-int IsDivByZero( n )
-PNODE n;
+int IsDivByZero(PNODE n)
 {
   if ( n->type != IFDiv )
     return( FALSE );

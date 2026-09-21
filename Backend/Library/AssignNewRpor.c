@@ -18,8 +18,7 @@
 /*          THE COMPOUND NODE TO WHICH g BELONGS.                         */
 /**************************************************************************/
 
-void AssignNewRports( g )
-PNODE g;
+void AssignNewRports(PNODE g)
 {
   register PEDGE i;
   register int   p = 1;

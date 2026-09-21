@@ -16,9 +16,7 @@
 /* PURPOSE: MAKE A COMPOUND NODE AND ADD IT TO THE NODE LIST.             */
 /**************************************************************************/
 
-void MonoMakeCompound( type, alst )
-int   type;
-char *alst;
+void MonoMakeCompound(int type, char *alst)
 {
   register PNODE n;
 

@@ -56,8 +56,7 @@
 /* PURPOSE: RETURN COMPONENT COPY FUNCTION NAME FOR ARRAY i.              */
 /**************************************************************************/
 
-char *GetCopyFunction( i )
-PINFO i;
+char *GetCopyFunction(PINFO i)
 {
   static char buf[100];                      /* COPY FUNCTION NAME BUFFER */
 
@@ -136,8 +135,7 @@ PINFO i;
 /* PURPOSE: RETURN COMPONENT READ FUNCTION NAME FOR ARRAY INFO CODE.      */
 /**************************************************************************/
 
-char *GetReadFunction( code )
-  int code;
+char *GetReadFunction(int code)
 {
   static char buf[100];                      /* COPY FUNCTION NAME BUFFER */
 
@@ -203,8 +201,7 @@ char *GetReadFunction( code )
 /* PURPOSE: RETURN COMPONENT WRITE FUNCTION NAME FOR ARRAY INFO CODE.     */
 /**************************************************************************/
 
-char *GetWriteFunction( code )
-  int code;
+char *GetWriteFunction(int code)
 {
   static char buf[100];                      /* COPY FUNCTION NAME BUFFER */
 
@@ -267,8 +264,7 @@ char *GetWriteFunction( code )
 /*          TYPE OF i IS ASSUMED TO BE UNION, RECORD, OR ARRAY.           */
 /**************************************************************************/
 
-char *GetIncRefCountName( i )
-PINFO i;
+char *GetIncRefCountName(PINFO i)
 {
   switch ( i->type ) {
     case IF_RECORD:
@@ -291,8 +287,7 @@ PINFO i;
 /*          TYPE OF i IS ASSUMED TO BE UNION, RECORD, OR ARRAY.           */
 /**************************************************************************/
 
-char *GetSetRefCountName( i )
-PINFO i;
+char *GetSetRefCountName(PINFO i)
 {
   switch ( i->type ) {
     case IF_RECORD:

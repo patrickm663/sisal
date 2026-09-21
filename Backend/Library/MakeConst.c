@@ -18,11 +18,7 @@
 /*          IMPORT LIST IN label ORDER.                                   */
 /**************************************************************************/
 
-void MakeConst( dnode, iport, label, CoNsT )
-int    dnode;
-int    iport;
-int    label;
-char  *CoNsT;
+void MakeConst(int dnode, int iport, int label, char *CoNsT)
 {
   register PEDGE c;
   register PNODE dst;

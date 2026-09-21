@@ -16,8 +16,7 @@
 /* PURPOSE: BUILD AND RETURN THE ASCII REPRESENTATION OF INTEGER val.     */
 /**************************************************************************/
 
-char *IntToAscii( val )
-int val;
+char *IntToAscii(int val)
 {
   char buf[BUFFER_SIZE];
 

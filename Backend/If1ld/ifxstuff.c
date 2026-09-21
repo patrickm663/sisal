@@ -36,21 +36,18 @@ int CheckForBadEdges    = FALSE;  /* Turn edge checking on/off */
   (x)->funct = ( pragmas.funct )?(pragmas.funct):sfunct;        \
 }
 
-void TypeAssignPragmas(i)
-     PINFO      i;
+void TypeAssignPragmas(PINFO i)
 {
   DoAssignPragmas(i);
 }
-void NodeAssignPragmas(n)
-     PNODE      n;
+void NodeAssignPragmas(PNODE n)
 {
   DoAssignPragmas(n);
   if (n->type==IFXGraph && IsReductionInterface(n->CoNsT)) {
       n->mark = 'd';
   }
 }
-void EdgeAssignPragmas(e)
-     PEDGE      e;
+void EdgeAssignPragmas(PEDGE e)
 {
   DoAssignPragmas(e);
 }
@@ -64,23 +61,19 @@ void EdgeAssignPragmas(e)
   (x)->print = TRUE; \
 }
 
-void PragInitPragmas(p)
-     PRAGS      *p;
+void PragInitPragmas(PRAGS *p)
 {
   DoInitPragmas(p);
 }
-void TypeInitPragmas(i)
-     PINFO      i;
+void TypeInitPragmas(PINFO i)
 {
   DoInitPragmas(i);
 }
-void NodeInitPragmas(n)
-     PNODE      n;
+void NodeInitPragmas(PNODE n)
 {
   DoInitPragmas(n);
 }
-void EdgeInitPragmas(e)
-     PEDGE      e;
+void EdgeInitPragmas(PEDGE e)
 {
   DoInitPragmas(e);
 }

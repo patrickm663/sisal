@@ -16,11 +16,7 @@
 /* PURPOSE: MAKE A CONSTANT EDGE AND ADD IT TO THE NODE LIST.             */
 /**************************************************************************/
 
-void MonoMakeConst( dnode, iport, label, CoNsT )
-int    dnode;
-int    iport;
-int    label;
-char  *CoNsT;
+void MonoMakeConst(int dnode, int iport, int label, char *CoNsT)
 {
   register PNODE n;
 

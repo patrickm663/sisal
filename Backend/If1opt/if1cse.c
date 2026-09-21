@@ -41,8 +41,7 @@ static PNODE ntails[IF1SimpleNodes];    /* SIMPLE-NODE LIST TAIL POINTERS */
 /*          GRAPH g TO ELIMINATE UNNECESSARY ARRAY CONSTRUCTIONS.         */
 /**************************************************************************/
 
-static void StripReturnNodes( g )
-PNODE g;
+static void StripReturnNodes(PNODE g)
 {
   register PNODE f1;
   register PNODE f2;
@@ -254,8 +253,7 @@ MoveOn:;
 /* PURPOSE: MOVE SUBGRAPH IMPORT FANOUT OUTSIDE SELECT NODE s.            */
 /**************************************************************************/
 
-static void MergeSelectExports( s )
-PNODE s;
+static void MergeSelectExports(PNODE s)
 {
   register PEDGE ii1;
   register PEDGE ii2;
@@ -307,10 +305,7 @@ PNODE s;
 /*          THE VALUE DEFINED BY n MODIFIED BY v0.                        */
 /**************************************************************************/
 
-static int IsDisjoint( e2, n, v0 )
-PEDGE e2;
-PNODE n;
-int   v0;
+static int IsDisjoint(PEDGE e2, PNODE n, int v0)
 {
   register int   v1;
   register int   v2;
@@ -375,8 +370,7 @@ int   v0;
 /*          THIS OPENS MORE OPPORTUNITIES FOR LATER OPTIMIZATION.         */
 /**************************************************************************/
 
-static void OpenArrayReferences( g )
-PNODE g;
+static void OpenArrayReferences(PNODE g)
 {
   register PNODE n;
   register PNODE nn;
@@ -497,8 +491,7 @@ DoIt:
 /*          ADJUST ALL EXPORTS OF THE LOOP NODE FOR WHICH g BELONGS.      */
 /**************************************************************************/
 
-static void CombineRports( g )
-PNODE g;
+static void CombineRports(PNODE g)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -523,8 +516,7 @@ PNODE g;
 /*          AND ADJUST ALL REFERENCES.                                    */
 /**************************************************************************/
 
-static void CombineMports( f )
-PNODE f;
+static void CombineMports(PNODE f)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -551,8 +543,7 @@ PNODE f;
 /*          AND ADJUST ALL REFERENCES.                                    */
 /**************************************************************************/
 
-static void CombineTports( f )
-PNODE f;
+static void CombineTports(PNODE f)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -577,8 +568,7 @@ PNODE f;
 /*          COPYING.                                                      */
 /**************************************************************************/
 
-static int WillIntroduceCopying( n )
-PNODE n;
+static int WillIntroduceCopying(PNODE n)
 {
   switch ( n->type ) {
     case IFAGather:
@@ -609,8 +599,7 @@ PNODE n;
 /* PURPOSE: INITIALIZE THE NODE TAILS TABLE USED TO QUICKEN CSE SEARCHES. */
 /**************************************************************************/
 
-static void InitializeNodeTails( g )
-PNODE g;
+static void InitializeNodeTails(PNODE g)
 {
   register int i,j;
   register PNODE n;
@@ -648,8 +637,7 @@ PNODE g;
 /*          NODES ARE REMOVED---PRESERVING THE DATAFLOW ORDERING.         */
 /**************************************************************************/
 
-static void CombineNodes( n1 )
-PNODE n1;
+static void CombineNodes(PNODE n1)
 {
     register PNODE n2;
     register PNODE sn;
@@ -705,8 +693,7 @@ PNODE n1;
 /*          ARE REMOVED.                                                  */
 /**************************************************************************/
 
-static void RemoveCses( g )
-PNODE g;
+static void RemoveCses(PNODE g)
 {
   register PNODE n;
   register PEDGE i;
@@ -791,7 +778,7 @@ PNODE g;
 /* PURPOSE: PRINT INFORMATION GATHERED DURING CSE TO stderr.              */
 /**************************************************************************/
 
-void WriteCseInfo()
+void WriteCseInfo(void)
 {
     FPRINTF( infoptr, "\n **** COMMON SUBEXPRESSION ELIMINATION\n\n" );
 
@@ -814,9 +801,7 @@ void WriteCseInfo()
 /*          IS TRUE. STRIP RETURN NODES IF strip IS TRUE.                 */
 /**************************************************************************/
 
-void If1Cse( cse, strip )
-     int cse;
-     int strip;
+void If1Cse(int cse, int strip)
 {
   register PNODE f;
 

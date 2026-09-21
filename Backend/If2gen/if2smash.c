@@ -26,8 +26,7 @@
 /*          FIRST MEMBER OF EACH EQUIVALENCE CLASS.                       */
 /**************************************************************************/
 
-static void AdjustInfoReferences( g )
-PNODE g;
+static void AdjustInfoReferences(PNODE g)
 {
   register PNODE sg;
   register PNODE n;
@@ -62,7 +61,7 @@ PNODE g;
 /*          ACCORDINGLY.                                                  */
 /**************************************************************************/
 
-void GenSmashTypes()
+void GenSmashTypes(void)
 {
     register int   chgd = TRUE;
     register int   c;

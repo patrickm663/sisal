@@ -16,9 +16,7 @@
 /* PURPOSE: RETURN TRUE IF GRAPH g CALLS FUNCTION who.                    */
 /**************************************************************************/
 
-int IsCaller( g, who )
-PNODE  g;
-char  *who;
+int IsCaller(PNODE g, char *who)
 {
   register PNODE  n;
   register PNODE  sg;

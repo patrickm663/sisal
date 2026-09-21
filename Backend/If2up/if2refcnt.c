@@ -25,9 +25,7 @@
 /* PURPOSE: ASSIGN PRAGMA pm=FANOUT+v TO THE AGGREGATE EXPORTS OF NODE n. */
 /**************************************************************************/
 
-static void AssignPMPragmas( n, v )
-PNODE n;
-int   v;
+static void AssignPMPragmas(PNODE n, int v)
 {
     register PEDGE e;
 
@@ -46,9 +44,7 @@ int   v;
 /* PURPOSE: ASSIGN PRAGMA cm=v TO ALL AGGREGATE IMPORTS OF NODE n.        */
 /**************************************************************************/
 
-void AssignCMPragmas( n, v )
-PNODE n;
-int   v;
+void AssignCMPragmas(PNODE n, int v)
 {
     register PEDGE i;
 
@@ -67,8 +63,7 @@ int   v;
 /* PURPOSE: ASSIGN PRAGMA sr=FANOUT TO ALL AGGREGATE EXPORTS OF NODE n.   */
 /**************************************************************************/
 
-static void AssignSRPragmas( n )
-PNODE n;
+static void AssignSRPragmas(PNODE n)
 {
     register PEDGE e;
 
@@ -147,8 +142,7 @@ PNODE n;
 /*                     ---->    cm=-1 (1..R)RETU(1..M)  pm=FANOUT   ----> */
 /**************************************************************************/
 
-static void AssignReferenceCounts( g )
-PNODE g;
+static void AssignReferenceCounts(PNODE g)
 {
     register PNODE n;
     register PEDGE i;
@@ -289,7 +283,7 @@ PNODE g;
 /* PURPOSE: ASSIGN DEFAULT REFERENCE COUNT PRAGMAS TO ALL FUNCTION GRAPHS.*/
 /**************************************************************************/
 
-void If2ReferenceCount()
+void If2ReferenceCount(void)
 {
     register PNODE f;
 

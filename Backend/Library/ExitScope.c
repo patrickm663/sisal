@@ -20,7 +20,7 @@
 /*          (THE FUNCTIONS).                                              */
 /**************************************************************************/
 
-void ExitScope()
+void ExitScope(void)
 {
   PopNodeList();
 }

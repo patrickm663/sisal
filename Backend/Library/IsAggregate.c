@@ -17,8 +17,7 @@
 /*          UNION, RECORD, ARRAY, STREAM, OR MULTIPLE THERE OF.           */
 /**************************************************************************/
 
-int IsAggregate( i )
-PINFO i;
+int IsAggregate(PINFO i)
 {
   if ( IsMultiple( i ) )
     i = i->A_ELEM;

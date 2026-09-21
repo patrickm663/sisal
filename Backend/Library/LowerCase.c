@@ -18,10 +18,7 @@
 /*          underr ARE TRUE RESPECTIVELY.                                 */
 /**************************************************************************/
 
-char *LowerCase( n, underl, underr )
-char *n;
-int   underl;
-int   underr;
+char *LowerCase(char *n, int underl, int underr)
 {
   register char *p;
   char  buf[100];

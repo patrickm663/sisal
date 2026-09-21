@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN THE nTH GRAPH IN THE GRAPH LIST ADDRESSED BY glstop.   */
 /**************************************************************************/
 
-PNODE FindGraph( n )
-int n;
+PNODE FindGraph(int n)
 {
   register PNODE g;
 

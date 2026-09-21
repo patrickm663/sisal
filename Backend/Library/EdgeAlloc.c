@@ -16,11 +16,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN AN EDGE.                     */
 /**************************************************************************/
 
-PEDGE EdgeAlloc( src, eport, dst, iport )
-PNODE src;
-int   eport;
-PNODE dst;
-int   iport;
+PEDGE EdgeAlloc(PNODE src, int eport, PNODE dst, int iport)
 {
   register PEDGE   e;
   register PBBLOCK b;

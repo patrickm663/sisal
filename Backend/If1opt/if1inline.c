@@ -34,8 +34,7 @@ int noincnt = -1;                             /* FUNCTION CALL LIST INDEX */
 char *noin[500];                                    /* FUNCTION CALL LIST */
 
 
-static int GetGraphSize( g )
-PNODE g;
+static int GetGraphSize(PNODE g)
 {
   register PNODE sg;
   register int   size;
@@ -62,8 +61,7 @@ PNODE g;
 /*          FUNCTION nm. IF NOT FOUND, NULL IS RETURNED.                  */
 /**************************************************************************/
 
-static PCALL OptFindCallee( nm )
-char *nm;
+static PCALL OptFindCallee(char *nm)
 {
     register PCALL c;
 
@@ -84,9 +82,7 @@ char *nm;
 /*          CALLEE'S CALL GRAPH TRUNK NODE IS INCREMENTED.                */
 /**************************************************************************/
 
-static void OptAddCalleeReferences( c, g )
-PCALL c;
-PNODE g;
+static void OptAddCalleeReferences(PCALL c, PNODE g)
 {
     register PNODE n;
     register PCALL r;
@@ -131,7 +127,7 @@ PNODE g;
 /*          ARE CONSTRUCTED.                                              */
 /**************************************************************************/
 
-static void OptMakeCallGraph()
+static void OptMakeCallGraph(void)
 {
     register PNODE f;
     register PCALL c;
@@ -166,7 +162,7 @@ static void OptMakeCallGraph()
 /*          OR PART OF RECURSIVE CYLCES THAT WERE BROKEN.                 */
 /**************************************************************************/
 
-static void ReadInlineRequests()
+static void ReadInlineRequests(void)
 {
     register int   x;
     register PCALL c;
@@ -215,8 +211,7 @@ static void ReadInlineRequests()
 /*          IF c HAS THE SAME COLOR AS color THEN IT CAN NOT BE INLINED.  */
 /**************************************************************************/
 
-static void OptBreakCycles( c )
-PCALL c;
+static void OptBreakCycles(PCALL c)
 {
     register PCALL r;
 
@@ -247,9 +242,7 @@ PCALL c;
 /*          DESTROYED (INCLUDING c).                                      */
 /**************************************************************************/
 
-void SpliceInGraph( g, c )
-PNODE g;
-PNODE c;
+void SpliceInGraph(PNODE g, PNODE c)
 {
     register PEDGE e;
     register PEDGE i;
@@ -327,8 +320,7 @@ PNODE c;
 /*          REMOVED FROM THE IF1 FUNCTION GRAPH LIST.                     */
 /**************************************************************************/
 
-static void ExpandCalls( c )
-PCALL c;
+static void ExpandCalls(PCALL c)
 {
     register PCALL r;
     register int   size;
@@ -392,7 +384,7 @@ TheEnd:
 /* PURPOSE: PRINT INFORMATION GATHERED DURING GRAPH EXPANSION TO stderr.  */
 /**************************************************************************/
 
-static void WriteInlineInfo()
+static void WriteInlineInfo(void)
 {
     register PCALL c;
     register PCALL r;
@@ -443,7 +435,7 @@ static void WriteInlineInfo()
 /*          QUERIED FOR FUNCTIONS TO INLINE.                              */
 /**************************************************************************/
 
-void If1Inline()
+void If1Inline(void)
 {
     register PNODE f;
     register PCALL c;

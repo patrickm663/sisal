@@ -73,8 +73,7 @@
 /*          RESIDE AND LEAVE IN ITS PLACE A TRUE NoOp NODE.               */
 /**************************************************************************/
 
-static void TryAndHoistNoOp( n )
-PNODE n;
+static void TryAndHoistNoOp(PNODE n)
 {
   register PEDGE li;
   register PEDGE ii;
@@ -199,7 +198,7 @@ PNODE n;
 /*          PRAGMAS TO 0.                                                 */
 /**************************************************************************/
 
-void CleanNoOpImports()
+void CleanNoOpImports(void)
 {
     register PNODE n;
 
@@ -219,10 +218,7 @@ void CleanNoOpImports()
 /*          TO EDGE ee.                                                   */
 /**************************************************************************/
 
-static void BindProducerPragmas( ee, pm, sr )
-PEDGE ee;
-int   pm;
-int   sr;
+static void BindProducerPragmas(PEDGE ee, int pm, int sr)
 {
     register PEDGE e;
 
@@ -242,9 +238,7 @@ int   sr;
 /*          SOURCE IS e->dst, ELSE RETURN FALSE.                          */
 /**************************************************************************/
 
-static int BeforeAWrite( e, wset )
-PEDGE e;
-PSET  wset;
+static int BeforeAWrite(PEDGE e, PSET wset)
 {
     register PEDGE ee;
     register int   w;
@@ -271,9 +265,7 @@ PSET  wset;
 /*          AND ITS SCOPE DEFINING GRAPH NODE IS ASSUMED TO EXIST.        */
 /**************************************************************************/
 
-static int BeforeAllWrites( e, wset )
-PEDGE e;
-PSET  wset;
+static int BeforeAllWrites(PEDGE e, PSET wset)
 {
     register PEDGE ee;
     register int   w;
@@ -300,8 +292,7 @@ PSET  wset;
 /*          DONE, WITH RESPECT TO e,  BY e->dst AND POSSIBLY e->src.      */
 /**************************************************************************/
 
-static void NeutralizeEdge( e )
-PEDGE e;
+static void NeutralizeEdge(PEDGE e)
 {
     register PEDGE ee;
 
@@ -344,9 +335,7 @@ PEDGE e;
 /*          RECYCLE THE EXPORT.  TRUE IS RETURNED IF THE CHANGE IS MADE.  */
 /**************************************************************************/
 
-static int ChangeToGenerator( g, eport )
-PNODE g;
-int   eport;
+static int ChangeToGenerator(PNODE g, int eport)
 {
     register PEDGE e;
     register int   chg = FALSE;
@@ -375,13 +364,12 @@ int   eport;
 /*          LIST FOR LATER MARK OPTIMIZATION. THE GROUND IS RETURNED.     */
 /**************************************************************************/
 
-static PEDGE AddGround( src, eport, dst, EdgeInfo, pm, sr )
-PNODE src;
-int   eport;
-PNODE dst;
-PINFO EdgeInfo;
-int   pm;
-int   sr;
+static PEDGE AddGround(PNODE src,
+                       int eport,
+                       PNODE dst,
+                       PINFO EdgeInfo,
+                       int pm,
+                       int sr)
 {
     register PEDGE e;
 
@@ -410,9 +398,7 @@ int   sr;
 /*          PORT VALUE eport.                                             */
 /**************************************************************************/
 
-static void DecrementPmValues( n, eport )
-PNODE n;
-int   eport;
+static void DecrementPmValues(PNODE n, int eport)
 {
     register PEDGE e;
 
@@ -429,9 +415,7 @@ int   eport;
 /*          THE DATA GROUND LIST FOR FUTURE OPTIMIZATION.                 */
 /**************************************************************************/
 
-static void NotRef( c, i )
-PNODE c;
-PEDGE i;
+static void NotRef(PNODE c, PEDGE i)
 {
     AppendToUtilityList( dghead, dgtail, i );
     AppendToUtilityList( dghead, dgtail, FindImport( c->L_BODY, i->iport ) );
@@ -446,9 +430,7 @@ PEDGE i;
 /*          EDGE i IS APPENDED TO THE DATA GROUND LIST.                   */
 /**************************************************************************/
 
-static void RefBodyOnly( c, i )
-PNODE c;
-PEDGE i;
+static void RefBodyOnly(PNODE c, PEDGE i)
 {
     register PEDGE ii;
 
@@ -473,9 +455,7 @@ PEDGE i;
 /*          CHANGED TO 0, ELSE i IS APPENDED TO THE DATA GROUND LIST.     */
 /**************************************************************************/
 
-static void RefBodyAndRet( c, i )
-PNODE c;
-PEDGE i;
+static void RefBodyAndRet(PNODE c, PEDGE i)
 {
     register PEDGE e;
     register PNODE n;
@@ -530,9 +510,7 @@ PEDGE i;
 /*          INTO A GENERATOR OF i.                                        */
 /**************************************************************************/
 
-static void RefRetOnly( c, i )
-PNODE c;
-PEDGE i;
+static void RefRetOnly(PNODE c, PEDGE i)
 {
     PEDGE ii;
 
@@ -599,7 +577,7 @@ PEDGE i;
 /*          TO 0.                                                         */
 /**************************************************************************/
 
-static void OptBoundaryReferenceCounts()
+static void OptBoundaryReferenceCounts(void)
 {
     register PNODE c;
     register PEDGE i;
@@ -807,7 +785,7 @@ static void OptBoundaryReferenceCounts()
 /*          WRITE SET IS EMPTY, THEN A DATA GROUND REFERENCE IS INSERTED. */
 /**************************************************************************/
 
-static void OptNodeReferenceCounts()
+static void OptNodeReferenceCounts(void)
 {
     register PSET  grset;
     register PSET  gwset;
@@ -867,7 +845,7 @@ static void OptNodeReferenceCounts()
 /*          ELIMINATED.                                                   */
 /**************************************************************************/
 
-void If2ReferenceCountOpt()
+void If2ReferenceCountOpt(void)
 {
     OptBoundaryReferenceCounts();
     OptNodeReferenceCounts();

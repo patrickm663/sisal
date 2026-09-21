@@ -16,8 +16,7 @@
 /* PURPOSE: PRINT AN ERROR MESSAGE TO stderr AND ABORT EXECUTION.         */
 /**************************************************************************/
 
-void Error1( msg1 )
-char *msg1;
+void Error1(char *msg1)
 {
   FPRINTF( stderr, "%s: E - %s\n", program, msg1 );
   Stop( ERROR );

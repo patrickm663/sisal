@@ -22,7 +22,7 @@
 /*          NOT SEEN, THE LINE IS A COMMENT TO BE DISCARDED BY THE CALLER.*/
 /**************************************************************************/
 
-void ReadStamp()
+void ReadStamp(void)
 {
   register char stamp;
   register int  kind;

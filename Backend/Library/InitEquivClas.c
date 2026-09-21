@@ -18,7 +18,7 @@
 /*          AVAILABLE SLOT IN THE EQUIVALENCE CLASS TABLE.                */
 /**************************************************************************/
 
-void InitEquivClasses()
+void InitEquivClasses(void)
 {
   register PINFO i;
   register int   c;

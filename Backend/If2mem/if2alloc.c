@@ -26,10 +26,7 @@ extern int agg;
 /* PURPOSE: ATTACH p'S SIZE EXPRESION exp TO p AT IMPORT PORT iport.      */
 /**************************************************************************/
 
-static void AttachSizeExpression( p, expr, iport )
-PNODE p;
-PEDGE expr;
-int   iport;
+static void AttachSizeExpression(PNODE p, PEDGE expr, int iport)
 {
   register PEDGE e;
 
@@ -52,9 +49,7 @@ int   iport;
 /*          RETURN IT.                                                    */
 /**************************************************************************/
 
-static PINFO MakeMultipleOrBufferInfo( type, aelem )
-int   type;
-PINFO aelem;
+static PINFO MakeMultipleOrBufferInfo(int type, PINFO aelem)
 {
     register PINFO i;
 
@@ -77,8 +72,7 @@ PINFO aelem;
 /*          RETURNED.                                                     */
 /**************************************************************************/
 
-static PEDGE ABuildReconstruction( e )
-PEDGE e;
+static PEDGE ABuildReconstruction(PEDGE e)
 {
     register PNODE pr;
     register PEDGE ee;
@@ -140,9 +134,7 @@ PEDGE e;
 /*          BY EDGE e USING NODE rpoint AS THE REFERENCE POINT.           */
 /**************************************************************************/
 
-static PEDGE AllocNewBuffer( rpoint, e )
-PNODE rpoint;
-PEDGE e;
+static PEDGE AllocNewBuffer(PNODE rpoint, PEDGE e)
 {
     register PEDGE ee;
     register PNODE pr;
@@ -207,8 +199,7 @@ PEDGE e;
 /*          ALLOCATED FOR p AND A CHILD AT-NODE SEARCH IS NOT PERFORMED.  */
 /**************************************************************************/
 
-static PEDGE GetBuffer( p )
-PNODE p;
+static PEDGE GetBuffer(PNODE p)
 {
     register PEDGE e;
     register PNODE n;
@@ -471,8 +462,7 @@ PNODE p;
 /*          TO THEIR USES WITHIN FUNCTION GRAPH f.                        */
 /**************************************************************************/
 
-void AllocIf2Nodes( f )
-PNODE f;
+void AllocIf2Nodes(PNODE f)
 {
     register PNODE p, n, nn, m;
     register PEDGE b, init;

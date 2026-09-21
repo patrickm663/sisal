@@ -16,9 +16,7 @@
 /* PURPOSE: RETURN THE ELAPSED TIME BETWEEN StartT AND StopT.     */
 /**************************************************************************/
 
-double ElapsedTime( StartT, StopT )
-struct timeval *StartT;
-struct timeval *StopT;
+double ElapsedTime(struct timeval *StartT, struct timeval *StopT)
 {
   double Seconds;
   double USeconds;              /* MICROSECONDS */

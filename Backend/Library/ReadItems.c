@@ -16,7 +16,7 @@ int    line   = 1;
 int    maxint = 1;
 PRAGS  pragmas;
 
-void ReadItems()
+void ReadItems(void)
 {
   token = ' ';
   line = 1;

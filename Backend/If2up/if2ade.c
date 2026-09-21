@@ -27,9 +27,7 @@
 /*          ERROR MESSAGE IS PRINTED.                                     */
 /**************************************************************************/
 
-static PNODE FindLGenerator( g, SearchColor )
-PNODE g;
-int   SearchColor;
+static PNODE FindLGenerator(PNODE g, int SearchColor)
 {
     register PEDGE i;
 
@@ -67,7 +65,7 @@ int   SearchColor;
 /*          ADE IS GIVEN A HIGH REMOVAL PRIORITY.                         */
 /**************************************************************************/
 
-static void OrderLPortGenerators()
+static void OrderLPortGenerators(void)
 {
     register PNODE c;
     register PNODE n;
@@ -133,8 +131,7 @@ static void OrderLPortGenerators()
 /*          HAVE EXECUTED, ELSE RETURN FALSE.                             */
 /**************************************************************************/
 
-static int CanExecute( n )
-PNODE n;
+static int CanExecute(PNODE n)
 {
     register PADE  a;
     register PEDGE i;
@@ -168,8 +165,7 @@ PNODE n;
 /*          EXECUTED.                                                     */
 /**************************************************************************/
 
-static void SortNodes( g )
-PNODE g;
+static void SortNodes(PNODE g)
 {
     register int   m;
     register PNODE ehead = NULL;                /* HAS EXECUTED LIST HEAD */
@@ -224,7 +220,7 @@ PNODE g;
 /*          SHOULD ALWAYS TAKE PRECEDENCE WHEN BREAKING ADE CYCLES.       */
 /**************************************************************************/
 
-void If2Ade()
+void If2Ade(void)
 {
     register PSET  s;
     register PEDGE r;

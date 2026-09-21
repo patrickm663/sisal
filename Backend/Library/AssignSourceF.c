@@ -17,8 +17,7 @@
 /*          N is UPDATED IN SITU AND ASSIGNED TO sfile.                   */
 /**************************************************************************/
 
-void AssignSourceFileName( n )
-char *n;
+void AssignSourceFileName(char *n)
 {
   register char *p,*nm;
   int           len;

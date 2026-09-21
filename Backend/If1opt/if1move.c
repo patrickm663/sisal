@@ -30,10 +30,7 @@
 /*          n SERVES AS THE ORIGIN OF THE SEARCH.                         */
 /**************************************************************************/
 
-void FindAndLinkToSource( n, d, alt )
-PNODE n;
-PEDGE d;
-PNODE alt;
+void FindAndLinkToSource(PNODE n, PEDGE d, PNODE alt)
 {
     register PEDGE i;
 
@@ -75,9 +72,7 @@ PNODE alt;
 /*          IN THE OLD EXPORT LIST.                                       */
 /**************************************************************************/
 
-void RemoveNode( n, g )
-PNODE n;
-PNODE g;
+void RemoveNode(PNODE n, PNODE g)
 {
              PEDGE export;
     register PEDGE e;
@@ -139,9 +134,7 @@ PNODE g;
 /*             NORMALIZATION).                                            */
 /**************************************************************************/
 
-void InsertNode( n1, n2 )
-PNODE n1;
-PNODE n2;
+void InsertNode(PNODE n1, PNODE n2)
 {
     register PEDGE i;
     register PEDGE si;

@@ -32,7 +32,7 @@ static int  tridiagonal_count   = 0;
 /* PURPOSE: WRITE VECTORIZATION FEEDBACK TO stderr.                       */
 /**************************************************************************/
 
-void WriteVectorInfo()
+void WriteVectorInfo(void)
 {
   FPRINTF( infoptr, "\n **** VECTOR OPTIMIZATIONS\n\n" );
   FPRINTF( infoptr, " First Minimum      conversions:  %d\n", first_min_count  );
@@ -78,8 +78,7 @@ void WriteVectorInfo()
 /**************************************************************************/
 
 
-static int IsFirstAbsMin( l )
-PNODE l;
+static int IsFirstAbsMin(PNODE l)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -273,8 +272,7 @@ PNODE l;
 }
 
 
-static int IsTri( l )
-PNODE l;
+static int IsTri(PNODE l)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -415,8 +413,7 @@ PNODE l;
 }
 
 
-static int IsFirstAbsMax( l )
-PNODE l;
+static int IsFirstAbsMax(PNODE l)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -610,8 +607,7 @@ PNODE l;
 }
 
 
-static int IsFirstMax( l )
-PNODE l;
+static int IsFirstMax(PNODE l)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -792,8 +788,7 @@ PNODE l;
   return( TRUE );
 }
 
-static int IsFirstSum( l )
-PNODE l;
+static int IsFirstSum(PNODE l)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -905,8 +900,7 @@ PNODE l;
 }
 
 
-static int IsFirstMin( l )
-PNODE l;
+static int IsFirstMin(PNODE l)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -1087,8 +1081,7 @@ PNODE l;
 }
 
 
-static void Vectorize( g )
-PNODE g;
+static void Vectorize(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1143,8 +1136,7 @@ PNODE g;
 /*          First Sum AND Tri-Diagonal Elimination.                        */
 /**************************************************************************/
 
-void If2Vectorize( useF )
-int useF;
+void If2Vectorize(int useF)
 {
   register PNODE f;
   
@@ -1171,7 +1163,7 @@ int useF;
 /*                           AN ALIAS.                                    */
 /**************************************************************************/
 
-void PrintNOVECTOR()
+void PrintNOVECTOR(void)
 {
   if ( fvc ) {
     if ( nltss )
@@ -1185,7 +1177,7 @@ void PrintNOVECTOR()
     FPRINTF( output, "/* _NOVECTOR_ */\n" );
 }
 
-void PrintVECTOR()
+void PrintVECTOR(void)
 {
   if ( fvc ) {
     if ( nltss )
@@ -1199,7 +1191,7 @@ void PrintVECTOR()
     FPRINTF( output, "/* _VECTOR_ */\n" );
 }
 
-void PrintASSOC()
+void PrintASSOC(void)
 {
   if ( fvc )
     FPRINTF( output, "/* _ASSOC_ */\n" );
@@ -1209,8 +1201,7 @@ void PrintASSOC()
     FPRINTF( output, "/* _ASSOC_ */\n" );
 }
 
-void PrintSAFE( nm )
-char *nm;
+void PrintSAFE(char *nm)
 {
   if ( fvc )
     FPRINTF( output, "/* _SAFE(%s) */\n", nm );

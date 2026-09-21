@@ -16,8 +16,7 @@
 
 #define MAX_BRECORD 4 /* MAXIMUM NUMBER OF FIELDS ALLOWED IN A BASIC RECORD */
 
-int IsABRecord( i )
-PINFO i;
+int IsABRecord(PINFO i)
 {
   register PINFO ii;
   register int   c;

@@ -46,9 +46,7 @@ int   cycle;
 
 /**************************************************************************/
 
-static void ParseCommandLine( argc, argv )
-int    argc;
-char **argv;
+static void ParseCommandLine(int argc, char **argv)
 {
     register char *c;
     register int   fmode = 0;
@@ -109,9 +107,7 @@ char **argv;
 /*          ARTIFICIAL DEPENDENCE EDGES.                                  */
 /**************************************************************************/
 
-int main( argc, argv )
-int    argc;
-char **argv;
+int main(int argc, char **argv)
 {
    input = stdin;
    output = stdout;

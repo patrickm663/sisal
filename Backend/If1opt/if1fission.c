@@ -34,11 +34,7 @@ static int rcnt  = 0;                   /* COUNT OF PUSHED RElement NODES */
 static int Trcnt  = 0;                   /* COUNT OF RElement NODES */
 
 
-static int FindElementSource( c, iport, e, idx )
-PNODE c;
-int   iport;
-PEDGE e;
-int idx;
+static int FindElementSource(PNODE c, int iport, PEDGE e, int idx)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -103,8 +99,7 @@ int idx;
 }
 
 
-static void ArrayFission( g )
-PNODE g;
+static void ArrayFission(PNODE g)
 {
     register PEDGE e;
     register PEDGE se;
@@ -216,10 +211,7 @@ PNODE g;
 /*          NEW K PORT NUMBER IS RETURNED TO THE CALLER.                  */
 /**************************************************************************/
 
-static int FindFieldSource( c, iport, e )
-PNODE c;
-int   iport;
-PEDGE e;
+static int FindFieldSource(PNODE c, int iport, PEDGE e)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -293,8 +285,7 @@ Start:
 }
 
 
-static void PushRElements( re )
-PNODE re;
+static void PushRElements(PNODE re)
 {
   register PEDGE e;
   register PNODE s;
@@ -401,8 +392,7 @@ PNODE re;
 /*          MULTIPLE RECORD ELEMENT DEREFERENCING IS NOT A PROBLEM.       */
 /**************************************************************************/
 
-static void RecordFission( g )
-PNODE g;
+static void RecordFission(PNODE g)
 {
     register PEDGE e;
     register PEDGE se;
@@ -521,7 +511,7 @@ Start:
 /* PURPOSE: PRINT INFORMATION GATHERED DURING RECORD FISSION TO stderr.   */
 /**************************************************************************/
 
-void WriteFissionInfo()
+void WriteFissionInfo(void)
 {
     FPRINTF( infoptr, "\n **** RECORD FISSION\n\n" );
     FPRINTF( infoptr, " Removed Field References:     %d of %d\n", fldcnt,Tfldcnt );
@@ -540,7 +530,7 @@ void WriteFissionInfo()
 /* PURPOSE: PERFORM RECORD AND ARRAY FISSION ON ALL FUNCTION GRAPHS.      */
 /**************************************************************************/
 
-void If1Fission()
+void If1Fission(void)
 {
     register PNODE f;
 

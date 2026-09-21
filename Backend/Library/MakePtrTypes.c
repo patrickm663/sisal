@@ -16,7 +16,7 @@
 /* PURPOSE: MAKE POINTER SYMBOL TABLE ENTRIES.                            */
 /**************************************************************************/
 
-void MakePtrTypes()
+void MakePtrTypes(void)
 {
   ptr_real = FindInfo( ++maxint, IF_PTR_REAL );
   ptr_real->tname = "float*";

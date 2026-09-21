@@ -93,10 +93,7 @@ static int syncs;           /* COUNT OF SYNCRONIZATION OPERATIONS          */
 /*          TASK'S TYPE. IF msg IS NULL, n'S SYMBOLIC NAME IS WRITTEN.    */
 /**************************************************************************/
 
-static void WriteTaskInfo( msg, n, indent )
-char *msg;
-PNODE n;
-int   indent;
+static void WriteTaskInfo(char *msg, PNODE n, int indent)
 {
     register    int     i;
     static      int     LoopCount = 0;
@@ -131,10 +128,7 @@ int   indent;
 /*          THE APPROPRIATE COUNTERS.                                     */
 /**************************************************************************/
 
-static void WriteMap( g, indent, plvl )
-PNODE g;
-int   indent;
-int   plvl;
+static void WriteMap(PNODE g, int indent, int plvl)
 {
     register PNODE n;
 
@@ -200,7 +194,7 @@ int   plvl;
 /* PURPOSE: PRINT A PARTITION MAP OF ALL FUNCTIONS TO stderr.             */
 /**************************************************************************/
 
-void PartIf2Count()
+void PartIf2Count(void)
 {
     register PNODE f;
 

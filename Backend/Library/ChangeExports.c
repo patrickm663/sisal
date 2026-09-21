@@ -17,10 +17,7 @@
 /*          eport INTO CONSTANT c.                                        */
 /**************************************************************************/
 
-void ChangeExportsToConst( n, eport, c )
-PNODE n;
-int   eport;
-PEDGE c;
+void ChangeExportsToConst(PNODE n, int eport, PEDGE c)
 {
   register PEDGE e;
   register PEDGE se;

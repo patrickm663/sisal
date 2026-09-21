@@ -17,8 +17,7 @@
 /*          THEN MAKE THE CONSTANT THE SECOND IMPORT.                     */
 /**************************************************************************/
 
-void NormalizeNode( n )
-PNODE n;
+void NormalizeNode(PNODE n)
 {
   switch ( n->type ) {
    case IFPlus:

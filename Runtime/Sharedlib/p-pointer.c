@@ -13,9 +13,7 @@
 #include "sisalrt.h"
 
 
-void FreePointerSwapFramework( BPtr, FramePtr )
-POINTER BPtr;
-POINTER FramePtr;
+void FreePointerSwapFramework(POINTER BPtr, POINTER FramePtr)
 {
   register PSBUFFERP Buffer;
 
@@ -29,10 +27,7 @@ POINTER FramePtr;
 }
 
 
-static void FreeStorage( Level, Info, FramePtr )
-int      Level;
-int     *Info;
-POINTER  FramePtr;
+static void FreeStorage(int Level, int *Info, POINTER FramePtr)
 {
   register ARRAYP Array;
   register int    Index;
@@ -55,9 +50,7 @@ POINTER  FramePtr;
 }
 
 
-void FreePointerSwapStorage( BPtr, FramePtr )
-POINTER BPtr;
-POINTER FramePtr;
+void FreePointerSwapStorage(POINTER BPtr, POINTER FramePtr)
 {
   register PSBUFFERP Buffer;
 
@@ -76,13 +69,12 @@ POINTER FramePtr;
 }
 
 
-static void InitializeStorage( Level, Info, ArrayInfo, CompSize, Base, Next )
-int       Level;
-int      *Info;
-int      *ArrayInfo;
-int       CompSize;
-POINTER  *Base;
-POINTER **Next;
+static void InitializeStorage(int Level,
+                              int *Info,
+                              int *ArrayInfo,
+                              int CompSize,
+                              POINTER *Base,
+                              POINTER **Next)
 {
   register ARRAYP Array;
   register PHYSP  Phys;
@@ -129,9 +121,7 @@ POINTER **Next;
 }
 
 
-POINTER AllocPointerSwapStorage( BPtr, CompSize )
-POINTER BPtr;
-int     CompSize;
+POINTER AllocPointerSwapStorage(POINTER BPtr, int CompSize)
 {
   register PSBUFFERP  Buffer;
   register ARRAYP     Array;
@@ -186,15 +176,13 @@ int     CompSize;
 
 
 /* SKI */
-static void SkiInitializeStorage( Nv, Level, Info, ArrayInfo, 
-                                  CompSize, Base, Next )
-int       Nv;
-int       Level;
-int      *Info;
-int      *ArrayInfo;
-int       CompSize;
-POINTER  *Base;
-POINTER **Next;
+static void SkiInitializeStorage(int Nv,
+                                 int Level,
+                                 int *Info,
+                                 int *ArrayInfo,
+                                 int CompSize,
+                                 POINTER *Base,
+                                 POINTER **Next)
 {
   register ARRAYP Array;
   register PHYSP  Phys;
@@ -243,10 +231,7 @@ POINTER **Next;
 }
 
 
-POINTER SkiAllocPointerSwapStorage( Nv, BPtr, CompSize )
-int Nv;
-POINTER BPtr;
-int     CompSize;
+POINTER SkiAllocPointerSwapStorage(int Nv, POINTER BPtr, int CompSize)
 {
   register PSBUFFERP  Buffer;
   register ARRAYP     Array;

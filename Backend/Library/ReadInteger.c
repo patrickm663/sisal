@@ -20,7 +20,7 @@
 /*          KEPT IN maxint.                                               */
 /**************************************************************************/
 
-int ReadInteger()
+int ReadInteger(void)
 {
   register int val = 0;
 

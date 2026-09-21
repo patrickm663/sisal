@@ -20,13 +20,12 @@
 int TaskInfo[MAX_PROCS][3];
 LOCK_TYPE TheFirstLock;
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
   free( SharedBase );
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -38,15 +37,14 @@ int NumBytes;
   SharedMemory = ALIGN(char*,SharedMemory);
 }
 
-int ProcessorId()
+int ProcessorId(void)
 {
   register int pID;
   GETPROCID(pID);
   return( pID );
 }
 
-static void CrayWorker( ProcId )
-int ProcId;
+static void CrayWorker(int ProcId)
 {
 #if defined(DIST_DSA)
         if(ProcId != 0)
@@ -56,7 +54,7 @@ int ProcId;
   LeaveWorker();
 }
 
-void StartWorkers()
+void StartWorkers(void)
 {
   register int NumProcs = NumWorkers;
   register int i;
@@ -74,7 +72,7 @@ void StartWorkers()
   EnterWorker( TaskInfo[0][2] );
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   register int i;
 
@@ -85,7 +83,7 @@ void StopWorkers()
     TSKWAIT( TaskInfo[i] );
 }
 
-void AbortParallel()
+void AbortParallel(void)
 {
   ERREXIT();
 }

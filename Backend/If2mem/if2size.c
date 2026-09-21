@@ -31,8 +31,7 @@ int paddh = 0;                              /* COUNT OF AAddH PREFERENCES */
 /* PURPOSE: RETURN TRUE IF IFAAddH IS PREFERRED OVER IFAAddHAT.           */
 /**************************************************************************/
 
-static int PreferAAddH( n )
-PNODE n;
+static int PreferAAddH(PNODE n)
 {
   register PEDGE e;
 
@@ -81,11 +80,7 @@ PNODE n;
 /*          EXPORTS OF NODE n.                                            */
 /**************************************************************************/
 
-static void BindExportSizes( n, lsize, csize, esize )
-PNODE n;
-int   lsize;
-int   csize;
-PNODE esize;
+static void BindExportSizes(PNODE n, int lsize, int csize, PNODE esize)
 {
     register PEDGE e;
 
@@ -107,8 +102,7 @@ PNODE esize;
 /*          PROPAGATED TO LOOPS.                                          */
 /**************************************************************************/
 
-static void PropagateImportSizes( n1, n2 )
-PNODE n1, n2 ;
+static void PropagateImportSizes(PNODE n1, PNODE n2)
 {
     register PEDGE  i;
     register PEDGE  e;
@@ -141,10 +135,7 @@ PNODE n1, n2 ;
 
 
 /* NEW CANN 2/92 */
-static int FirstIterationSkipped( l, n, mult )
-PNODE l;
-PNODE n;
-PEDGE mult;
+static int FirstIterationSkipped(PNODE l, PNODE n, PEDGE mult)
 {
   register PEDGE i;
   register PEDGE ii;
@@ -222,10 +213,7 @@ PEDGE mult;
 /*          ELSE FALSE IS RETURNED.                                       */
 /**************************************************************************/
 
-static int IsGatherFinalOrReduceOk( l, n, mult )
-PNODE l;
-PNODE n;
-PEDGE mult;
+static int IsGatherFinalOrReduceOk(PNODE l, PNODE n, PEDGE mult)
 {
     if ( IsSizeUnknown( l ) )
         return( FALSE );
@@ -261,10 +249,7 @@ PEDGE mult;
 /*          ORDERINGS.  THE max NODE IS RETURNED.                         */
 /**************************************************************************/
 
-static PNODE HighMinusLowPlusOne( rpoint, lo, hi )
-PNODE rpoint;
-PEDGE lo;
-PEDGE hi;
+static PNODE HighMinusLowPlusOne(PNODE rpoint, PEDGE lo, PEDGE hi)
 {
     register PNODE pr;
     register PNODE n;
@@ -373,8 +358,7 @@ PEDGE hi;
 /*          APPEATS AS NOT( x < fve ) IN IF1.                             */
 /**************************************************************************/
 
-static void BuildLoopIterExpr( l )
-PNODE l;
+static void BuildLoopIterExpr(PNODE l)
 {
     register PNODE  n;
     register PNODE  adj;
@@ -627,8 +611,7 @@ PNODE l;
 /*          MIGHT BE A CONSTANT:  for i in array [1: 1 2 3].              */
 /**************************************************************************/
 
-static void BuildForallIterExpr( n )
-PNODE n;
+static void BuildForallIterExpr(PNODE n)
 {
     register PNODE c ;
     register PEDGE lo, hi ;
@@ -699,9 +682,7 @@ PNODE n;
 /*          SUBGRAPH MUST BE BY FinalValue NODE n.                        */
 /**************************************************************************/
 
-static int IsMonotonicConstruction( l, n )
-PNODE l;
-PNODE n;
+static int IsMonotonicConstruction(PNODE l, PNODE n)
 {
     register PEDGE lb;
     register PEDGE i1;
@@ -817,8 +798,7 @@ PNODE n;
 /*          ARRAY.                                                        */
 /**************************************************************************/
 
-static void BuildAddLHSize( n )
-PNODE n;
+static void BuildAddLHSize(PNODE n)
 {
     register PNODE plus;
     register PEDGE one;
@@ -861,8 +841,7 @@ PNODE n;
 /*          ARE KNOWN.                                                    */
 /**************************************************************************/
 
-static void BuildACatSize( n )
-PNODE n ;
+static void BuildACatSize(PNODE n)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -941,8 +920,7 @@ PNODE n ;
 /*          THE EXPORT IS AN ARRAY.                                       */
 /**************************************************************************/
 
-static void BuildABuildSize( n )
-PNODE n;
+static void BuildABuildSize(PNODE n)
 {
     register PEDGE i;
     register int   numb;
@@ -966,9 +944,7 @@ PNODE n;
 /*          ITERATIONS. NOTE l CAN BE A LoopA, LoopB, OR FORALL NODE.     */
 /**************************************************************************/
 
-static void BuildAGatherSize( l, n )
-PNODE l ;
-PNODE n ;
+static void BuildAGatherSize(PNODE l, PNODE n)
 {
     register PNODE plus;
     register PEDGE one;
@@ -1032,8 +1008,7 @@ PNODE n ;
 /*          IN THE NODE LIST CONTAINING LOOP l.                           */
 /**************************************************************************/
 
-static void BuildFinalValueSize( l, n )
-PNODE l, n ;
+static void BuildFinalValueSize(PNODE l, PNODE n)
 {
     register PNODE pr;
     register PNODE times, plus ;
@@ -1102,10 +1077,7 @@ PNODE l, n ;
 /*          NODE IS RETURNED.                                             */
 /**************************************************************************/
 
-static PNODE ExprTimesConst( rpoint, expr, CoNsT )
-PNODE rpoint;
-PNODE expr;
-int   CoNsT;
+static PNODE ExprTimesConst(PNODE rpoint, PNODE expr, int CoNsT)
 {
     register PNODE times;
     register PEDGE ce;
@@ -1144,10 +1116,7 @@ int   CoNsT;
 /*          FORALL NODE.                                                  */
 /**************************************************************************/
 
-static void BuildRedCatSize( l, mult, n )
-PNODE l;
-PEDGE mult;
-PNODE n;
+static void BuildRedCatSize(PNODE l, PEDGE mult, PNODE n)
 {
     register PNODE times;
     register PNODE pr;
@@ -1190,8 +1159,7 @@ PNODE n;
 /*          NODE.                                                         */
 /**************************************************************************/
 
-static void AssignExportSizes( n ) 
-PNODE  n ;
+static void AssignExportSizes(PNODE n)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -1232,8 +1200,7 @@ PNODE  n ;
 /*          NODES ARE CONSIDERED CANDIDATES FOR CONVERSION.               */
 /**************************************************************************/
 
-void AssignSizes( g )
-PNODE g;
+void AssignSizes(PNODE g)
 {
     register PNODE nd;
     register PNODE sg;

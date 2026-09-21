@@ -17,8 +17,7 @@
 /*          ARITHMETIC CONSTANTS (GIVEN sgnok IS TRUE).                   */
 /**************************************************************************/
 
-void  AssignNewLabels( g )
-register PNODE g;
+void  AssignNewLabels(register PNODE g)
 {
   register int   lab;
   register PNODE n,nn;

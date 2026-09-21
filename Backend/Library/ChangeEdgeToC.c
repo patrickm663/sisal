@@ -17,9 +17,7 @@
 /*          ITS SOURCE NODE'S EXPORT LIST.                                */
 /**************************************************************************/
 
-void ChangeEdgeToConst( d, c )
-PEDGE d;
-PEDGE c;
+void ChangeEdgeToConst(PEDGE d, PEDGE c)
 {
   UnlinkExport( d );
   ChangeToConst( d, c );

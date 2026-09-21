@@ -17,9 +17,7 @@
 /**************************************************************************/
 
 
-void LinkExportToEnd( src, e )
-PNODE src;
-PEDGE e;
+void LinkExportToEnd(PNODE src, PEDGE e)
 {
   register PEDGE ee;
 

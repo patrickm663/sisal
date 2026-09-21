@@ -21,8 +21,7 @@
 /*          FOUND, AN ERROR MESSAGE IS PRINTED.                           */
 /**************************************************************************/
 
-PNODE FindFunction( nm )
-char *nm;
+PNODE FindFunction(char *nm)
 {
   register PNODE f;
 

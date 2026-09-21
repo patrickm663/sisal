@@ -19,9 +19,7 @@
 /*          TYPE.                                                         */
 /**************************************************************************/
 
-void MonoWriteConst( c, t )
-char  *c;
-PINFO  t;
+void MonoWriteConst(char *c, PINFO t)
 {
   if ( c == NULL ) {
     FPRINTF( output, " \"%s\"", ERROR_CONSTANT );

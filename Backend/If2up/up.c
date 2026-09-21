@@ -74,9 +74,7 @@ static char *ofile = NULL;   /* OUTPUT FILE NAME                          */
 /*              -^      -> SDBX mode                                      */
 /**************************************************************************/
 
-static void ParseCommandLine( argc, argv )
-int    argc;
-char **argv;
+static void ParseCommandLine(int argc, char **argv)
 {
     register char *c;
     register int   fmode = 0;
@@ -189,9 +187,7 @@ char **argv;
 /*          THE 'U' STAMP IS APPENDED TO THE RESULTING OUTPUT.            */
 /**************************************************************************/
 
-int main( argc, argv )
-int    argc;
-char **argv;
+int main(int argc, char **argv)
 {
     register FILE *fd;
     int i3 = I_Info3;

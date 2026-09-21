@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN TRUE IF nm IS A C INTERFACE FUNCTION.                  */
 /**************************************************************************/
 
-int IsCInterface( nm )
-char *nm;
+int IsCInterface(char *nm)
 {
   register char *p;
   register int   i;

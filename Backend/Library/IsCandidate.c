@@ -17,8 +17,7 @@
 /*          NOT DEAD (HAVING NO EXPORTS).                                 */
 /**************************************************************************/
 
-int IsCandidate( n )
-PNODE n;
+int IsCandidate(PNODE n)
 {
   if ( n->exp == NULL )
     return( FALSE );

@@ -35,9 +35,7 @@ static int Tiscnt = 0;                    /* COUNT OF SELECT EXPORTS */
 DYNDECLARE(fuseinfo, fusebuf, fuselen, fusecount, char, 2000);
 
 
-static void SummarizeForall( f, lvl )
-PNODE f;
-int lvl;
+static void SummarizeForall(PNODE f, int lvl)
 {
   register int   fi = 0;
   register int   fe = 0;
@@ -67,9 +65,7 @@ int lvl;
     lvl, fi,fe, bi,be, ri,re, bn,rn );
 }
 
-static void DumpThem( g, lvl )
-PNODE g;
-int lvl;
+static void DumpThem(PNODE g, int lvl)
 {
   register PNODE n;
   register PNODE sg;
@@ -92,8 +88,7 @@ int lvl;
 /*          THEY ARE UNIQUE ACROSS THE ENTIRE IF1 FILE.                   */
 /**************************************************************************/
 
-static void RenumberForallPorts( n )
-PNODE n;
+static void RenumberForallPorts(PNODE n)
 {
     register PEDGE i;
 
@@ -131,10 +126,7 @@ PNODE n;
 /*          f2 ARE EQUAL.                                                 */
 /**************************************************************************/
 
-static int AreForallsEqual( f1, f2, indep )
-PNODE f1;
-PNODE f2;
-int   indep;
+static int AreForallsEqual(PNODE f1, PNODE f2, int indep)
 {
     register PNODE n1;
     register PNODE n2;
@@ -189,8 +181,7 @@ int   indep;
 /* PURPOSE: RENUMBER THE PORT NUMBERS OF SELECT NODE n.                   */
 /**************************************************************************/
 
-static void RenumberSelectPorts( n )
-PNODE n;
+static void RenumberSelectPorts(PNODE n)
 {
   register PEDGE i;
   register int   iport;
@@ -220,9 +211,7 @@ PNODE n;
 /*          AND s2.                                                       */
 /**************************************************************************/
 
-static void LinkSelectDependencies( s1, s2 )
-PNODE s1;
-PNODE s2;
+static void LinkSelectDependencies(PNODE s1, PNODE s2)
 {
   register PEDGE e;
   register PEDGE se;
@@ -288,10 +277,7 @@ PNODE s2;
 /* PURPOSE: FUSE s1 AND s2 IN GRAPH g, AND REMOVE s2.                     */
 /**************************************************************************/
 
-static void DoTheSelectFusion( g, s1, s2 )
-PNODE g;
-PNODE s1;
-PNODE s2;
+static void DoTheSelectFusion(PNODE g, PNODE s1, PNODE s2)
 {
   RenumberSelectPorts( s2 );
 
@@ -323,10 +309,7 @@ PNODE s2;
 /* PURPOSE: TRY AND FUSE Select NODES s1 AND s2, REMOVING s2 FROM GRAPH g.*/
 /**************************************************************************/
 
-static int TryAndFuseSelects( g, s1, s2 )
-PNODE s1;
-PNODE s2;
-PNODE g;
+static int TryAndFuseSelects(PNODE g, PNODE s1, PNODE s2)
 {
   if ( !sfuse )
     return( FALSE );
@@ -347,8 +330,7 @@ PNODE g;
 /*          LEGAL CHAIN.                                                  */
 /**************************************************************************/
 
-static void AssignSelectAttributes( n )
-PNODE n;
+static void AssignSelectAttributes(PNODE n)
 {
   register PEDGE e;
   register int   c;
@@ -393,9 +375,7 @@ PNODE n;
 /*          IMPORT PORT 0.                                                */
 /**************************************************************************/
 
-static void CleanDependentPaths( g, f2 )
-register PNODE g;
-register PNODE f2;
+static void CleanDependentPaths(register PNODE g, register PNODE f2)
 {
   register PEDGE si;
   register PEDGE i;
@@ -437,9 +417,7 @@ register PNODE f2;
 /*          SUBGRAPH g INTO DIRECT REFERENCES TO i.                       */
 /**************************************************************************/
 
-static void ChangeDstPath( g, i )
-PNODE g;
-PEDGE i;
+static void ChangeDstPath(PNODE g, PEDGE i)
 {
   register PEDGE e;
   register PEDGE ee;
@@ -498,11 +476,10 @@ PEDGE i;
 /*          SEARCH FOR f1.                                                */
 /**************************************************************************/
 
-static void  DoTheForallMerge( g, f1, f2, indep )
-PNODE g;
-PNODE f1;
-PNODE f2;
-int   indep;                          /* INDEPENDENT OR DEPENDENT FUSION */
+static void  DoTheForallMerge(PNODE g,
+                              PNODE f1,
+                              PNODE f2,
+                              int indep)  /* INDEPENDENT OR DEPENDENT FUSION */
 {
   register PEDGE i;
   register PEDGE ii;
@@ -593,9 +570,7 @@ int   indep;                          /* INDEPENDENT OR DEPENDENT FUSION */
 /* PURPOSE: ARE e AND idx REFERENCES TO THE SAME VALUE.                   */
 /**************************************************************************/
 
-static int IsIndexingOk( e, idx )
-PEDGE e;
-PEDGE idx;
+static int IsIndexingOk(PEDGE e, PEDGE idx)
 {
   if ( e == NULL )
     return( FALSE );
@@ -628,10 +603,7 @@ PEDGE idx;
 /*          AElement NODES.                                               */
 /**************************************************************************/
 
-static int IsAReadOnly( b, a, idx )
-PNODE b;
-PEDGE a;
-PEDGE idx;
+static int IsAReadOnly(PNODE b, PEDGE a, PEDGE idx)
 {
   register PEDGE e;
   register PNODE sg;
@@ -665,12 +637,11 @@ PEDGE idx;
 /* PURPOSE: TRY AND FUSE Forall NODES f1 AND f2, REMOVING f2 FROM GRAPH g.*/
 /**************************************************************************/
 
-static int TryAndFuseForalls( g, f1, f2, indep, ReasonP )
-PNODE g;
-PNODE f1;
-PNODE f2;
-int   indep;                          /* INDEPENDENT OR DEPENDENT FUSION */
-char **ReasonP;
+static int TryAndFuseForalls(PNODE g,
+                             PNODE f1,
+                             PNODE f2,
+                             int indep,  /* INDEPENDENT OR DEPENDENT FUSION */
+                             char **ReasonP)
 {
   register PEDGE i;
   register PEDGE ii;
@@ -787,8 +758,7 @@ char **ReasonP;
 /*          CHAIN.                                                        */
 /**************************************************************************/
 
-static void AssignForallAttributes( n )
-PNODE n;
+static void AssignForallAttributes(PNODE n)
 {
   register PEDGE e;
   register int   c;
@@ -842,8 +812,7 @@ PNODE n;
 /**************************************************************************/
 /* PURPOSE: FUSE THE DEPENDENT NODES IN GRAPH g.                          */
 /**************************************************************************/
-static void DependentFusion( g )
-PNODE g;
+static void DependentFusion(PNODE g)
 {
   register PNODE f1;
   register PNODE f2;
@@ -1027,7 +996,7 @@ ContinueTheFusion:
 /* PURPOSE: APPLY DEPENDENT FUSION TO ALL THE NODES IN THE PROGRAM.       */
 /**************************************************************************/
 
-void If1DFusion()
+void If1DFusion(void)
 {
   register PNODE f;
 
@@ -1045,8 +1014,7 @@ void If1DFusion()
 /* PURPOSE: PROPAGATE THE LABEL OF n TO ALL ITS DECENDENTS.               */
 /**************************************************************************/
 
-static void AssignAttributes( n )
-PNODE n;
+static void AssignAttributes(PNODE n)
 {
   register PEDGE e;
   register int   c;
@@ -1069,8 +1037,7 @@ PNODE n;
 /* PURPOSE: FUSE THE INDEPENDENT NODES IN GRAPH g.                        */
 /**************************************************************************/
 
-static void IndependentFusion( g )
-PNODE g;
+static void IndependentFusion(PNODE g)
 {
   register PNODE f1;
   register PNODE f2;
@@ -1210,7 +1177,7 @@ ContinueTheFusion:
 /* PURPOSE: WRITE FUSION INFORMATION TO stderr.                           */
 /**************************************************************************/
 
-void WriteFusionInfo()
+void WriteFusionInfo(void)
 {
   FPRINTF( infoptr, "\n\n **** LOOP FUSION\n\n%s\n" ,fuseinfo);
   DYNFREE(fuseinfo, fusebuf, fuselen, fusecount, char, NULL);
@@ -1231,7 +1198,7 @@ void WriteFusionInfo()
 /* PURPOSE: APPLY INDEPENDENT FUSION TO ALL THE NODES IN THE PROGRAM.     */
 /**************************************************************************/
 
-void If1IFusion()
+void If1IFusion(void)
 {
   register PNODE f;
 

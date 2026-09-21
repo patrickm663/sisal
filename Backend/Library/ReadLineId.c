@@ -18,7 +18,7 @@
 /*          WILL CONTAIN THE CHARACTER FOLLOWING THE RETURNED IDENTIFIER. */
 /**************************************************************************/
 
-int ReadLineId() 
+int ReadLineId(void) 
 { 
   register int id;
 

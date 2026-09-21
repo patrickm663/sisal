@@ -16,8 +16,7 @@
 /*          TERMINATES.                                                   */
 /**************************************************************************/
 
-char *MyAlloc( size )
-int size;
+char *MyAlloc(int size)
 {
   char *p;
 

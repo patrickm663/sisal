@@ -16,9 +16,7 @@
 /* PURPOSE: PRINT ln FOLLOWED BY indent BLANKS AND indent TO output.      */
 /**************************************************************************/
 
-void PPrintIndentation( indent, ln )
-int indent;
-int ln;
+void PPrintIndentation(int indent, int ln)
 {
   register int i;
 

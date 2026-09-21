@@ -18,8 +18,7 @@
 /*          RETURNED.                                                     */
 /**************************************************************************/
 
-PNODE UnlinkGraph( g )
-PNODE g;
+PNODE UnlinkGraph(PNODE g)
 {
   register PNODE pred = g->gpred;
 

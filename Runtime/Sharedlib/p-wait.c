@@ -13,7 +13,7 @@
 #include "sisalrt.h"
 
 
-static void DoDependentWork()
+static void DoDependentWork(void)
 {
   register struct ActRec *NewAR;
   register int local_flush;
@@ -51,8 +51,7 @@ static void DoDependentWork()
 #define YIELD_IF_REQUIRED()
 #endif
 
-void Wait( Event ) 
-int Event;
+void Wait(int Event)
 {
   switch ( Event ) {
     case FOR_NOTHING:
@@ -75,9 +74,7 @@ int Event;
     }
 }
 
-void Sync( First, LastPlusOne )
-register struct ActRec *First;
-register struct ActRec *LastPlusOne;
+void Sync(register struct ActRec *First, register struct ActRec *LastPlusOne)
 {
   if ( First == LastPlusOne )
     return;

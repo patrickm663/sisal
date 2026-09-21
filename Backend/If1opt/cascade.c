@@ -13,8 +13,7 @@
 #include "world.h"
 
 static void
-TestCascade(G)
-     PNODE      G;
+TestCascade(PNODE G)
 {
   PNODE         SubG,N,Test,TrueSide,FalseSide;
   PEDGE         TestEdge,E,ENext;
@@ -84,7 +83,7 @@ TestCascade(G)
 /**************************************************************************/
 
 void
-If1TestCascade()
+If1TestCascade(void)
 {
   register PNODE f;
 

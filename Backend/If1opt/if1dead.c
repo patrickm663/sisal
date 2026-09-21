@@ -52,8 +52,7 @@ int Tagcnt  = 0;          /* COUNT OF DEAD AGather NODES            */
 /*                   IS ENABLED (FOR DI COMPATABILITY).                   */ 
 /**************************************************************************/
 
-static void FastRemoveUnnecEdges( n )
-PNODE n;
+static void FastRemoveUnnecEdges(PNODE n)
 {
     register PEDGE i;
     register PEDGE si;
@@ -232,8 +231,7 @@ PNODE n;
 /*          COMBINED WITH OTHER IMPORTS.                                  */
 /**************************************************************************/
 
-void CombineKports( c )
-PNODE c;
+void CombineKports(PNODE c)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -268,8 +266,7 @@ PNODE c;
 /*          (SEE FastCleanForalls).                                       */ 
 /**************************************************************************/
 
-static void FastRemoveUnusedLTports( l )
-PNODE l;
+static void FastRemoveUnusedLTports(PNODE l)
 {
     register PEDGE i;
     register PEDGE si;
@@ -320,8 +317,7 @@ PNODE l;
 /*          (SEE FastCleanForalls).                                       */ 
 /**************************************************************************/
 
-static void FastRemoveUnusedKports( c )
-PNODE c;
+static void FastRemoveUnusedKports(PNODE c)
 {
     register PEDGE i;
     register PEDGE si;
@@ -354,8 +350,7 @@ PNODE c;
 /*          (SEE FastCleanForalls).                                       */ 
 /**************************************************************************/
 
-static void FastRemoveUnusedRports( g )
-PNODE g;
+static void FastRemoveUnusedRports(PNODE g)
 {
     register PEDGE i;
     register PEDGE si;
@@ -383,8 +378,7 @@ PNODE g;
 /*          (SEE FastCleanForalls).                                       */ 
 /**************************************************************************/
 
-static void FastRemoveUnusedTports( f )
-PNODE f;
+static void FastRemoveUnusedTports(PNODE f)
 {
     register PEDGE i;
     register PEDGE si;
@@ -410,8 +404,7 @@ PNODE f;
 /*          TRAVERSAL ROUTINE.                                            */
 /**************************************************************************/
 
-void FastCleanGraph( g )
-PNODE g;
+void FastCleanGraph(PNODE g)
 {
   register PNODE n;
   register PEDGE i;
@@ -518,8 +511,7 @@ PNODE g;
 /*          n IS UNLINKED FROM ITS NODE LIST.                             */
 /**************************************************************************/
 
-static void RecycleNode( n )
-PNODE n;
+static void RecycleNode(PNODE n)
 {
     if ( IsCompound( n ) )
       dccnt++;
@@ -542,8 +534,7 @@ PNODE n;
 /*          CLEAN IT.  GRAPH NODES ARE IGNORED.                           */
 /**************************************************************************/
 
-void OptRemoveDeadNode( n )
-PNODE n;
+void OptRemoveDeadNode(PNODE n)
 {
     register PEDGE i;
     register PEDGE si;
@@ -585,8 +576,7 @@ PNODE n;
 /*          DEAD OR REQUIRES CLEANING.  EDGE d MAY DEFINE A CONSTANT.     */
 /**************************************************************************/
 
-void RemoveDeadEdge( d )
-PEDGE d;
+void RemoveDeadEdge(PEDGE d)
 {
     UnlinkImport( d );
     UnlinkExport( d );
@@ -602,7 +592,7 @@ PEDGE d;
 /*          stderr.                                                       */
 /**************************************************************************/
 
-void WriteCleanInfo()
+void WriteCleanInfo(void)
 {
     FPRINTF( infoptr, "\n **** GRAPH CLEANUP SUMMARY\n\n" );
     FPRINTF( infoptr, " Unnecessary Edges And Literals:  %d of %d\n", unnec,Tunnec  );
@@ -620,7 +610,7 @@ void WriteCleanInfo()
 /*          NODES AND EDGES.                                              */
 /**************************************************************************/
 
-void If1Clean()
+void If1Clean(void)
 {
   register PNODE f;
 

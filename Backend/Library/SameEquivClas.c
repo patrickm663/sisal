@@ -19,9 +19,7 @@
 
 #define EquivClass(x) (((x) == NULL)? -1 : (x)->eid)
 
-int SameEquivClass( a, b )
-PINFO a;
-PINFO b;
+int SameEquivClass(PINFO a, PINFO b)
 {
   return( (EquivClass( a->info1 ) == EquivClass( b->info1 )) &&
          (EquivClass( a->info2 ) == EquivClass( b->info2 )) );

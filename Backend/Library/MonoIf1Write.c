@@ -18,7 +18,7 @@
 /*          THE FUNCTION GRAPHS ARE FOUND TRAVERSING nhead.               */
 /**************************************************************************/
 
-void MonoIf1Write()
+void MonoIf1Write(void)
 {
   MonoWriteInfo();
   WriteStamps();

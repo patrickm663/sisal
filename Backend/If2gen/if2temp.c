@@ -50,8 +50,7 @@ int    rags;             /* RAGGED MEMORY ALLOCATION MANAGEMENT VARIABLES */
 static int   frametop = 1;             /* NUMBER OF ALLOCATE LOOP POOL FRAMES */
 
 
-static void AssignVectorTemps( l )
-PNODE l;
+static void AssignVectorTemps(PNODE l)
 {
     register PEDGE i;
 
@@ -99,8 +98,7 @@ PNODE l;
 /* PURPOSE: DECREMENT THE POPULARITY VALUE FOR ALL IMPORT OF SUBGRAPH g.  */
 /**************************************************************************/
 
-static void DecImportPopularity( g )
-PNODE g;
+static void DecImportPopularity(PNODE g)
 {
     register PEDGE i;
 
@@ -135,8 +133,7 @@ PNODE g;
 /* PURPOSE: DECREMENT THE POPULARITY VALUE FOR ALL EXPORTS OF SUBGRAPH g. */
 /**************************************************************************/
 
-static void DecExportPopularity( g )
-PNODE g;
+static void DecExportPopularity(PNODE g)
 {
     register PEDGE e;
 
@@ -188,10 +185,7 @@ PNODE g;
 /*          IN RETURN SUBGRAPH r AND IS REFERENCED EACH ITERATION.        */
 /**************************************************************************/
 
-static int IsDerefCandidate( iport, r, b )
-int   iport;
-PNODE r;
-PNODE b;
+static int IsDerefCandidate(int iport, PNODE r, PNODE b)
 {
     register PEDGE e;
 
@@ -246,8 +240,7 @@ PNODE b;
 /*          A LOOP BODY, OR EACH EXECUTION OF A LOOP'S RETURN SUBGRAPH.   */
 /**************************************************************************/
 
-static void ReduceArgAccessCost( f )
-PNODE f;
+static void ReduceArgAccessCost(PNODE f)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -342,10 +335,7 @@ FoundIt:
 /*          AND s2 AND IDENTIFIER id.                                     */
 /**************************************************************************/
 
-char *MakeName( s1, s2, id )
-char *s1;
-char *s2;
-int   id;
+char *MakeName(char *s1, char *s2, int id)
 {
     char buf[100];
 
@@ -361,8 +351,7 @@ int   id;
 /*          IMPORTING n->imp.                                             */
 /**************************************************************************/
 
-static int IsOnlyFinalValueNode( n )
-PNODE n;
+static int IsOnlyFinalValueNode(PNODE n)
 {
     register PEDGE e;
     register int   c = 0;
@@ -386,9 +375,7 @@ PNODE n;
 /*          EXPORT PORT NUMBER eport.                                     */
 /**************************************************************************/
 
-static void DecrementRefCount( n, eport )
-PNODE n;
-int   eport;
+static void DecrementRefCount(PNODE n, int eport)
 {
     register PEDGE e;
 
@@ -405,9 +392,7 @@ int   eport;
 /*          AND BOOLEAN ALL MATCH.                                        */
 /**************************************************************************/
 
-static int IsTypeMatch( i1, i2 )
-PEDGE i1;
-PEDGE i2;
+static int IsTypeMatch(PEDGE i1, PEDGE i2)
 {
     if ( i1->info == i2->info )
         return( TRUE );
@@ -442,9 +427,7 @@ PEDGE i2;
 /* PURPOSE: RETURN TRUE IF TNAMES t1 AND t2 MATCH. NOTE, int MATCHES char.*/
 /**************************************************************************/
 
-static int IsTNameMatch( t1, t2 )
-char *t1;
-char *t2;
+static int IsTNameMatch(char *t1, char *t2)
 {
     if ( strcmp( t1, t2 ) == 0 )
         return( TRUE );
@@ -470,10 +453,7 @@ char *t2;
 /*          "ALLOCATED",                                                  */
 /**************************************************************************/
 
-PTEMP GetTemp( name, TempInfo, mod )
-char  *name;
-PINFO  TempInfo;
-int    mod;
+PTEMP GetTemp(char *name, PINFO TempInfo, int mod)
 {
     register PTEMP  t;
     register PTEMP  c;
@@ -533,7 +513,7 @@ int    mod;
 /* PURPOSE: EMPTY THE SYMBOL TABLE.                                       */
 /**************************************************************************/
 
-void InitializeSymbolTable()
+void InitializeSymbolTable(void)
 {
     register PTEMP t;
     register PTEMP ti;
@@ -561,9 +541,7 @@ void InitializeSymbolTable()
 /*          EQUAL TO EDGE e IS NOT ALTERED.                               */
 /**************************************************************************/
 
-void ChangeToAllocated( e, n )
-PEDGE e;
-PNODE n;
+void ChangeToAllocated(PEDGE e, PNODE n)
 {
     register PEDGE i;
 
@@ -587,8 +565,7 @@ PNODE n;
 /*          COUNT IS ONE, ELSE JUST DECREMENT THE REFERENCE COUNT.        */
 /**************************************************************************/
 
-void FreeTemp( e )
-PEDGE e;
+void FreeTemp(PEDGE e)
 {
   if ( e->temp == NULL ) {                /* CONSTANT OR INDEX OPERATION */
     if ( IsConst( e ) )
@@ -615,8 +592,7 @@ PEDGE e;
 }
 
 
-static int DistanceFromCriticalLoop( i )
-register PEDGE i;
+static int DistanceFromCriticalLoop(register PEDGE i)
 {
     register PEDGE ii;
     register PNODE owner;
@@ -654,11 +630,7 @@ register PEDGE i;
 /*          EXTRA REFERENCE COUNT IS ASSIGNED.                            */
 /**************************************************************************/
 
-void PropagateTemp( n, eport, ronly, t )
-PNODE n;
-int   eport;
-int   ronly;
-PTEMP t;
+void PropagateTemp(PNODE n, int eport, int ronly, PTEMP t)
 {
     register PEDGE  e;
     register PEDGE  i;
@@ -700,9 +672,7 @@ PTEMP t;
 /* PURPOSE: RETURN TRUE IF TEMPORARY t IS EXPORTED FROM NODE n.           */
 /**************************************************************************/
 
-int IsTempExported( n, t )
-PNODE n;
-PTEMP t;
+int IsTempExported(PNODE n, PTEMP t)
 {
     register PEDGE e;
 
@@ -720,9 +690,7 @@ PTEMP t;
 /* PURPOSE: RETURN TRUE IF TEMPORARY t IS IMPORTED TO NODE n.             */
 /**************************************************************************/
 
-int IsTempImported( n, t )
-PNODE n;
-PTEMP t;
+int IsTempImported(PNODE n, PTEMP t)
 {
     register PEDGE i;
 
@@ -740,8 +708,7 @@ PTEMP t;
 /* PURPOSE: SORT THE TEMPORARY LIST HEADED BY h BY COST, GREATEST FIRST.  */
 /**************************************************************************/
 
-static PTEMP SortByCost( h )
-PTEMP h;
+static PTEMP SortByCost(PTEMP h)
 {
     register PTEMP p;
     register PTEMP pr;
@@ -787,8 +754,7 @@ PTEMP h;
 /*          POPULARITY AND RETURN A POINTER TO THE NEW LIST.              */
 /**************************************************************************/
 
-static PTEMP SortByPopularity( h )
-PTEMP h;
+static PTEMP SortByPopularity(PTEMP h)
 {
     register PTEMP p;
     register PTEMP pr;
@@ -840,8 +806,7 @@ PTEMP h;
 /*          A POINTER TO THE NEW LIST.                                    */
 /**************************************************************************/
 
-static PTEMP SortByDistance( h )
-PTEMP h;
+static PTEMP SortByDistance(PTEMP h)
 {
     register PTEMP p;
     register PTEMP pr;
@@ -897,7 +862,7 @@ PTEMP h;
 /*          POPULARITY.                                                   */
 /**************************************************************************/
 
-void PrintLocals( )
+void PrintLocals(void)
 {
     register PTEMP p;
     register PINFO i;
@@ -986,11 +951,7 @@ void PrintLocals( )
 /*          NEW NODE TO NODE dst; THIS EDGE IS RETURNED TO THE CALLER.    */
 /**************************************************************************/
 
-static PEDGE AddAssignNode( pr, dst, i, t )
-PNODE pr;
-PNODE dst;
-PEDGE i;
-PTEMP t;
+static PEDGE AddAssignNode(PNODE pr, PNODE dst, PEDGE i, PTEMP t)
 {
     register PNODE a;
     register PEDGE e;
@@ -1026,9 +987,7 @@ PTEMP t;
 /*          THE SAME TEMPORARY STORAGE (i->temp).                         */
 /**************************************************************************/
 
-static void FixAlternatives( i, st )
-PEDGE i;
-PNODE st;
+static void FixAlternatives(PEDGE i, PNODE st)
 {
     register PNODE sg;
     register PEDGE ii;
@@ -1056,9 +1015,7 @@ PNODE st;
 /*          THE OWNING Select OR TagCase NODE, RETURN TRUE.               */
 /**************************************************************************/
 
-static int SafeInAlternatives( i, st )
-PEDGE i;
-PNODE st;
+static int SafeInAlternatives(PEDGE i, PNODE st)
 {
     register PNODE sg;
     register PEDGE ii;
@@ -1080,8 +1037,7 @@ PNODE st;
 /*          REUSE STORAGE.                                                */
 /**************************************************************************/
 
-static void AssignUReduceTemps( r )
-PNODE r;
+static void AssignUReduceTemps(PNODE r)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -1271,8 +1227,7 @@ PNODE r;
 /* PURPOSE: ASSIGN TEMPORARIES TO RETURN SUBGRAPH g.                      */
 /**************************************************************************/
 
-static void AssignReturnsTemps( g )
-PNODE g;
+static void AssignReturnsTemps(PNODE g)
 {
     register PNODE r;
 
@@ -1291,8 +1246,7 @@ PNODE g;
 /*          SUBGRAPHS.                                                    */
 /**************************************************************************/
 
-static void AssignSelectTemps( s )
-PNODE s;
+static void AssignSelectTemps(PNODE s)
 {
     register PEDGE e  = NULL;
     register PEDGE i;
@@ -1481,8 +1435,7 @@ MoveOn:
 }
 
 
-static int CriticalPath( i )
-PEDGE i;
+static int CriticalPath(PEDGE i)
 {
   if ( IsConst( i ) ) 
     return( 1 );
@@ -1507,8 +1460,7 @@ PEDGE i;
 /*          TO REUSE STORAGE.                                             */
 /**************************************************************************/
 
-static void AssignForallTemps( f )
-PNODE f;
+static void AssignForallTemps(PNODE f)
 {
     register PEDGE i;
     register PEDGE si;
@@ -1767,8 +1719,7 @@ PNODE f;
 /*          SUBGRAPHS.                                                    */
 /**************************************************************************/
 
-static void AssignLoopTemps( l )
-PNODE l;
+static void AssignLoopTemps(PNODE l)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -1973,10 +1924,7 @@ PNODE l;
 /* PURPOSE: ALLOCATE TEMPORARIES DESCRIPTORS FOR n'S OUTPUT ARGUMENTS.    */
 /**************************************************************************/
 
-static void BindExportTemps( n, TempInfo, name )
-PNODE  n;
-PINFO  TempInfo;
-char  *name;
+static void BindExportTemps(PNODE n, PINFO TempInfo, char *name)
 {
     register PEDGE e;
 
@@ -1989,9 +1937,7 @@ char  *name;
 }
 
 
-PNODE  FindCriticalPath( g, cbody )
-PNODE  g;
-PNODE  cbody;
+PNODE  FindCriticalPath(PNODE g, PNODE cbody)
 {
     register PNODE n;
     register PNODE cb;
@@ -2037,8 +1983,7 @@ PNODE  cbody;
 /* PURPOSE: ASSIGN TEMPORARIES TO THE NODES IN GRAPH g.                   */
 /**************************************************************************/
 
-void AssignTemps( g )
-PNODE g;
+void AssignTemps(PNODE g)
 {
     register PNODE  n;
     register PEDGE  e;
@@ -2920,7 +2865,7 @@ FreeRest:
 /* PURPOSE: PRINT THE LOOP POOL FRAME STORAGE DEALLOCATIONS TO output.    */
 /**************************************************************************/
 
-void PrintFrameDeallocs()
+void PrintFrameDeallocs(void)
 {
   register PTEMP p;
 

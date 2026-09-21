@@ -17,8 +17,7 @@
 /*          cnt UNSINGED INTEGERS.                                        */
 /**************************************************************************/
 
-PALIST ReadAssocList( cnt )
-register int cnt;
+PALIST ReadAssocList(register int cnt)
 {
   register PALIST l = AssocListAlloc( ReadInteger() );
 

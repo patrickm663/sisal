@@ -14,8 +14,7 @@
 
 PNODE SortedTree;
 
-static PNODE FindNewFunctionGraph( nm )
-     char           *nm;
+static PNODE FindNewFunctionGraph(char *nm)
 {
   register PNODE g;
 
@@ -26,8 +25,7 @@ static PNODE FindNewFunctionGraph( nm )
   return( NULL );
 }
 
-static PNODE FindTheFunction( nm )
-     char           *nm;
+static PNODE FindTheFunction(char *nm)
 {
   register PNODE g;
 
@@ -42,9 +40,7 @@ static PNODE FindTheFunction( nm )
   return( NULL );
 }
 
-static int InSortedTree( f,g )
-     PNODE f;
-     PNODE g;
+static int InSortedTree(PNODE f, PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -63,9 +59,7 @@ static int InSortedTree( f,g )
   return TRUE;
 }
 
-static int CallReachable( f,g )
-     PNODE f;
-     PNODE g;
+static int CallReachable(PNODE f, PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -90,8 +84,7 @@ static int CallReachable( f,g )
   return FALSE;
 }
 
-static int InRecursiveChain(F)
-     PNODE      F;
+static int InRecursiveChain(PNODE F)
 {
   PNODE         ff;
 
@@ -111,7 +104,7 @@ static int InRecursiveChain(F)
 /************************************************************************ **/
 /* PURPOSE:  */
 /**************************************************************************/
-void CallReorder()
+void CallReorder(void)
 {
   register PNODE        f,next,last;
 

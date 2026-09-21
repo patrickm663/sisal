@@ -18,9 +18,7 @@
 /**************************************************************************/
 
 
-void LinkExport( src, e )
-PNODE src;
-PEDGE e;
+void LinkExport(PNODE src, PEDGE e)
 {
   e->src = src;
 

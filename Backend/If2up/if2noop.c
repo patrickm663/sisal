@@ -29,9 +29,7 @@
 /*          THE ALLOCATED NODE IS APPENDED TO THE GLOBAL NoOp NODE LIST.  */
 /**************************************************************************/
 
-static void InsertNoOp( e, omark )
-PEDGE e;
-int omark;
+static void InsertNoOp(PEDGE e, int omark)
 {
     register PNODE n;
     register PEDGE ee;
@@ -73,8 +71,7 @@ int omark;
 /*          THE CONSTANT AGGREGATE GENERATOR LIST.                        */
 /**************************************************************************/
 
-static void AddNoOpsToGraph( g )
-PNODE g;
+static void AddNoOpsToGraph(PNODE g)
 {
     register PNODE n;
     register PEDGE e;
@@ -196,7 +193,7 @@ PNODE g;
 /*          TO ENHANCE PERFORMANCE OF LATER OPTIMIZATION SUBPHASES.       */
 /**************************************************************************/
 
-void If2NoOp()
+void If2NoOp(void)
 {
     register PNODE f;
 

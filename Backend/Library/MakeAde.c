@@ -20,9 +20,7 @@
 /*          IF FULLY ORDERED, DO NOTHING.                                 */
 /**************************************************************************/
 
-void MakeAde( snode, dnode )
-int snode;
-int dnode;
+void MakeAde(int snode, int dnode)
 {
   if ( !FullyOrdered ) {
     register PADE  a;

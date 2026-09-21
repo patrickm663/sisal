@@ -17,9 +17,7 @@
 /*          LIST OF g2 IS SET TO NULL.                                    */
 /**************************************************************************/
 
-void LinkNodeLists( g1, g2 )
-PNODE g1;
-PNODE g2;
+void LinkNodeLists(PNODE g1, PNODE g2)
 {
   register PNODE ln;
   register PNODE n;

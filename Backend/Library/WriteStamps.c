@@ -16,7 +16,7 @@
 /* PURPOSE: WRITE THE IF1 STAMPS IN THE STAMP TABLE TO output.            */
 /**************************************************************************/
 
-void WriteStamps()
+void WriteStamps(void)
 {
   register int i;
 

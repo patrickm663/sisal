@@ -13,12 +13,11 @@
 #include "sisalrt.h"
 
 
-static void ConfigureExecution( lsValue, gssValue, bValue, xftValue, axValue )
-int lsValue;
-int gssValue;
-int bValue;
-int xftValue;
-int axValue;
+static void ConfigureExecution(int lsValue,
+                               int gssValue,
+                               int bValue,
+                               int xftValue,
+                               int axValue)
 {
   if ( lsValue > 0 ) {
     if ( gssValue == 1 )
@@ -44,10 +43,7 @@ int axValue;
     XftThreshold = xftValue;
 }
 
-static void ParseInterfaceArguments( wValue, dsValue, rValue )
-int wValue;
-int dsValue;
-int rValue;
+static void ParseInterfaceArguments(int wValue, int dsValue, int rValue)
 {
   if ( dsValue > 0 )
     DsaSize = dsValue;
@@ -72,8 +68,7 @@ int rValue;
 #define FIBREOUT        2
 #define SINFO           3
 
-static void ParseFileParameters(filename)
-    char        *filename;
+static void ParseFileParameters(char *filename)
 {
     FILE        *optfile;
     char        arg[512];
@@ -235,9 +230,7 @@ int      *Info;
 #endif
 }
 
-void IDescriptorCheck( Dim, Info )
-int  Dim;
-int *Info;
+void IDescriptorCheck(int Dim, int *Info)
 {
   register int CurrentDim;
   register int Plo,Phi, Llo,Lhi;

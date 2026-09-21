@@ -84,9 +84,7 @@ static char *ofile = NULL;
 /*              -^      -> SDBX mode                                      */
 /**************************************************************************/
 
-static void ParseCommandLine( argc, argv )
-int    argc;
-char **argv;
+static void ParseCommandLine(int argc, char **argv)
 {
     register char *c;
     register int   fmode = 0;
@@ -220,9 +218,7 @@ char **argv;
 /*          OF THE INPUT FILE IS OVERWRITTEN.                             */
 /**************************************************************************/
 
-int main( argc, argv )
-int    argc;
-char **argv;
+int main(int argc, char **argv)
 {
     register FILE *fd;
     int i2 = I_Info2;

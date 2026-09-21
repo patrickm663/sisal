@@ -17,9 +17,7 @@
 /*          eport.  IF NOT FOUND, RETURN NULL.                            */
 /**************************************************************************/
 
-PEDGE FindExport( n, eport )
-PNODE n;
-int   eport;
+PEDGE FindExport(PNODE n, int eport)
 {
   register PEDGE e;
 

@@ -16,8 +16,7 @@
 /* PURPOSE: SWAP THE IMPORTS OF DYADIC NODE n.                            */
 /**************************************************************************/
 
-void ImportSwap( n )
-PNODE n;
+void ImportSwap(PNODE n)
 {
   register PEDGE one;
   register PEDGE two;

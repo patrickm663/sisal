@@ -17,9 +17,7 @@
 /*          NOT FOUND, RETURN NULL.                                       */
 /**************************************************************************/
 
-PEDGE FindImport( n, iport )
-PNODE n;
-register int iport;
+PEDGE FindImport(PNODE n, register int iport)
 {
   register PEDGE i;
 

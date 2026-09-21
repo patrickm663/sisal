@@ -20,13 +20,12 @@
 int p_procnum = 0;
 static LOCK_TYPE  TheLock;
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
   free( SharedBase );
 }
 
-static void* Transfer( ProcId )
-void* ProcId;
+static void* Transfer(void * ProcId)
 {
   GetProcId = (long)ProcId;
 
@@ -45,8 +44,7 @@ void* ProcId;
   return NULL;
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -56,7 +54,7 @@ int NumBytes;
     SisalError( "AcquireSharedMemory", "malloc FAILED" );
 }
 
-void StartWorkers()
+void StartWorkers(void)
 {
   int NumProcs = NumWorkers;
   thread_t *thread = malloc(NumProcs*sizeof(*thread));
@@ -70,19 +68,18 @@ void StartWorkers()
   Transfer( (void*)NumProcs );
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel()
+void AbortParallel(void)
 {
   (void)exit( 1 );
 }
 
-BARRIER_TYPE *MyInitBarrier(limit)
-  int limit;
+BARRIER_TYPE *MyInitBarrier(int limit)
 {
   BARRIER_TYPE *bar;
 
@@ -103,8 +100,7 @@ BARRIER_TYPE *MyInitBarrier(limit)
   return bar;
 }
 
-void MyBarrier( bar )                   /* from tomig.esd.mun.ca */
-  BARRIER_TYPE *bar;
+void MyBarrier(BARRIER_TYPE *bar)  /* from tomig.esd.mun.ca */
 {
   /*
    * Block for lock, then decrement waiting thread count.

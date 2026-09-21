@@ -16,8 +16,7 @@
 /* PURPOSE: FIND THE ACTUAL SOURCE NODE OF THE VALUE CARRIED ON EDGE e.   */
 /**************************************************************************/
 
-PEDGE FindSource( e )
-register PEDGE e;
+PEDGE FindSource(register PEDGE e)
 {
   register PEDGE ee;
   register PNODE src;

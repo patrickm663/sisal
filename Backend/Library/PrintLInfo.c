@@ -9,11 +9,7 @@
 
 #include "world.h"
 
-void PrintLInfo( lvl, plvl, c, loop )
-     int  lvl;
-     int  plvl;
-     char  *c;
-     PNODE  loop;
+void PrintLInfo(int lvl, int plvl, char *c, PNODE loop)
 {
   register int i;
   char     lbuf[1024];          /* Assemble the loop info string */

@@ -101,9 +101,7 @@ static PNODE root = NULL;                     /* CURRENT BIP ROOT DV NODE */
 /* PURPOSE: RETURN TRUE IF PSAlloc NODES a1 AND a2 ARE IDENTICAL.         */
 /**************************************************************************/
 
-static int ArePSAllocsIdentical( a1, a2 )
-PNODE a1;
-PNODE a2;
+static int ArePSAllocsIdentical(PNODE a1, PNODE a2)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -148,8 +146,7 @@ PNODE a2;
 /*          STORAGE SWAPS.                                                */
 /**************************************************************************/
 
-static void ShareStorage( g )
-PNODE g;
+static void ShareStorage(PNODE g)
 {
   register PNODE sg;
   register PNODE a1;
@@ -283,11 +280,7 @@ MoveOn:
 /*          dst AT IMPORT PORT iport.                                     */
 /**************************************************************************/
 
-static void FindSourceEdgeAndLink( dst, iport, m, e )
-PNODE dst;
-int   iport;
-PNODE m;
-PEDGE e;
+static void FindSourceEdgeAndLink(PNODE dst, int iport, PNODE m, PEDGE e)
 {
   register PNODE l;
   register PEDGE ee;
@@ -349,9 +342,7 @@ PEDGE e;
 /* PURPOSE: WIRE THE POINTER SWAP FOR MemAllocDVI b->src.                 */
 /**************************************************************************/
 
-static void WireRegionalSwap( m, b )
-PNODE m;
-PEDGE b;
+static void WireRegionalSwap(PNODE m, PEDGE b)
 {
   register PNODE ma;
   register PNODE psma;
@@ -612,9 +603,7 @@ PEDGE b;
 /**************************************************************************/
 
 
-static void CountTheArms( sg, eport )
-PNODE sg;
-int   eport;
+static void CountTheArms(PNODE sg, int eport)
 {
   register PEDGE e;
 
@@ -637,9 +626,7 @@ int   eport;
 /**************************************************************************/
 
 
-static void RestructureTheBIP( m, i )
-PNODE m;
-PEDGE i;
+static void RestructureTheBIP(PNODE m, PEDGE i)
 {
   register PEDGE e;
   register PNODE n;
@@ -792,7 +779,7 @@ PEDGE i;
 }
 
 
-static void IncDimCounter() /* FOR THE -info FILE!!! */
+static void IncDimCounter(void) /* FOR THE -info FILE!!! */
 {
   /* DEBUG CHECKS!!! */
   if ( macnt1 != macnt2 ) {
@@ -819,8 +806,7 @@ static void IncDimCounter() /* FOR THE -info FILE!!! */
 /*          THEN MAKE THE CONSTANT THE SECOND IMPORT.                     */
 /**************************************************************************/
 
-void GenNormalizeNode( n )
-PNODE n;
+void GenNormalizeNode(PNODE n)
 {
   switch ( n->type ) {
     case IFPlus:
@@ -844,9 +830,7 @@ PNODE n;
 /*          NODE LIST.                                                    */
 /**************************************************************************/
 
-static int GenIsEdgeInvariant( m, e )
-PNODE m;
-PEDGE e;
+static int GenIsEdgeInvariant(PNODE m, PEDGE e)
 {
   register PNODE c;
 
@@ -883,10 +867,7 @@ PEDGE e;
 /*          WITHIN m'S CONFINES.                                          */
 /**************************************************************************/
 
-static int IsNextDimWellFormed( d, m, i )
-int   d;
-PNODE m;
-PEDGE i;
+static int IsNextDimWellFormed(int d, PNODE m, PEDGE i)
 {
   register PNODE n;
   register PEDGE e;
@@ -1032,10 +1013,7 @@ DoTheRest:
 /*          BEING CONSIDERED IS d.                                        */
 /**************************************************************************/
 
-static int IsBIPWellFormed( d, m, i )
-int   d;
-PNODE m;
-PEDGE i;
+static int IsBIPWellFormed(int d, PNODE m, PEDGE i)
 {
   register PEDGE e;
   register PNODE n;
@@ -1151,8 +1129,7 @@ PEDGE i;
 /* PURPOSE: RETURN TRUE IF INFO i IS A CANDIDATE FOR POINTER SWAP.        */
 /**************************************************************************/
 
-static int IsPSCandidate( i )
-PINFO  i;
+static int IsPSCandidate(PINFO i)
 {
   if ( IsBasic( i ) )
     return( TRUE );
@@ -1172,8 +1149,7 @@ PINFO  i;
 /* PURPOSE: RETURN TRUE IF EDGE e IS A GROUND EDGE.                       */
 /**************************************************************************/
 
-static int IsGround( e )
-PEDGE e;
+static int IsGround(PEDGE e)
 {
   if ( e->iport != 0 ) 
     return( FALSE );
@@ -1194,8 +1170,7 @@ PEDGE e;
 /* PURPOSE: DETERMINE IF THE AGGREGATE CARRIED ON EDGE e IS READ-ONLY.    */
 /**************************************************************************/
 
-static int IsEdgeReadOnly( e )
-PEDGE  e;
+static int IsEdgeReadOnly(PEDGE e)
 {
   register PNODE f;
   register PNODE n;
@@ -1301,9 +1276,7 @@ PEDGE  e;
 /*          READ-ONLY.                                                    */
 /**************************************************************************/
 
-static int AreAllReadOnly( n, eport )
-PNODE  n;
-int    eport;
+static int AreAllReadOnly(PNODE n, int eport)
 {
   register PEDGE e;
 
@@ -1326,9 +1299,7 @@ int    eport;
 /*          IF SO, RETURN IT.                                             */
 /**************************************************************************/
 
-static PEDGE GetWriteEdge( n, eport )
-PNODE n;
-int   eport;
+static PEDGE GetWriteEdge(PNODE n, int eport)
 {
   register PEDGE e;
   register PEDGE we;
@@ -1368,9 +1339,7 @@ int   eport;
 /* PURPOSE: RETURN TRUE IF MAlloc NODE ma IS INVARIANT WITH RESPECT TO m. */
 /**************************************************************************/
 
-static int IsMAllocInvariant( m, ma )
-PNODE m;
-PNODE ma;
+static int IsMAllocInvariant(PNODE m, PNODE ma)
 {
   register PEDGE i;
 
@@ -1477,9 +1446,7 @@ PNODE ma;
 /**************************************************************************/
 
 
-void PointerSwap( m, g )
-PNODE m;
-PNODE g;
+void PointerSwap(PNODE m, PNODE g)
 {
   register PNODE n;
   register PEDGE e;
@@ -1949,9 +1916,7 @@ DoTheRest:
 /* PURPOSE: CALL IsPMakred RECORDING RECORDING THE ATTEMPTS AND RESULTS.  */
 /**************************************************************************/
 
-static int MyIsPMarked( n, eport )
-PNODE n;
-int   eport;
+static int MyIsPMarked(PNODE n, int eport)
 {
   register int st;
 
@@ -1970,8 +1935,7 @@ int   eport;
 /* PURPOSE: DRIVE Xmark THROUGH GRAPH g.                                  */
 /**************************************************************************/
 
-static void DriveXmark( g )
-PNODE g;
+static void DriveXmark(PNODE g)
 {
   register PNODE n;
 
@@ -2026,9 +1990,7 @@ PNODE g;
 /*          xmarkS USED LATER DURING POINTER SWAP ANALSYS.                */
 /**************************************************************************/
 
-static void FixBRecordOperators( g, ok )
-PNODE g;
-int   ok;
+static void FixBRecordOperators(PNODE g, int ok)
 {
   register PNODE n;
   register PEDGE i;
@@ -2158,7 +2120,7 @@ int   ok;
 /* PURPOSE: WRITE PREBUILD OPTIMIZATION FEEDBACK TO stderr.               */
 /**************************************************************************/
 
-void WritePrebuildInfo()
+void WritePrebuildInfo(void)
 {
 /*  FPRINTF( infoptr2, "\n **** PREBUILD OPTIMIZATIONS\n\n" );
   FPRINTF( infoptr, " Basic Record Node Conversions:        %d\n", brcnt  );
@@ -2207,9 +2169,7 @@ void WritePrebuildInfo()
 /*          WITH EXPORT PORT NUMBER eport.                                */
 /**************************************************************************/
 
-static void ZeroRCPragmas( n, eport )
-PNODE n;
-int   eport;
+static void ZeroRCPragmas(PNODE n, int eport)
 {
   register PEDGE e;
 
@@ -2232,8 +2192,7 @@ int   eport;
 /*          SAME AS THAT DONE BY GetBIPType.                              */
 /**************************************************************************/
 
-static void ModifyBIP( e )
-PEDGE e;
+static void ModifyBIP(PEDGE e)
 {
   register PNODE src;
   register PNODE rt;
@@ -2354,8 +2313,7 @@ DoIt:
 /* PURPOSE: MODIFY THE BIP OF REDUCE CATENATE VALUE v.                    */
 /**************************************************************************/
 
-static void ModifyRedAT( v )
-PEDGE v;
+static void ModifyRedAT(PEDGE v)
 {
   register PEDGE ge;
   register PEDGE e;
@@ -2388,8 +2346,7 @@ PEDGE v;
 /*          CATENATE VALUE v.                                             */
 /**************************************************************************/
 
-static int GetRedATType( v )
-PEDGE v;
+static int GetRedATType(PEDGE v)
 {
   register PNODE sg;
   register PEDGE e2;
@@ -2454,8 +2411,7 @@ PEDGE v;
 /* PURPOSE: RETURN THE BIP TYPE OF AT-SUBGRAPH ROOTED BY EDGE e.          */
 /**************************************************************************/
 
-static int GetBIPType( e )
-PEDGE e;
+static int GetBIPType(PEDGE e)
 {
   register PNODE src;
   register int   t1;
@@ -2583,14 +2539,13 @@ DoIt:
 /*          EDGE lb AND DVI NODE type DVItype and DV NODE TYPE DVtype.    */
 /**************************************************************************/
 
-static void ProcessBIP( n, e1, e2, m, lb, DVItype, DVtype )
-PNODE n;
-PEDGE e1;
-PEDGE e2;
-PEDGE m;
-PEDGE lb;
-int   DVItype;
-int   DVtype;
+static void ProcessBIP(PNODE n,
+                       PEDGE e1,
+                       PEDGE e2,
+                       PEDGE m,
+                       PEDGE lb,
+                       int DVItype,
+                       int DVtype)
 {
   register int   ok;
   register int   t1;
@@ -2675,9 +2630,7 @@ int   DVtype;
 /* PURPOSE: RETURN THE NEAREST DECENDENT OF EXPORT eport OF NODE n.       */
 /**************************************************************************/
 
-static PNODE FindNearestDecendent( n, eport )
-PNODE n;
-int   eport;
+static PNODE FindNearestDecendent(PNODE n, int eport)
 {
   register PEDGE e;
   register PEDGE ee;
@@ -2712,8 +2665,7 @@ int   eport;
 /*          I's TYPE MUST BE INTEGER.                                     */
 /**************************************************************************/
 
-static int IsRagged( i )
-PEDGE i;
+static int IsRagged(PEDGE i)
 {
   register PNODE src;
   register PEDGE ii;
@@ -2765,8 +2717,7 @@ PEDGE i;
 /* PURPOSE: REMOVE RAGGED INVARIANTS FROM SUBGRAPH g.                     */
 /**************************************************************************/
 
-static void MoveRaggedInvariants( g )
-PNODE g;
+static void MoveRaggedInvariants(PNODE g)
 {
   register PNODE n;
   register PNODE sn;
@@ -2832,8 +2783,7 @@ PNODE g;
 /* PURPOSE: OPTIMIZE THE BUILD-IN-PLACE SUBGRAPHS IN GRAPH g.             */
 /**************************************************************************/
 
-static void IdentifyRaggedMemAllocs( g )
-PNODE g;
+static void IdentifyRaggedMemAllocs(PNODE g)
 {
   register PNODE n;
   register PNODE raggednode;
@@ -2897,8 +2847,7 @@ PNODE g;
 /* PURPOSE: OPTIMIZE THE BUILD-IN-PLACE SUBGRAPHS IN GRAPH g.             */
 /**************************************************************************/
 
-void OptimizeBIPs( g )
-PNODE g;
+void OptimizeBIPs(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -3036,8 +2985,7 @@ MoveOn:
 /*          RESIDE IN APPOSING SELECT ARMS AND CLEAN THE TRANSFORMATIONS. */
 /**************************************************************************/
 
-static void CombineAndHoistMemAllocs( g )
-PNODE g;
+static void CombineAndHoistMemAllocs(PNODE g)
 {
   register PNODE n;
   register PNODE an;
@@ -3298,7 +3246,7 @@ PNODE g;
 /*          OF SCALARS TO TYPE BRECORD (BASIC RECORD).                    */
 /**************************************************************************/
 
-void If2Prebuild0()
+void If2Prebuild0(void)
 {
   register PINFO ii;
   register PINFO i;
@@ -3357,7 +3305,7 @@ Abort:
 /* PURPOSE: APPLY AGGREGATE PREBUILD OPTIMIZATIONS PRIOR TO NODE YANKING. */
 /**************************************************************************/
 
-void If2Prebuild1()
+void If2Prebuild1(void)
 {
   register PNODE f;
 
@@ -3392,7 +3340,7 @@ void If2Prebuild1()
 /* PURPOSE: APPLY AGGREGATE PREBUILD OPTIMIZATIONS ON YANKED GRAPHS.      */
 /**************************************************************************/
 
-void If2Prebuild2()
+void If2Prebuild2(void)
 {
   register PNODE f;
 

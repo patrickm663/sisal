@@ -49,8 +49,7 @@ static SCOPE scopes[MAX_SCOPE];                            /* SCOPE STACK */
 /*             ASSIGN THE SAME NUMBER TO e2'S IMPORT PORT.                */
 /**************************************************************************/
 
-static PEDGE CopyExportsForThreading( n1 )
-PNODE n1;
+static PEDGE CopyExportsForThreading(PNODE n1)
 {
     register PEDGE e1;
     register PEDGE e2;
@@ -97,9 +96,7 @@ PNODE n1;
 /*          ARE REMOVED.                                                  */
 /**************************************************************************/
 
-static void CombineGNodes( g1, n1 )
-PNODE g1;
-PNODE n1;
+static void CombineGNodes(PNODE g1, PNODE n1)
 {
     register PNODE n2;
     register PEDGE e;
@@ -166,8 +163,7 @@ DoThreading:
 /*          SUCCESS OF UPDATE-IN-PLACE.                                   */
 /**************************************************************************/
 
-static int IsGCSECandidate( n )
-PNODE n;
+static int IsGCSECandidate(PNODE n)
 {
     register PEDGE e;
 
@@ -199,8 +195,7 @@ PNODE n;
 /*          CONSIDERED.                                                   */
 /**************************************************************************/
 
-static void RemoveGCses( g )
-PNODE g;
+static void RemoveGCses(PNODE g)
 {
     register PNODE n;
     register PNODE sn;
@@ -242,7 +237,7 @@ PNODE g;
 /* PURPOSE: PRINT INFORMATION GATHERED DURING GCSE TO stderr.             */
 /**************************************************************************/
 
-void WriteGCseInfo()
+void WriteGCseInfo(void)
 {
     FPRINTF( infoptr, "\n **** GLOBAL COMMON NODE ELIMINATION\n\n" );
     FPRINTF( infoptr, " Select Subgraph Movements:  %d\n", ccnt   );
@@ -262,8 +257,7 @@ void WriteGCseInfo()
 /*          NON-VECTOR MACHINES.                                          */
 /**************************************************************************/
 
-static void DoAntiGCse( g )
-PNODE g;
+static void DoAntiGCse(PNODE g)
 {
   register PNODE sg;
   register PNODE n;
@@ -487,8 +481,7 @@ PNODE g;
 /*          IMPROVE CHANCES FOR INVARIANT REMOVAL AND CSE.                */
 /**************************************************************************/
 
-void OptRemoveSCses( g )
-PNODE g;
+void OptRemoveSCses(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -595,7 +588,7 @@ PNODE g;
 /*          COMMON SUBEXPRESSIONS IN ALL FUNCTION GRAPHS.                 */
 /**************************************************************************/
 
-void If1GCse()
+void If1GCse(void)
 {
   register PNODE f;
 

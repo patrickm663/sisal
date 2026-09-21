@@ -18,9 +18,7 @@
 /**************************************************************************/
 
 
-void LinkAdeExport( src, a )
-PNODE src;
-PADE  a;
+void LinkAdeExport(PNODE src, PADE a)
 {
   a->src = src;
 

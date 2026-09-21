@@ -15,10 +15,7 @@
 /**************************************************************************/
 /* PURPOSE:  Traverses and writes out information for loops.              */
 /**************************************************************************/
-void WriteTheLMap( lvl, plvl, g )
-int   lvl;
-int   plvl;
-PNODE g;
+void WriteTheLMap(int lvl, int plvl, PNODE g)
 {
   register PNODE n;
 

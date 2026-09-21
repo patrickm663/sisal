@@ -43,7 +43,7 @@
 
 #define HashP(First,Second)      ((First-'a')*26+(Second))
 
-void ReadPragmas()
+void ReadPragmas(void)
 {
   register char *name;
   register int   ThisLine;

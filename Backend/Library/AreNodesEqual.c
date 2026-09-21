@@ -17,9 +17,7 @@
 /*          AND FALSE IF THEY ARE NOT.                                    */
 /**************************************************************************/
 
-int AreNodesEqual( n1, n2 )
-PNODE n1;
-PNODE n2;
+int AreNodesEqual(PNODE n1, PNODE n2)
 {
   register PEDGE i1;
   register PEDGE i2;

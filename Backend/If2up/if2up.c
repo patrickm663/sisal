@@ -53,8 +53,7 @@ int   cmig   = 0;               /* COUNT OF MIGRATED NODES                */
 /*          DEPENDENTS.                                                   */
 /**************************************************************************/
 
-void If2Up( sdbx )
-int sdbx;
+void If2Up(int sdbx)
 {
     If2CallGraph();
     If2NoOp();

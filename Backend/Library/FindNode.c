@@ -21,9 +21,7 @@
 /*          AND RETURNED.                                                 */
 /**************************************************************************/
 
-PNODE FindNode( label, type )
-int label;
-int type;
+PNODE FindNode(int label, int type)
 {
   register PNODE n;
 

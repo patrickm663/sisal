@@ -17,8 +17,7 @@ static int      PatchCount = 0;
 /**************************************************************************/
 /* PURPOSE: True iff the numbered patch is active.                        */
 /**************************************************************************/
-int UsingPatch(P)
-     int        P;
+int UsingPatch(int P)
 {
   int           i;
 
@@ -32,8 +31,7 @@ int UsingPatch(P)
 /**************************************************************************/
 /* PURPOSE:  Add a patch to the list of active patches.                   */
 /**************************************************************************/
-void AddPatch(P)
-     int        P;
+void AddPatch(int P)
 {
   if ( PatchCount > sizeof(Patches)/sizeof(Patches[0]) ) {
     Error1("Too many patches being applied");

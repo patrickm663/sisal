@@ -17,10 +17,7 @@
 /*          oport TO nport.                                               */
 /**************************************************************************/
 
-void ChangeImportPorts( n, oport, nport )
-PNODE n;
-int   oport;
-int   nport;
+void ChangeImportPorts(PNODE n, int oport, int nport)
 {
   register PEDGE i;
 

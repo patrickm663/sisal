@@ -41,8 +41,7 @@ static int              IDPool = 0;
 /**************************************************************************/
 /* PURPOSE:  Parse commands for the tracer function                       */
 /**************************************************************************/
-void ParseTracerCommand(p)
-     char       *p;
+void ParseTracerCommand(char *p)
 {
   int  len = strlen(p);
 
@@ -131,12 +130,11 @@ void ParseTracerCommand(p)
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
 static void
-TraceDisplay(Entry,args,writer,f,ID)
-     TraceTableEntry    *Entry;
-     POINTER            args;
-     void               ((*writer)(POINTER));
-     char               *f;
-     int                *ID;
+TraceDisplay(TraceTableEntry *Entry,
+             POINTER args,
+             void ((*writer)(POINTER)),
+             char *f,
+             int *ID)
 {
   FILE                  *HoldFD;
 
@@ -182,12 +180,11 @@ TraceDisplay(Entry,args,writer,f,ID)
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
 static void
-TraceInteractive(Entry,args,writer,f,ID)
-     TraceTableEntry    *Entry;
-     POINTER            args;
-     void               ((*writer)(POINTER));
-     char               *f;
-     int                *ID;
+TraceInteractive(TraceTableEntry *Entry,
+                 POINTER args,
+                 void ((*writer)(POINTER)),
+                 char *f,
+                 int *ID)
 {
   TraceTableEntry       *ThisEntry;
   char                  com[256];
@@ -358,11 +355,7 @@ TraceInteractive(Entry,args,writer,f,ID)
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
 void
-_Tracer_(args,writer,f,ID)
-     POINTER    args;
-     void       ((*writer)(POINTER));
-     char       *f;
-     int        *ID;
+_Tracer_(POINTER args, void ((*writer)(POINTER)), char *f, int *ID)
 {
   TraceTableEntry       *Entry;
 

@@ -35,8 +35,7 @@ int agg = 0;
 /*          MESSAGE IS PRINTED IF OVERFLOW OCCURS.                        */
 /**************************************************************************/
 
-void PushAtNode( at )
-PNODE at;
+void PushAtNode(PNODE at)
 {
     if ( (++attop) >= AT_STACK_SIZE )
         Error2( "PushAtNode:", "AT-NODE STACK OVERFLOW" );
@@ -53,7 +52,7 @@ PNODE at;
 /*          IS RETURNED.                                                  */
 /**************************************************************************/
 
-PNODE PopAtNode()
+PNODE PopAtNode(void)
 {
     if ( attop < 0 )
         return( NULL );
@@ -72,9 +71,7 @@ PNODE PopAtNode()
 /*          min IS < TO THE LEVEL OF RPOINT.                              */
 /**************************************************************************/
 
-PNODE ReferencePoint( rpoint, min )
-PNODE rpoint;
-int   min;
+PNODE ReferencePoint(PNODE rpoint, int min)
 {
     register PNODE n;
     register PNODE nn;
@@ -125,10 +122,7 @@ int   min;
 /*          LEVEL OF BOTH n1 AND n2 ARE <= TO THAT OF rpoint.             */
 /**************************************************************************/
 
-PNODE MaxNodeInDFO( rpoint, n1, n2 )
-PNODE rpoint;
-PNODE n1;
-PNODE n2;
+PNODE MaxNodeInDFO(PNODE rpoint, PNODE n1, PNODE n2)
 {
     register PNODE n;
 
@@ -166,10 +160,7 @@ PNODE n2;
 /*          NODE rpoint SERVES AS THE STARTING POINT IN THE SEARCH.       */
 /**************************************************************************/
 
-PNODE MaxSourceInDFO( rpoint, e1, e2 )
-PNODE rpoint;
-PEDGE e1;
-PEDGE e2;
+PNODE MaxSourceInDFO(PNODE rpoint, PEDGE e1, PEDGE e2)
 {
     if ( IsConst( e1 ) ) {
         if ( IsConst( e2 ) )
@@ -200,8 +191,7 @@ PEDGE e2;
 /*          MORE SUCCESSFUL.                                              */
 /**************************************************************************/
 
-static void MoveNodesLeft( g )
-PNODE g;
+static void MoveNodesLeft(PNODE g)
 {
     register PNODE n;
     register PNODE sn;
@@ -253,7 +243,7 @@ PNODE g;
         }
 }
 
-void WriteAggregateInfo ()
+void WriteAggregateInfo (void)
 {
         FPRINTF (infoptr, "\n **** AGGREGATE INFORMATION\n\n");
         FPRINTF (infoptr, " Total Number of Aggregates:                    %d\n", tagg);
@@ -267,7 +257,7 @@ void WriteAggregateInfo ()
 /* PURPOSE: TRY TO PREALLOCATE STORAGE FOR ARRAYS IN ALL FUNCTION GRAPHS. */
 /**************************************************************************/
 
-void If2Mem()
+void If2Mem(void)
 {
     register PNODE f;
 

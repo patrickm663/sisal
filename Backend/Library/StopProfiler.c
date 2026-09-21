@@ -16,8 +16,7 @@
 /*          WITH msg TO stderr.                                           */
 /**************************************************************************/
 
-void StopProfiler( msg )
-char *msg;
+void StopProfiler(char *msg)
 {
   if ( prof )
     FPRINTF( stderr, "PROFILE [%s,%s] = %f seconds\n",

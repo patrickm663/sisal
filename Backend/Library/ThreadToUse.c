@@ -17,12 +17,7 @@
 /*          dst IMPORT PORT iport; THE THREAD TYPE IS edgeinfo.           */
 /**************************************************************************/
 
-void ThreadToUse( src, eport, dst, iport, edgeinfo )
-PNODE src;
-PNODE dst;
-int   eport;
-int   iport;
-PINFO edgeinfo;
+void ThreadToUse(PNODE src, int eport, PNODE dst, int iport, PINFO edgeinfo)
 {
   register PNODE sg;
 

@@ -29,8 +29,7 @@ static char *sys_returns[RETURNS_CODE_LAST-RETURNS_CODE_FIRST+1] = {
 /**************************************************************************/
 
 int
-FindReturnsCode( returns )
-  char *returns;
+FindReturnsCode(char *returns)
 {
   int   code = RETURNS_USER;
 
@@ -81,8 +80,7 @@ FindReturnsCode( returns )
 /* PURPOSE: FIND THE STRING CORRESPONDING TO A RETURNS CODE.              */
 /**************************************************************************/
 
-char* FindReturnsString( returns_code )
-  int returns_code;
+char* FindReturnsString(int returns_code)
 {
   if (returns_code>=RETURNS_CODE_FIRST && returns_code<=RETURNS_CODE_LAST)
       return sys_returns[returns_code];

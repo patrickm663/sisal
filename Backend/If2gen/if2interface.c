@@ -28,7 +28,7 @@ static int acnt  = 0;          /* COUNT OF INTERFACE AGGREGATES           */
 /* PURPOSE: WRITE INTERFACE INFORMATION TO stderr.                        */
 /**************************************************************************/
 
-void WriteInterfaceInfo()
+void WriteInterfaceInfo(void)
 {
   FPRINTF( infoptr, "\n **** INTERFACE OPTIMIZATIONS\n\n" );
   FPRINTF( infoptr, " Array Input Arguments:           %d\n", acnt  );
@@ -42,8 +42,7 @@ void WriteInterfaceInfo()
 /* PURPOSE: RETURN THE COMPONENT TYPE STRUCTURE FOR ARRAY i.              */
 /**************************************************************************/
 
-static PINFO GetComponentType( i )
-PINFO i;
+static PINFO GetComponentType(PINFO i)
 {
   register PINFO ii;
 
@@ -74,8 +73,7 @@ PINFO i;
 /* PURPOSE: RETURN THE DIMENSIONALITY OF ARRAY i.                         */
 /**************************************************************************/
 
-static int GetDim( i )
-PINFO i;
+static int GetDim(PINFO i)
 {
   register PINFO ii;
   register int   c;
@@ -109,8 +107,7 @@ PINFO i;
 /* PURPOSE: RETURN THE SOURCE LANGUAGE OF FUNCTION f.                     */
 /**************************************************************************/
 
-int GetLanguage( f )
-PNODE f;
+int GetLanguage(PNODE f)
 {
   if ( IsIGraph( f ) ) {
     if ( f->mark == 'f' ) /* NEW CANN 2/92 */
@@ -137,10 +134,7 @@ PNODE f;
 /**************************************************************************/
 
 
-char *BindInterfaceName( nm, lang, mark )
-char *nm;
-int   lang;
-char  mark;
+char *BindInterfaceName(char *nm, int lang, int mark)
 {
   register char *p;
            char buf[100];
@@ -169,10 +163,7 @@ char  mark;
 }
 
 
-static PEDGE FindDescriptor( n, f, me )
-PNODE n;
-PNODE f;
-int   me;
+static PEDGE FindDescriptor(PNODE n, PNODE f, int me)
 {
   register PEDGE i;
   register PINFO out;
@@ -219,10 +210,7 @@ int   me;
 /* PURPOSE: PRINT INTERFACE INVOCATION n OF FUNCTION f TO output.         */
 /**************************************************************************/
 
-void PrintInterfaceCall( indent, n, f )
-int   indent;
-PNODE n;
-PNODE f;
+void PrintInterfaceCall(int indent, PNODE n, PNODE f)
 {
   register PEDGE i;
   register int   c;
@@ -476,14 +464,13 @@ PNODE f;
 /*          output.                                                       */
 /**************************************************************************/
 
-static void PrintWriteArrayOp( indent, dst, src, dd, d, i, CompType )
-int    indent;
-char  *dst;
-char  *src;
-int    dd;
-int    d;
-PINFO  i;
-PINFO  CompType;
+static void PrintWriteArrayOp(int indent,
+                              char *dst,
+                              char *src,
+                              int dd,
+                              int d,
+                              PINFO i,
+                              PINFO CompType)
 {
   char nsrc[100];
   char ndst[100];
@@ -581,8 +568,7 @@ PINFO  CompType;
 /* PURPOSE: PRINT INTERFACE ARRAY WRITE ROUTINES FOR FUNCTION f TO output.*/
 /**************************************************************************/
 
-static void PrintIntWriteRoutine( i )
-register PINFO i;
+static void PrintIntWriteRoutine(register PINFO i)
 {
   register PINFO CompType;
   register int   d;
@@ -619,14 +605,13 @@ register PINFO i;
 /*          output.                                                       */
 /**************************************************************************/
 
-static void PrintReadArray( indent, src, dst, dd, d, i, CompType )
-int    indent;
-char  *src;
-char  *dst;
-int    dd;
-int    d;
-PINFO  i;
-PINFO  CompType;
+static void PrintReadArray(int indent,
+                           char *src,
+                           char *dst,
+                           int dd,
+                           int d,
+                           PINFO i,
+                           PINFO CompType)
 {
   char nsrc[100];
   char ndst[100];
@@ -734,8 +719,7 @@ PINFO  CompType;
 /* PURPOSE: PRINT INTERFACE ARRAY READ ROUTINE TO output.                 */
 /**************************************************************************/
 
-static void PrintReadRoutine( i )
-register PINFO i;
+static void PrintReadRoutine(register PINFO i)
 {
   register PINFO CompType;
   register int   d;
@@ -769,9 +753,7 @@ register PINFO i;
 /* PURPOSE: RETURN TRUE IF AGGREGATE eport OF NODE n IS READ-ONLY.        */
 /**************************************************************************/
 
-int GenIsReadOnly( n, eport )
-PNODE n;
-int   eport;
+int GenIsReadOnly(PNODE n, int eport)
 {
   register PEDGE e;
   register PNODE f;
@@ -885,10 +867,7 @@ int   eport;
 /* PURPOSE: PRINT INTERFACE READ OPERATION FOR f (NAMED nm) TO output.    */
 /**************************************************************************/
 
-static void PrintIntReadOp( nm, f, lang )
-char  *nm;
-PNODE  f;
-int    lang;
+static void PrintIntReadOp(char *nm, PNODE f, int lang)
 {
   register PINFO  i;
   register int    c;
@@ -938,9 +917,7 @@ int    lang;
 /* PURPOSE: PRINT INTERFACE WRITE OPERATION FOR f TO output.              */
 /**************************************************************************/
 
-static void PrintIntWriteOp( f, lang )
-PNODE f;
-int   lang;
+static void PrintIntWriteOp(PNODE f, int lang)
 {
   register PINFO  i;
   register int    c;
@@ -974,10 +951,7 @@ int   lang;
 /* PURPOSE: PRINT INTERFACE FUNCTION HEADER FOR f WITH NAME nm TO output. */
 /**************************************************************************/
 
-static void PrintInterfaceHeader( nm, f, lang )
-char  *nm;
-PNODE  f;
-int    lang;
+static void PrintInterfaceHeader(char *nm, PNODE f, int lang)
 {
   register PINFO  i;
   register int    c;
@@ -1088,7 +1062,7 @@ int    lang;
 /* PURPOSE: PRINT INTERFACE UTILITIES TO output.                          */
 /**************************************************************************/
 
-void PrintInterfaceUtilities()
+void PrintInterfaceUtilities(void)
 {
   register PINFO i;
 
@@ -1112,8 +1086,7 @@ void PrintInterfaceUtilities()
 /* PURPOSE: PRINT INTERFACE FUNCTION FOR SISAL FUNCTION f.                */
 /**************************************************************************/
 
-void PrintInterface( f )
-PNODE f;
+void PrintInterface(PNODE f)
 {
   register PINFO i;
   register int   c;

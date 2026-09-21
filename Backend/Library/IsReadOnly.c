@@ -17,9 +17,7 @@
 /*          IS READ ONLY.                                                 */
 /**************************************************************************/
 
-int IsReadOnly( n, eport )
-PNODE n;
-int   eport;
+int IsReadOnly(PNODE n, int eport)
 {
   register PEDGE e;
   register PNODE sg;

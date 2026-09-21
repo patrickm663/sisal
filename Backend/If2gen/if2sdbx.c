@@ -33,7 +33,7 @@ static char *cfn = NULL;
 /* PURPOSE: PRINT THE SDBX FUNCTION LIST TO output.                       */
 /**************************************************************************/
 
-void PrintSdbxFunctionList()
+void PrintSdbxFunctionList(void)
 {
   register PNODE  f;
   register int    c;
@@ -69,8 +69,7 @@ void PrintSdbxFunctionList()
 /*          e.                                                            */
 /**************************************************************************/
 
-static void AssignSdbxOffset( e )
-PEDGE e;
+static void AssignSdbxOffset(PEDGE e)
 {
   register int   i;
   register char *nm;
@@ -99,8 +98,7 @@ PEDGE e;
 /* PURPOSE: ASSIGN SCOPE POSITIONS TO THE NAMES DEFINED IN GRAPH g.       */
 /**************************************************************************/
 
-static void AssignScopePositions( g )
-PNODE g;
+static void AssignScopePositions(PNODE g)
 {
   register PNODE  n;
   register PNODE  sg;
@@ -207,8 +205,7 @@ PNODE g;
 /* PURPOSE: BUILD AND PRINT THE SDBX SCOPE DATA BASE FOR GRAPH g.         */
 /**************************************************************************/
 
-void BuildAndPrintSdbxScope( f )
-PNODE f;
+void BuildAndPrintSdbxScope(PNODE f)
 {
   register int i;
 
@@ -246,8 +243,7 @@ PNODE f;
 /**************************************************************************/
 
 
-void UpdateSdbxScopeNames( n )
-PNODE n;
+void UpdateSdbxScopeNames(PNODE n)
 {
   register PEDGE  e;
   register PEDGE  ii;
@@ -405,8 +401,7 @@ PNODE n;
 /**************************************************************************/
 
 
-void SaveSdbxState( n )
-PNODE n;
+void SaveSdbxState(PNODE n)
 {
   if ( !sdbx ) /* GUT CHECK!!! */
     return;

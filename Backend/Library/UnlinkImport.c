@@ -16,8 +16,7 @@
 /* PURPOSE: UNLINK IMPORT i FROM ITS DESTINATION NODE's IMPORT LIST.      */
 /**************************************************************************/
 
-void UnlinkImport( i )
-PEDGE i;
+void UnlinkImport(PEDGE i)
 {
   echange = TRUE;
 

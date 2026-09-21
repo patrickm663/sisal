@@ -26,10 +26,7 @@
 /*          OF rpl's NoOp NODE, MAKING THE APPROPRIATE PRAGMA CHANGES.    */
 /**************************************************************************/
 
-static void ChangeSourceNode( osrc, e, rpl )
-PNODE osrc;
-PEDGE e;
-PNODE rpl;
+static void ChangeSourceNode(PNODE osrc, PEDGE e, PNODE rpl)
 {
     register PEDGE ee;
 
@@ -74,9 +71,7 @@ PNODE rpl;
 /*          UNDO THE CSE (NOT IMPLEMENTED YET).                           */
 /**************************************************************************/
 
-static void FlushCompoundNodes( rpl, i )
-PNODE rpl;
-PEDGE i;
+static void FlushCompoundNodes(PNODE rpl, PEDGE i)
 {
     register PEDGE e;
     register PEDGE ii;
@@ -183,7 +178,7 @@ PEDGE i;
 /*          EXPORT WITH WRITE CLASSIFICATION ARE CONSIDERED.              */
 /**************************************************************************/
 
-void If2Replace()
+void If2Replace(void)
 {
     register PNODE n;
     register PNODE rpl;

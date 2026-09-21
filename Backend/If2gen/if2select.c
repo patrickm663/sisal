@@ -25,9 +25,7 @@
 /* PURPOSE: PRINT Select NODE n TO output.                                */
 /**************************************************************************/
 
-void PrintSelect( indent, n )
-int   indent;
-PNODE n;
+void PrintSelect(int indent, PNODE n)
 {
     PrintIndentation( indent );
 
@@ -112,9 +110,7 @@ DyadicFinish:
 /* PURPOSE: PRINT TagCase NODE n TO output.                               */
 /**************************************************************************/
 
-void PrintTagCase( indent, n )
-int   indent;
-PNODE n;
+void PrintTagCase(int indent, PNODE n)
 {
   register PALIST c;
   register PNODE sg;

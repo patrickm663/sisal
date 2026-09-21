@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN THE LAST IMPORT or EXPORT TO NODE n.                   */
 /**************************************************************************/
 
-int FindLargestPort( node )
-PNODE node;
+int FindLargestPort(PNODE node)
 {
   register PEDGE edge;
   int largest_port = 0;

@@ -28,9 +28,7 @@ static void PrintFreeOp PROTO((int, PINFO, int, char*));
 /*          IS NOT GENERIC.                                               */
 /**************************************************************************/
 
-static int IsReadOnlyOuter( n, eport )
-PNODE n;
-int   eport;
+static int IsReadOnlyOuter(PNODE n, int eport)
 {
   register PEDGE ee;
   register PEDGE e;
@@ -82,8 +80,7 @@ int   eport;
 /*          IS TRUE, ELSE IT IS MARKED FOR PARALLEL DEALLOCATION (touch1).*/
 /**************************************************************************/
 
-char *GetFreeName( i )
-PINFO i;
+char *GetFreeName(PINFO i)
 {
   register char *nm;
 
@@ -126,11 +123,10 @@ PINFO i;
 /*          PARALLEL FORM.                                                */
 /**************************************************************************/
 
-static void PrintFreeUnion( indent, u, par, src )
-int    indent;
-PINFO  u;
-char  *src;
-int    par; /* TRUE ASSUMED!!! */
+static void PrintFreeUnion(int indent,
+                           PINFO u,
+                           int par,  /* TRUE ASSUMED!!! */
+                           char *src)
 {
   register PINFO i;
   register int   c;
@@ -222,11 +218,7 @@ int    par; /* TRUE ASSUMED!!! */
 /* PURPOSE: PRINT FREE RECORD OPERATION r FOR src TO OUTPUT.              */
 /**************************************************************************/
 
-static void PrintFreeRecord( indent, r, par, src )
-int    indent;
-PINFO  r;
-int    par;
-char  *src;
+static void PrintFreeRecord(int indent, PINFO r, int par, char *src)
 {
   register PINFO i;
   register int   c;
@@ -299,11 +291,7 @@ char  *src;
 /*          FORM IF par IS TRUE.                                          */
 /**************************************************************************/
 
-static void PrintFreeArray( indent, i, par, src )
-int    indent;
-PINFO  i;
-int    par;
-char  *src;
+static void PrintFreeArray(int indent, PINFO i, int par, char *src)
 {
   char  buf[100];
 
@@ -432,11 +420,7 @@ char  *src;
 /* PURPOSE: PRINT THE FREE OPERATION i FOR src TO output.                 */
 /**************************************************************************/
 
-static void PrintFreeOp( indent, i, par, src )
-int    indent;
-PINFO  i;
-int    par;
-char  *src;
+static void PrintFreeOp(int indent, PINFO i, int par, char *src)
 {
   switch( i->type ) {
     case IF_UNION:
@@ -464,13 +448,10 @@ char  *src;
 /*          TRUE.                                                         */
 /**************************************************************************/
 
-static void PrintFreeRoutine( i, par )
-PINFO i;
-int   par;
+static void PrintFreeRoutine(PINFO i, int par)
 {
-  FPRINTF( output, "\nstatic void %s( ptr )\n", (par)? i->fname2 : i->fname1 );
-  FPRINTF( output, "%s ptr;\n", i->tname );
-  FPRINTF( output, "{\n" );
+  FPRINTF( output, "\nstatic void %s( %s ptr )\n{\n",
+          (par)? i->fname2 : i->fname1, i->tname );
   FPRINTF( output, "  register int RefCount;\n" );
 
   if ( !par )
@@ -492,7 +473,7 @@ int   par;
 /*          SYMBOL TABLE ENTRIES WITH touch2 EQUAL TO TRUE ARE PRINTED.   */
 /**************************************************************************/
 
-void PrintFreeUtilities()
+void PrintFreeUtilities(void)
 {
   register PINFO i;
 
@@ -524,10 +505,7 @@ void PrintFreeUtilities()
 /*          (NAMED nm) THEIR OUTER DEMENSION OR SCOPE IS READ ONLY.       */
 /**************************************************************************/
 
-void PrintInputDeallocs( nm, indent, f )
-char  *nm;
-int    indent;
-PNODE  f;
+void PrintInputDeallocs(char *nm, int indent, PNODE f)
 {
   register PINFO i;
   register int   eport;
@@ -575,9 +553,7 @@ PNODE  f;
 /* PURPOSE: DEALLOCATE CANDIDATE AGGREGATES EXPORTED FROM FUNCTION f.     */
 /**************************************************************************/
 
-void PrintOutputDeallocs( indent, f )
-int   indent;
-PNODE f;
+void PrintOutputDeallocs(int indent, PNODE f)
 {
   register PINFO i;
   register PEDGE ii;

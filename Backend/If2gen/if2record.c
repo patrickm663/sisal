@@ -25,9 +25,7 @@
 /* PURPOSE: PRINT UNION GET TAG NODE n TO output.                         */
 /**************************************************************************/
 
-void PrintUGetTag( indent, n )
-int   indent;
-PNODE n;
+void PrintUGetTag(int indent, PNODE n)
 {
   PrintIndentation( indent );
   PrintTemp( n->exp );
@@ -44,9 +42,7 @@ PNODE n;
 /*          ASSUMED THE FIRST ENTRY IN THE SUBGRAPHS TAG LIST.            */
 /**************************************************************************/
 
-void PrintUElement( indent, n )
-int   indent;
-PNODE n;
+void PrintUElement(int indent, PNODE n)
 {
     PrintIndentation( indent );
 
@@ -67,9 +63,7 @@ PNODE n;
 /* PURPOSE: PRINT UNION RBuild NODE n TO output.                          */
 /**************************************************************************/
 
-void PrintUBuild( indent, n )
-int   indent;
-PNODE n;
+void PrintUBuild(int indent, PNODE n)
 {
     PrintIndentation( indent );
 
@@ -90,9 +84,7 @@ PNODE n;
 /*          THEN ONLY THE LOCK IS INITIALIZED.                            */
 /**************************************************************************/
 
-void PrintRBuild( indent, n )
-int   indent;
-PNODE n;
+void PrintRBuild(int indent, PNODE n)
 {
     register PEDGE i;
 
@@ -122,9 +114,7 @@ PNODE n;
 /* PURPOSE: PRINT RECORD ELEMENTS NODE n TO output.                       */
 /**************************************************************************/
 
-void PrintRElements( indent, n )
-int   indent;
-PNODE n;
+void PrintRElements(int indent, PNODE n)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -159,9 +149,7 @@ PNODE n;
 /*          AN ATTEMPT IS NOT MADE TO RECYCLE REPLACED AGGREGATES.        */
 /**************************************************************************/
 
-void PrintRReplace( indent, n )
-int   indent;
-PNODE n;
+void PrintRReplace(int indent, PNODE n)
 {
   register PEDGE i;
 
@@ -195,9 +183,7 @@ PNODE n;
 /*          COPYING AND NO MARK ALWAYS RESULTS IN COPYING.                */
 /**************************************************************************/
 
-void PrintRecordNoOp( indent, n )
-int   indent;
-PNODE n;
+void PrintRecordNoOp(int indent, PNODE n)
 {
     register char  *opcode;
     register PINFO  i;
@@ -255,10 +241,7 @@ PNODE n;
 /* PURPOSE: PRINT BRAStore NODE n OF AGatherAT NODE gat TO output.        */
 /**************************************************************************/
 
-void PrintBRAStore( indent, n, gat )
-int   indent;
-PNODE n;
-PNODE gat;
+void PrintBRAStore(int indent, PNODE n, PNODE gat)
 {
   register PNODE l;
   register PEDGE i;
@@ -300,9 +283,7 @@ PNODE gat;
 /* PURPOSE: PRINT BRBuild NODE n TO output.                               */
 /**************************************************************************/
 
-void PrintBRBuild( indent, n )
-int   indent;
-PNODE n;
+void PrintBRBuild(int indent, PNODE n)
 {
   register PEDGE i;
 
@@ -325,9 +306,8 @@ PNODE n;
 /* PURPOSE: PRINT AOptAElement-BRElement PAIR ROOTED BY NODE n TO stderr. */
 /**************************************************************************/
 
-void PrintBROptAElement( indent, n )
-int   indent;
-PNODE n;      /* IFBRElement NODE */
+void PrintBROptAElement(int indent,
+                        PNODE n)  /* IFBRElement NODE */
 {
   register PEDGE e;
   register PEDGE ee;
@@ -421,9 +401,7 @@ PNODE n;      /* IFBRElement NODE */
 /* PURPOSE: PRINT BRElements NODE n TO output.                            */
 /**************************************************************************/
 
-void PrintBRElements( indent, n )
-int   indent;
-PNODE n;
+void PrintBRElements(int indent, PNODE n)
 {
   /*
   register PEDGE e;
@@ -465,9 +443,7 @@ PNODE n;
 /* PURPOSE: PRINT BRReplace NODE n TO output.                             */
 /**************************************************************************/
 
-void PrintBRReplace( indent, n )
-int   indent;
-PNODE n;
+void PrintBRReplace(int indent, PNODE n)
 {
   register PEDGE i;
 
@@ -491,9 +467,7 @@ PNODE n;
 /* PURPOSE: PRINT UNION TAG TEST NODE n TO output.                        */
 /**************************************************************************/
 
-void PrintUTagTest( indent, n )
-int   indent;
-PNODE n;
+void PrintUTagTest(int indent, PNODE n)
 {
   PrintIndentation( indent );
   PrintTemp( n->exp );

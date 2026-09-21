@@ -26,9 +26,7 @@
 /*          RETURN FALSE.  TWO ERROR CONSTANTS ARE NOT CONSIDERED EQUAL.  */
 /**************************************************************************/
 
-int AreConstsEqual( c1, c2 )
-PEDGE c1;
-PEDGE c2;
+int AreConstsEqual(PEDGE c1, PEDGE c2)
 {
   if ( c1->CoNsT == NULL || c2->CoNsT == NULL )
     return( FALSE );

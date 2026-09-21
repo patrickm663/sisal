@@ -17,9 +17,7 @@
 /*          IF THE FIRST LIST IS EMPTY, THE SECOND IS RETURNED.           */
 /**************************************************************************/
 
-PALIST LinkAssocLists( lst1, lst2 )
-PALIST lst1;
-PALIST lst2;
+PALIST LinkAssocLists(PALIST lst1, PALIST lst2)
 {
   register PALIST l;
   register PALIST prev = NULL;

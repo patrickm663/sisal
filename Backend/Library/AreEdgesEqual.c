@@ -28,9 +28,7 @@
 /*          IF THEY ARE NOT EQUAL, FALSE IS RETURNED.                     */
 /**************************************************************************/
 
-int AreEdgesEqual( e1, e2 )
-PEDGE e1;
-PEDGE e2;
+int AreEdgesEqual(PEDGE e1, PEDGE e2)
 {
   if ( ExpandedEqual ) {
     if ( IsConst( e1 ) ^ IsConst( e2 ) ) /* XOR */

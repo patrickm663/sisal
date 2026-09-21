@@ -20,8 +20,7 @@
 /*          NORMALIZATION OF DI.                                          */
 /**************************************************************************/
 
-int CanPropagateConst( i )
-PEDGE i;
+int CanPropagateConst(PEDGE i)
 {
   /* BUG FIX: 4/16/92 */  /* ERROR CONSTANT? */
   if ( IsArray( i->info ) || (i->CoNsT == NULL) )  

@@ -18,7 +18,7 @@ static struct ActRecCache *ARList;
 #endif
 
 
-void InitReadyList()
+void InitReadyList(void)
 {
   register int Index;
 
@@ -67,9 +67,7 @@ void InitReadyList()
 }
 
 
-void RListEnQ( FirstAR, LastAR )
-register struct ActRec *FirstAR;
-register struct ActRec *LastAR;
+void RListEnQ(register struct ActRec *FirstAR, register struct ActRec *LastAR)
 {
   register unsigned  int  NextPid;
   register struct ActRec *CurrAR;
@@ -113,7 +111,7 @@ register struct ActRec *LastAR;
 }
 
 
-struct ActRec *RListDeQ()
+struct ActRec *RListDeQ(void)
 {
   register struct ActRec      *ThisAR;
   register struct ActRecCache *arc;

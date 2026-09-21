@@ -18,7 +18,7 @@
 /*          ALSO SET THE fmem OF EACH MEMBER TO ADDRESS THE FIRST.        */
 /**************************************************************************/
 
-void PointToHead()
+void PointToHead(void)
 {
   register PINFO m;
   register PINFO r;

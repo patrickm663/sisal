@@ -17,9 +17,7 @@
 /*          NODE dst (THE DESTINATION), ELSE RETURN FALSE.                */
 /**************************************************************************/
 
-int IsAdePresent( src, dst )
-PNODE src;
-PNODE dst;
+int IsAdePresent(PNODE src, PNODE dst)
 {
   register PADE a;
 

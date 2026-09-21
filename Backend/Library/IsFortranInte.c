@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN TRUE IF nm IS A FORTRAN INTERFACE FUNCTION.            */
 /**************************************************************************/
 
-int IsFortranInterface( nm )
-char *nm;
+int IsFortranInterface(char *nm)
 {
   register char *p;
   register int   i;

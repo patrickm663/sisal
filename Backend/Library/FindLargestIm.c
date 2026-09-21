@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN THE LARGEST IMPORT TO NODE node.                       */
 /**************************************************************************/
 
-int FindLargestImport( node )
-PNODE node;
+int FindLargestImport(PNODE node)
 {
   register PEDGE edge;
   int largest_port = 0;

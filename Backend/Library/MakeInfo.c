@@ -20,11 +20,7 @@
 /*          LARGEST ENCOUNTERED LABEL IS REMEMBERED.                      */
 /**************************************************************************/
 
-void MakeInfo( label, type, ref1, ref2 )
-int   label;
-int   type;
-int   ref1;
-int   ref2;
+void MakeInfo(int label, int type, int ref1, int ref2)
 {
   register PINFO i;
   register PINFO i1;

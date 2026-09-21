@@ -54,8 +54,7 @@
 /**************************************************************************/
 /* PURPOSE: Give a single node a new identifier                           */
 /**************************************************************************/
-void NewCompoundID(n)
-     PNODE      n;
+void NewCompoundID(PNODE n)
 {
   static int    ID=0;
 
@@ -67,8 +66,7 @@ void NewCompoundID(n)
 /**************************************************************************/
 /* PURPOSE: Recursively assign ID numbers to each compound node.          */
 /**************************************************************************/
-static void AssignIDs(g)
-     PNODE      g;
+static void AssignIDs(PNODE g)
 {
   PNODE         n,subg;
 
@@ -90,7 +88,7 @@ static void AssignIDs(g)
 /*          manipulate them (with the loop report, etc..)                 */
 /**************************************************************************/
 
-void AssignCompoundIDs()
+void AssignCompoundIDs(void)
 {
   PNODE         f;
 

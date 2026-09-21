@@ -28,9 +28,12 @@ int nchange             = 0;
 int CheckForBadEdges    = FALSE; /* Turn edge checking on/off */
 
 
-void PlaceInEntryTable(c) char *c; {}
-void PlaceInFortranTable(c) char *c; {}
-void PlaceInCTable(c) char *c; {}
+void PlaceInEntryTable(char *c)
+{}
+void PlaceInFortranTable(char *c)
+{}
+void PlaceInCTable(char *c)
+{}
 
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
@@ -76,18 +79,15 @@ void PlaceInCTable(c) char *c; {}
                      (cfunct == NULL)? "" : cfunct->G_NAME);    \
 }
 
-void TypeAssignPragmas(p)
-     PINFO      p;
+void TypeAssignPragmas(PINFO p)
 {
   DoAssignPragmas(p);
 }
-void EdgeAssignPragmas(p)
-     PEDGE      p;
+void EdgeAssignPragmas(PEDGE p)
 {
   DoAssignPragmas(p);
 }
-void NodeAssignPragmas(p)
-     PNODE      p;
+void NodeAssignPragmas(PNODE p)
 {
   DoAssignPragmas(p);
 }
@@ -104,23 +104,19 @@ void NodeAssignPragmas(p)
   (x)->cm =  0; \
 }
 
-void PragInitPragmas(p)
-     PRAGS      *p;
+void PragInitPragmas(PRAGS *p)
 {
   DoInitPragmas(p);
 }
-void NodeInitPragmas(p)
-     PNODE      p;
+void NodeInitPragmas(PNODE p)
 {
   DoInitPragmas(p);
 }
-void TypeInitPragmas(p)
-     PINFO      p;
+void TypeInitPragmas(PINFO p)
 {
   DoInitPragmas(p);
 }
-void EdgeInitPragmas(p)
-     PEDGE      p;
+void EdgeInitPragmas(PEDGE p)
 {
   DoInitPragmas(p);
 }

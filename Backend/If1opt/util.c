@@ -53,8 +53,7 @@
 /*          NODE.                                                         */
 /**************************************************************************/
 
-int OptIsInvariant( n )
-PNODE n;
+int OptIsInvariant(PNODE n)
 {
     register PEDGE i;
 
@@ -86,8 +85,7 @@ PNODE n;
 /*          AElementP IN GRAPH b.                                         */
 /**************************************************************************/
 
-void DecodeIndexing( b )
-PNODE b;
+void DecodeIndexing(PNODE b)
 {
   register PNODE n;
   register PNODE nn;
@@ -152,10 +150,7 @@ PNODE b;
 /*          (HAVING PORT NUMBER cport).                                   */
 /**************************************************************************/
 
-void EncodeIndexing( b, cport, maelmp )
-PNODE b;
-int   cport;
-int   *maelmp;
+void EncodeIndexing(PNODE b, int cport, int *maelmp)
 {
   register PNODE n;
   register PNODE op;

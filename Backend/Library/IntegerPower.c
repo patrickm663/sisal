@@ -11,9 +11,7 @@
 #include "world.h"
 
 int
-IntegerPower(a,b)
-     int a;
-     register int b;
+IntegerPower(int a, register int b)
 {
   register int  r,p;
 

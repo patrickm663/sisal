@@ -19,10 +19,7 @@
 /*          IS NOT INSERTED. NOTE: BOUND EDGES NEVER INTRODUCE CYCLES.    */
 /**************************************************************************/
 
-void CreateAndInsertAde( src, dst, p )
-PNODE src;
-PNODE dst;
-int   p;
+void CreateAndInsertAde(PNODE src, PNODE dst, int p)
 {
   register PADE a;
 

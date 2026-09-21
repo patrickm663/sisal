@@ -46,9 +46,7 @@ DYNDECLARE(printinfo,printbuf,printlen,printcount,char,2000);
 /*          THIS CONTEXT.                                                 */
 /**************************************************************************/
 
-static PEDGE GetOperand( f, e )
-PEDGE e;
-PNODE f;
+static PEDGE GetOperand(PNODE f, PEDGE e)
 {
   register PEDGE i1;
 
@@ -78,9 +76,7 @@ PNODE f;
 /* PURPOSE: IDENTIFY THE SPLIT TYPE OF FORALL NODE f GIVEN NODE n.        */
 /**************************************************************************/
 
-static int SplitType( f, n )
-PNODE f;
-PNODE n;
+static int SplitType(PNODE f, PNODE n)
 {
    register PEDGE i1;
    register PEDGE i2;
@@ -144,10 +140,7 @@ PNODE n;
 /* PURPOSE: ADJUST THE t CONDITIONALS IN FORALL f TO YIELD v.             */
 /**************************************************************************/
 
-static void FixBody( t, f, v )
-int    t;
-PNODE  f;
-char  *v;
+static void FixBody(int t, PNODE f, char *v)
 {
   register PNODE n;
   register PEDGE e;
@@ -192,11 +185,7 @@ char  *v;
 /*          THE RESULT OF ADDING kk (AN IMPORT VALUE TO rg) TO v.         */
 /**************************************************************************/
 
-static void FixControl2( kk, ee, rg, v )
-PEDGE   kk;
-PEDGE   ee;
-PNODE   rg;
-char   *v;
+static void FixControl2(PEDGE kk, PEDGE ee, PNODE rg, char *v)
 {
   register PNODE f;
   register PEDGE e;
@@ -248,10 +237,7 @@ char   *v;
 /*          OF rg (GLOBALS lo AND hi).                                    */
 /**************************************************************************/
 
-static void FixControl1( ee, rg, mt )
-PEDGE   ee;
-PNODE   rg;
-int     mt;
+static void FixControl1(PEDGE ee, PNODE rg, int mt)
 {
   register PNODE f;
   register PEDGE e;
@@ -300,7 +286,7 @@ int     mt;
 /* PURPOSE: WRITE LOOP SPLITTING INFORMATION TO stderr.                   */
 /**************************************************************************/
 
-void WriteSplitInfo()
+void WriteSplitInfo(void)
 {
   FPRINTF( infoptr, "\n\n **** LOOP SPLITTING\n\n%s\n", printinfo);
 
@@ -322,9 +308,7 @@ void WriteSplitInfo()
 /*          RETURN SPLIT_BAD.                                                   */
 /**************************************************************************/
 
-static int IsSplitCandidate( f, ReasonP )
-PNODE f;
-char **ReasonP;
+static int IsSplitCandidate(PNODE f, char **ReasonP)
 {
   register PNODE r;
   register PNODE n;
@@ -423,9 +407,7 @@ char **ReasonP;
 /*          JUST HANDLES THE SPLIT_HIGH TEST.                                   */
 /**************************************************************************/
 
-static void DoHighSplit( f1, kind )
-PNODE f1;
-int   kind;
+static void DoHighSplit(PNODE f1, int kind)
 {
   register PNODE f2;
   register PNODE cat;
@@ -500,9 +482,7 @@ int   kind;
 /*          JUST HANDLES THE SPLIT_LOW TEST.                                    */
 /**************************************************************************/
 
-static void DoLowSplit( f1, kind )
-PNODE f1;
-int   kind;
+static void DoLowSplit(PNODE f1, int kind)
 {
   register PNODE f2;
   register PNODE cat;
@@ -575,8 +555,7 @@ int   kind;
 /* PURPOSE: SPLIT THE FORALL LOOPS IN GRAPH g.                            */
 /**************************************************************************/
 
-static void SplitForalls( g )
-PNODE g;
+static void SplitForalls(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -636,7 +615,7 @@ PNODE g;
 /*                                                                        */
 /**************************************************************************/
 
-void If1Split()
+void If1Split(void)
 {
   register PNODE f;
 

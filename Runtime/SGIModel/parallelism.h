@@ -31,12 +31,11 @@
 static ulock_t  TheLock;
 static usptr_t *UsHandle;
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
 }
 
-static void SgiTransfer( ProcId )
-void* ProcId;
+static void SgiTransfer(void * ProcId)
 {
   GetProcId = (long)ProcId;
 
@@ -61,8 +60,7 @@ void* ProcId;
     }
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   char ArenaName[50];
 
@@ -90,7 +88,7 @@ int NumBytes;
 }
 
 
-void StartWorkers()
+void StartWorkers(void)
 {
   register int NumProcs = NumWorkers;
 
@@ -101,19 +99,18 @@ void StartWorkers()
   SgiTransfer( (void*)NumProcs );
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel()
+void AbortParallel(void)
 {
   (void)kill( 0, SIGKILL );
 }
 
-void MyLock(plock)
-register volatile LOCK_TYPE *plock;
+void MyLock(register volatile LOCK_TYPE *plock)
 {
   for (;;) {
     while (*(plock) == 1);
@@ -127,19 +124,17 @@ register volatile LOCK_TYPE *plock;
     }
 }
 
-void MyUnlock(plock)
-register volatile LOCK_TYPE *plock;
+void MyUnlock(register volatile LOCK_TYPE *plock)
 {
   *plock = 0;
 }
 
-void MyInitLock(plock)
-register volatile LOCK_TYPE *plock;
+void MyInitLock(register volatile LOCK_TYPE *plock)
 {
   *plock = 0;
 }
 
-BARRIER_TYPE *MyInitBarrier()
+BARRIER_TYPE *MyInitBarrier(void)
 {
   barrier_t *bar;
 
@@ -151,9 +146,7 @@ BARRIER_TYPE *MyInitBarrier()
   return( (BARRIER_TYPE*) bar );
 }
 
-void MyBarrier( bar, limit )
-BARRIER_TYPE *bar;
-int limit;
+void MyBarrier(BARRIER_TYPE *bar, int limit)
 {
   barrier( (barrier_t *) bar, limit );
 }

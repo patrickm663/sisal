@@ -20,9 +20,7 @@
 /*          EXISTENCE BEFORE ANY OPERATIONS ON THEM ARE DONE              */
 /**************************************************************************/
 
-int AssignNewLports( p, l )
-int   p;
-PNODE l;
+int AssignNewLports(int p, PNODE l)
 {
   register PEDGE i;
   register PNODE n;

@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN TRUE IF nm IS A REDUCTION INTERFACE FUNCTION.          */
 /**************************************************************************/
 
-int IsReductionInterface( nm )
-char *nm;
+int IsReductionInterface(char *nm)
 {
   register char *p;
   register int   i;

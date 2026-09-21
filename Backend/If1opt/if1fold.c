@@ -39,8 +39,7 @@ static PNODE    FoldNode;
 /*          OF EDGE e.                                                    */
 /**************************************************************************/
 
-static PEDGE FindLowerBound( e )
-PEDGE e;
+static PEDGE FindLowerBound(PEDGE e)
 {
   register PNODE src;
   register PNODE n;
@@ -113,8 +112,7 @@ MoveOn:
 /* PURPOSE: ATTEMPT TO ELIMINATE OR REDUCE NODE n, AND RETURN THE STATUS. */
 /**************************************************************************/
 
-static int WasReduced( n )
-PNODE n;
+static int WasReduced(PNODE n)
 {
   register PNODE dst;
   register PEDGE e;
@@ -234,8 +232,7 @@ PNODE n;
 /*             x&TRUE -> x, TRUE&x -> x                                   */
 /**************************************************************************/
 
-static int IsLogicalShortCircuit( n )
-PNODE n;
+static int IsLogicalShortCircuit(PNODE n)
 {
   register int  tv;
   register int  v;
@@ -315,8 +312,7 @@ PNODE n;
 /*          THEN MAKE THE CONSTANT THE SECOND IMPORT.                     */
 /**************************************************************************/
 
-void OptNormalizeNode( n )
-PNODE n;
+void OptNormalizeNode(PNODE n)
 {
   switch ( n->type ) {
     case IFPlus:
@@ -347,8 +343,7 @@ PNODE n;
 /*          OPTIMIZATIONS DONE BY ImproveIndexing IN if2gen.              */
 /**************************************************************************/
 
-static void NormalizeIndexing( e )
-PEDGE e;
+static void NormalizeIndexing(PEDGE e)
 {
   register int   v0;
   register int   v1;
@@ -418,9 +413,7 @@ PEDGE e;
 /* PURPOSE: RETURN THE POSSIBLY SIGNED INTEGER REPRESENTED BY STRING c.   */
 /**************************************************************************/
 
-static long AsciiToLong( c, b )
-char *c;
-int   b;
+static long AsciiToLong(char *c, int b)
 {
     register long v = 0;
     register long s = 1;
@@ -445,8 +438,7 @@ int   b;
 /* PURPOSE: STRENGTH REDUCE SELECTIVE IFExp OPERATIONS: exp(n,2) -> n*n.  */
 /**************************************************************************/
 
-static void FoldExp( n )
-PNODE n;
+static void FoldExp(PNODE n)
 {
   register PEDGE  i2;
   register PEDGE  i1;
@@ -632,8 +624,7 @@ MoveOn:
 /* PURPOSE: Fold SELECTIVE IFDiv OPERATIONS: n/k -> n*(1/k)               */
 /**************************************************************************/
 
-static void FoldDiv( n )
-PNODE n;
+static void FoldDiv(PNODE n)
 {
   register PEDGE  i2;
   register PEDGE  i1;
@@ -679,8 +670,7 @@ PNODE n;
 }
 
 
-static double GetSpecialOperand( e )
-PEDGE  e;
+static double GetSpecialOperand(PEDGE e)
 {
   register double val;
 
@@ -706,9 +696,7 @@ PEDGE  e;
 }
 
 
-static void StoreSpecialConst( e, val )
-PEDGE  e;
-double val;
+static void StoreSpecialConst(PEDGE e, double val)
 {
   char a[ANSWER_SIZE];
 
@@ -730,8 +718,7 @@ double val;
 }
 
 
-static int IsSpecialCandidate( n )
-PNODE n;
+static int IsSpecialCandidate(PNODE n)
 {
   switch( n->type ) {
     case IFPlus:
@@ -757,9 +744,7 @@ PNODE n;
 /*          NEEDED.                                                       */
 /**************************************************************************/
 
-static void HandleUselessNode ( n, val )
-PNODE  n;
-double val;
+static void HandleUselessNode (PNODE n, double val)
 {
     register PEDGE e;
     register PEDGE se;
@@ -788,8 +773,7 @@ double val;
 /*          REFERENCES TO i, CONVERTING n INTO A DEAD NODE.               */
 /**************************************************************************/
 
-static void OptSkipIdentityNode( i )
-PEDGE i;
+static void OptSkipIdentityNode(PEDGE i)
 {
     register PEDGE e;
     register PEDGE se;
@@ -823,10 +807,7 @@ PEDGE i;
 /**************************************************************************/
 
 
-static int IsSpecialChain( c1, n, e )
-double  c1;
-PNODE   n;
-PEDGE   e;
+static int IsSpecialChain(double c1, PNODE n, PEDGE e)
 {
     register PNODE  prevn;
     register double op1;
@@ -891,8 +872,7 @@ PEDGE   e;
 /**************************************************************************/
 
 
-static void FoldSpecialNodes( g )
-PNODE g;
+static void FoldSpecialNodes(PNODE g)
 {
     register PNODE  n;
     register PEDGE  i1;
@@ -1084,8 +1064,7 @@ PNODE g;
 /* PURPOSE: HANDLES ARITHMETIC EXCEPTIONS FOR CONSTANT FOLDER.            */
 /**************************************************************************/
 
-static void FoldExceptionHandler( sig )
-  int   sig;
+static void FoldExceptionHandler(int sig)
 {
   char  ebuf[256];
 
@@ -1108,8 +1087,7 @@ static void FoldExceptionHandler( sig )
 /*          BRANCH AND s ARE DESTROYED.                                   */
 /**************************************************************************/
 
-static PNODE RemoveBranch( s )
-PNODE s;
+static PNODE RemoveBranch(PNODE s)
 {
     register PNODE sg;
     register PEDGE e;
@@ -1201,8 +1179,7 @@ PNODE s;
 /*          \SpecialCharacter, \NonSpecialCharacter, AND Character.       */
 /**************************************************************************/
 
-static long CharToInteger( c )
-char *c;
+static long CharToInteger(char *c)
 {
     register int v;
 
@@ -1235,8 +1212,7 @@ char *c;
 /*          MATH FUNCTION atof CAN HANDLE.                                */
 /**************************************************************************/
 
-char *DoubleToReal( d )
-char *d;
+char *DoubleToReal(char *d)
 {
     register char *p;
 
@@ -1262,10 +1238,7 @@ char *d;
 /*          ARE COERCED TO REAL (D or d EXPONENT SPECIFIERS CHANGED TO e);*/
 /*          IT IS ASSUMED THAT if1write WILL CORRECT THIS.                */
 /**************************************************************************/
-static int  GetConstantEdge(ival,dval,E)
-     long       *ival;
-     double     *dval;
-     PEDGE      E;
+static int  GetConstantEdge(long *ival, double *dval, PEDGE E)
 {
   if ( !E || !(E->CoNsT) ) return ERROR;
 
@@ -1297,8 +1270,7 @@ static int  GetConstantEdge(ival,dval,E)
   return( ERROR );
 }
 
-static int GetOperands( n )
-PNODE n;
+static int GetOperands(PNODE n)
 {
   int   stat;
 
@@ -1323,8 +1295,7 @@ PNODE n;
 /*          IMPORTING ERROR CONSTANTS ARE NOT FOLDED.                     */
 /**************************************************************************/
 
-static void Fold( n )
-PNODE n;
+static void Fold(PNODE n)
 {
     register PEDGE  i;
     register PEDGE  e;
@@ -1705,8 +1676,7 @@ PNODE n;
 /*          PROPAGATE  CONSTANTS INTO  ALL COMPOUND NODES.                */
 /**************************************************************************/
 
-static void FoldNodes( g )
-PNODE g;
+static void FoldNodes(PNODE g)
 {
     register PNODE n;
     register PNODE sn;
@@ -1814,7 +1784,7 @@ PNODE g;
 /* PURPOSE: PRINT INFORMATION GATHERED DURING CONSTANT FOLDING TO stderr. */
 /**************************************************************************/
 
-void WriteFoldInfo()
+void WriteFoldInfo(void)
 {
     FPRINTF( infoptr, "\n **** CONSTANT NODE FOLDING\n\n"   );
     FPRINTF( infoptr, " Folded Simple Nodes:          %d\n", fcnt  );
@@ -1845,7 +1815,7 @@ void WriteFoldInfo()
 /*          WITH UNREACHABLE BRANCHES ARE FOLDED.                         */
 /**************************************************************************/
 
-void If1Fold()
+void If1Fold(void)
 {
   register PNODE f;
 

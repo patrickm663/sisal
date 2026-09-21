@@ -15,8 +15,7 @@
 /*          LEVEL SUMMARY AND TOTALS.                                     */
 /**************************************************************************/
 
-void Count( g )
-PNODE g;
+void Count(PNODE g)
 {
   register PNODE n;
   register PEDGE i;

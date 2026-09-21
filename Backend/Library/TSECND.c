@@ -18,7 +18,7 @@
 /*          NOTE THAT TSECND IS A CRAY INTRINSIC!                         */
 /**************************************************************************/
 
-double TSECND()
+double TSECND(void)
 {
   register double CurrentCpuTime;
 

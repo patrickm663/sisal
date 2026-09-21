@@ -31,7 +31,7 @@ DYNDECLARE(printinfo,printbuf,printlen,printcount,char,2000);
 /* PURPOSE: WRITE LOOP INVERTION INFORMATION TO stderr.                   */
 /**************************************************************************/
 
-void WriteInvertInfo()
+void WriteInvertInfo(void)
 {
   FPRINTF( infoptr, "\n\n **** LOOP INVERSION\n\n%s\n", printinfo);
   FPRINTF( infoptr, " Inverted Loops: %d of %d\n", invcnt,Tcnt  );
@@ -44,10 +44,7 @@ void WriteInvertInfo()
 /* PURPOSE: WIRE sg TO f AND f TO sg USING s AS THE PARENT.               */
 /**************************************************************************/
 
-static void WireSelectSubgraph( s, sg, f )
-PNODE s;
-PNODE sg;
-PNODE f;
+static void WireSelectSubgraph(PNODE s, PNODE sg, PNODE f)
 {
   register PEDGE i;
   register PEDGE e;
@@ -77,10 +74,7 @@ PNODE f;
 /*          INTO FORALL f.                                                */
 /**************************************************************************/
 
-static void FixForallBody( s, f, sg )
-PNODE s;
-PNODE f;
-PNODE sg;
+static void FixForallBody(PNODE s, PNODE f, PNODE sg)
 {
   register PEDGE e;
   register PEDGE i;
@@ -158,8 +152,7 @@ PNODE sg;
 /* PURPOSE: RETURN THE FIRST NoOp NODE IN GRAPH g.                        */
 /**************************************************************************/
 
-static PNODE GetFirstNoOp( g )
-PNODE g;
+static PNODE GetFirstNoOp(PNODE g)
 {
   register PNODE n;
 
@@ -178,9 +171,7 @@ PNODE g;
 /* PURPOSE: DO THE LOOP INVERSION FOR f WITH SELECT NODE s.               */
 /**************************************************************************/
 
-static void DoTheInversion( f, s )
-PNODE f;
-PNODE s;
+static void DoTheInversion(PNODE f, PNODE s)
 {
   register PNODE fa;
   register PNODE fc;
@@ -244,8 +235,7 @@ PNODE s;
 /*             else for i in 1,10 returns array of b[i] end for end if    */
 /**************************************************************************/
 
-static void InvertLoops( g )
-PNODE g;
+static void InvertLoops(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -371,7 +361,7 @@ MoveOn:
 /* PURPOSE: INVERT CANDIDATE LOOPS IN ALL FUNCTION GRAPHS.                */
 /**************************************************************************/
 
-void If1Invert()
+void If1Invert(void)
 {
   register PNODE f;
 

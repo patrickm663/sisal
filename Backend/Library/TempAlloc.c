@@ -16,11 +16,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A TEMPORARY                  */
 /**************************************************************************/
 
-PTEMP TempAlloc( name, tempinfo, mod, fld )
-char  *name;
-PINFO  tempinfo;
-int    mod;
-int    fld;
+PTEMP TempAlloc(char *name, PINFO tempinfo, int mod, int fld)
 {
   register PTEMP   t;
   register PBBLOCK b;

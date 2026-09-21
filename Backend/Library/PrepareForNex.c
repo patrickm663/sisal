@@ -19,7 +19,7 @@
 /*          IN THE PREVIOUS FILE.                                         */
 /**************************************************************************/
 
-void PrepareForNextFile()
+void PrepareForNextFile(void)
 {
   tbase  = LargestTypeLabelSoFar;
 }

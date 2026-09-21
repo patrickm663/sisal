@@ -21,11 +21,7 @@
 /*          COMPOUND NODE, COMPLETING SCOPE EXIT.                         */
 /**************************************************************************/
 
-void MakeCompound( label, type, cnt, lst )
-int    label;
-int    type;
-int    cnt;
-PALIST lst;
+void MakeCompound(int label, int type, int cnt, PALIST lst)
 {
   register PNODE n;
 

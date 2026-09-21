@@ -16,8 +16,7 @@
 /* PURPOSE: UNLINK ADE a FROM ITS SOURCE NODE'S ADE EXPORT LIST.          */
 /**************************************************************************/
 
-void UnlinkAdeExport( a )
-PADE a;
+void UnlinkAdeExport(PADE a)
 {
   if ( a->epred == NULL ) {     /* FIRST ONE IN LIST */
     a->src->aexp = a->esucc;

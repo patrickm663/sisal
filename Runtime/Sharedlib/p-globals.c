@@ -17,7 +17,7 @@
 extern struct shared_s LSR;
 
 void
-InitSharedGlobals()
+InitSharedGlobals(void)
 {
         NumWorkers       = DEFAULT_NUM_WORKERS;
         DsaSize          = DEFAULT_DSA_SIZE;

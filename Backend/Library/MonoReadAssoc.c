@@ -18,7 +18,7 @@
 /*          PRAGMA OR EOLN.                                               */
 /**************************************************************************/
 
-char *MonoReadAssocList()
+char *MonoReadAssocList(void)
 {
   register int idx = 0;
 

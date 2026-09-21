@@ -17,9 +17,7 @@
 /*          IMPORT LIST OF n2 IS SET TO NULL.                             */
 /**************************************************************************/
 
-void LinkImportLists( n1, n2 )
-PNODE n1;
-PNODE n2;
+void LinkImportLists(PNODE n1, PNODE n2)
 {
   register PEDGE i;
   register PEDGE si;

@@ -51,8 +51,7 @@ static int     CharMode = FALSE;
                                GET_NEXT_TOKEN;                   \
                                }
 
-void FibreError(s)
-     char   *s;
+void FibreError(char *s)
 {
   char          buf[1024],charname[10];
 
@@ -70,8 +69,7 @@ void FibreError(s)
   SisalError("FIBRE",buf);
 }
 
-static long GetLong( Base )
-register int Base;
+static long GetLong(register int Base)
 {
   register long Value;
 
@@ -95,7 +93,7 @@ register int Base;
 }
 
 
-static void GetExponent()
+static void GetExponent(void)
 {
   Buffer = 'e';
 
@@ -116,8 +114,7 @@ static void GetExponent()
 }
 
 
-static void GetFraction( FractionOptional )
-int FractionOptional;
+static void GetFraction(int FractionOptional)
 {
   ADD_TO_TEXT;
   GET_NEXT_TOKEN;
@@ -142,7 +139,7 @@ int FractionOptional;
 }
 
 
-static int PackageNumber()
+static int PackageNumber(void)
 {
 
   Text[Length] = '\0';
@@ -161,7 +158,7 @@ static int PackageNumber()
 }
 
 
-static char GetChar()
+static char GetChar(void)
 {
   register char Value;
   register long Escape;  
@@ -218,7 +215,7 @@ static char GetChar()
 }
 
 
-static int GetNil()
+static int GetNil(void)
 {
   GET_NEXT_TOKEN;
 
@@ -246,7 +243,7 @@ static int GetNil()
 }
 
 
-static int FibreLex()
+static int FibreLex(void)
 {
   Length = 0;
 
@@ -427,8 +424,7 @@ static char *Messages[] = {
       ", EXPECTED"};
 
 
-int FibreParse( Expected ) 
-int Expected;
+int FibreParse(int Expected)
 {
   int FibreToken;
 

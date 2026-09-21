@@ -17,9 +17,7 @@
 /*          A `P' MARK.                                                   */
 /**************************************************************************/
 
-int IsPMarked( n, eport )
-PNODE n;
-int   eport;
+int IsPMarked(PNODE n, int eport)
 {
   register PEDGE e;
 

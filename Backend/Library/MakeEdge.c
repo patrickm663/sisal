@@ -18,10 +18,7 @@
 /*          ORDER) AND ITS SOURCE NODE (IN RANDOM ORDER).                 */
 /**************************************************************************/
 
-void MakeEdge( snode, eport, dnode, iport, type )
-int   snode, eport;
-int   dnode, iport;
-int   type;
+void MakeEdge(int snode, int eport, int dnode, int iport, int type)
 {
   register PNODE dst;
   register PNODE src;

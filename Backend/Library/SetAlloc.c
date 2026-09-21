@@ -16,9 +16,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A READ/WRITE SET.            */
 /**************************************************************************/
 
-PSET SetAlloc( ssucc, scope )
-PSET  ssucc;
-PNODE scope;
+PSET SetAlloc(PSET ssucc, PNODE scope)
 {
   PSET s;
   PBBLOCK b;

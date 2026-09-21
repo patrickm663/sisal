@@ -17,9 +17,8 @@
 /*          ROUTINE ASSUMES THE GRAPH IS ACYCLIC.                         */
 /**************************************************************************/
 
-int IsPath( src, dst )
-PNODE src;
-PNODE dst; /* FIXED */
+int IsPath(PNODE src,
+           PNODE dst)  /* FIXED */
 {
   register PEDGE e;
   register PADE  a;

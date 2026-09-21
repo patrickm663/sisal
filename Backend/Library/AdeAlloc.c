@@ -26,10 +26,7 @@
 /*          EDGE.                                                         */
 /**************************************************************************/
 
-PADE AdeAlloc( src, dst, p )
-PNODE src;
-PNODE dst;
-int   p;
+PADE AdeAlloc(PNODE src, PNODE dst, int p)
 {
   PADE a;
   PBBLOCK b;

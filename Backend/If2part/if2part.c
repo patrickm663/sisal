@@ -38,8 +38,7 @@ static int total;             /* TOTAL DISTANCE OF COUNTED EDGES          */
 /*          IN GRAPH g.                                                   */
 /**************************************************************************/
 
-static void AverageDistance( g )
-PNODE g;
+static void AverageDistance(PNODE g)
 {
     register PNODE n;
     register PEDGE e;
@@ -64,8 +63,7 @@ PNODE g;
 /*          FOR USE, ELSE RETURN FALSE; THAT IS, HAS A SYNC BEEN DONE?    */
 /**************************************************************************/
 
-static int IsTaskFinished( n )
-PNODE n;
+static int IsTaskFinished(PNODE n)
 {
     register PEDGE e;
 
@@ -85,8 +83,7 @@ PNODE n;
 /*          ONLY THE FIRST NODE USING THE LOOP'S OUTPUTS DOES THE SYNC.   */
 /**************************************************************************/
 
-static void SetSyncMarks( g )
-PNODE g;
+static void SetSyncMarks(PNODE g)
 {
     register PEDGE i;
     register PNODE n;
@@ -118,9 +115,7 @@ PNODE g;
 /**************************************************************************/
 /* PURPOSE:  Find out how many processors are in use                      */
 /**************************************************************************/
-static int GetNewActiveProcCount( f, active )
-PNODE f;
-int   active;
+static int GetNewActiveProcCount(PNODE f, int active)
 {
   register int i;
 
@@ -144,10 +139,9 @@ int   active;
 /*          TOWARD THE LEAVES. WHEN DONE, SYNC OPERATIONS ARE INSERTED.   */
 /**************************************************************************/
 
-static void PartitionGraph( g, plvl, pbusy )
-PNODE g;
-int   plvl;
-int   pbusy; /* BUSY PROCESSORS */
+static void PartitionGraph(PNODE g,
+                           int plvl,
+                           int pbusy)  /* BUSY PROCESSORS */
 {
   register PNODE        n;
   register PNODE        gg;
@@ -344,7 +338,7 @@ int   pbusy; /* BUSY PROCESSORS */
 /*          PARALLEL NESTING LEVEL (A PARTITIONING PARAMETER).            */
 /**************************************************************************/
 
-void If2Part()
+void If2Part(void)
 {
     register PNODE f;
 

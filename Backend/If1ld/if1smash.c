@@ -28,7 +28,7 @@
 /* NOTE:    ORIGINALLY WRITTEN IN PASCAL BY sks AT LLNL:  1/10/83.        */
 /**************************************************************************/
 
-void LoadSmashTypes()
+void LoadSmashTypes(void)
 {
     register int   chgd = TRUE;
     register int   c;

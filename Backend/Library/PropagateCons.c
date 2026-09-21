@@ -18,8 +18,7 @@
 /*          CONSTANTS ARE NOT MOVED INTO SUBGRAPHS---OVERRIDDEN BY sgnok. */
 /**************************************************************************/
 
-void PropagateConst( c )
-PNODE c;
+void PropagateConst(PNODE c)
 {
   register PNODE g;
   register PEDGE i;

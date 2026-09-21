@@ -16,12 +16,7 @@
 /* PURPOSE: PRINT op'S COPY WARNING TO stderr.                            */
 /**************************************************************************/
 
-void PrintWarning( op, sourceline, funct, file, copy )
-char *op;
-int   sourceline;
-char *funct;
-char *file;
-int   copy;
+void PrintWarning(char *op, int sourceline, char *funct, char *file, int copy)
 {
   if ( !Warnings ) return;      /* Are warnings suppressed? */
 

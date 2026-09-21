@@ -17,10 +17,7 @@
 /*          NODE dst.  THE PORT NUMBERS ARE TAKEN FROM e.                 */
 /**************************************************************************/
 
-PEDGE CopyEdge( e, src, dst )
-PEDGE e;
-PNODE src;
-PNODE dst;
+PEDGE CopyEdge(PEDGE e, PNODE src, PNODE dst)
 {
   register PEDGE ee;
 

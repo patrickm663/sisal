@@ -47,7 +47,7 @@ PINFO ptr_integer       = NULL;
 PINFO ptr               = NULL;
 PINFO integer           = NULL;
 
-void BuildItems()
+void BuildItems(void)
 {
   int           i;
 

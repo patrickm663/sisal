@@ -22,7 +22,7 @@
 PBBLOCK pool;
 int     pidx = MAX_BBLOCKS+100;
 
-PBBLOCK MyBBlockAlloc()
+PBBLOCK MyBBlockAlloc(void)
 {
   if ( pidx >= MAX_BBLOCKS ) {
     pool = (PBBLOCK) MyAlloc( (int)sizeof(BBLOCK)*MAX_BBLOCKS );

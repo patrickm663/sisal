@@ -35,9 +35,7 @@ static int fnvisited = 0;   /* COUNT OF UNVISITED FUNCTIONS               */
 /*                                                                        */
 /**************************************************************************/
 
-static int CatAtBugFix( e, omark )
-PEDGE e;
-int   omark;
+static int CatAtBugFix(PEDGE e, int omark)
 {
     register PEDGE p;
 
@@ -79,7 +77,7 @@ int   omark;
 /*          CHANGE THE cm=-1 PRAGMA TO CM=0;                              */
 /**************************************************************************/
 
-void If2RefineGrounds()
+void If2RefineGrounds(void)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -151,9 +149,7 @@ MoveOn:
 /* PURPOSE: ASSIGN rmark TO rmark1 OF ALL EDGES IN SET s.                 */
 /**************************************************************************/
 
-static void BindRMark( s, rmark )
-PSET s;
-int  rmark;
+static void BindRMark(PSET s, int rmark)
 {
     register PEDGE e;
     register int   m;
@@ -172,9 +168,7 @@ int  rmark;
 /*          HAVE mk=P PRAGMAS, THEN ASSIGN omark TO omark1 OF EACH MEMBER.*/
 /**************************************************************************/
 
-static void ConditionallyBindOMark( s, omark )
-PSET s;
-int  omark;
+static void ConditionallyBindOMark(PSET s, int omark)
 {
     register PEDGE e;
     register int   m;
@@ -225,10 +219,7 @@ int  omark;
 /*          THEN omark CAN BE ASSIGNED.                                   */
 /**************************************************************************/
 
-static void AssignMarks( e, rmark, omark )
-PEDGE e;
-int   rmark;
-int   omark;
+static void AssignMarks(PEDGE e, int rmark, int omark)
 {
     register PEDGE w;
     register int   wc;
@@ -290,8 +281,7 @@ int   omark;
 /*          LATER PROCESSING.                                             */
 /**************************************************************************/
 
-static void PropagateCallMarks( c )
-PNODE c;
+static void PropagateCallMarks(PNODE c)
 {
     register PNODE f;
     register PEDGE e;
@@ -387,8 +377,7 @@ PNODE c;
 /*          IS ALWAYS ASSUMED TO HAVE UNKNOWN MARKS (ALWAYS READ ONLY).   */
 /**************************************************************************/
 
-static void PropagateSelectMarks( s )
-PNODE s;
+static void PropagateSelectMarks(PNODE s)
 {
     register PNODE g;
     register PEDGE i;
@@ -461,8 +450,7 @@ PNODE s;
 /*          NODES BEFORE MARKS ARE ACCORDINGLY ASSIGNED TO f EXPORTS.     */ 
 /**************************************************************************/
 
-static void PropagateForallMarks( f )
-PNODE f;
+static void PropagateForallMarks(PNODE f)
 {
     register PEDGE i;
     register PEDGE e;
@@ -526,8 +514,7 @@ PNODE f;
 /*          AN O MARK IS SET TO NOMARK DURING ADJUSTMENT.                 */
 /**************************************************************************/
 
-static void PropagateLoopMarks( l )
-PNODE l;
+static void PropagateLoopMarks(PNODE l)
 {
     register PEDGE e;
     register PEDGE i;
@@ -658,8 +645,7 @@ PNODE l;
 /*          ARE READY FOR PROPAGATION.                                    */
 /**************************************************************************/
 
-static void PropagateMarks( g )
-PNODE g;
+static void PropagateMarks(PNODE g)
 {
     register PNODE n;
     register PEDGE e;
@@ -841,7 +827,7 @@ PNODE g;
 /*          FUNCTION BOUNDARIES MOVE TOWARD THE LEAVES.                   */
 /**************************************************************************/
 
-void If2PropagateMarks()
+void If2PropagateMarks(void)
 {
     register PEDGE e;
     register PNODE f;

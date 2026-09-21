@@ -37,9 +37,7 @@ static char printinfo[2000];
 /*          SUBGRAPH dst, AND WIRE THE NON-NEGATIVE SOURCE EDGES TO dst.  */
 /**************************************************************************/
 
-static void MoveTheNegNodes( src, dst )
-PNODE src;
-PNODE dst;
+static void MoveTheNegNodes(PNODE src, PNODE dst)
 {
   register PNODE n;
   register PNODE pn;
@@ -80,10 +78,7 @@ PNODE dst;
 /*          PORT NUMBER cport.                                            */
 /**************************************************************************/
 
-static void WireNegExports( f2, src, crod )
-PNODE f2;
-PNODE src;
-PEDGE crod;
+static void WireNegExports(PNODE f2, PNODE src, PEDGE crod)
 {
   register PNODE n;
   register PEDGE e;
@@ -197,8 +192,7 @@ StartOver:
 /*          EXECUTION.                                                    */
 /**************************************************************************/
 
-int OptIsVecCandidate( f )
-PNODE f;
+int OptIsVecCandidate(PNODE f)
 {
   register PNODE n;
   register PEDGE i;
@@ -306,7 +300,7 @@ PNODE f;
 /* PURPOSE: WRITE LOOP AND FORALL CONCURRENTIZATION INFORMATION TO stderr.*/
 /**************************************************************************/
 
-void WriteConcurInfo()
+void WriteConcurInfo(void)
 {
   FPRINTF( infoptr, "\n\n **** FORALL SPLITTING FOR CONCURRENTIZATION\n\n%s\n" ,printinfo);
   FPRINTF( infoptr, " Generated Vector Forall Nodes:     %d of %d\n", vfcnt,Tvfcnt );
@@ -325,9 +319,7 @@ void WriteConcurInfo()
 /*          IS THE PORT NUMBER OF THE LOOP'S CONTROL ROD.                 */
 /**************************************************************************/
 
-static int IsFractureCandidate( b, cport )
-PNODE b;
-int   cport;
+static int IsFractureCandidate(PNODE b, int cport)
 {
   register PNODE n;
   register PEDGE i;
@@ -417,13 +409,12 @@ SkipOut:
 /*          BOUND high, AND FORM A NEW FORALL.                            */
 /**************************************************************************/
 
-static void DoTheConcurrentization( f1, b, r, crod, low, high )
-PNODE f1;
-PNODE b;
-PNODE r;
-PEDGE crod;
-PEDGE low;
-PEDGE high;
+static void DoTheConcurrentization(PNODE f1,
+                                   PNODE b,
+                                   PNODE r,
+                                   PEDGE crod,
+                                   PEDGE low,
+                                   PEDGE high)
 {
   register PNODE n;
   register PEDGE e;
@@ -586,8 +577,7 @@ PEDGE high;
 /*          THE NON-VECTOR FORALL NODES OF GRAPH g.                       */
 /**************************************************************************/
 
-static void VectorizeForalls( g )
-PNODE g;
+static void VectorizeForalls(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -640,7 +630,7 @@ PNODE g;
 /*          NONVECTOR FORALLS.                                            */
 /**************************************************************************/
 
-void If1Vec()
+void If1Vec(void)
 {
   register PNODE f;
 
@@ -656,8 +646,7 @@ void If1Vec()
 /*          IN THE SEQUENTIAL LOOP NODES (LoopB) OF GRAPH g.              */
 /**************************************************************************/
 
-static void ParallelizeLoops( g )
-PNODE g;
+static void ParallelizeLoops(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -753,7 +742,7 @@ PNODE g;
 /*          SEQUENTIAL LOOPS.                                             */
 /**************************************************************************/
 
-void If1Par()
+void If1Par(void)
 {
   register PNODE f;
 

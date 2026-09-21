@@ -49,8 +49,7 @@ struct scope {
 
 static SCOPE scopes[MAX_SCOPE];                            /* SCOPE STACK */
 
-void NormalizeVectorLoop( f )
-PNODE f;
+void NormalizeVectorLoop(PNODE f)
 {
   register PEDGE e;
   register PEDGE ee;
@@ -219,8 +218,7 @@ PNODE f;
 /* PURPOSE: RETURN THE CORRECT GetArrayBase EXPORT TYPE FOR ARRAY i.      */
 /**************************************************************************/
 
-static PINFO GetGABType( i )
-PINFO i;
+static PINFO GetGABType(PINFO i)
 {
   switch( i->A_ELEM->type ) {
     case IF_REAL:
@@ -247,10 +245,7 @@ PINFO i;
 /*          EXPORTS TO HAVE eport i.                                      */
 /**************************************************************************/
 
-static void DoTypeChange( n, eport, i )
-PNODE n;
-int   eport;
-PINFO i;
+static void DoTypeChange(PNODE n, int eport, PINFO i)
 {
   register PEDGE e;
   register PNODE sg;
@@ -274,8 +269,7 @@ PINFO i;
 /* PURPOSE: ASSIGN POINTER TYPES TO ALL GetArrayBase REFERENCES           */
 /**************************************************************************/
 
-static void FixGABExportTypes( g )
-PNODE g;
+static void FixGABExportTypes(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -295,9 +289,7 @@ PNODE g;
 }
 
 
-static int IsInplace( i, e )
-register PEDGE i;
-register PEDGE e;
+static int IsInplace(register PEDGE i, register PEDGE e)
 {
   register PNODE nop;
 
@@ -337,8 +329,7 @@ register PEDGE e;
 /*          INVARIANT. THIS ROUTINE DETECTS AND OPTIMIZES THESE CASES.    */
 /**************************************************************************/
 
-static void OptSpecGABPaths( g )
-PNODE g;
+static void OptSpecGABPaths(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -415,8 +406,7 @@ PNODE g;
 /*          NODES TOWARD THEIR FIRST USERS.                               */
 /**************************************************************************/
 
-static void OptGABPaths( g )
-PNODE g;
+static void OptGABPaths(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -536,8 +526,7 @@ MoveOn:
 /*           if ( tmp2 < tmp3 ) then....                                  */
 /**************************************************************************/
 
-static void SelectTestOpt( s )
-PNODE s;
+static void SelectTestOpt(PNODE s)
 {
     register PEDGE i;
     register PEDGE e;
@@ -593,8 +582,7 @@ PNODE s;
 /*          NULL IS RETURNED.                                             */
 /**************************************************************************/
 
-static PEDGE GenFindSource( e )
-PEDGE e;
+static PEDGE GenFindSource(PEDGE e)
 {
     if ( IsTagCase( e->src->G_DAD ) && (e->eport == 1) )
         return( NULL );
@@ -610,9 +598,7 @@ PEDGE e;
 /*          A GetArrayBase NODE AND NESTED DEEPER THAN n2.                */
 /**************************************************************************/
 
-static int GenAreNodesEqual( n1, n2 )
-PNODE n1;
-PNODE n2;
+static int GenAreNodesEqual(PNODE n1, PNODE n2)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -645,8 +631,7 @@ PNODE n2;
 /*          PORT NUMBER IS RETURNED.                                      */
 /**************************************************************************/
 
-static int GenAssignNewKports( c )
-PNODE c;
+static int GenAssignNewKports(PNODE c)
 {
     register PNODE g;
     register PEDGE i;
@@ -676,9 +661,7 @@ PNODE c;
 /*          NEXT LEGAL PORT NUMBER IS RETURNED.                           */
 /**************************************************************************/
 
-static int GenAssignNewLports( p, l )
-int   p;
-PNODE l;
+static int GenAssignNewLports(int p, PNODE l)
 {
     register PEDGE i;
 
@@ -708,9 +691,7 @@ PNODE l;
 /*          NEXT LEGAL PORT NUMBER IS RETURNED.                           */
 /**************************************************************************/
 
-static int GenAssignNewMports( p, f )
-int   p;
-PNODE f;
+static int GenAssignNewMports(int p, PNODE f)
 {
     register PEDGE i;
 
@@ -737,9 +718,7 @@ PNODE f;
 /*          FORALL f'S BODY SUBGRAPH AND ADJUST ALL REFERENCES.           */
 /**************************************************************************/
 
-static void GenAssignNewTports( p, f )
-int   p;
-PNODE f;
+static void GenAssignNewTports(int p, PNODE f)
 {
     register PEDGE i;
 
@@ -762,9 +741,7 @@ PNODE f;
 /*          LOOP l'S BODY SUBGRAPH AND ADJUST ALL REFERENCES.             */
 /**************************************************************************/
 
-static void GenAssignNewLoopTports( p, l )
-int   p;
-PNODE l;
+static void GenAssignNewLoopTports(int p, PNODE l)
 {
     register PEDGE i;
 
@@ -789,8 +766,7 @@ PNODE l;
 /*          THE COMPOUND NODE TO WHICH g BELONGS.                         */
 /**************************************************************************/
 
-static void GenAssignNewRports( g )
-PNODE g;
+static void GenAssignNewRports(PNODE g)
 {
     register PEDGE i;
     register int   p = 1;
@@ -818,9 +794,7 @@ PNODE g;
 /*          LOOPB :  K < L      AND K AND R PORTS  START AT 1 BY 1        */
 /**************************************************************************/
 
-void  AssignNewPortNums( g, STestOpt )
-register PNODE g;
-int            STestOpt;
+void  AssignNewPortNums(register PNODE g, int STestOpt)
 {
     register PNODE n;
     register int   p;
@@ -912,10 +886,7 @@ int            STestOpt;
 /*          NOT FOUND.                                                    */
 /**************************************************************************/
 
-static PEDGE AReplaceOpt( n, i, iport )
-PNODE n;
-PEDGE i;
-int   iport;
+static PEDGE AReplaceOpt(PNODE n, PEDGE i, int iport)
 {
   register PEDGE e;
   register PEDGE ee;
@@ -994,8 +965,7 @@ int   iport;
 /*          NODE AND WIRE IT TO n.                                        */
 /**************************************************************************/
 
-static void TryAndInsertSpecGABNode( n )
-PNODE n;
+static void TryAndInsertSpecGABNode(PNODE n)
 {
   register PNODE nop;
   register PNODE nn;
@@ -1042,8 +1012,7 @@ PNODE n;
 /*          CANDIDATE AReplace NODES IN GRAPH g.                          */
 /**************************************************************************/
 
-static void DecoupleAReplaceNodes( g )
-PNODE g;
+static void DecoupleAReplaceNodes(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1076,8 +1045,7 @@ PNODE g;
 /*          REFERENCE COUNTING.                                           */
 /**************************************************************************/
 
-static void InsertGABNodes( g )
-PNODE g;
+static void InsertGABNodes(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1129,9 +1097,7 @@ PNODE g;
 /*          WITHIN c.  THE FIRST IMPORT OF A TAGCASE NODE IS ALWAYS USED. */
 /**************************************************************************/
 
-static int GenIsUsed( c, i )
-PNODE c;
-PEDGE i;
+static int GenIsUsed(PNODE c, PEDGE i)
 {
     register PNODE g;
 
@@ -1153,8 +1119,7 @@ PEDGE i;
 /*          SINGLE IMPORT IS A K PORT VALUE.                              */
 /**************************************************************************/
 
-static int GenIsInvariant( n )
-PNODE n;
+static int GenIsInvariant(PNODE n)
 {
   register PEDGE i;
 
@@ -1187,8 +1152,7 @@ PNODE n;
 /* PURPOSE: COMBINE COMMON GetArrayBase NODES IN GRAPH g.                 */
 /**************************************************************************/
 
-static void CommonGABRemoval( g )
-PNODE g;
+static void CommonGABRemoval(PNODE g)
 {
   register PNODE n1;
   register PNODE n2;
@@ -1232,8 +1196,7 @@ PNODE g;
 /*          FIRST.  THE NODES ARE EXAMINED IN DATAFLOW ORDER.             */
 /**************************************************************************/
 
-static void InvarGABRemoval( g )
-PNODE g;
+static void InvarGABRemoval(PNODE g)
 {
   register PNODE n;
   register PNODE nd;
@@ -1321,8 +1284,7 @@ PNODE g;
 /*          COMBINED WITH OTHER IMPORTS.                                  */
 /**************************************************************************/
 
-static void GenCombineKports( c )
-PNODE c;
+static void GenCombineKports(PNODE c)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -1384,9 +1346,7 @@ PNODE c;
 /*          IS, BE A GetArrayBase NODE.                                   */
 /**************************************************************************/
 
-static void CombineGGABNode( g1, n1 )
-PNODE g1;
-PNODE n1;
+static void CombineGGABNode(PNODE g1, PNODE n1)
 {
   register PNODE n2;
   register PEDGE e;
@@ -1455,8 +1415,7 @@ DoThreading:
 /*          CONSIDERED.                                                   */
 /**************************************************************************/
 
-static void GCommonGABRemoval( g )
-PNODE g;
+static void GCommonGABRemoval(PNODE g)
 {
   register PNODE n;
   register PNODE sn;
@@ -1489,8 +1448,7 @@ PNODE g;
 }
 
 
-static void CombineKs( g )
-PNODE g;
+static void CombineKs(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1513,8 +1471,7 @@ PNODE g;
 /*          INTO ...tmpY[index + C].                                      */
 /**************************************************************************/
 
-static void ImproveIndexing( g )
-PNODE g;
+static void ImproveIndexing(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1606,8 +1563,7 @@ MoveOn:
 /* PURPOSE: RETURN THE NEAREST SUCCESSOR NODE OF NODE n.                  */
 /**************************************************************************/
 
-static PNODE NearestSuccessor( n )
-PNODE n;
+static PNODE NearestSuccessor(PNODE n)
 {
   register PNODE ns;
   register PEDGE e;
@@ -1638,8 +1594,7 @@ PNODE n;
 /* PURPOSE: RETURN TRUE IF NODE n IS ALREADY PART OF A CRAY X-MP CHAIN.   */
 /**************************************************************************/
 
-static int IsChained( n )
-PNODE n;
+static int IsChained(PNODE n)
 {
   if ( n->nsucc != NULL )
     if ( n->label == n->nsucc->label )
@@ -1660,8 +1615,7 @@ PNODE n;
 /*          THE CRAY X-MP.                                                */
 /**************************************************************************/
 
-static void FormCrayXmpChains( g )
-PNODE g;
+static void FormCrayXmpChains(PNODE g)
 {
   register PNODE n;
   register PNODE nn;
@@ -1757,9 +1711,7 @@ PNODE g;
 /*          IMPROVE THE PERFORMANCE OF SEQUENTIAL CODE ON THE CRAY X-MP.  */
 /**************************************************************************/
 
-static void MigrateReadsUpward( g, vmode )
-PNODE g;
-int   vmode;
+static void MigrateReadsUpward(PNODE g, int vmode)
 {
   register PNODE sg;
   register PNODE n;
@@ -1842,7 +1794,7 @@ int   vmode;
 /*          DONE (see the specific routines).                             */
 /**************************************************************************/
 
-void If2AImp()
+void If2AImp(void)
 {
   register PNODE f;
 
@@ -1879,7 +1831,7 @@ void If2AImp()
 /**************************************************************************/
 
 
-void WriteIf2AImpInfo()
+void WriteIf2AImpInfo(void)
 {
   FPRINTF( infoptr, "\n **** ARRAY IMPROVMENTS\n\n" );
   FPRINTF( infoptr, " GetArrayBase Nodes Inserted:          %d\n", gabc  );
@@ -1901,7 +1853,7 @@ void WriteIf2AImpInfo()
   FPRINTF( infoptr, " Formed Cray X-MP Chains:              %d\n", chains );
 }
 
-void WriteIf2AImpInfo2()
+void WriteIf2AImpInfo2(void)
 {
   FPRINTF( infoptr1, "\n **** SELECT TEST IMPROVEMENTS\n\n" );
   FPRINTF( infoptr1, " Optimized Select Tests:               %d of %d\n", sopt,scnt  );

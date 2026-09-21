@@ -16,10 +16,7 @@
 /* PURPOSE: MAKE AN EDGE AND ADD IT TO THE NODE LIST.                     */
 /**************************************************************************/
 
-void MonoMakeEdge( snode, eport, dnode, iport, label )
-int   snode, eport;
-int   dnode, iport;
-int   label;
+void MonoMakeEdge(int snode, int eport, int dnode, int iport, int label)
 {
   register PNODE n;
 

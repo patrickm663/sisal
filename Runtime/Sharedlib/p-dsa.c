@@ -103,7 +103,7 @@ int dbytes  = 0;
 #endif
 
 
-void ShutDownDsa()
+void ShutDownDsa(void)
 {
 #if defined(DEBUG_DSA)
   FPRINTF( stderr, "D - (ShutDownDsa) Allocs %d Frees %d Lost Bytes %d\n", 
@@ -112,9 +112,7 @@ void ShutDownDsa()
 }
 
 
-void InitDsa( size, xft )
-int size;
-int xft;
+void InitDsa(int size, int xft)
 {
    register struct top *cu, *nx;
    register struct bot *cubot;
@@ -223,7 +221,7 @@ int xft;
 }
 
 #if defined(DEBUG_DSA)
-printDSA()
+printDSA(void)
 {
   struct top *cu, *pr, *back;
   int pID, mystart;
@@ -247,8 +245,7 @@ printDSA()
 
 /* Allocate storage from the boundary tag-managed pool */
 
-static char *btAlloc(size)
-register int size;
+static char *btAlloc(register int size)
 {
    register struct top *cu, *pr, *back;
    struct top          *newtop;
@@ -361,8 +358,7 @@ register int size;
 }
 
 
-static void btDeAlloc(ptr)
-register struct top *ptr;
+static void btDeAlloc(register struct top *ptr)
 {
   register struct top *bl_above, *bl_below, *pr, *cu;
   struct bot          *bot_above, *cubot;
@@ -507,8 +503,7 @@ tryabove:
 
 /* Return blocks from cache p to the boundary tag pool */
 
-static void OldZap(p)
-struct top *p;
+static void OldZap(struct top *p)
 {
   struct top *q;
 
@@ -533,7 +528,7 @@ struct top *p;
 /* "Shape up" the dsa system in a last ditch attempt to avoid deadlock */
 /* on data memory.                                                     */
 
-void DsaHelp()
+void DsaHelp(void)
 {
   register int pID;
 
@@ -548,8 +543,7 @@ void DsaHelp()
 }
 
 
-POINTER Alloc(size)
-register int size;
+POINTER Alloc(register int size)
 {
   register struct top *cu, *pr;
   register char       *addr;
@@ -625,15 +619,13 @@ register int size;
 }
 
 
-void DeAllocToBt( x )
-POINTER x;
+void DeAllocToBt(POINTER x)
 {
    btDeAlloc( (struct top *)((PCMCAST)x - TOPSIZE) );
 }
 
 
-void DeAlloc( x )
-POINTER x;
+void DeAlloc(POINTER x)
 {
    register struct top *pr, *cu, *ptr;
    register int size;
@@ -717,7 +709,7 @@ int dbytes  = 0;
 #endif
 
 
-void ShutDownDsa()
+void ShutDownDsa(void)
 {
 #if defined(DEBUG_DSA)
   FPRINTF( stderr, "D - (ShutDownDsa) Allocs %d Frees %d Lost Bytes %d\n", 
@@ -726,9 +718,7 @@ void ShutDownDsa()
 }
 
 
-InitDsaCaches(size,xft)
-int size;
-int xft;
+InitDsaCaches(int size, int xft)
 {
    int i;
    int roundsize;
@@ -755,9 +745,7 @@ int xft;
 }
 
 
-void InitDsa( size, xft )
-int size;
-int xft;
+void InitDsa(int size, int xft)
 {
    register struct top *cu, *nx;
    register struct bot *cubot;
@@ -847,8 +835,7 @@ FLUSHALL;
 
 /* Allocate storage from the boundary tag-managed pool */
 
-static char *btAlloc(size)
-register int size;
+static char *btAlloc(register int size)
 {
    register struct top *cu, *pr, *back;
    struct top          *newtop;
@@ -938,8 +925,7 @@ register int size;
 }
 
 
-static int btDeAlloc(ptr)
-register struct top *ptr;
+static int btDeAlloc(register struct top *ptr)
 {
   register struct top *bl_above, *bl_below, *pr, *cu;
   struct bot          *bot_above, *cubot;
@@ -1048,8 +1034,7 @@ tryabove:
 
 /* Return blocks from cache p to the boundary tag pool */
 
-static int OldZap(p)
-struct top *p;
+static int OldZap(struct top *p)
 {
   struct top *q;
 
@@ -1071,8 +1056,7 @@ struct top *p;
 }
 
 
-POINTER Alloc(size)
-register int size;
+POINTER Alloc(register int size)
 {
   register struct top *cu, *pr;
   register char       *addr;
@@ -1151,7 +1135,7 @@ register int size;
 /* "Shape up" the dsa system in a last ditch attempt to avoid deadlock */
 /* on data memory.                                                     */
 
-int DsaHelp()
+int DsaHelp(void)
 {
   register int pID;
 
@@ -1166,15 +1150,13 @@ int DsaHelp()
 }
 
 
-void DeAllocToBt( x )
-POINTER x;
+void DeAllocToBt(POINTER x)
 {
    btDeAlloc( (struct top *)((PCMCAST)x - TOPSIZE) );
 }
 
 
-void DeAlloc( x )
-POINTER x;
+void DeAlloc(POINTER x)
 {
    register struct top *pr, *cu, *ptr;
    register int size;

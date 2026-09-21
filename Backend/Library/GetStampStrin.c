@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN A POINTER TO THE COMMENTARY FOR STAMP stamp.           */
 /**************************************************************************/
 
-char *GetStampString( stamp )
-     char stamp;
+char *GetStampString(int stamp)
 {
   return( stamps[ (int)stamp ] );
 }

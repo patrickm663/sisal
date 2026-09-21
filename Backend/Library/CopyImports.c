@@ -18,10 +18,7 @@
 /*          SOURCE NODE COPY'S EXPORT LIST.                               */
 /**************************************************************************/
 
-void CopyImports( n1, n2, atts )
-PNODE n1;
-PNODE n2;
-int   atts;
+void CopyImports(PNODE n1, PNODE n2, int atts)
 {
     register PEDGE i;
     register PEDGE ii;

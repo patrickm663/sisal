@@ -21,9 +21,7 @@
 /*          tbase FOR THE NEXT READ FILE (IF1LD only)                     */
 /**************************************************************************/
 
-PINFO FindInfo( label, type )
-int label;
-int type;
+PINFO FindInfo(int label, int type)
 {
   if ( label <= 0 )
     return( NULL );

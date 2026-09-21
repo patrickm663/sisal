@@ -19,8 +19,7 @@
 /*          TYPE. THE PORT NUMBERS MAY BE NEGATIVE.                       */
 /**************************************************************************/
 
-void WriteConst( c )
-PEDGE c;
+void WriteConst(PEDGE c)
 {
   FPRINTF( output, "L         %2d %2d  %2d", c->dst->label,
           abs( c->iport ), c->info->label         );

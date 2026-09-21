@@ -18,9 +18,7 @@
 /*          REGUARDLESS, NODE n IS RETURNED.                              */
 /**************************************************************************/
 
-PNODE LinkNode( pred, n )
-PNODE pred;
-PNODE n;
+PNODE LinkNode(PNODE pred, PNODE n)
 {
   nchange = TRUE;
 

@@ -13,8 +13,7 @@
 #include "sisalrt.h"
 #include <signal.h>
 
-static void HandleSig( SigCode )
-int SigCode;
+static void HandleSig(int SigCode)
 {
   extern void InitSignalSystem();
 
@@ -39,7 +38,7 @@ int SigCode;
   AbortParallel();
 }
 
-void InitSignalSystem()
+void InitSignalSystem(void)
 {
   signal( SIGINT, HandleSig );
   signal( SIGFPE, HandleSig );

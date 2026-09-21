@@ -30,8 +30,7 @@ double atcosts[IF2AtNodes];                    /* AT-NODE COST TABLE     */
 /* PURPOSE:                                                               */
 /**************************************************************************/
 
-static void SetArithmeticCost( n )
-PNODE n;
+static void SetArithmeticCost(PNODE n)
 {
    register int extra;
 
@@ -72,8 +71,7 @@ PNODE n;
 /*                   8:  COST TO DEALLOCATE AN AGGREGATE                  */
 /**************************************************************************/
 
-void ReadCostFile( fn )
-char *fn;
+void ReadCostFile(char *fn)
 {
     FILE  *fd;
     char   buf[100];
@@ -102,7 +100,7 @@ char *fn;
 /* PURPOSE: WRITE COST TABLES TO stderr.                                  */
 /**************************************************************************/
 
-static void WriteCostTables()
+static void WriteCostTables(void)
 {
  /*   register int i;
 
@@ -165,8 +163,7 @@ static void WriteCostTables()
 /*          THE COST OF A Select NODE TEST SUBGRAPH IS NOT CONSIDERED.    */
 /**************************************************************************/
 
-static double MaxSubgraphCost( n )
-PNODE n;
+static double MaxSubgraphCost(PNODE n)
 {
     register PNODE  g;
     register double x;
@@ -189,8 +186,7 @@ PNODE n;
 /*          ADD IT TO ITS EXECUTION COST.                                 */
 /**************************************************************************/
 
-static void CalculateRefCntCosts( n )
-PNODE n;
+static void CalculateRefCntCosts(PNODE n)
 {
     register PEDGE i;
     register PEDGE e;
@@ -228,8 +224,7 @@ PNODE n;
 /*          ITERATION NUMBER.                                             */
 /**************************************************************************/
 
-double NumberOfIterations( f )
-PNODE f;
+double NumberOfIterations(PNODE f)
 {
     register PNODE n;
 
@@ -254,8 +249,7 @@ PNODE f;
 /*          THE FUNCTION WAS BROKEN TO ELIMINATE A CYCLE) IS USED.        */
 /**************************************************************************/
 
-static void CalculateCost( g )
-PNODE g;
+static void CalculateCost(PNODE g)
 {
   register PNODE n;
   register PNODE gg;
@@ -460,7 +454,7 @@ PNODE g;
 /*          COST TABLES ARE PRINTED TO stderr.                            */
 /**************************************************************************/
 
-void If2Cost()
+void If2Cost(void)
 {
     register PNODE f;
 

@@ -39,7 +39,7 @@
 /*          DEALLOCATED.                                                  */
 /**************************************************************************/
 
-void If2ConstGenerators()
+void If2ConstGenerators(void)
 {
     register PNODE n;
     register PEDGE i;

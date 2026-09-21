@@ -16,8 +16,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN AN ASSOCIATION LIST NODE.    */
 /**************************************************************************/
 
-PALIST AssocListAlloc( datum )
-int datum;
+PALIST AssocListAlloc(int datum)
 {
   register PALIST l;
 

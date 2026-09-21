@@ -17,8 +17,7 @@
 /*          ELSE RETURN -1.                                               */
 /**************************************************************************/
 
-int IsEntryPoint( nm )
-char *nm;
+int IsEntryPoint(char *nm)
 {
   register int   i;
   register char *p;

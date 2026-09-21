@@ -204,8 +204,7 @@ static void ConvertIfThenElse(PNODE node) {
 /*                                                                        */
 /**************************************************************************/
 
-static void SimplifyGenerates( g )
-PNODE g;
+static void SimplifyGenerates(PNODE g)
 {
     register PNODE n;
     register PNODE sn;
@@ -457,9 +456,7 @@ MoveOn2:
 /*          ROUTINE SHOULD BE IN THE FRONTEND, BUT IS NOT.                */
 /**************************************************************************/
 
-static int IsRecursive( from, to )
-PINFO from;
-PINFO to;
+static int IsRecursive(PINFO from, PINFO to)
 {
   register PINFO r;
   register PINFO ato;
@@ -497,8 +494,7 @@ PINFO to;
 
 /* HAVE is_error ALWAYS RETURN FALSE, ASSUMING error(..) GENERATES AN */
 /* ERROR MESSAGE AND SHUTS DOWN EXECUTION.                            */
-static void BindIsError( n )
-PNODE n;
+static void BindIsError(PNODE n)
 {
   register PEDGE e;
   register PEDGE se;
@@ -517,9 +513,7 @@ PNODE n;
 }
 
 
-static PNODE FindFunctionGraph( f, nm )
-register PNODE  f;
-char           *nm;
+static PNODE FindFunctionGraph(register PNODE f, char *nm)
 {
   register PNODE g;
 
@@ -534,9 +528,7 @@ char           *nm;
 }
 
 
-static void MarkReferencedFunctions( f, g )
-PNODE f;
-PNODE g;
+static void MarkReferencedFunctions(PNODE f, PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -557,7 +549,7 @@ PNODE g;
 }
 
 
-void EliminateDeadFunctions()
+void EliminateDeadFunctions(void)
 {
   register PNODE f;
   register PNODE sf;
@@ -588,8 +580,7 @@ void EliminateDeadFunctions()
 /* PURPOSE:  CONVERT AFill NODE n INTO FORALL NODE n.                     */
 /**************************************************************************/
 
-static void ConvertFillToForall( n )
-PNODE n;
+static void ConvertFillToForall(PNODE n)
 {
   register PNODE  g;
   register PNODE  b;
@@ -675,8 +666,7 @@ PNODE n;
 /*           SOURCES (CHANGED BACK BY IF1Write!!!).                       */
 /**************************************************************************/
 
-static void FixBooleanAndErrorConsts( n )
-PNODE n;
+static void FixBooleanAndErrorConsts(PNODE n)
 {
     register PEDGE i;
     register PNODE nn;
@@ -716,8 +706,7 @@ PNODE n;
 /*           SOFTWARE TO GURANTEE AN INTEGER SELECTOR.                    */
 /**************************************************************************/
 
-static void RemoveIntNode( s )
-PNODE s;
+static void RemoveIntNode(PNODE s)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -766,8 +755,7 @@ PNODE s;
 /*          STREAM SCATTER NODES.                                         */
 /**************************************************************************/
 
-static void NormalizeGenerateSubgraph( f )
-PNODE f;
+static void NormalizeGenerateSubgraph(PNODE f)
 {
     register PNODE n;
     register PNODE nd;
@@ -966,11 +954,7 @@ PNODE f;
 /*          n2 MUST BE THE Forall'S BODY AND RETURN GRAPH NODES.          */
 /**************************************************************************/
 
-static void EliminateFanout( n, n1, n2, eport )
-PNODE n;
-PNODE n1;
-PNODE n2;
-int   eport;
+static void EliminateFanout(PNODE n, PNODE n1, PNODE n2, int eport)
 {
     register PEDGE e;
     register PEDGE se;
@@ -1011,8 +995,7 @@ int   eport;
 /*          STREAMS IS 1.  NODE n IS DESTROYED.                           */
 /**************************************************************************/
 
-static void RemoveSLimLNode( n )
-PNODE n;
+static void RemoveSLimLNode(PNODE n)
 {
     register PEDGE e;
     register PEDGE se;
@@ -1041,8 +1024,7 @@ PNODE n;
 /*          THE NEGATED CONSTANT.  ERROR CONSTANTS ARE IGNORED.           */
 /**************************************************************************/
 
-static void FoldNegNode( n )
-PNODE n;
+static void FoldNegNode(PNODE n)
 {
     register PEDGE  i;
     register PEDGE  e;
@@ -1093,8 +1075,7 @@ PNODE n;
 /*          LOOP FORMS.                                                   */
 /**************************************************************************/
 
-static void RemoveSetLowNode( s )
-PNODE s;
+static void RemoveSetLowNode(PNODE s)
 {
     register PEDGE i;
     register PEDGE e;
@@ -1205,8 +1186,7 @@ DoRemoval:
 /*          NULL STRING REPRESENTS AN ERROR STRING AND IS IGNORED.        */
 /**************************************************************************/
 
-static void ConvertStringImports( n )
-PNODE n;
+static void ConvertStringImports(PNODE n)
 {
     register char  *s;
     register PEDGE  i;
@@ -1282,8 +1262,7 @@ PNODE n;
 /*          NODE WHOSE EXPORT IS ONLY USED BY n.                          */
 /**************************************************************************/
 
-static void RemoveNotNodePair( n )
-PNODE n;
+static void RemoveNotNodePair(PNODE n)
 {
     register PEDGE e;
     register PEDGE se;
@@ -1332,8 +1311,7 @@ PNODE n;
 /*          SHARED).                                                      */
 /**************************************************************************/
 
-static void ConvertReduceCatenate( n )
-PNODE n;
+static void ConvertReduceCatenate(PNODE n)
 {
     register PNODE c;
     register PNODE g;
@@ -1383,8 +1361,7 @@ PNODE n;
 }
 
 
-static void NormalizeLoopRet( l )
-PNODE l;
+static void NormalizeLoopRet(PNODE l)
 {
   register PNODE n;
   register PNODE sn;
@@ -1435,8 +1412,7 @@ PNODE l;
   }
 }
 
-static void NormalizeForallRet( f )
-PNODE f;
+static void NormalizeForallRet(PNODE f)
 {
   register PNODE n;
   register PNODE sn;
@@ -1492,8 +1468,7 @@ PNODE f;
 /*          THE UNIT (ASSUMED TO BE 1).                                   */
 /**************************************************************************/
 
-static int IsRetNormalized( l )
-PNODE l;
+static int IsRetNormalized(PNODE l)
 {
     register PNODE n;
     register PEDGE i;
@@ -1554,8 +1529,7 @@ PNODE l;
 /*          label FIELD IS NEGATIVE.                                      */
 /**************************************************************************/
 
-static void MarkLegalTestNodes( n )
-PNODE n;
+static void MarkLegalTestNodes(PNODE n)
 {
     register PEDGE i;
 
@@ -1600,8 +1574,7 @@ PNODE n;
 /*          INITIAL SUBGRAPH.                                             */
 /**************************************************************************/
 
-static void NormalizeLoopTest( l )
-PNODE l;
+static void NormalizeLoopTest(PNODE l)
 {
     register PNODE n;
     register PNODE nn;
@@ -1668,8 +1641,7 @@ PNODE l;
 /*          COMPILATION TO STOP.                                          */
 /**************************************************************************/
 
-static void NormalizeNodes( g )
-PNODE g;
+static void NormalizeNodes(PNODE g)
 {
     register PNODE n;
     register PNODE nd;
@@ -1894,8 +1866,7 @@ StartForall:
 }
 
 
-static void ConvertStreamsToArrays( g )
-PNODE g;
+static void ConvertStreamsToArrays(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1972,7 +1943,7 @@ PNODE g;
 /*          STREAM IMPORTS ARE REPLACED BY THE CONSTANT 1.                */
 /**************************************************************************/
 
-void If1Normalize()
+void If1Normalize(void)
 {
   register PNODE f;
   register PINFO i;

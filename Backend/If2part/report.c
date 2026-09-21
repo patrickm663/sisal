@@ -100,8 +100,7 @@ static int            LoopCount; /* Used to count number of elig. loops */
 /**************************************************************************/
 /* PURPOSE:  See if the comment is a pragma (active comment).             */
 /**************************************************************************/
-static void CheckPragma(s)
-     char   *s;
+static void CheckPragma(char *s)
 {
   /* ------------------------------------------------------------ */
   /* All comments start with '#$<char>'                           */
@@ -144,7 +143,7 @@ static void CheckPragma(s)
 /* PURPOSE:  Read in the updates to apply from the report file            */
 /**************************************************************************/
 
-void ReadReport()
+void ReadReport(void)
 {
   char          sourceline[1024],*p,Buf[1024],*q;
   int           lineno = 0;
@@ -276,8 +275,7 @@ void ReadReport()
 /**************************************************************************/
 /* PURPOSE: Write out the loop report file                                */
 /**************************************************************************/
-static void WriteReport(f)
-     PNODE      f;
+static void WriteReport(PNODE f)
 {
   PNODE         n,g;
 
@@ -315,8 +313,7 @@ static void WriteReport(f)
 /**************************************************************************/
 /* PURPOSE: Count the number of forall loops to report on                 */
 /**************************************************************************/
-static void LoopCounter(f)
-     PNODE      f;
+static void LoopCounter(PNODE f)
 {
   PNODE         n,g;
 
@@ -349,9 +346,8 @@ static void LoopCounter(f)
 /*           it changes any fields.                                       */
 /**************************************************************************/
 
-int UpdatedLoopPragmas(n,RMask)
-     PNODE      n;
-     unsigned   RMask;          /* Bit mask selector for fields */
+int UpdatedLoopPragmas(PNODE n,
+                       unsigned RMask)  /* Bit mask selector for fields */
 {
   int           ID = n->ID;     /* ID to search for */
   int           i;
@@ -411,7 +407,7 @@ int UpdatedLoopPragmas(n,RMask)
 /**************************************************************************/
 /* PURPOSE: To write out a report on loop concurrency                     */
 /**************************************************************************/
-void PartitionReport()
+void PartitionReport(void)
 {
   register PNODE f;
 

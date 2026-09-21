@@ -16,7 +16,7 @@
 /* PURPOSE: CLEAR ALL THE SYMBOL TABLE TOUCH FLAGS.                       */
 /**************************************************************************/
 
-void ClearTouchFlags()
+void ClearTouchFlags(void)
 {
   register PINFO i;
 

@@ -149,9 +149,7 @@ static char *ofile = NULL;   /* NAME OF THE OUTPUT FILE                   */
 /*              -# f    -> DON'T INLINE FUNCTION f                        */
 /**************************************************************************/
 static void ParseCommandLine PROTO((int,char**));
-static void ParseCommandLine( argc, argv )
-int    argc;
-char **argv;
+static void ParseCommandLine(int argc, char **argv)
 {
     register char *c;
     register int   fmode = 0;
@@ -429,9 +427,7 @@ char **argv;
 /**************************************************************************/
 
 extern int main PROTO((int,char**));
-int main( argc, argv )
-int    argc;
-char **argv;
+int main(int argc, char **argv)
 {
   register FILE *fd;
   register int   i;

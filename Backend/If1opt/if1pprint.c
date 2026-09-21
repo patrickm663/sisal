@@ -25,8 +25,7 @@ static int nm    =  0;                             /* UNIQUE ID FOR NAMES */
 /**************************************************************************/
 /* GLOBAL **************    OptRemoveDeadNode      ************************/
 /**************************************************************************/
-void OptRemoveDeadNode( n )
-PNODE n;
+void OptRemoveDeadNode(PNODE n)
 {
   /* Just a stub for the util.c module */
 }
@@ -34,8 +33,7 @@ PNODE n;
 /**************************************************************************/
 /* GLOBAL **************     OptNormalizeNode      ************************/
 /**************************************************************************/
-void OptNormalizeNode( n )
-PNODE n;
+void OptNormalizeNode(PNODE n)
 {
   /* Just a stub for the util.c module */
 }
@@ -46,8 +44,7 @@ PNODE n;
 /* PURPOSE: ALLOCATE AND RETURN A UNIQUE NAME WITH PREFIX pre.            */
 /**************************************************************************/
 
-static char *PrefixNameAlloc( pre )
-char *pre;
+static char *PrefixNameAlloc(char *pre)
 {
     char Namebuffer[100];
 
@@ -63,9 +60,7 @@ char *pre;
 /* PURPOSE: ASSIGN A NAME TO EACH UNIQUE EXPORT OF n'S EXPORT LIST.       */
 /**************************************************************************/
 
-static void AssignExportNames( n, pre )
-PNODE  n;
-char  *pre;
+static void AssignExportNames(PNODE n, char *pre)
 {
     register PEDGE e1;
     register PEDGE e2;
@@ -89,8 +84,7 @@ char  *pre;
 /* PURPOSE: ASSIGN NAMES TO THE UNIQUE EXPORTS OF ALL NODES IN GRAPH g.   */
 /**************************************************************************/
 
-static void OptAssignNames( g )
-register PNODE g;
+static void OptAssignNames(register PNODE g)
 {
     register PNODE n;
 
@@ -120,8 +114,7 @@ register PNODE g;
 /*          OR A PORT NUMBER.                                             */
 /**************************************************************************/
 
-static void PPrintGraphParameters( g )
-PNODE g;
+static void PPrintGraphParameters(PNODE g)
 {
     register PEDGE e1;
     register PEDGE e2;
@@ -179,8 +172,7 @@ PNODE g;
 /*          OR A PORT NUMBER.                                             */
 /**************************************************************************/
 
-static void If1PPrintNodeParameters( n )
-PNODE n;
+static void If1PPrintNodeParameters(PNODE n)
 {
     register PEDGE e1;
     register PEDGE e2;
@@ -230,9 +222,7 @@ PNODE n;
 /*          NESTING LEVEL.  TYPE INFORMATION IS NOT PRINTED.              */
 /**************************************************************************/
 
-static void If1PPrintNode( g, indent )
-PNODE g;
-int indent;
+static void If1PPrintNode(PNODE g, int indent)
 {
     register PNODE n;
 
@@ -280,7 +270,7 @@ int indent;
 /* PURPOSE: PRINT ALL FUNCTION GRAPHS TO output IN A READABLE FORM.       */
 /**************************************************************************/
 
-void If1PPrint()
+void If1PPrint(void)
 {
     register PNODE f;
 

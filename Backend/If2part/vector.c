@@ -78,8 +78,7 @@ static int vbc      = 0;
 /*          context (e.g. loop body).                                     */
 /**************************************************************************/
 
-static int PartIsInvariant( n )
-PNODE n;
+static int PartIsInvariant(PNODE n)
 {
     register PEDGE i;
 
@@ -104,9 +103,7 @@ PNODE n;
 /* PURPOSE: RETURN TRUE IF FORALL f IS A CANDIDATE FOR VECTORIZATION.     */
 /**************************************************************************/
 
-int PartIsVecCandidate( f,ReasonP )
-     PNODE f;
-     char  **ReasonP;
+int PartIsVecCandidate(PNODE f, char **ReasonP)
 {
   register PEDGE e;
   register PEDGE i;
@@ -749,7 +746,7 @@ int PartIsVecCandidate( f,ReasonP )
 /**************************************************************************/
 /* PURPOSE: Display vectorizing statistics                                */
 /**************************************************************************/
-void VectorSummary()
+void VectorSummary(void)
 {
     FPRINTF( infoptr, "\n **** VECTORIZATION SUMMARY\n" );
     FPRINTF( infoptr, "\n\n" );

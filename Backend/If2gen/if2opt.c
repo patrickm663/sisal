@@ -42,8 +42,7 @@ int rmdab   = 0;                  /* COUNT OF REMOVED IFDefArrayBuf NODES */
 /* PURPOSE: ASSIGN ERROR CONSTANTS THEIR OWN SOURCE NODE.                 */
 /**************************************************************************/
 
-static void FixErrorConstants( n )
-PNODE n;
+static void FixErrorConstants(PNODE n)
 {
   register PEDGE i;
   register PNODE nn;
@@ -74,8 +73,7 @@ PNODE n;
 /*          <.                                                            */
 /**************************************************************************/
 
-static void FoldLogical( n )
-PNODE n;
+static void FoldLogical(PNODE n)
 {
   register PEDGE e;
 
@@ -127,9 +125,7 @@ PNODE n;
 /*          THIS MAKES LIFE EASIER AND EXECUTION FASTER!                  */
 /**************************************************************************/
 
-static void FoldReturnPragmas( l, r )
-PNODE l;
-PNODE r;
+static void FoldReturnPragmas(PNODE l, PNODE r)
 {
   register PEDGE i;
   register PEDGE e;
@@ -184,8 +180,7 @@ PNODE r;
 /* PURPOSE: ELIMINATE VARIOUS pm AND cm PRAGMAS.                          */
 /**************************************************************************/
 
-static void FoldPragmas( n )
-PNODE n;
+static void FoldPragmas(PNODE n)
 {
     switch( n->type ) {
       case IFForall:
@@ -210,8 +205,7 @@ PNODE n;
 /*          WITH REFERENCES TO THE CONSTITUENT TYPES.                     */
 /**************************************************************************/
 
-static void RemoveMultipleTypes( n )
-PNODE n;
+static void RemoveMultipleTypes(PNODE n)
 {
     register PEDGE i;
 
@@ -228,8 +222,7 @@ PNODE n;
 /*          TO GRAPH g.                                                   */
 /**************************************************************************/
 
-static void ApplyVariousIf2Opts( g )
-PNODE g;
+static void ApplyVariousIf2Opts(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -308,8 +301,7 @@ PNODE g;
 /*          RECURSIVE PROGRAM ENTRY POINT? YES, IF standalone IS TRUE.    */
 /**************************************************************************/
 
-static void RemoveGrounds( f )
-PNODE f;
+static void RemoveGrounds(PNODE f)
 {
   register PEDGE i;
   register PEDGE si;
@@ -347,9 +339,7 @@ PNODE f;
 /* PURPOSE: IF APPROPRIATE, ADD n TO GRAPH g's FLOP COUNTERS.             */
 /**************************************************************************/
 
-static void AddToFlopCounts( g, n )
-PNODE g;
-PNODE n;
+static void AddToFlopCounts(PNODE g, PNODE n)
 {
   register PNODE f;
 
@@ -508,8 +498,7 @@ PNODE n;
 /*          THE START OF if2gen EXECUTION.                                */
 /**************************************************************************/
 
-void PrepareGraph( g )
-register PNODE g;
+void PrepareGraph(register PNODE g)
 {
   register PNODE sg;
   register PNODE n;
@@ -544,7 +533,7 @@ register PNODE g;
 /* PURPOSE: APPLY MISCELLANEOUS OPTIMIZATIONS TO THE IF2 GRAPHS.          */
 /**************************************************************************/
 
-void If2Opt()
+void If2Opt(void)
 {
   register PNODE f;
 
@@ -562,14 +551,14 @@ void If2Opt()
 /**************************************************************************/
 /* PURPOSE: WRITE if2opt INFORMATION TO stderr.                           */
 /**************************************************************************/
-void WriteIf2OptInfo2()
+void WriteIf2OptInfo2(void)
 {
   FPRINTF( infoptr4, "\n **** SEQUENTIALIZED LOOPS\n\n" );
   FPRINTF( infoptr4, "%s\n Sequentialized Concurrent Loops: %d\n", rmark,rmsmark );
   FPRINTF( infoptr4, "%s\n Sequentialized Vector Loops:     %d\n", vmark,rmvmark );
 }
 
-void WriteIf2OptInfo()
+void WriteIf2OptInfo(void)
 {
   FPRINTF( infoptr3, "\n **** ADDITIONAL COPY ELIMINATIONS\n\n" );
 /*  FPRINTF( infoptr3, " Removed Ground Imports:           %d\n", gcnt  ); */

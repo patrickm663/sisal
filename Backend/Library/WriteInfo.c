@@ -16,7 +16,7 @@
 /* PURPOSE: WRITE THE INFO NODE LIST HEADED BY ihead TO OUTPUT.           */
 /**************************************************************************/
 
-void WriteInfo()
+void WriteInfo(void)
 {
   register PINFO i;
   register int   t;

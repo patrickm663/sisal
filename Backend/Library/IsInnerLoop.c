@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN TRUE IF THE LOOP WITH BODY b IS AN INNER LOOP.         */
 /**************************************************************************/
 
-int IsInnerLoop( b )
-PNODE b;
+int IsInnerLoop(PNODE b)
 {
   register PNODE n;
   register PNODE sg;

@@ -42,9 +42,7 @@ static int cetop = -1;
 /*          SIMILARLY.                                                    */
 /**************************************************************************/
 
-static int DriveParallelMarks( g, Pmark )
-PNODE g;
-int   Pmark;
+static int DriveParallelMarks(PNODE g, int Pmark)
 {
   register PNODE n;
   register PNODE sg;
@@ -82,7 +80,7 @@ int   Pmark;
 /*          ENTRY POINT!                                                  */
 /**************************************************************************/
 
-void MarkParallelFunctions()
+void MarkParallelFunctions(void)
 {
   register PNODE f;
   register int   change = TRUE;
@@ -113,7 +111,7 @@ void MarkParallelFunctions()
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A MODULE DATA BASE NODE.     */
 /**************************************************************************/
 
-static PMDATA MDataAlloc()
+static PMDATA MDataAlloc(void)
 {
   register PMDATA m;
 
@@ -138,8 +136,7 @@ static PMDATA MDataAlloc()
 /*          ELSE RETURN THE ENTRY.                                        */
 /**************************************************************************/
 
-PMDATA LookupCallee( name )
-char *name;
+PMDATA LookupCallee(char *name)
 {
   register int    i;
   register PMDATA ce;
@@ -165,7 +162,7 @@ char *name;
 static char name[100];
 static char kind;
 
-void ReadModuleDataBase()
+void ReadModuleDataBase(void)
 {
   register PNODE  f;
   register PMDATA ce;
@@ -264,7 +261,7 @@ void ReadModuleDataBase()
 /* PURPOSE: WRITE THE INTERNAL DATA BASE TO THE MODULE DATA BASE FILE.    */
 /**************************************************************************/
 
-void WriteModuleDataBase()
+void WriteModuleDataBase(void)
 {
   register int     i;
   register PMDATA  ce;
@@ -432,7 +429,7 @@ void WriteModuleDataBase()
 /* PURPOSE: ADD THE APPROPRIATE MODULE STAMP TO THE STAMP SYSTEM.         */
 /**************************************************************************/
 
-void AddModuleStamp()
+void AddModuleStamp(void)
 {
   switch( cmode ) {
     case M_DATABASE:

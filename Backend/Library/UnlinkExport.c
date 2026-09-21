@@ -17,8 +17,7 @@
 /*          CONSTANT, NOTHING IS DONE.                                    */
 /**************************************************************************/
 
-void UnlinkExport( e )
-PEDGE e;
+void UnlinkExport(PEDGE e)
 {
   if ( IsConst( e ) )
     return;

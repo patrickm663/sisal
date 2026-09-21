@@ -16,7 +16,7 @@
 /*          Stamps to display.                                            */
 /**************************************************************************/
 
-void AddTimeStamp()
+void AddTimeStamp(void)
 {
   time_t        timeofday;
   char          *asciitime;

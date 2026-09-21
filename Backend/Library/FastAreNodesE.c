@@ -18,9 +18,7 @@
 /*          AreNodesEqual ASSUMES n1 AND n2 ARE FROM THE SAME SCOPE!      */
 /**************************************************************************/
 
-int FastAreNodesEqual( n1, n2 )
-PNODE n1;
-PNODE n2;
+int FastAreNodesEqual(PNODE n1, PNODE n2)
 {
   register PEDGE i1;
   register PEDGE i2;

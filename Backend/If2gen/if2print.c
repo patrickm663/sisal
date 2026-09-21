@@ -25,8 +25,7 @@
 /* PURPOSE: PRINT indent BLANKS TO output.                                */
 /**************************************************************************/
 
-static void PrintDivByZeroCheck( n )
-PNODE n;
+static void PrintDivByZeroCheck(PNODE n)
 {
   char buf[200];
 
@@ -54,8 +53,7 @@ PNODE n;
 /* PURPOSE: PRINT indent BLANKS TO output.                                */
 /**************************************************************************/
 
-void PrintIndentation( indent )
-int indent;
+void PrintIndentation(int indent)
 {
   register int i;
 
@@ -72,8 +70,7 @@ int indent;
 /*          DEFINE A CONSTANT.                                            */
 /**************************************************************************/
 
-void PrintTemp( e )
-PEDGE e;
+void PrintTemp(PEDGE e)
 {
     register PTEMP t;
 
@@ -136,12 +133,7 @@ PEDGE e;
 /* PURPOSE: PRINT STRUCTURE REFERENCE TO output.                          */
 /**************************************************************************/
 
-void PrintFldRef( sname, name, e, f, fid )
-char  *sname;
-char  *name;
-PEDGE  e;
-char  *f;
-int    fid;
+void PrintFldRef(char *sname, char *name, PEDGE e, char *f, int fid)
 {
     FPRINTF( output, "((%s*)", sname );
 
@@ -160,10 +152,7 @@ int    fid;
 /* PURPOSE: PRINT AN ASSIGNMENT OPERATION TO output: e = i;               */
 /**************************************************************************/
 
-void PrintAssgn( indent, e, i )
-int   indent;
-PEDGE e;
-PEDGE i;
+void PrintAssgn(int indent, PEDGE e, PEDGE i)
 {
     if ( e->temp == i->temp )
         return;
@@ -183,14 +172,13 @@ PEDGE i;
 /* PURPOSE: PRINT STRUCTURE FIELD ASSIGNMENT TO output.                   */
 /**************************************************************************/
 
-void PrintFldAssgn( indent, sname, name, e, f, fid, i )
-int    indent;
-char  *sname;
-char  *name;
-PEDGE  e;
-char  *f;
-int    fid;
-PEDGE  i;
+void PrintFldAssgn(int indent,
+                   char *sname,
+                   char *name,
+                   PEDGE e,
+                   char *f,
+                   int fid,
+                   PEDGE i)
 {
     PrintIndentation( indent );
 
@@ -210,11 +198,7 @@ PEDGE  i;
 /*          AS THE SUFFIX.                                                */
 /**************************************************************************/
 
-void PrintMacro( indent, macro, n, s )
-int    indent;
-char  *macro;
-PNODE  n;
-char  *s;
+void PrintMacro(int indent, char *macro, PNODE n, char *s)
 {
     register PEDGE i;
 
@@ -242,11 +226,7 @@ char  *s;
 /*          PRINTED.                                                      */
 /**************************************************************************/
 
-void PrintSetRefCount( indent, e, v, is1 )
-int   indent;
-PEDGE e;
-int   v;
-int   is1;
+void PrintSetRefCount(int indent, PEDGE e, int v, int is1)
 {
   if ( v == 0 ) {
     rmsrcnt++;
@@ -272,9 +252,7 @@ int   is1;
 /* PURPOSE: PRINT FREE CALL FOR AGGREGATE i TO output.                    */
 /**************************************************************************/
 
-void PrintFreeCall( indent, i )
-int   indent;
-PEDGE i;
+void PrintFreeCall(int indent, PEDGE i)
 {
   PrintIndentation( indent );
   FPRINTF( output, "%s( ", GetFreeName(i->info) );
@@ -289,9 +267,7 @@ PEDGE i;
 /* PURPOSE: PRINT CONSUMER MODIFY OPERATIONS FOR THE IMPORTS OF NODE n.   */
 /**************************************************************************/
 
-void PrintConsumerModifiers( indent, n )
-int   indent;
-PNODE n;
+void PrintConsumerModifiers(int indent, PNODE n)
 {
   register PEDGE i;
 
@@ -311,9 +287,7 @@ PNODE n;
 /*          EXPORTS OF NODE n.                                            */
 /**************************************************************************/
 
-void PrintProducerLastModifiers( indent, n )
-int   indent;
-PNODE n;
+void PrintProducerLastModifiers(int indent, PNODE n)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -345,9 +319,7 @@ PNODE n;
 /* PURPOSE: PRINT PRODUCER MODIFY OPERATIONS FOR THE EXPORTS OF NODE n.   */
 /**************************************************************************/
 
-void PrintProducerModifiers( indent, n )
-int   indent;
-PNODE n;
+void PrintProducerModifiers(int indent, PNODE n)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -379,9 +351,7 @@ PNODE n;
 /* PURPOSE: PRINT Min OR Max NODE n TO output.                            */
 /**************************************************************************/
 
-static void PrintMinMax( indent, n )
-int    indent;
-PNODE  n;
+static void PrintMinMax(int indent, PNODE n)
 {
     char buf[100];
 
@@ -402,9 +372,7 @@ PNODE  n;
 /* PURPOSE: PRINT DYADIC NODE n TO OUTPUT.                                */
 /**************************************************************************/
 
-static void PrintDyadic( indent, n )
-int    indent;
-PNODE  n;
+static void PrintDyadic(int indent, PNODE n)
 {
     char buf[100];
     char *op;
@@ -433,10 +401,7 @@ PNODE  n;
 /* PURPOSE: PRINT COMMUTATIVE DYADIC NODE n TO OUTPUT.                    */
 /**************************************************************************/
 
-static void PrintDyadicCom( indent, n, override )
-int    indent;
-PNODE  n;
-char  *override;
+static void PrintDyadicCom(int indent, PNODE n, char *override)
 {
     char buf[100];
 
@@ -456,10 +421,7 @@ char  *override;
 /* PURPOSE:  Expand the $vars found in the LoopSlice (and other?)         */
 /*           formulas to the defined variables.                           */
 /**************************************************************************/
-static void ExpandDollarFormula(c,n,errorbuf)
-     char       *c;
-     PNODE      n;
-     char       *errorbuf;
+static void ExpandDollarFormula(char *c, PNODE n, char *errorbuf)
 {
   errorbuf[0] = '\0';           /* Assume no errors */
      
@@ -501,8 +463,7 @@ static void ExpandDollarFormula(c,n,errorbuf)
 /**************************************************************************/
 /* PURPOSE:                                                               */
 /**************************************************************************/
-static int IsComplex( g )
-PNODE g;
+static int IsComplex(PNODE g)
 {
   register PNODE n;
 
@@ -526,9 +487,7 @@ PNODE g;
 /**************************************************************************/
 /* PURPOSE: Prints out the code to invoke the loop slice scheduler        */
 /**************************************************************************/
-static void PrintBuildSlices( indent, n )
-int   indent;
-PNODE n;
+static void PrintBuildSlices(int indent, PNODE n)
 {
   register PNODE f;
   char     buf[100];
@@ -622,9 +581,7 @@ PNODE n;
 }
 
 
-static void PrintSaveSliceParam( indent, n )
-int   indent;
-PNODE n;
+static void PrintSaveSliceParam(int indent, PNODE n)
 {
   register PEDGE i;
   register PNODE lpe;
@@ -667,9 +624,7 @@ PNODE n;
 /* PURPOSE: PRINT LoopPoolEnQ NODE n TO output.                           */
 /**************************************************************************/
 
-static void PrintLoopPoolEnq( indent, n )
-int   indent;
-PNODE n;
+static void PrintLoopPoolEnq(int indent, PNODE n)
 {
   register PNODE f;
   char     *Style;
@@ -733,8 +688,7 @@ PNODE n;
 /* PURPOSE: RETURN TRUE IF NODE n CALLS ONE OF THE FOUR LOGICAL FUNCTIONS */
 /**************************************************************************/
 
-int GenIsIntrinsic( f )
-PNODE f;
+int GenIsIntrinsic(PNODE f)
 {
   return( (f->mark == 'i')? TRUE : FALSE );
 }
@@ -746,10 +700,7 @@ PNODE f;
 /* PURPOSE: PRINT LOGICAL FUNCTION n TO output.                           */
 /**************************************************************************/
 
-static void PrintIntrinsicFunction( indent, n, f )
-int   indent;
-PNODE n;
-PNODE f;
+static void PrintIntrinsicFunction(int indent, PNODE n, PNODE f)
 {
   PrintIndentation( indent );
 
@@ -776,9 +727,7 @@ PNODE f;
 /*          FUNCTION.                                                     */
 /**************************************************************************/
 
-static void PrintCall( indent, n )
-int   indent;
-PNODE n;
+static void PrintCall(int indent, PNODE n)
 {
   register PNODE f;
   register int   eport;
@@ -842,9 +791,7 @@ SkipCleanUp:
 /* PURPOSE: PRINT THE NODES OF GRAPH g TO output.                         */
 /**************************************************************************/
 
-void PrintGraph( indent, g )
-int   indent;
-PNODE g;
+void PrintGraph(int indent, PNODE g)
 {
     register PNODE n;
     register PEDGE i;

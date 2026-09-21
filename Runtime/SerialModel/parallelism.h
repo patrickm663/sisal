@@ -19,13 +19,12 @@
 
 int p_procnum = 0;
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
   free( SharedBase );
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -35,7 +34,7 @@ int NumBytes;
     SisalError( "AcquireSharedMemory", "malloc FAILED" );
 }
 
-void StartWorkers() 
+void StartWorkers(void) 
 {
 #if defined(DIST_DSA)
         if(p_procnum != 0)
@@ -45,13 +44,13 @@ void StartWorkers()
   EnterWorker( p_procnum );
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel() 
+void AbortParallel(void) 
 { 
   exit( 1 ); 
 }

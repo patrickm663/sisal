@@ -16,7 +16,7 @@
 /* PURPOSE: WRITE GLOBAL NODES IN THE IMPORT LIST TO output.              */
 /**************************************************************************/
 
-void WriteGlobals()
+void WriteGlobals(void)
 {
   register PNAME i;
 

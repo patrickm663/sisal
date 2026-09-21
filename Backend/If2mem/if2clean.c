@@ -25,10 +25,7 @@
 /*          IF fast THEN DO NOT CROSS GRAPH BOUNDARIES IN THE SEARCH.     */
 /**************************************************************************/
 
-static int FastAreValuesEqual( v1, v2, fast )
-PEDGE v1;
-PEDGE v2;
-int   fast;
+static int FastAreValuesEqual(PEDGE v1, PEDGE v2, int fast)
 {
   if ( v1 == NULL || v2 == NULL )
     return( FALSE );
@@ -47,10 +44,7 @@ int   fast;
 /*          AND FALSE IF THEY ARE NOT.                                    */
 /**************************************************************************/
 
-static int MemAreNodesEqual( n1, n2, fast )
-PNODE n1;
-PNODE n2;
-int   fast;
+static int MemAreNodesEqual(PNODE n1, PNODE n2, int fast)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -99,9 +93,7 @@ int   fast;
 /*          WITHIN c.  THE FIRST IMPORT OF A TAGCASE NODE IS ALWAYS USED. */
 /**************************************************************************/
 
-static int MemIsUsed( c, i )
-PNODE c;
-PEDGE i;
+static int MemIsUsed(PNODE c, PEDGE i)
 {
     register PNODE g;
 
@@ -130,10 +122,7 @@ PEDGE i;
 /*          CONVERTS n INTO A DEAD NODE.                                  */
 /**************************************************************************/
 
-static void HandleUselessNode ( n, CoNsT, non_const )
-PNODE  n;
-char  *CoNsT;
-PEDGE  non_const;
+static void HandleUselessNode (PNODE n, char *CoNsT, PEDGE non_const)
 {
     register PEDGE e;
     register PEDGE se;
@@ -167,8 +156,7 @@ PEDGE  non_const;
 /*          REFERENCES TO i, CONVERTING n INTO A DEAD NODE.               */
 /**************************************************************************/
 
-static void SkipIdentityNode( i )
-PEDGE i;
+static void SkipIdentityNode(PEDGE i)
 {
     register PEDGE e;
     register PEDGE se;
@@ -204,9 +192,7 @@ PEDGE i;
 /*          RETURNED IF SUCH A CHAIN IS NOT FOUND AND FOLDED.             */
 /**************************************************************************/
 
-static int AddMaxAddChain( c1, add1 )
-int   c1;
-PNODE add1;
+static int AddMaxAddChain(int c1, PNODE add1)
 {
     register PNODE add2;
     register PNODE max;
@@ -283,10 +269,7 @@ PNODE add1;
 /**************************************************************************/
 
 
-static int ChainPresent( c1, n, e )
-int   c1;
-PNODE n;
-PEDGE e;
+static int ChainPresent(int c1, PNODE n, PEDGE e)
 {
     register PNODE prevn;
     register int   op1;
@@ -355,8 +338,7 @@ PEDGE e;
 /**************************************************************************/
 
 
-static void BasicFold( g )
-PNODE g;
+static void BasicFold(PNODE g)
 {
     register PNODE n;
     register PEDGE i1;
@@ -620,10 +602,7 @@ PNODE g;
 /*          AND THREAD IN THE REFERENCES.                                 */
 /**************************************************************************/
 
-static void RemoveAndInsertNodes( aa, cc, n )
-PNODE aa;
-PNODE cc;
-PNODE n;
+static void RemoveAndInsertNodes(PNODE aa, PNODE cc, PNODE n)
 {
   register PNODE nn;
   register PEDGE i;
@@ -693,8 +672,7 @@ PNODE n;
 /* PURPOSE: RETURN TRUE IF EDGE i IS LOOP INVARIANT.                      */
 /**************************************************************************/
 
-static int MemIsEdgeInvariant( i )
-PEDGE i;
+static int MemIsEdgeInvariant(PEDGE i)
 {
   if ( IsConst( i ) )
     return( TRUE );
@@ -717,8 +695,7 @@ PEDGE i;
 /*          NODE.                                                         */
 /**************************************************************************/
 
-static int MemIsInvariant( n )
-PNODE n;
+static int MemIsInvariant(PNODE n)
 {
     register PEDGE i;
 
@@ -739,8 +716,7 @@ PNODE n;
 /*          NEVER COMBINED WITH OTHER IMPORTS.                            */
 /**************************************************************************/
 
-static void MemCombineKports( c )
-PNODE c;
+static void MemCombineKports(PNODE c)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -771,8 +747,7 @@ PNODE c;
 /*          IMPROVE CHANCES FOR INVARIANT REMOVAL AND CSE.                */
 /**************************************************************************/
 
-static void MemRemoveSCses( g )
-PNODE g;
+static void MemRemoveSCses(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -843,8 +818,7 @@ PNODE g;
 }
 
 
-static void RemoveCCses( g )
-PNODE g;
+static void RemoveCCses(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -949,8 +923,7 @@ PNODE g;
 /*          INVARIANT NODES ARE CONSIDERED.                               */
 /**************************************************************************/
 
-static void BasicGCseRemoval( g )
-PNODE g;
+static void BasicGCseRemoval(PNODE g)
 {
     register PNODE sn;
     register PNODE n1;
@@ -1022,8 +995,7 @@ CombineAndThread:
 /*          REDUNDANT K PORT IMPORTS OF ALL COMPOUND NODES ARE REMOVED.   */
 /**************************************************************************/
 
-static void BasicCseRemoval( g )
-PNODE g;
+static void BasicCseRemoval(PNODE g)
 {
     register PNODE n1;
     register PNODE n2;
@@ -1080,9 +1052,7 @@ PNODE g;
 /*          INVARIANT NODES IN THE SAME SCOPE ARE EASILY DETECTED.        */
 /**************************************************************************/
 
-static void BasicInvarRemoval(lvl, g )
-int lvl;
-PNODE g;
+static void BasicInvarRemoval(int lvl, PNODE g)
 {
     register PNODE n;
     register PNODE nd;
@@ -1171,8 +1141,7 @@ PNODE g;
 /*          DEAD NODES.                                                   */
 /**************************************************************************/
 
-static void MemRemoveDeadNode( n )
-PNODE n;
+static void MemRemoveDeadNode(PNODE n)
 {
     register PEDGE i;
 
@@ -1204,8 +1173,7 @@ PNODE n;
 /*          EXPORT LIST IS NULL.                                          */
 /**************************************************************************/
 
-static void MemRemoveDeadNodesFromGraph( g )
-PNODE g;
+static void MemRemoveDeadNodesFromGraph(PNODE g)
 {
     register PNODE n;
     register PNODE sn;
@@ -1253,10 +1221,7 @@ PNODE g;
 /*          IMPORT THE RESULT TO NODE dst AT IMPORT PORT iport.           */
 /**************************************************************************/
 
-static void ComputeAndAttachLowerBound( i, dst, iport )
-PEDGE i;
-PNODE dst;
-int   iport;
+static void ComputeAndAttachLowerBound(PEDGE i, PNODE dst, int iport)
 {
   register PNODE lml;
   register PEDGE e;
@@ -1342,10 +1307,7 @@ int   iport;
 /*          NODE dst AT PORT iport. EDGE e IS ASSUMED TO CARRY A P MARK.  */
 /**************************************************************************/
 
-static void FindAndAttachLowerBound( e, dst, iport )
-PEDGE e;
-PNODE dst;
-int   iport;
+static void FindAndAttachLowerBound(PEDGE e, PNODE dst, int iport)
 {
   register PNODE n;
   register PEDGE lo;
@@ -1456,8 +1418,7 @@ int   iport;
 /*          AGatherAT NODES ALREADY HAVE ATTACHED LOWER BOUNDS.           */
 /**************************************************************************/
 
-static void AssignLowerBounds( g )
-PNODE g;
+static void AssignLowerBounds(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -1519,7 +1480,7 @@ PNODE g;
 /*          THE OLD HANDLER IS REINSTALLED AFTER FOLDING.                 */
 /**************************************************************************/
 
-void If2Clean()
+void If2Clean(void)
 {
   register PNODE f;
 

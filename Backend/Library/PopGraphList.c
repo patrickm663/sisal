@@ -18,7 +18,7 @@
 /*          PREVIOUS GRAPH LIST HEADER.  THE REMOVED HEADER NODE IS FREED.*/
 /**************************************************************************/
 
-void PopGraphList() 
+void PopGraphList(void) 
 { 
   if ( glstop == NULL ) return;
   glstop = UnlinkNode( glstop );

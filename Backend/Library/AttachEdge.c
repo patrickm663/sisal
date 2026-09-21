@@ -17,13 +17,12 @@
 /*          SOURCE PORT IS eport AND THE DESTINATION PORT IS iport.       */
 /**************************************************************************/
 
-void AttachEdge( src, eport, dst, iport, edgeinfo, c )
-PNODE  src;
-PNODE  dst;
-int    eport;
-int    iport;
-PINFO  edgeinfo;
-char  *c;
+void AttachEdge(PNODE src,
+                int eport,
+                PNODE dst,
+                int iport,
+                PINFO edgeinfo,
+                char *c)
 {
   register PEDGE e;
 

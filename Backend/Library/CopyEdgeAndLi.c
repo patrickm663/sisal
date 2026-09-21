@@ -17,10 +17,7 @@
 /*          GRAPH. THE DESTINATION INPUT PORT NUMBER IS iport.            */
 /**************************************************************************/
 
-void CopyEdgeAndLink( e, dst, iport )
-PEDGE e;
-PNODE dst;
-int   iport;
+void CopyEdgeAndLink(PEDGE e, PNODE dst, int iport)
 {
   register PEDGE i;
 

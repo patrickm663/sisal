@@ -16,10 +16,7 @@
 /*          THE SOURCE AND DESTINATION NODES.                             */
 /**************************************************************************/
 
-void CopyEdgeAndReset( e, src, dst )
-PEDGE e;
-PNODE src;
-PNODE dst;
+void CopyEdgeAndReset(PEDGE e, PNODE src, PNODE dst)
 {
   register PEDGE ee;
 

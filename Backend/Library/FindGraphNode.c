@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN THE GRAPH NODE OWNING NODE n.                          */
 /**************************************************************************/
 
-PNODE FindGraphNode( n )
-PNODE n;
+PNODE FindGraphNode(PNODE n)
 {
   register PNODE nn;
 

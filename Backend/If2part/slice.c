@@ -58,9 +58,7 @@
 /*          RETURNING A STREAM IS NOT CONSIDERED A CANDIDATE.             */
 /**************************************************************************/
 
-int IsSliceCandidate( f,reasonp )
-     PNODE      f;
-     char       **reasonp;
+int IsSliceCandidate(PNODE f, char **reasonp)
 {
     register PNODE n;
     register int   dots = -1;

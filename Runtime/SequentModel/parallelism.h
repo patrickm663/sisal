@@ -19,8 +19,7 @@
 
 extern char *shmalloc PROTO((int));
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -32,13 +31,13 @@ int NumBytes;
   SharedMemory = ALIGN(char*,SharedMemory);
 }
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
   shfree( SharedBase );
 }
 
 #ifdef GANGD
-void StartWorkers()
+void StartWorkers(void)
 {
   register int pID;
 
@@ -59,21 +58,21 @@ void StartWorkers()
     }
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
   end_parallel();
 }
 
-void AbortParallel() 
+void AbortParallel(void) 
 { 
   abort_parallel(); 
 }
 #else
 int p_procnum = 0;
 
-void StartWorkers( )
+void StartWorkers(void)
 {
   register int NumProcs = NumWorkers;
 
@@ -93,13 +92,13 @@ void StartWorkers( )
     }
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel()
+void AbortParallel(void)
 {
   (void)kill( 0, SIGKILL );
 }

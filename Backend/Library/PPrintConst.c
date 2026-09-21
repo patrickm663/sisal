@@ -16,8 +16,7 @@
 /* PURPOSE: PRINT CONSTANT c TO output.                                   */
 /**************************************************************************/
 
-void PPrintConst( c )
-PEDGE c;
+void PPrintConst(PEDGE c)
 {
   if ( c->CoNsT == NULL ) {
     FPRINTF( output, "\"%s\"", ERROR_CONSTANT );

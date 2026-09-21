@@ -49,8 +49,7 @@ static int last;   /* HAS OPTIMIZATION COMPLETED?                         */
 /*          AGGREGATE CONSTRUCTORS, AND ARTIFICIAL DEPENDENCE EDGES.      */
 /**************************************************************************/
 
-static void GatherCounts( g )
-PNODE g;
+static void GatherCounts(PNODE g)
 {
     register PNODE n;
     register PEDGE e;
@@ -272,7 +271,7 @@ PNODE g;
 /* PURPOSE: WRITE OCCURENCE COUNTS TO output.                             */
 /**************************************************************************/
 
-static void WriteUpCountInfo()
+static void WriteUpCountInfo(void)
 {
     FPRINTF( infoptr,   " Copy Nodes:                                    %d\n", noops);
     FPRINTF( infoptr,   " Copy Ops:                                      %d\n", snoops);
@@ -309,9 +308,7 @@ static void WriteUpCountInfo()
 /*          RESULTS, ALONG WITH QUALIFYING MESSAGE msg, TO output.        */
 /**************************************************************************/
 
-void UpIf2Count( lst, msg )
-int   lst;
-char *msg;
+void UpIf2Count(int lst, char *msg)
 {
     register PNODE f;
 
@@ -335,8 +332,7 @@ char *msg;
 /* PURPOSE: WRITE GRAPH WARNINGS FOR g TO stderr.                         */
 /**************************************************************************/
 
-static void UpWriteGraphWarnings( g )
-PNODE g;
+static void UpWriteGraphWarnings(PNODE g)
 {
     register PNODE  n;
     register PNODE  nn;
@@ -401,7 +397,7 @@ PNODE g;
 /* PURPOSE: WRITE COPY WARNINGS TO stderr FOR ALL THE FUNCTIONS.          */
 /**************************************************************************/
 
-void WriteIf2upWarnings()
+void WriteIf2upWarnings(void)
 {
   register PNODE f;
 

@@ -16,9 +16,7 @@
 /* PURPOSE: BLINDLY CHANGE EDGE d INTO CONSTANT c.                        */
 /**************************************************************************/
 
-void ChangeToConst( d, c )
-PEDGE d;
-PEDGE c;
+void ChangeToConst(PEDGE d, PEDGE c)
 {
   d->CoNsT = c->CoNsT;
   d->info  = c->info; 

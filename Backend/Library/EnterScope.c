@@ -18,7 +18,7 @@
 /*          NODE IS TO BE BUILT (WHEN } SEEN IN IF1 INPUT).               */
 /**************************************************************************/
 
-void EnterScope()
+void EnterScope(void)
 {
   PushGraphList();
   PushNodeList();

@@ -15,8 +15,7 @@
 /**************************************************************************/
 /* PURPOSE:  Writes out the information for all loops in program.         */
 /**************************************************************************/
-void WriteLoopMap( msg )
-     char *msg;
+void WriteLoopMap(char *msg)
 {
   register PNODE f;
 

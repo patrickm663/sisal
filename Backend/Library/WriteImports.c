@@ -38,8 +38,7 @@
 /* PURPOSE: WRITE NODE n's IMPORTS, BOTH DATA AND CONTROL, TO output.     */
 /**************************************************************************/
 
-void WriteImports( n )
-PNODE n;
+void WriteImports(PNODE n)
 {
   register PEDGE  i;
   register PADE   a;

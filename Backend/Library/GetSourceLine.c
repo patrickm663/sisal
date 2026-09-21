@@ -18,8 +18,7 @@
 /*          remove star slash combos that would kill us in a C            */
 /*          comment.                                                      */
 /**************************************************************************/
-char* GetSourceLine(N)
-     PNODE      N;
+char* GetSourceLine(PNODE N)
 {
   char          *p;             /* Misc char pointer */
   static char   LineBuf[1024];

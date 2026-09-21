@@ -20,8 +20,7 @@
 /**************************************************************************/
 
 PNODE
-FindEnclosing(node)
-  PNODE node;
+FindEnclosing(PNODE node)
 {
   PNODE g=NULL, graph;
 

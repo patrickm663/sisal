@@ -18,9 +18,7 @@
 /*          LEGAL PORT IS RETURNED.                                       */
 /**************************************************************************/
 
-int AssignNewLoopTports( p, l )
-int   p;
-PNODE l;
+int AssignNewLoopTports(int p, PNODE l)
 {
   register PEDGE i;
  if (l->L_BODY != NULL)

@@ -16,9 +16,7 @@
 /* PURPOSE: ADD STAMP stamp WITH COMMENTARY s TO THE STAMP TABLE.         */
 /**************************************************************************/
 
-void AddStamp( stamp, s )  
-     char stamp;
-     char *s;
+void AddStamp(int stamp, char *s)
 { 
   stamps[ (int)stamp ] = s;
 }

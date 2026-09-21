@@ -28,8 +28,7 @@
 /*          TRAVERSED.                                                    */
 /**************************************************************************/
 
-static void PropagateGlobalSets( e )
-PEDGE e;
+static void PropagateGlobalSets(PEDGE e)
 {
     register PEDGE ee;
 
@@ -66,9 +65,7 @@ PEDGE e;
 /*          TO IDENTIFY THE VALUES ABSOLUTE ORIGIN DURING LATER ANALYSIS. */
 /**************************************************************************/
 
-static void BuildGlobalSets( n, scope )
-PNODE n;
-PNODE scope;
+static void BuildGlobalSets(PNODE n, PNODE scope)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -120,9 +117,7 @@ PNODE scope;
 /*          EDGE IS ENTERED IN IT'S ASSOCIATED LOCAL AND GLBOAL READ SETS.*/
 /**************************************************************************/
 
-static void BuildLocalSets( n, scope )
-PNODE n;
-PNODE scope;
+static void BuildLocalSets(PNODE n, PNODE scope)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -169,8 +164,7 @@ PNODE scope;
 /*          LIST IN READ->WRITE PAIRS.                                    */
 /**************************************************************************/
 
-static void BuildReadWriteSets( g )
-PNODE g;
+static void BuildReadWriteSets(PNODE g)
 {
     register PNODE n;
     register PNODE sg;
@@ -217,7 +211,7 @@ PNODE g;
 /* PURPOSE: CONSTRUCT THE READ/WRITE SETS IN ALL FUNCTION GRAPHS.         */
 /**************************************************************************/
 
-void If2ReadWriteSets()
+void If2ReadWriteSets(void)
 {
     register PNODE f;
 

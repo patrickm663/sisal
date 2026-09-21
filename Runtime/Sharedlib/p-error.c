@@ -16,16 +16,14 @@
 static LOCK_TYPE *ErrorLock = (LOCK_TYPE*) NULL;
 
 
-void InitErrorSystem()
+void InitErrorSystem(void)
 {
   ErrorLock = (LOCK_TYPE*) SharedMalloc( SIZEOF(LOCK_TYPE) );
   MY_SINIT_LOCK(ErrorLock);
 }
 
 
-int SisalError( Message1, Message2 )
-char *Message1;
-char *Message2;
+int SisalError(char *Message1, char *Message2)
 {
   if ( ErrorLock != (LOCK_TYPE*) NULL )
     MY_SLOCK( ErrorLock );

@@ -21,9 +21,7 @@
 /* ------------------------------------------------------------ */
 /* Add a name to a namelink list                                */
 /* ------------------------------------------------------------ */
-void AddName(list,nm)
-     namelink   **list;
-     char       *nm;
+void AddName(namelink **list, char *nm)
 {
   namelink      *work;
 
@@ -36,8 +34,7 @@ void AddName(list,nm)
 /* ------------------------------------------------------------ */
 /* Build the export list for the current IF1/2 internal tree    */
 /* ------------------------------------------------------------ */
-void BuildHaveList(HaveP)
-     namelink   **HaveP;
+void BuildHaveList(namelink **HaveP)
 {
   PNODE         F;
 
@@ -55,8 +52,7 @@ void BuildHaveList(HaveP)
 /* ------------------------------------------------------------ */
 /* Dump out a namelink list to stdout                           */
 /* ------------------------------------------------------------ */
-void DumpList(p)
-     namelink   *p;
+void DumpList(namelink *p)
 {
   for(; p; p = p->next) {
     if ( *p->name ) printf("%s ",p->name);
@@ -67,9 +63,7 @@ void DumpList(p)
 /* ------------------------------------------------------------ */
 /* Search for a name in a namelink list                         */
 /* ------------------------------------------------------------ */
-int InNameList(name,list)
-     char       *name;
-     namelink   *list;
+int InNameList(char *name, namelink *list)
 {
   namelink      *nl;
   char          lowername[MAX_PATH],*p;

@@ -16,9 +16,7 @@
 /* PURPOSE: RETURN TRUE IF EDGE v1 AND EDGE v2 CARRY THE SAME VALUE.      */
 /**************************************************************************/
 
-int AreValuesEqual( v1, v2 )
-PEDGE v1;
-PEDGE v2;
+int AreValuesEqual(PEDGE v1, PEDGE v2)
 {
   if ( v1 == NULL || v2 == NULL )
     return( FALSE );

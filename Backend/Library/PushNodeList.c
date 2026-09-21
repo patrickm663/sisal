@@ -17,7 +17,7 @@
 /*          STACK. WHEN DONE, nlstop WILL ADDRESS THIS NEW HEADER.        */
 /**************************************************************************/
 
-void PushNodeList()
+void PushNodeList(void)
 {
   register int idx;
 

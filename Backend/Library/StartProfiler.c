@@ -16,7 +16,7 @@
 /* PURPOSE: RECORD THE CURRENT TSECND VALUE IN StartTime                  */
 /**************************************************************************/
 
-void StartProfiler()
+void StartProfiler(void)
 {
   if ( prof )
     StartTime = TSECND();

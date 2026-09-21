@@ -72,8 +72,7 @@ static int FirstSdbxCall = TRUE;
 static int SdbxMonitorCode = SDBX_NONE;
 
 
-static char *CopyString( String ) 
-char *String;
+static char *CopyString(char *String)
 {
   extern POINTER Alloc PROTO((int));
 
@@ -81,8 +80,7 @@ char *String;
 }
 
 
-static char *LowerCase( String )
-char *String;
+static char *LowerCase(char *String)
 {
   register char *Base;
   register char *Ptr;
@@ -95,7 +93,7 @@ char *String;
 }
 
 
-static void CloseFile()
+static void CloseFile(void)
 {
   if ( CurrentOpenFile != NULL )
     FCLOSE( CurrentOpenFile );
@@ -106,8 +104,7 @@ static void CloseFile()
 }
 
 
-static int OpenFile( FileName )
-char *FileName;
+static int OpenFile(char *FileName)
 {
    if ( FileName == NULL )
      return( ERROR );
@@ -132,7 +129,7 @@ char *FileName;
   return( OK );
 }
 
-static int ReadLine()
+static int ReadLine(void)
 {
   register int  Ch;
   register int  Idx;
@@ -164,8 +161,7 @@ static int ReadLine()
 }
 
 
-static void GetLine( LineNumber )
-int LineNumber;
+static void GetLine(int LineNumber)
 {
   register int Idx;
 
@@ -193,8 +189,7 @@ int LineNumber;
 }
 
 
-static void PrintSdbxPrompt( Message )
-char *Message;
+static void PrintSdbxPrompt(char *Message)
 {
   if ( Message != NULL ) {
     PRINTF( " [%s]\n", Message );
@@ -209,7 +204,7 @@ char *Message;
 }
 
 
-static void PrintSdbxHelp()
+static void PrintSdbxHelp(void)
 {
   PRINTF( " bounds    NAME        [print the bounds of array NAME]\n" );
   PRINTF( " break                 [continue and break just inside the next function]\n" );
@@ -236,8 +231,7 @@ static void PrintSdbxHelp()
 }
 
 
-static void GetWord( Word )
-char *Word;
+static void GetWord(char *Word)
 {
   register int  Ch;
   register int  Count;
@@ -286,7 +280,7 @@ char *Word;
 }
 
 
-static void GetCommand()
+static void GetCommand(void)
 {
   register int Ch;
 
@@ -444,7 +438,7 @@ DoItAgain:
 }
 
 
-static void DisplayFunctions()
+static void DisplayFunctions(void)
 {
   register char **Ptr;
   register int    Count;
@@ -465,7 +459,7 @@ static void DisplayFunctions()
 }
 
 
-static void DisplayText()
+static void DisplayText(void)
 {
   register int Lo;
   register int Hi;
@@ -490,7 +484,7 @@ static void DisplayText()
 }
 
 
-static void ProcessCommands()
+static void ProcessCommands(void)
 {
   register int      Count;
   register int      Idx;
@@ -712,8 +706,7 @@ static void ProcessCommands()
 }
 
 
-void SdbxHandler( AtLine )
-int AtLine;
+void SdbxHandler(int AtLine)
 {
   register char *Name;
 
@@ -806,8 +799,7 @@ int AtLine;
 }
 
 
-void SdbxMonitor( SdbxCode )
-int SdbxCode;
+void SdbxMonitor(int SdbxCode)
 {
   register struct SdbxValue **ScopeStack;
   register struct SdbxValue *Scope;

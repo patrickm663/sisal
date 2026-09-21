@@ -24,7 +24,7 @@
 /*          (SIGNED CONSTANTS ARE ALLOWED IF sgnok IS TRUE).              */
 /**************************************************************************/
 
-void If2Write()
+void If2Write(void)
 {
   register PNODE f;
 

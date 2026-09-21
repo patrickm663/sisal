@@ -16,7 +16,7 @@
 /* PURPOSE: ALLOCATE AND RETURN A NEW CALL STRUCTURE.                     */
 /**************************************************************************/
 
-PCALL GetNewCallNode()
+PCALL GetNewCallNode(void)
 {
   PBBLOCK b;
 

@@ -25,8 +25,7 @@ static PEDGE imp[MAX_IMP];
 static int   limp[MAX_IMP];
 
 
-static int MaxPathToSrc( i )
-PEDGE i;
+static int MaxPathToSrc(PEDGE i)
 {
   register PEDGE ii;
   register int   ml;
@@ -58,8 +57,7 @@ PEDGE i;
 /*          ROUTINE ASSUMES g'S NODE LIST IS DATA FLOW ORDERED.           */
 /**************************************************************************/
 
-static void MigrateNodes( g )
-PNODE g;
+static void MigrateNodes(PNODE g)
 {
     register int   l  = 0;
     register PNODE n  = g->G_NODES;
@@ -169,8 +167,7 @@ MoveOn:
 }
 
 
-static void DoCommute( f )
-PNODE f;
+static void DoCommute(PNODE f)
 {
     register PNODE n;
     register PNODE sg;
@@ -219,7 +216,7 @@ PNODE f;
 /* PURPOSE: MIGRATE THE NODES OF ALL FUNCTION GRAPHS TOWARD THEIR USES.   */
 /**************************************************************************/
 
-void If2Migrate()
+void If2Migrate(void)
 {
     register PNODE f;
 

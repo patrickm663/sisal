@@ -24,8 +24,7 @@
 /*          "error" IS SPECIAL, REPRESENTED INTERNALLY AS A NULL POINTER. */
 /**************************************************************************/
 
-char *ReadLiteral( abort )
-int abort;
+char *ReadLiteral(int abort)
 {
   register char *s;
 

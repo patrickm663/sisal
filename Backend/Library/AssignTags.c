@@ -20,9 +20,7 @@
 /*          THE TAG n.                                                    */
 /**************************************************************************/
 
-void AssignTags( lst, dad )
-PALIST lst;
-PNODE  dad;
+void AssignTags(PALIST lst, PNODE dad)
 {
   register PNODE n;
   register int   tag;

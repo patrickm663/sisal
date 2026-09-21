@@ -17,8 +17,7 @@
 /*          NOTE n ITSELF MIGHT BE THE LAST NODE.                         */
 /**************************************************************************/
 
-PNODE FindLastNode( n )
-register PNODE n;
+PNODE FindLastNode(register PNODE n)
 {
   if ( n == NULL )
     return( NULL );

@@ -31,8 +31,7 @@ PNODE fhead;                           /* DEFINED FOR if2util.c           */
 /*          LABEL(b) > LABEL(a).                                          */
 /**************************************************************************/
 
-static void CheckDataFlowOrder( g )
-PNODE g;
+static void CheckDataFlowOrder(PNODE g)
 {
     register PNODE n;
     register PEDGE i;
@@ -74,8 +73,7 @@ PNODE g;
 /* PURPOSE: PRINT NODE n'S MARKS TO output.                               */
 /**************************************************************************/
 
-static void If2PPrintNodeMarks( n )
-PNODE n;
+static void If2PPrintNodeMarks(PNODE n)
 {
     FPRINTF( output, "(" );
 
@@ -122,8 +120,7 @@ PNODE n;
 /* PURPOSE: PRINT THE PRAGMAS OF EDGE e TO output.                        */
 /**************************************************************************/
 
-static void PPrintEdgePragmas( e )
-PEDGE e;
+static void PPrintEdgePragmas(PEDGE e)
 {
     if ( !IsAggregate( e->info ) )
         return;
@@ -173,9 +170,7 @@ PEDGE e;
 /* PURPOSE: PRINT THE NAME AND PRAGMAS OF NODE n'S IMPORTS TO output.     */
 /**************************************************************************/
 
-static void PPrintImports( n, indent )
-PNODE n;
-int   indent;
+static void PPrintImports(PNODE n, int indent)
 {
     register PADE  a;
     register PEDGE i;
@@ -218,9 +213,7 @@ int   indent;
 /*          CHECK IS MADE.                                                */
 /**************************************************************************/
 
-static void If2PPrintNode( g, indent )
-PNODE g;
-int indent;
+static void If2PPrintNode(PNODE g, int indent)
 {
     register PNODE n;
 
@@ -285,7 +278,7 @@ int indent;
 /* PURPOSE: PRINT ALL FUNCTION GRAPHS TO output IN A READABLE FORM.       */
 /**************************************************************************/
 
-void If2PPrint()
+void If2PPrint(void)
 {
     register PNODE f;
 

@@ -25,8 +25,7 @@
 /* PURPOSE: ADD NODE n TO THE END OF THE NODE LIST.                       */
 /**************************************************************************/
 
-void AddToNodeList( n )
-register PNODE n;
+void AddToNodeList(register PNODE n)
 {
   n->next = NULL;
 

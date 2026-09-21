@@ -17,9 +17,7 @@
 /*          COPIED EXPORT IS NOT LINKED TO ITS COPY'S  DESTINATION NODE.  */
 /**************************************************************************/
 
-void CopyExports( n1, n2 )
-PNODE n1;
-PNODE n2;
+void CopyExports(PNODE n1, PNODE n2)
 {
     register PEDGE e;
 

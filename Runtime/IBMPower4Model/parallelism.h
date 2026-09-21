@@ -27,13 +27,12 @@
 #define SHMEMBASE 0x30001000
 
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
         return;
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -52,7 +51,7 @@ int NumBytes;
   SharedMemory = ALIGN(char*,SharedMemory);
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   FLUSHLINE(SisalShutDown);
@@ -66,7 +65,7 @@ LOCK_TYPE pidlock;
 extern BARRIER_TYPE *StartBarrier;
 extern BARRIER_TYPE *FinishBarrier;
 
-void GoneParallel()
+void GoneParallel(void)
 {
         p6k_whoami(&p_procnum);
 
@@ -99,7 +98,7 @@ void GoneParallel()
         }
 }
 
-void StartWorkers() 
+void StartWorkers(void) 
 {
         /*
          * Flush cache to make sure that all shared variables are
@@ -117,7 +116,7 @@ void StartWorkers()
 }
 
 
-void AbortParallel() 
+void AbortParallel(void) 
 { 
   exit( 1 ); 
 }

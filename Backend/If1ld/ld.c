@@ -60,8 +60,7 @@ static int PID;                         /* Unique ID for creating tmpfiles */
 /* PURPOSE: PLACE nm IN THE ENTRY NAME TABLE.                             */
 /**************************************************************************/
 
-void PlaceInEntryTable( nm )
-char *nm;
+void PlaceInEntryTable(char *nm)
 {
   register int idx;
 
@@ -92,8 +91,7 @@ char *nm;
 /* PURPOSE: PLACE nm IN THE C NAME TABLE.                                 */
 /**************************************************************************/
 
-void   PlaceInCTable( nm )
-char *nm;
+void   PlaceInCTable(char *nm)
 {
   register int idx;
 
@@ -123,8 +121,7 @@ char *nm;
 /* PURPOSE: PLACE nm IN THE FORTRAN NAME TABLE.                           */
 /**************************************************************************/
 
-void PlaceInFortranTable( nm )
-char *nm;
+void PlaceInFortranTable(char *nm)
 {
   register int idx;
 
@@ -154,8 +151,7 @@ char *nm;
 /* PURPOSE: PLACE nm IN THE REDUCTION NAME TABLE.                         */
 /**************************************************************************/
 
-void PlaceInReductionTable( nm )
-char *nm;
+void PlaceInReductionTable(char *nm)
 {
   register int idx;
 
@@ -209,9 +205,7 @@ char *nm;
 /*              -W              -> Turn on profiling                      */
 /**************************************************************************/
 
-static void ParseCommandLine( argc, argv )
-int    argc;
-char **argv;
+static void ParseCommandLine(int argc, char **argv)
 {
     register char *c;
     register int   idx;
@@ -367,8 +361,7 @@ char **argv;
 /*           These names can be the same, but may differ if a tempfile    */
 /*           has been pulled out of an archive.                           */
 /**************************************************************************/
-static void LoadIF1File(actual,name)
-     char       *actual,*name;
+static void LoadIF1File(char *actual, char *name)
 {
   input = fopen( actual, "r" );
   if ( !input ) Error2( "CAN'T OPEN", actual );
@@ -423,9 +416,7 @@ static int ReadToken( FILE *F, char *Buf, size_t Size )
 /*           by loading a file stored in the archive ``lib''.  The list of*/
 /*           unresolved imports is found in ``Need''.                     */
 /**************************************************************************/
-static int ReadLibrary(lib,Need)
-     char       *lib;
-     namelink   *Need;
+static int ReadLibrary(char *lib, namelink *Need)
 {
   FILE          *LIBF;
   char          line[MAX_PATH];
@@ -523,9 +514,7 @@ static int ReadLibrary(lib,Need)
 /*          THE MONOLITH.  IF A FILE CANNOT BE OPENED, AN ERROR MESSAGE   */
 /*          IS PRINTED.                                                   */
 /**************************************************************************/
-static void ReadTheIf1Files( argc, argv )
-int    argc;
-char **argv;
+static void ReadTheIf1Files(int argc, char **argv)
 {
   register int   idx;
   char     *dotp;
@@ -568,8 +557,7 @@ char **argv;
 /*           must be taken to remove inames that were instantiated (are   */
 /*           on the xnames list) from the final list.                     */
 /**************************************************************************/
-static void BuildNeedList(NeedP)
-     namelink   **NeedP;
+static void BuildNeedList(namelink **NeedP)
 {
   PNAME         F,G;
 
@@ -591,9 +579,7 @@ static void BuildNeedList(NeedP)
 /*          FILE NAMES, THE CONTENTS OF THE INPUT FILE IS OVERWRITTEN.    */
 /**************************************************************************/
 
-int main( argc, argv )
-int    argc;
-char **argv;
+int main(int argc, char **argv)
 {
     register FILE *fd;
     namelink      *Need;

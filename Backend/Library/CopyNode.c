@@ -18,8 +18,7 @@
 /*          LIST IS COPIED.                                               */
 /**************************************************************************/
 
-PNODE CopyNode( n )
-PNODE n;
+PNODE CopyNode(PNODE n)
 {
   register PNODE nn;
   register PNODE nd;

@@ -21,8 +21,7 @@
 /**************************************************************************/
 /* GLOBAL **************    OptRemoveDeadNode      ************************/
 /**************************************************************************/
-void OptRemoveDeadNode( n )
-PNODE n;
+void OptRemoveDeadNode(PNODE n)
 {
   /* Just a stub for the util.c module */
    return;
@@ -31,8 +30,7 @@ PNODE n;
 /**************************************************************************/
 /* GLOBAL **************     OptNormalizeNode      ************************/
 /**************************************************************************/
-void OptNormalizeNode( n )
-PNODE n;
+void OptNormalizeNode(PNODE n)
 {
   /* Just a stub for the util.c module */
    return;
@@ -46,8 +44,7 @@ PNODE n;
 /*          NODES HAVE BEEN CONVERTED.                                    */
 /**************************************************************************/
 
-static int CheckIsRetNormalized( l )
-PNODE l;
+static int CheckIsRetNormalized(PNODE l)
 {
     register PNODE n;
 
@@ -99,8 +96,7 @@ PNODE l;
 /*          NORMALIZED: CONTAINS ONLY SCATTER AND RANGEGENERATE NODES.    */
 /**************************************************************************/
 
-static int IsGenNormalized( f )
-PNODE f;
+static int IsGenNormalized(PNODE f)
 {
     register PNODE n;
 
@@ -119,8 +115,7 @@ PNODE f;
 /*          NORMALIZED: CONTAINS ONLY BOOLEAN OPERATION NODES.            */
 /**************************************************************************/
 
-static int IsTestNormalized( l )
-PNODE l;
+static int IsTestNormalized(PNODE l)
 {
     register PNODE n;
 
@@ -153,8 +148,7 @@ PNODE l;
 /*          'e' FOR REALS, AND ' ' FOR UNKNOWNS.                          */
 /**************************************************************************/
 
-static char FloatType( c )
-register char *c;
+static char FloatType(register char *c)
 {
     while ( *c != '\0' ) {
         if ( (*c == 'd') || (*c == 'D') )
@@ -178,8 +172,7 @@ register char *c;
 /*          CONSTANTS, A MESSAGE IS PRINTED.                              */
 /**************************************************************************/
 
-static void CheckConstantImports( n )
-PNODE n;
+static void CheckConstantImports(PNODE n)
 {
     register PEDGE i;
 
@@ -237,8 +230,7 @@ PNODE n;
 /* PURPOSE: CHECK FOR REDUNDANT IMPORTS TO COMPOUND NODE c.               */
 /**************************************************************************/
 
-static int AreKportsCombined( c )
-PNODE c;
+static int AreKportsCombined(PNODE c)
 {
     register PEDGE i1;
     register PEDGE i2;
@@ -260,9 +252,7 @@ PNODE c;
 /*          DONE.                                                         */
 /**************************************************************************/
 
-static int AreSameType( i1, i2 )
-PINFO i1;
-PINFO i2;
+static int AreSameType(PINFO i1, PINFO i2)
 {
     if ( IsMultiple( i1 ) )
         i1 = i1->A_ELEM;
@@ -282,8 +272,7 @@ PINFO i2;
 /*          LABEL(b) > LABEL(a).                                          */
 /**************************************************************************/
 
-static void CheckIfDFOrdered( g )
-PNODE g;
+static void CheckIfDFOrdered(PNODE g)
 {
     register PNODE n;
     register PEDGE i;
@@ -311,10 +300,7 @@ PNODE g;
 /*          PORT NUMBER.                                                  */
 /**************************************************************************/
 
-static int CheckPortNumbers( p, g, gg )
-int   p;
-PNODE g;
-PNODE gg;
+static int CheckPortNumbers(int p, PNODE g, PNODE gg)
 {
     register PEDGE i;
 
@@ -338,9 +324,7 @@ PNODE gg;
 /*          SAME TYPE. IF i->iport IS USED, TRUE IS RETURNED, ELSE FALSE. */
 /**************************************************************************/
 
-static int IsUsed( g, i )
-PNODE g;
-PEDGE i;
+static int IsUsed(PNODE g, PEDGE i)
 {
     register PEDGE e;
     register int   u = FALSE;
@@ -365,8 +349,7 @@ PEDGE i;
 /* PURPOSE: CHECK THAT ALL IMPORTS TO COMPOUND NODE c ARE USED.           */
 /**************************************************************************/
 
-static void CheckForUnusedKports( c )
-PNODE c;
+static void CheckForUnusedKports(PNODE c)
 {
     register PEDGE i;
     register int   u;
@@ -389,8 +372,7 @@ PNODE c;
 /*          COMPOUND NODE DEFINING g.                                     */
 /**************************************************************************/
 
-static void CheckForUnusedRports( g )
-PNODE g;
+static void CheckForUnusedRports(PNODE g)
 {
     register PEDGE i;
 
@@ -406,8 +388,7 @@ PNODE g;
 /* PURPOSE: CHECK THAT ALL IMPORTS TO FORALL f'S BODY SUBGRAPH ARE USED.  */
 /**************************************************************************/
 
-static void CheckForUnusedTports( f )
-PNODE f;
+static void CheckForUnusedTports(PNODE f)
 {
     register PEDGE i;
 
@@ -424,8 +405,7 @@ PNODE f;
 /*          THAT THE L IMPORTS OF LOOP l'S INITIAL SUBGRAPH ARE USED.     */
 /**************************************************************************/
 
-static void CheckForUnusedLTports( l )
-PNODE l;
+static void CheckForUnusedLTports(PNODE l)
 {
     register PEDGE i;
 
@@ -462,8 +442,7 @@ PNODE l;
 /*          5. "L := CoNsTant OR K", "L := SAME CoNsTant OR K"            */
 /**************************************************************************/
 
-static void CheckForUnnecEdges( l )
-PNODE l;
+static void CheckForUnnecEdges(PNODE l)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -560,8 +539,7 @@ PNODE l;
 /*          MAKE SURE ALL REFERENCED SUBGRAPH EXPORTS ARE DEFINED.        */
 /**************************************************************************/
 
-static void CheckCompoundNode( c )
-PNODE c;
+static void CheckCompoundNode(PNODE c)
 {
     register PNODE g;
     register int   p;
@@ -710,8 +688,7 @@ PNODE c;
 /*          IS CHECKED; AND STREAM LIMIT LOW NODES ARE IDENTIFIED.        */
 /**************************************************************************/
 
-static void CheckNode( g )
-register PNODE g;
+static void CheckNode(register PNODE g)
 {
     register PEDGE i;
     register PEDGE e;
@@ -771,7 +748,7 @@ register PNODE g;
 /* PURPOSE: CHECK THE STRUCTURE AND SEMANTICS OF ALL FUNCTION GRAPHS.     */
 /**************************************************************************/
 
-void If1Check()
+void If1Check(void)
 {
     register PNODE f;
 

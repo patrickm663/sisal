@@ -17,9 +17,7 @@
 /*          ERROR MESSAGE.                                                */
 /**************************************************************************/
 
-void EnterInSet( s, e )
-PSET  s;
-PEDGE e;
+void EnterInSet(PSET s, PEDGE e)
 {
   register PEDGE *p;
   register int    i;

@@ -22,9 +22,7 @@
 /*          VALUE.                                                        */
 /**************************************************************************/
 
-int FixConstantImports( n, lab )
-PNODE n;
-int   lab;
+int FixConstantImports(PNODE n, int lab)
 {
   register PEDGE  i;
   register PEDGE  ii;

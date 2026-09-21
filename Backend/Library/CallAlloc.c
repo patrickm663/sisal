@@ -14,8 +14,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A CALL GRAPH NODE.           */
 /**************************************************************************/
 
-PCALL CallAlloc( n )
-PNODE n;
+PCALL CallAlloc(PNODE n)
 {
   register PCALL c;
 

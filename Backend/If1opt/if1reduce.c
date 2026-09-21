@@ -56,11 +56,10 @@ static int Tmaelm = 0;                 /* COUNT OF AElement NODES */
 /* PURPOSE: RETURNS TRUE IF NODE n IS A CANDIDATE FOR REDUCTION.          */
 /**************************************************************************/
 
-static int IsReductionCandidate( r_graph, r_loop_handle, r_port_count, r_ports )
-  PNODE r_graph;                        /* reduction function graph */
-  PNODE *r_loop_handle;                 /* reduction LOOP subgraphs */
-  int r_port_count[MAX_CALLS][MAX_TYPES];
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];
+static int IsReductionCandidate(PNODE r_graph,  /* reduction function graph */
+                                PNODE *r_loop_handle,  /* reduction LOOP subgraphs */
+                                int r_port_count[MAX_CALLS][MAX_TYPES],
+                                int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS])
 {
   PNODE n;
   PEDGE edge;
@@ -144,12 +143,10 @@ static int IsReductionCandidate( r_graph, r_loop_handle, r_port_count, r_ports )
 /* PURPOSE: RETURNS TRUE IF NODE n IS A CANDIDATE FOR REDUCTION DRIVER.   */
 /**************************************************************************/
 
-static int IsReductionDriverCandidate( d_call, d_for_stack, d_depth_ptr, 
-  d_ports )
-  PNODE d_call;                         /* reduction function graph */
-  PNODE d_for_stack[MAX_NFORALL];       /* reduction driver outer FOR */
-  int *d_depth_ptr;
-  int d_ports[MAX_PORTS];
+static int IsReductionDriverCandidate(PNODE d_call,  /* reduction function graph */
+                                      PNODE d_for_stack[MAX_NFORALL],  /* reduction driver outer FOR */
+                                      int *d_depth_ptr,
+                                      int d_ports[MAX_PORTS])
 {
   PEDGE edge;
   PEDGE redge;
@@ -219,10 +216,7 @@ static int IsReductionDriverCandidate( d_call, d_for_stack, d_depth_ptr,
 /* template_node AND ATTACH FROM source_node TO NODE dest_node.           */ 
 /**************************************************************************/
 
-static void CollapsePortArray( port_count, dest_ports, dest_offset )
-int port_count;
-int *dest_ports;
-int dest_offset;
+static void CollapsePortArray(int port_count, int *dest_ports, int dest_offset)
 {
     int i;
     for ( i = 0; i < port_count; i++ ) {
@@ -237,15 +231,13 @@ int dest_offset;
 /* template_node AND ATTACH FROM source_node TO NODE dest_node.           */ 
 /**************************************************************************/
 
-static int CopySelectedImports2( template_node, port_count, ports, 
-    source_node, source_ports, dest_node, dest_ports )
-PNODE template_node;
-int port_count;
-int *ports;
-PNODE source_node;      /* use template sources if NULL */
-int *source_ports;
-PNODE dest_node;
-int *dest_ports;
+static int CopySelectedImports2(PNODE template_node,
+                                int port_count,
+                                int *ports,
+                                PNODE source_node,  /* use template sources if NULL */
+                                int *source_ports,
+                                PNODE dest_node,
+                                int *dest_ports)
 {
     int i;
 
@@ -280,15 +272,13 @@ int *dest_ports;
 /* template_node AND ATTACH FROM source_node TO NODE dest_node.           */ 
 /**************************************************************************/
 
-static int CopySelectedImports( template_node, port_count, ports, 
-    source_node, source_offset, dest_node, dest_offset )
-PNODE template_node;
-int port_count;
-int *ports;
-PNODE source_node;      /* use template sources if NULL */
-int source_offset;
-PNODE dest_node;
-int dest_offset;
+static int CopySelectedImports(PNODE template_node,
+                               int port_count,
+                               int *ports,
+                               PNODE source_node,  /* use template sources if NULL */
+                               int source_offset,
+                               PNODE dest_node,
+                               int dest_offset)
 {
     int i;
 
@@ -323,15 +313,13 @@ int dest_offset;
 /* template_node AND ATTACH FROM source_node TO NODE dest_node.           */ 
 /**************************************************************************/
 
-static int CopySelectedExports( template_node, port_count, ports, 
-    source_node, source_offset, dest_node, dest_offset)
-PNODE template_node;
-int port_count;
-int *ports;
-PNODE source_node;
-int source_offset;
-PNODE dest_node;        /* use template destinations if NULL */
-int dest_offset;
+static int CopySelectedExports(PNODE template_node,
+                               int port_count,
+                               int *ports,
+                               PNODE source_node,
+                               int source_offset,
+                               PNODE dest_node,  /* use template destinations if NULL */
+                               int dest_offset)
 {
     int i;
 
@@ -366,11 +354,10 @@ int dest_offset;
 /* dest_node.                                                             */
 /**************************************************************************/
 
-static int ShiftSelectedImports( port_count, ports, dest_offset, dest_node )
-int port_count;
-int *ports;
-int dest_offset;
-PNODE dest_node;
+static int ShiftSelectedImports(int port_count,
+                                int *ports,
+                                int dest_offset,
+                                PNODE dest_node)
 {
     PEDGE edge;
 
@@ -399,11 +386,10 @@ PNODE dest_node;
 /* source_node.                                                           */
 /**************************************************************************/
 
-static int ShiftSelectedExports( port_count, ports, source_offset, source_node )
-int port_count;
-int *ports;
-int source_offset;
-PNODE source_node;
+static int ShiftSelectedExports(int port_count,
+                                int *ports,
+                                int source_offset,
+                                PNODE source_node)
 {
     PEDGE edge;
 
@@ -431,11 +417,10 @@ PNODE source_node;
 /* PURPOSE: GROUP IN/IN-OUT AND IN-OUT/OUT PORTS TOGETHER.                */
 /**************************************************************************/
 
-static void GroupInOutPorts( r_port_count, r_ports, port_count, ports )
-  int r_port_count[MAX_CALLS][MAX_TYPES];                       /* in */
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];                 /* in */
-  int port_count[MAX_CALLS][MAX_WAYS];                          /* out */
-  int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS];                    /* out */
+static void GroupInOutPorts(int r_port_count[MAX_CALLS][MAX_TYPES],  /* in */
+                            int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],  /* in */
+                            int port_count[MAX_CALLS][MAX_WAYS],  /* out */
+                            int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS])  /* out */
 {
   int i, j, k;
 
@@ -467,14 +452,12 @@ static void GroupInOutPorts( r_port_count, r_ports, port_count, ports )
 /* PURPOSE: MAKE TYPE LABELS FOR REDUCTION INIT COMPONENT CALLS.          */
 /**************************************************************************/
 
-static void AddInitCallTypes( r_loop, r_port_count, r_ports, 
-  port_count, ports, labels )
-  PNODE r_loop;                                                 /* in */
-  int r_port_count[MAX_CALLS][MAX_TYPES];                       /* in */
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];                 /* in */
-  int port_count[MAX_CALLS][MAX_WAYS];                          /* in */
-  int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS];                    /* in */
-  int labels[MAX_CALLS][MAX_LABELS];                            /* out */
+static void AddInitCallTypes(PNODE r_loop,  /* in */
+                             int r_port_count[MAX_CALLS][MAX_TYPES],  /* in */
+                             int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],  /* in */
+                             int port_count[MAX_CALLS][MAX_WAYS],  /* in */
+                             int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS],  /* in */
+                             int labels[MAX_CALLS][MAX_LABELS])  /* out */
 {
   PEDGE edge;
   int last_label;
@@ -508,14 +491,12 @@ static void AddInitCallTypes( r_loop, r_port_count, r_ports,
 /* PURPOSE: MAKE TYPE LABELS FOR REDUCTION BODY COMPONENT CALLS.          */
 /**************************************************************************/
 
-static void AddBodyCallTypes( r_loop, r_port_count, r_ports, 
-  port_count, ports, labels )
-  PNODE r_loop;                                                 /* in */
-  int r_port_count[MAX_CALLS][MAX_TYPES];                       /* in */
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];                 /* in */
-  int port_count[MAX_CALLS][MAX_WAYS];                          /* in */
-  int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS];                    /* in */
-  int labels[MAX_CALLS][MAX_LABELS];                            /* out */
+static void AddBodyCallTypes(PNODE r_loop,  /* in */
+                             int r_port_count[MAX_CALLS][MAX_TYPES],  /* in */
+                             int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],  /* in */
+                             int port_count[MAX_CALLS][MAX_WAYS],  /* in */
+                             int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS],  /* in */
+                             int labels[MAX_CALLS][MAX_LABELS])  /* out */
 {
   PEDGE edge;
   int last_label;
@@ -559,14 +540,12 @@ static void AddBodyCallTypes( r_loop, r_port_count, r_ports,
 /* PURPOSE: MAKE TYPE LABELS FOR REDUCTION MERGE COMPONENT CALLS.         */
 /**************************************************************************/
 
-static void AddMergeCallTypes( r_loop, r_port_count, r_ports, 
-  port_count, ports, labels )
-  PNODE r_loop;                                                 /* in */
-  int r_port_count[MAX_CALLS][MAX_TYPES];                       /* in */
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];                 /* in */
-  int port_count[MAX_CALLS][MAX_WAYS];                          /* in */
-  int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS];                    /* in */
-  int labels[MAX_CALLS][MAX_LABELS];                            /* out */
+static void AddMergeCallTypes(PNODE r_loop,  /* in */
+                              int r_port_count[MAX_CALLS][MAX_TYPES],  /* in */
+                              int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],  /* in */
+                              int port_count[MAX_CALLS][MAX_WAYS],  /* in */
+                              int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS],  /* in */
+                              int labels[MAX_CALLS][MAX_LABELS])  /* out */
 {
   PEDGE edge;
   int last_label;
@@ -608,12 +587,11 @@ static void AddMergeCallTypes( r_loop, r_port_count, r_ports,
 /*          MAKE FROM THE REDUCTION INIT SUBGRAPH.                        */
 /**************************************************************************/
 
-static void AddInitCallGraph( r_loop, labels, call_name, counter, call_graph )
-  PNODE r_loop;                                                 /* in */
-  int labels[MAX_CALLS][MAX_LABELS];                            /* in */
-  char* call_name[MAX_CALLS];                                   /* in */
-  int counter;                                                  /* in */
-  PNODE call_graph[MAX_CALLS];                                  /* out */
+static void AddInitCallGraph(PNODE r_loop,  /* in */
+                             int labels[MAX_CALLS][MAX_LABELS],  /* in */
+                             char * call_name[MAX_CALLS],  /* in */
+                             int counter,  /* in */
+                             PNODE call_graph[MAX_CALLS])  /* out */
 {
   call_graph[CALL_INIT] = CopyNode( r_loop->L_INIT ); /* imports are copied */
   call_graph[CALL_INIT]->type = IFLGraph;
@@ -633,12 +611,11 @@ static void AddInitCallGraph( r_loop, labels, call_name, counter, call_graph )
 /*          MAKE FROM THE REDUCTION BODY SUBGRAPH.                        */
 /**************************************************************************/
 
-static void AddBodyCallGraph( r_loop, labels, call_name, counter, call_graph )
-  PNODE r_loop;                                                 /* in */
-  int labels[MAX_CALLS][MAX_LABELS];                            /* in */
-  char* call_name[MAX_CALLS];                                   /* in */
-  int counter;                                                  /* in */
-  PNODE call_graph[MAX_CALLS];                                  /* out */
+static void AddBodyCallGraph(PNODE r_loop,  /* in */
+                             int labels[MAX_CALLS][MAX_LABELS],  /* in */
+                             char * call_name[MAX_CALLS],  /* in */
+                             int counter,  /* in */
+                             PNODE call_graph[MAX_CALLS])  /* out */
 {
   call_graph[CALL_BODY] = CopyNode( r_loop->L_BODY );   /* imports are copied */
   call_graph[CALL_BODY]->type = IFLGraph;
@@ -658,12 +635,11 @@ static void AddBodyCallGraph( r_loop, labels, call_name, counter, call_graph )
 /* PURPOSE: ADD REDUCTION MERGE CALL GRAPH TO MODULE LIST.                */
 /**************************************************************************/
 
-static void AddMergeCallGraph( r_loop, labels, call_name, counter, call_graph )
-  PNODE r_loop;                                                 /* in */
-  int labels[MAX_CALLS][MAX_LABELS];                            /* in */
-  char* call_name[MAX_CALLS];                                   /* in */
-  int counter;                                                  /* in */
-  PNODE call_graph[MAX_CALLS];                                  /* out */
+static void AddMergeCallGraph(PNODE r_loop,  /* in */
+                              int labels[MAX_CALLS][MAX_LABELS],  /* in */
+                              char * call_name[MAX_CALLS],  /* in */
+                              int counter,  /* in */
+                              PNODE call_graph[MAX_CALLS])  /* out */
 {
   call_graph[CALL_MERGE] = NodeAlloc( 0, IFLGraph );
   call_graph[CALL_MERGE]->funct = r_loop->L_INIT->funct;
@@ -682,13 +658,11 @@ static void AddMergeCallGraph( r_loop, labels, call_name, counter, call_graph )
 /* PURPOSE: Add nodes to merge function.                                  */
 /**************************************************************************/
 
-static void CreateMerge( r_port_count, r_ports, d_for_stack, d_depth, 
-  call_graph )
-  int r_port_count[MAX_CALLS][MAX_TYPES];                       /* in */
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];                 /* in */
-  PNODE d_for_stack[MAX_NFORALL];                               /* in */
-  int d_depth;                                                  /* in */
-  PNODE call_graph[MAX_CALLS];                                  /* in/out */
+static void CreateMerge(int r_port_count[MAX_CALLS][MAX_TYPES],  /* in */
+                        int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],  /* in */
+                        PNODE d_for_stack[MAX_NFORALL],  /* in */
+                        int d_depth,  /* in */
+                        PNODE call_graph[MAX_CALLS])  /* in/out */
 { 
   PEDGE edge, other_edge;
   int i;
@@ -731,10 +705,9 @@ static void CreateMerge( r_port_count, r_ports, d_for_stack, d_depth,
 /* PURPOSE: ELIMINATE EXTRA AELEMENT ACCESS TO MULTIPLES.                 */
 /**************************************************************************/
 
-static void EliminateAEMultiples( r_port_count, r_ports, call_graph )
-  int r_port_count[MAX_CALLS][MAX_TYPES];                       /* in */
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];                 /* in */
-  PNODE call_graph[MAX_CALLS];                                  /* in/out */
+static void EliminateAEMultiples(int r_port_count[MAX_CALLS][MAX_TYPES],  /* in */
+                                 int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],  /* in */
+                                 PNODE call_graph[MAX_CALLS])  /* in/out */
 {
   PEDGE edge, other_edge;
   int i;
@@ -767,10 +740,9 @@ static void EliminateAEMultiples( r_port_count, r_ports, call_graph )
 /* PURPOSE: ADJUST REDUCTION CALL GRAPHS TO USE ONLY NECESSARY PORTS.     */
 /**************************************************************************/
 
-static void AdjustCallGraphs( port_count, ports, call_graph )
-  int port_count[MAX_CALLS][MAX_WAYS];                          /* in */
-  int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS];                    /* in */
-  PNODE call_graph[MAX_CALLS];                                  /* in/out */
+static void AdjustCallGraphs(int port_count[MAX_CALLS][MAX_WAYS],  /* in */
+                             int ports[MAX_CALLS][MAX_WAYS][MAX_PORTS],  /* in */
+                             PNODE call_graph[MAX_CALLS])  /* in/out */
 {
   /*** Shift the init function ports over. ***/
 
@@ -799,16 +771,14 @@ static void AdjustCallGraphs( port_count, ports, call_graph )
 /* PURPOSE: COPY REDUCTION FUNCTION UP INTO FORALL DRIVER.                */
 /**************************************************************************/
 
-static void RewireReduction( r_graph, r_loop, r_port_count, r_ports, 
-  d_call, d_for_stack, d_depth, d_ports )
-  PNODE r_graph;                        /* reduction function graph */
-  PNODE r_loop;                         /* reduction LOOP subgraphs */
-  int r_port_count[MAX_CALLS][MAX_TYPES];
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];
-  PNODE d_call;                         /* reduction driver CALL */ 
-  PNODE d_for_stack[MAX_NFORALL];       /* reduction driver embedded FOR's */
-  int d_depth;                          /* reduction driver FOR max depth */
-  int d_ports[MAX_PORTS];
+static void RewireReduction(PNODE r_graph,  /* reduction function graph */
+                            PNODE r_loop,  /* reduction LOOP subgraphs */
+                            int r_port_count[MAX_CALLS][MAX_TYPES],
+                            int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],
+                            PNODE d_call,  /* reduction driver CALL */
+                            PNODE d_for_stack[MAX_NFORALL],  /* reduction driver embedded FOR's */
+                            int d_depth,  /* reduction driver FOR max depth */
+                            int d_ports[MAX_PORTS])
 {
   int labels[MAX_CALLS][MAX_LABELS];
   int port_count[MAX_CALLS][MAX_WAYS];
@@ -1019,12 +989,11 @@ static void RewireReduction( r_graph, r_loop, r_port_count, r_ports,
 /*          COUNT OF FUNCTIONS REDUCED.                                   */
 /**************************************************************************/
 
-static int ReduceArrayFuncs( r_graph, r_loop, r_port_count, r_ports, g )
-  PNODE r_graph;                        /* reduction function graph */
-  PNODE r_loop;                         /* reduction LOOP subgraphs */
-  int r_port_count[MAX_CALLS][MAX_TYPES];
-  int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS];
-  PNODE g;                              /* graph which may call r_graph */
+static int ReduceArrayFuncs(PNODE r_graph,  /* reduction function graph */
+                            PNODE r_loop,  /* reduction LOOP subgraphs */
+                            int r_port_count[MAX_CALLS][MAX_TYPES],
+                            int r_ports[MAX_CALLS][MAX_TYPES][MAX_PORTS],
+                            PNODE g)  /* graph which may call r_graph */
 {
   int d_ports[MAX_PORTS];
   PNODE d_call;                         /* reduction driver CALL */ 
@@ -1070,7 +1039,7 @@ static int ReduceArrayFuncs( r_graph, r_loop, r_port_count, r_ports, g )
 /* PURPOSE: WRITE ARRAY REDUCTION INFORMATION TO stderr.                  */
 /**************************************************************************/
 
-void WriteReduceInfo()
+void WriteReduceInfo(void)
 {
   FPRINTF (infoptr, "\n **** ARRAY REDUCTION FUNCTIONS\n\n");
   FPRINTF (infoptr, " Reduced Array Functions:     %d of %d\n", rafs, Trafs);
@@ -1084,7 +1053,7 @@ void WriteReduceInfo()
 /* PURPOSE: REDUCE THE ARRAY FUNCTIONS MARKED WITH 'd'.                   */
 /**************************************************************************/
 
-void If1Reduce( )
+void If1Reduce(void)
 {
   PNODE r_graph;                        /* reduction function graph */
   PNODE g;                              /* graph which may call r_graph */

@@ -20,12 +20,11 @@
 int p_procnum = 0;
 char *share_malloc();
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -40,7 +39,7 @@ int NumBytes;
   SharedMemory = ALIGN(char*,SharedMemory);
 }
 
-void StartWorkers()
+void StartWorkers(void)
 {
   register int NumProcs = NumWorkers;
 
@@ -62,13 +61,13 @@ void StartWorkers()
 }
 
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel()
+void AbortParallel(void)
 {
   (void)kill( 0, SIGKILL );
 }

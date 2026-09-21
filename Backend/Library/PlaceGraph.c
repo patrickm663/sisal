@@ -18,8 +18,7 @@
 /*          IN THE LIST, BUT IT IS NOT ADJUSTED BY UnlinkGraph.           */
 /**************************************************************************/
 
-void PlaceGraph( g )
-PNODE g;
+void PlaceGraph(PNODE g)
 {
   if ( glstop->gsucc == NULL ) {
     glstop->gsucc = g;

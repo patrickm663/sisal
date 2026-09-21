@@ -343,7 +343,7 @@ static option_t options[] = {
 /**************************************************************************/
 /* Remove temporary files on exit                                         */
 /**************************************************************************/
-static void cleanup() {
+static void cleanup(void) {
    while( temporaryFiles ) {
       char* file = dequeue(&temporaryFiles);
       if ( verbose ) fprintf(stderr,"rm %s\n",file);

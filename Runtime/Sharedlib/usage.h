@@ -27,9 +27,9 @@
 /* h */  "-w<num>               Set number of worker processes to <num>",
 /* a */  "-z                    Do not print the program's output.",
 /* n */   NULL };
-/* g */  static void PrintUsageTable(argv,idx)
-/* e */  char *argv[]; int idx;
-/*   */  {
+/* g */  static void PrintUsageTable(char *argv[],
+                                     int idx)  /* */  /* e */
+{
 /* M */    char **p,*q,*r,buf[128],lbuf[128],c;
 /* a */    int len,cnt=0;
 /* c */    if (argv[idx+1]) {

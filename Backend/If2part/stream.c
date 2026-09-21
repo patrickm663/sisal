@@ -51,8 +51,7 @@
 /* PURPOSE: RETURN TRUE IF LOOP n IMPORTS OR EXPORTS A STREAM, ELSE FALSE.*/
 /**************************************************************************/
 
-int IsStreamTask( n )
-PNODE n;
+int IsStreamTask(PNODE n)
 {
     register PEDGE i;
     register PEDGE e;

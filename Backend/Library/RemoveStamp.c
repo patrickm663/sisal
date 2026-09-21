@@ -16,8 +16,7 @@
 /* PURPOSE: REMOVE STAMP stamp FROM THE STAMP TABLE.                      */
 /**************************************************************************/
 
-void RemoveStamp( stamp )
-     char stamp;
+void RemoveStamp(int stamp)
 {
   stamps[ (int)stamp ] = NULL;
 }

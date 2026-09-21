@@ -16,9 +16,7 @@
 /* PURPOSE: REMOVE ENTRY x FROM THE EQUIVALENCE CLASS CONTAINING o.       */
 /**************************************************************************/
 
-void RemoveFromEquivClass( o, x )
-PINFO o;
-PINFO x;
+void RemoveFromEquivClass(PINFO o, PINFO x)
 {
   if ( x == ttable[ o->eid ] )
     ttable[ o->eid ] = o;

@@ -22,7 +22,7 @@ static void PrintVecNode PROTO((int, PNODE));
 
 /* scc UNDER Unicos APPEARS TO HAVE TROUBLE CORRECTLY VECTORIZING LOOPS */
 /* NOT ALREADY SUBJECTED TO cse AND gcse OPTIMIZATIONS                  */
-static int WasCseANDGcseDone()
+static int WasCseANDGcseDone(void)
 {
   register char *s;
   register int   gcse;
@@ -54,8 +54,7 @@ static int WasCseANDGcseDone()
 }
 
 
-static int AreImportReferenceCountOps( n )
-PNODE n;
+static int AreImportReferenceCountOps(PNODE n)
 {
   register PEDGE i;
 
@@ -67,8 +66,7 @@ PNODE n;
 }
 
 
-static int AreComplexImports( n )
-PNODE n;
+static int AreComplexImports(PNODE n)
 {
   register PEDGE i;
 
@@ -83,9 +81,7 @@ PNODE n;
 }
 
 
-static int IsIvdepOk( g,ReasonP )
-     PNODE g;
-     char       **ReasonP;
+static int IsIvdepOk(PNODE g, char **ReasonP)
 {
   register PNODE n;
   register PEDGE e;
@@ -186,9 +182,7 @@ static int IsIvdepOk( g,ReasonP )
 }
 
 
-static char *PrintVectorTemp( fd, i )
-FILE  *fd;
-PEDGE  i;
+static char *PrintVectorTemp(FILE *fd, PEDGE i)
 {
   register int  type;
            char buf[100];
@@ -235,10 +229,7 @@ PEDGE  i;
 /* PURPOSE: PRINT AStore NODE n OF AGatherAT NODE gat TO output.          */
 /**************************************************************************/
 
-void PrintAStore( indent, n, gat )
-int   indent;
-PNODE n;
-PNODE gat;
+void PrintAStore(int indent, PNODE n, PNODE gat)
 {
   register PNODE l;
 
@@ -267,10 +258,7 @@ PNODE gat;
 /* PURPOSE: PRINT YANKED BASIC REDUCTION UPDATE NODE n TO OUTPUT.         */
 /**************************************************************************/
 
-void PrintYankedRed( indent, n, macro )
-int    indent;
-PNODE  n;
-char  *macro;
+void PrintYankedRed(int indent, PNODE n, char *macro)
 {
     register PEDGE i = n->gsucc->exp;
 
@@ -294,8 +282,7 @@ char  *macro;
 /*          NODE LIST OF LOOP TEST SUBGRAPH g IS 1.                       */
 /**************************************************************************/
 
-int AreAllUnitFanout( g )
-PNODE g;
+int AreAllUnitFanout(PNODE g)
 {
     register PNODE n;
 
@@ -314,8 +301,7 @@ PNODE g;
 /*          output.                                                       */
 /**************************************************************************/
 
-static void PrintLoopTest( i )
-PEDGE i;
+static void PrintLoopTest(PEDGE i)
 {
     if ( IsConst( i ) ) {
         PrintTemp( i );
@@ -410,9 +396,7 @@ PEDGE i;
 /*          ASSOCIATED MUTLIPLE NODE TO output.                           */
 /**************************************************************************/
 
-void PrintSumOfTerms( indent, e )
-int   indent;
-PEDGE e;
+void PrintSumOfTerms(int indent, PEDGE e)
 {
     register PEDGE i = FindImport( e->src->F_RET, e->eport );
 
@@ -478,10 +462,7 @@ PEDGE e;
 /* PURPOSE: PRINT BASIC REDUCTION UPDATE MACRO macro TO OUTPUT.           */
 /**************************************************************************/
 
-static void PrintBasicRed( indent, i, macro )
-int    indent;
-PEDGE  i;
-char  *macro;
+static void PrintBasicRed(int indent, PEDGE i, char *macro)
 {
     register PEDGE v = i->src->imp->isucc->isucc;
 
@@ -510,9 +491,7 @@ char  *macro;
 /* PURPOSE: PRINT USER REDUCTION UPDATE MACRO macro TO OUTPUT.            */
 /**************************************************************************/
 
-static void PrintUserRed( indent , i )          /* TBD */
-int    indent;
-PEDGE  i;
+static void PrintUserRed(int indent, PEDGE i)  /* TBD */
 {
     PNODE       graph;
     PEDGE       edge;
@@ -568,12 +547,7 @@ PEDGE  i;
 /*          NODE IS ASSUMED TO BE i->src.                                 */
 /**************************************************************************/
 
-static void PrintRCatUpd( indent, i, v, bool_, atnode )
-int    indent;
-PEDGE  i;
-PEDGE  v;
-PEDGE  bool_;
-int    atnode;
+static void PrintRCatUpd(int indent, PEDGE i, PEDGE v, PEDGE bool_, int atnode)
 {
   register char  *macro;
 
@@ -617,14 +591,13 @@ int    atnode;
 /* PURPOSE: PRINT AN ARRAY BuildAT AT MACRO TO output.                    */
 /**************************************************************************/
 
-static void PrintBldAT( indent, i, e, low, sz, b, n )
-int   indent;
-PEDGE i;
-PEDGE e;
-PEDGE low;
-PEDGE sz;
-PEDGE b;
-PNODE n;
+static void PrintBldAT(int indent,
+                       PEDGE i,
+                       PEDGE e,
+                       PEDGE low,
+                       PEDGE sz,
+                       PEDGE b,
+                       PNODE n)
 {
     register char *s;
 
@@ -675,10 +648,7 @@ PNODE n;
 /*          TO output.                                                    */
 /**************************************************************************/
 
-static void PrintReduceInit( indent, f, e )
-int   indent;
-PEDGE f;
-PEDGE e;
+static void PrintReduceInit(int indent, PEDGE f, PEDGE e)
 {
     PrintIndentation( indent );
 
@@ -774,9 +744,7 @@ PEDGE e;
 /*          RETURN THE CORRESPONDING IMPORT TO ENQUE NODE n.              */
 /**************************************************************************/
 
-PEDGE GetSliceParam( i, n )
-PEDGE i;
-PNODE n;
+PEDGE GetSliceParam(PEDGE i, PNODE n)
 {
     register PEDGE ii;
 
@@ -822,8 +790,7 @@ DoItAgain:
 /*          SLICED LOOPS CONTROLLING RANGES ARE PRINTED.                  */
 /**************************************************************************/
 
-void PrintRanges( n )
-PNODE n;
+void PrintRanges(PNODE n)
 {
     FPRINTF( output, ", " );                              /* CONTROL LOW */
     PrintRangeLow(n);
@@ -831,8 +798,7 @@ PNODE n;
     FPRINTF( output, ", " );                             /* CONTROL HIGH */
     PrintRangeHigh(n);
 }
-void PrintRangeLow( n )
-PNODE n;
+void PrintRangeLow(PNODE n)
 {
     register PEDGE i;
 
@@ -841,8 +807,7 @@ PNODE n;
 
     PrintTemp( GetSliceParam( i->src->imp->src->imp, n ) );
 }
-void PrintRangeHigh( n )
-PNODE n;
+void PrintRangeHigh(PNODE n)
 {
     register PEDGE i;
 
@@ -861,9 +826,7 @@ PNODE n;
 /*          ITS VALUE.                                                    */
 /**************************************************************************/
 
-void PrintSliceTaskInit( indent, n )
-int   indent;
-PNODE n;
+void PrintSliceTaskInit(int indent, PNODE n)
 {
     register PEDGE i;
 
@@ -941,9 +904,7 @@ PNODE n;
 /*          DONE AFTER THE LOOP HAS COMPLETED TO FINALIZE THE RESULTS.    */
 /**************************************************************************/
 
-void PrintReturnRapUp( indent, r )
-int   indent;
-PNODE r;
+void PrintReturnRapUp(int indent, PNODE r)
 {
     register PEDGE i;
     PNODE n;
@@ -1025,9 +986,7 @@ PNODE r;
 /* PURPOSE: PRINT RETURN SUBGRAPH r'S UPDATE MACROS TO output.            */
 /**************************************************************************/
 
-static void PrintReturnUpd( indent, r )
-int   indent;
-PNODE r;
+static void PrintReturnUpd(int indent, PNODE r)
 {
     register PEDGE i;
     register PEDGE b;
@@ -1218,9 +1177,7 @@ PNODE r;
 /* PURPOSE: PRINT RETURN SUBGRAPH r'S INITIALIZATION MACROS TO output.    */
 /**************************************************************************/
 
-static void PrintReturnInit( indent, r )
-int   indent;
-PNODE r;
+static void PrintReturnInit(int indent, PNODE r)
 {
     register PEDGE  i;
     register char  *s;
@@ -1352,9 +1309,7 @@ PNODE r;
 /*          SUBGRAPH TO output. ONLY NoOp AND Assgn NODES ARE CONSIDERED. */
 /**************************************************************************/
 
-static void PrintGenInit( indent, f )
-int   indent;
-PNODE f;
+static void PrintGenInit(int indent, PNODE f)
 {
     register PNODE n;
     register PEDGE i;
@@ -1430,9 +1385,7 @@ PNODE f;
 /* PURPOSE: PRINT Forall NODE f'S GENERATE UPDATE MACROS TO output.       */
 /**************************************************************************/
 
-static void PrintGenUpd( indent, f )
-int   indent;
-PNODE f;
+static void PrintGenUpd(int indent, PNODE f)
 {
     register PNODE n;
 
@@ -1474,9 +1427,7 @@ PNODE f;
 /* PURPOSE: PRINT Forall NODE f'S GENERATE RAP-UP MACROS TO output.       */
 /**************************************************************************/
 
-static void PrintGenRapUp( indent, f )
-int   indent;
-PNODE f;
+static void PrintGenRapUp(int indent, PNODE f)
 {
 }
 
@@ -1487,9 +1438,7 @@ PNODE f;
 /* PURPOSE: PRINT Forall NODE f's LOOP CONTROL MACROS TO output.          */
 /**************************************************************************/
 
-static void PrintGenControl( indent, f )
-int   indent;
-PNODE f;
+static void PrintGenControl(int indent, PNODE f)
 {
     register PNODE  n;
     register PNODE  nn;
@@ -1680,9 +1629,7 @@ PNODE f;
 }
 
 
-static void PrintVecNodeImport( indent, i )
-int   indent;
-PEDGE i;
+static void PrintVecNodeImport(int indent, PEDGE i)
 {
 
   if ( IsConst( i ) ) {
@@ -1700,9 +1647,7 @@ PEDGE i;
 
 static int ncnt = 0;
 
-static void PrintVecNode( indent, n )
-int   indent;
-PNODE n;
+static void PrintVecNode(int indent, PNODE n)
 {
   register char op;
 
@@ -1818,10 +1763,7 @@ PrintIt:
 }
 
 
-static void PrintVecUpd( indent, i, f )
-int   indent;
-PEDGE i;
-PNODE f;
+static void PrintVecUpd(int indent, PEDGE i, PNODE f)
 {
   register PEDGE e;
 
@@ -1834,9 +1776,7 @@ PNODE f;
 }
 
 
-static void PrintVecBody( indent, f )
-int   indent;
-PNODE f;
+static void PrintVecBody(int indent, PNODE f)
 {
   register PNODE n;
   register PEDGE i;
@@ -1936,8 +1876,7 @@ PrintIt2:
 
 static int hcnt = 0;
 
-static void PrintHTemp( e )
-PEDGE e;
+static void PrintHTemp(PEDGE e)
 {
     if ( IsConst( e ) ) {
         FPRINTF( hyfd, "(%s)", e->CoNsT );
@@ -1993,8 +1932,7 @@ PEDGE e;
 }
 
 
-static char *GetHybridTypeProlog( i )
-PEDGE i;
+static char *GetHybridTypeProlog(PEDGE i)
 {
   switch( i->info->type ) {
     case IF_ARRAY:
@@ -2034,10 +1972,7 @@ PEDGE i;
 }
 
 
-static void PrintHybridGraph( f, g, crod )
-PNODE f;
-PNODE g;
-PEDGE crod;
+static void PrintHybridGraph(PNODE f, PNODE g, PEDGE crod)
 {
   register PNODE  n;
   register char  *op;
@@ -2248,8 +2183,7 @@ DoPrefix:
 }
 
 
-static void PrintHybrid( f )
-PNODE f;
+static void PrintHybrid(PNODE f)
 {
   register PEDGE  i;
   register char  *nm;
@@ -2423,9 +2357,7 @@ PNODE f;
   FPRINTF( hyfd, "      end\n" );
 }
 
-static int IsHybridGraph( g, outer )
-PNODE g;
-int   outer;
+static int IsHybridGraph(PNODE g, int outer)
 {
   register PNODE n;
   register PEDGE i;
@@ -2594,8 +2526,7 @@ DoIntrinsic:
 }
 
 
-static int IsHybridCandidate( f )
-PNODE f;
+static int IsHybridCandidate(PNODE f)
 {
   register PNODE n;
   register PEDGE e;
@@ -2668,9 +2599,7 @@ PNODE f;
 /*          SLICED AND NONSLICED FORMS.                                   */
 /**************************************************************************/
 
-void PrintForall( indent, f )
-int   indent;
-PNODE f;
+void PrintForall(int indent, PNODE f)
 {
     PrintProducerModifiers( indent, f->F_GEN );
     PrintGenInit( indent, f );
@@ -2722,9 +2651,7 @@ MoveOn:
 /*          output.                                                       */
 /**************************************************************************/
 
-void PrintLoop( indent, l )
-int   indent;
-PNODE l;
+void PrintLoop(int indent, PNODE l)
 {
     register PEDGE i;
     register PEDGE ii;
@@ -2889,8 +2816,7 @@ LastThing:
 /* PURPOSE: RETURN THE PREFIX CHARACTER ASSOCIATED WITH TYPE i.           */
 /**************************************************************************/
 
-static char GetTypePrefix( i )
-PINFO i;
+static char GetTypePrefix(PINFO i)
 {
   switch( i->type ) {
     case IF_DOUBLE:
@@ -2911,9 +2837,7 @@ PINFO i;
 }
 
 
-void PrintFirstSum( indent, l )
-int   indent;
-PNODE l;
+void PrintFirstSum(int indent, PNODE l)
 {
              char   fn[100];
     register PEDGE  x;
@@ -2970,9 +2894,7 @@ PNODE l;
 }
 
 
-void PrintTri( indent, l )
-int   indent;
-PNODE l;
+void PrintTri(int indent, PNODE l)
 {
              char  fn[100];
     register PEDGE x;
@@ -3045,10 +2967,7 @@ PNODE l;
 }
 
 
-void PrintVMinMax( indent, l, root )
-int    indent;
-PNODE  l;
-char  *root;
+void PrintVMinMax(int indent, PNODE l, char *root)
 {
              char  fn[100];
     register PEDGE x;
@@ -3102,8 +3021,7 @@ char  *root;
 }
 
 int
-BasicTypeSize(i)
-PINFO i;
+BasicTypeSize(PINFO i)
 {
         switch(i->type)
         {
@@ -3125,8 +3043,7 @@ PINFO i;
 #define BIGINT 0xFFFFFFFF
 
 int
-LCMSize(g)
-PNODE g;
+LCMSize(PNODE g)
 {
 #if !defined(CACHE_LINE)
         return(0);

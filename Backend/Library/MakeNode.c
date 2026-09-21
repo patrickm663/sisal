@@ -18,9 +18,7 @@
 /*          RECOGNIZED.                                                   */
 /**************************************************************************/
 
-void MakeNode( label, type )
-int   label;
-int   type;
+void MakeNode(int label, int type)
 {
   register PNODE n;
 

@@ -22,7 +22,7 @@ static pthread_key_t sisalKey;
 static int* identifiers = 0;
 static pthread_t *sisalThread = 0;
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
   free( SharedBase );
 }
@@ -32,7 +32,7 @@ void ReleaseSharedMemory()
 /**************************************************************************/
 /* Return a unique thread ID. 0 for master, 1..n-1 for workers            */
 /**************************************************************************/
-int sisalGetID() {
+int sisalGetID(void) {
    void* dataP = 0;
    int* tidP = 0;
 
@@ -56,8 +56,7 @@ int sisalGetID() {
    return *tidP;
 }
 
-static void* Transfer( dataP )
-     void* dataP;
+static void* Transfer(void * dataP)
 {
    int* tidP = (int*)dataP;
 
@@ -82,8 +81,7 @@ static void* Transfer( dataP )
    return NULL;
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -93,7 +91,7 @@ int NumBytes;
     SisalError( "AcquireSharedMemory", "malloc FAILED" );
 }
 
-void StartWorkers()
+void StartWorkers(void)
 {
    int i;
 
@@ -135,19 +133,18 @@ void StartWorkers()
    Transfer(identifiers+0 );
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel()
+void AbortParallel(void)
 {
   (void)exit( 1 );
 }
 
-BARRIER_TYPE *MyInitBarrier(limit)
-  int limit;
+BARRIER_TYPE *MyInitBarrier(int limit)
 {
   BARRIER_TYPE *bar;
 
@@ -169,7 +166,7 @@ BARRIER_TYPE *MyInitBarrier(limit)
 /**************************************************************************/
 /* Yield thread control to waiting process                                */
 /**************************************************************************/
-void sisalYield() {
+void sisalYield(void) {
 #ifdef HAVE_SCHED_YIELD
     sched_yield();
 #else
@@ -177,8 +174,7 @@ void sisalYield() {
 #endif
 }
 
-void MyBarrier( bar )
-  BARRIER_TYPE *bar;
+void MyBarrier(BARRIER_TYPE *bar)
 {
   /*
    * Block for lock, then decrement waiting thread count.

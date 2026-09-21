@@ -580,7 +580,7 @@ static void body(option_t* opt) {
    }
 }
 
-static void trailer() {
+static void trailer(void) {
    switch (helpKind) {
    case HTML:
       printf("</TABLE>\n");

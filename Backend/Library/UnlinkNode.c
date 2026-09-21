@@ -17,8 +17,7 @@
 /*          PREDECESSOR OF n IS RETURNED, ELSE n'S SUCCESSOR IS RETURNED. */
 /**************************************************************************/
 
-PNODE UnlinkNode( n )
-PNODE n;
+PNODE UnlinkNode(PNODE n)
 {
   register PNODE pred = n->npred;
 

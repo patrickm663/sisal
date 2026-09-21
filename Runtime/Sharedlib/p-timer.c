@@ -12,9 +12,7 @@
 
 #include "sisalrt.h"
 
-static double ElapsedTime( Start, Stop )
-struct timeval *Start;
-struct timeval *Stop;
+static double ElapsedTime(struct timeval *Start, struct timeval *Stop)
 {
   double Seconds;
   double USeconds;
@@ -40,7 +38,7 @@ extern double TSECND();
 /*          NOTE THAT TSECND IS A CRAY INTRINSIC!                         */
 /**************************************************************************/
 
-static double TSECND()
+static double TSECND(void)
 {
   register double CurrentCpuTime;
 
@@ -75,13 +73,13 @@ static double TSECND()
 }
 #endif
 
-void StartTimer() 
+void StartTimer(void) 
 { 
   (void)gettimeofday( &(MyInfo->WallTimeBuffer), (struct timezone *) NULL );
   MyInfo->CpuTime = TSECND(); 
 }
 
-void StopTimer()  
+void StopTimer(void)  
 { 
   struct timeval StopWallTime;
   register double StopCpuTime;

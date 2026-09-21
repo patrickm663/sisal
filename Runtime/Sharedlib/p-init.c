@@ -40,8 +40,7 @@ struct shared_s LSR;    /* READ ARGS. LOCALLY BEFORE COPYING TO DYNAMIC MEM. */
 /**************************************************************************/
 /* PURPOSE:  Convert C string escapes into internal representation        */
 /**************************************************************************/
-char *ParseCEscapes(s)
-     char       *s;
+char *ParseCEscapes(char *s)
 {
   char  *buf = (char*)(malloc(strlen(s)+1));
   char  *p = buf;
@@ -83,9 +82,7 @@ char *ParseCEscapes(s)
 
 char** sisal_save_argv = 0;
 
-void ParseCommandLine( argc, argv )
-int   argc;
-char *argv[];
+void ParseCommandLine(int argc, char *argv[])
 {
   register int   idx;
   int   Tmp;
@@ -149,7 +146,7 @@ char *argv[];
 } 
 
 
-static void PrintExecutionTimes()
+static void PrintExecutionTimes(void)
 {
   struct WorkerInfo *InfoPtr;
   int    Worker;
@@ -176,7 +173,7 @@ static void PrintExecutionTimes()
 }
 
 
-void DumpRunTimeInfo()
+void DumpRunTimeInfo(void)
 {
   register struct WorkerInfo *InfoPtr;
   register int    Worker;
@@ -261,7 +258,7 @@ void DumpRunTimeInfo()
 }
 
 
-void InitSisalRunTime()
+void InitSisalRunTime(void)
 {
 #if defined(DIST_DSA)
   AcquireSharedMemory( DsaSize * MAX_PROCS );

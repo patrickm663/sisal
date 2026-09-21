@@ -29,8 +29,7 @@ PNAME inames = NULL;                                  /* IMPORT NAME LIST */
 /*          SEE IsInterfaceCandidate BELOW.                               */
 /**************************************************************************/
 
-static int IsInterfaceType( i )
-register PINFO i;
+static int IsInterfaceType(register PINFO i)
 {
   register PINFO ii;
 
@@ -82,9 +81,7 @@ register PINFO i;
 /*          RECENTLY MOFIFIED TO ALLOW MULTIPLE-ARITY!!!                  */
 /**************************************************************************/
 
-static int IsInterfaceCandidate( name, t )
-char  *name;
-PINFO  t;
+static int IsInterfaceCandidate(char *name, PINFO t)
 {
   register PINFO i;
   register int   ac;
@@ -133,10 +130,7 @@ PINFO  t;
 /*          ARE ALLOWED AT THIS POINT.  N IS nm'S IGraph NODE.            */ 
 /**************************************************************************/
 
-void AddToImportList( n, nm, t )
-PNODE  n;
-char  *nm;
-PINFO  t;
+void AddToImportList(PNODE n, char *nm, PINFO t)
 {
   register PNAME i;
   register PNAME ii;
@@ -163,8 +157,7 @@ PINFO  t;
 /*          EITHER A XGraph OR LGraph NODE.                               */
 /**************************************************************************/
 
-void AddToNameList( n )
-PNODE n;
+void AddToNameList(PNODE n)
 {
   register PNAME x;
 
@@ -186,9 +179,7 @@ PNODE n;
 /*          NULL IS RETURNED IF n IS NOT FOUND.                           */
 /**************************************************************************/
 
-static PNAME NameLookup( l, n )
-PNAME  l;
-char  *n;
+static PNAME NameLookup(PNAME l, char *n)
 {
     register PNAME p;
     
@@ -207,7 +198,7 @@ char  *n;
 /*          CONFLICTS AND DECORATE THE GRAPH ACCORDINGLY.                 */
 /**************************************************************************/
 
-void CheckForUnresolvedNames()
+void CheckForUnresolvedNames(void)
 {
   register PNAME i;
   register PNAME ii;

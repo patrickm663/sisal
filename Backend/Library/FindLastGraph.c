@@ -17,8 +17,7 @@
 /*          NOTE: n ITSELF MIGHT BE RETURNED.                             */
 /**************************************************************************/
 
-PNODE FindLastGraph( n )
-register PNODE n;
+PNODE FindLastGraph(register PNODE n)
 {
   while ( n->gsucc != NULL )
     n = n->gsucc;

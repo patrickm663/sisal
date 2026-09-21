@@ -172,9 +172,7 @@ static char *flop[200];                       /* FLOP FUNCTION LIST       */
 /*              -9      -> Force release of all storage                   */
 /**************************************************************************/
 
-static void ParseCommandLine( argc, argv )
-int    argc;
-char **argv;
+static void ParseCommandLine(int argc, char **argv)
 {
     register char *c;
     register int   fmode = 0;
@@ -433,8 +431,7 @@ char **argv;
 /*          CONSTANT PROPAGATION TOOK PLACE.                              */
 /**************************************************************************/
 
-static void CheckRefCountOps( g )
-PNODE g;
+static void CheckRefCountOps(PNODE g)
 {
   register PNODE n;
   register PEDGE e;
@@ -506,8 +503,7 @@ PNODE g;
 /* PURPOSE: ADJUST THE CALL NAMES FOR GRAPH g.                            */
 /**************************************************************************/
 
-static void BindCallNames( g )
-PNODE g;
+static void BindCallNames(PNODE g)
 {
   register PNODE  n;
   register PNODE  sg;
@@ -591,9 +587,7 @@ PNODE g;
 /*          BEEN DONE.                                                    */
 /**************************************************************************/
 
-int main( argc, argv )
-int    argc;
-char **argv;
+int main(int argc, char **argv)
 {
   register FILE  *fd;
   register PNODE  f;

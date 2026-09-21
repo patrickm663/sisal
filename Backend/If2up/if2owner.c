@@ -22,8 +22,7 @@
 static int Sharing = FALSE;
 
 
-static void DoSharingAnalysis( g )
-PNODE g;
+static void DoSharingAnalysis(PNODE g)
 {
     register PNODE n;
     register PNODE sg;
@@ -86,7 +85,7 @@ PNODE g;
 /*          GRAPH MUST HAVE A mk=R PRAGMA.                                */
 /**************************************************************************/
 
-void If2Ownership()
+void If2Ownership(void)
 {
     register PNODE n;
     register PEDGE i;
@@ -182,7 +181,7 @@ void If2Ownership()
 
 int swcnt = 0;
 
-void OptimizeSwaps()
+void OptimizeSwaps(void)
 {
   register PNODE n1;
   register PNODE n2;

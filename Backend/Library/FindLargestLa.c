@@ -18,7 +18,7 @@ int LargestTypeLabelSoFar = 0;
 /**************************************************************************/
 
 
-int FindLargestLabel( )
+int FindLargestLabel(void)
 {
   return LargestTypeLabelSoFar;
 }

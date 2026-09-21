@@ -19,9 +19,7 @@
 /*          RETURNED.                                                     */
 /**************************************************************************/
 
-PNODE LinkGraph( pred, g )
-PNODE pred;
-PNODE g;
+PNODE LinkGraph(PNODE pred, PNODE g)
 {
   if ( pred == NULL )
     return( g );

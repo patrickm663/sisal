@@ -48,7 +48,7 @@ int     sisal_file_io = 0;
 /* ------------------------------------------------------------ */
 /* B O O L E A N                                                */
 /* ------------------------------------------------------------ */
-POINTER ReadBoolVector()
+POINTER ReadBoolVector(void)
 {
   switch ( FibreParse( ANY_ ) ) {
   case ARRAYB_:
@@ -66,8 +66,7 @@ POINTER ReadBoolVector()
   }
   return (POINTER)(NULL);
 }
-void WriteBoolVector( val )
-POINTER val;
+void WriteBoolVector(POINTER val)
 {
   register POINTER Base2;
   register int     HiBound;
@@ -105,7 +104,7 @@ POINTER val;
 /* ------------------------------------------------------------ */
 /* C H A R A C T E R                                            */
 /* ------------------------------------------------------------ */
-POINTER ReadCharVector()
+POINTER ReadCharVector(void)
 {
   POINTER       val0;
 
@@ -138,8 +137,7 @@ POINTER ReadCharVector()
   return (POINTER)(NULL);
 }
 
-void WriteCharVector( val )
-POINTER val;
+void WriteCharVector(POINTER val)
 {
   register POINTER Base2;
   register int     HiBound;
@@ -209,7 +207,7 @@ POINTER val;
 /* ------------------------------------------------------------ */
 /*  D O U B L E                                                 */
 /* ------------------------------------------------------------ */
-POINTER ReadDoubleVector()
+POINTER ReadDoubleVector(void)
 {
   switch ( FibreParse( ANY_ ) ) {
   case ARRAYB_:
@@ -228,8 +226,7 @@ POINTER ReadDoubleVector()
   return (POINTER)(NULL);
 }
 
-void WriteDoubleVector( val )
-POINTER val;
+void WriteDoubleVector(POINTER val)
 {
   register POINTER Base2;
   register int     HiBound;
@@ -266,7 +263,7 @@ POINTER val;
 /* ------------------------------------------------------------ */
 /* I N T E G E R                                                */
 /* ------------------------------------------------------------ */
-POINTER ReadIntegerVector()
+POINTER ReadIntegerVector(void)
 {
   switch ( FibreParse( ANY_ ) ) {
   case ARRAYB_:
@@ -285,8 +282,7 @@ POINTER ReadIntegerVector()
   return (POINTER)(NULL);
 }
 
-void WriteIntegerVector( val )
-POINTER val;
+void WriteIntegerVector(POINTER val)
 {
     register POINTER Base2;
     register int     HiBound;
@@ -322,7 +318,7 @@ POINTER val;
 /* ------------------------------------------------------------ */
 /* N U L L                                                      */
 /* ------------------------------------------------------------ */
-POINTER ReadNullVector()
+POINTER ReadNullVector(void)
 {
   switch ( FibreParse( ANY_ ) ) {
   case ARRAYB_:
@@ -341,8 +337,7 @@ POINTER ReadNullVector()
   return (POINTER)(NULL);
 }
 
-void WriteNullVector( val )
-POINTER val;
+void WriteNullVector(POINTER val)
 {
   register POINTER Base2;
   register int     HiBound;
@@ -379,7 +374,7 @@ POINTER val;
 /* ------------------------------------------------------------ */
 /* R E A L                                                      */
 /* ------------------------------------------------------------ */
-POINTER ReadRealVector()
+POINTER ReadRealVector(void)
 {
   switch ( FibreParse( ANY_ ) ) {
   case ARRAYB_:
@@ -398,8 +393,7 @@ POINTER ReadRealVector()
   return (POINTER)(NULL);
 }
 
-void WriteRealVector( val )
-POINTER val;
+void WriteRealVector(POINTER val)
 {
   register POINTER Base2;
   register int     HiBound;

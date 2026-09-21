@@ -16,9 +16,7 @@
  * p-util.c - SISAL runtime system array memory utilities
 \************************************************************************/
 
-PHYSP DoPhysExpand( Array, CompSize )
-POINTER Array;
-int     CompSize;
+PHYSP DoPhysExpand(POINTER Array, int CompSize)
 {
   register PHYSP  Phys;
   register char  *Dest;
@@ -50,9 +48,7 @@ int     CompSize;
 }
 
 
-POINTER ArrayDuplicate( OldArray, CompSize )
-POINTER OldArray;
-int     CompSize;
+POINTER ArrayDuplicate(POINTER OldArray, int CompSize)
 {
   register ARRAYP Array;
   register PHYSP  Phys;
@@ -82,9 +78,7 @@ int     CompSize;
 }
 
 
-POINTER ArrayDuplicatePlus( OldArray, CompSize )
-POINTER OldArray;
-int     CompSize;
+POINTER ArrayDuplicatePlus(POINTER OldArray, int CompSize)
 {
   register ARRAYP Array;
   register PHYSP  Phys;

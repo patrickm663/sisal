@@ -27,8 +27,7 @@ static int color = WHITE;            /* CURRENT COLOR IN CYCLE DETECTION    */
 /*          FUNCTION nm. IF NOT FOUND, NULL IS RETURNED.                  */
 /**************************************************************************/
 
-static PCALL UpFindCallee( nm )
-char *nm;
+static PCALL UpFindCallee(char *nm)
 {
     register PCALL c;
 
@@ -49,9 +48,7 @@ char *nm;
 /*          CALLEE'S CALL GRAPH TRUNK NODE IS INCREMENTED.                */
 /**************************************************************************/
 
-static void UpAddCalleeReferences( c, g )
-PCALL c;
-PNODE g;
+static void UpAddCalleeReferences(PCALL c, PNODE g)
 {
     register PNODE n;
     register PCALL r;
@@ -92,7 +89,7 @@ PNODE g;
 /*          POINT.                                                        */
 /**************************************************************************/
 
-static void UpMakeCallGraph()
+static void UpMakeCallGraph(void)
 {
     register PNODE f;
     register PCALL c;
@@ -135,9 +132,7 @@ static void UpMakeCallGraph()
 /*          BROKEN.                                                       */
 /**************************************************************************/
 
-static void UpBreakCycles( caller, callee )
-PCALL caller;
-PCALL callee;
+static void UpBreakCycles(PCALL caller, PCALL callee)
 {
     register PCALL r;
 
@@ -177,7 +172,7 @@ PCALL callee;
 /*          BROKEN, THE ROUTINE WILL TERMINATE.                           */
 /**************************************************************************/
 
-static void SortFunctionGraphs()
+static void SortFunctionGraphs(void)
 {
     register PNODE f;
     register PNODE sf;
@@ -225,7 +220,7 @@ static void SortFunctionGraphs()
 /*          SORT THE FUNCTION GRAPHS (HEADED BY fhead).                   */
 /**************************************************************************/
 
-void If2CallGraph()
+void If2CallGraph(void)
 {
     register PCALL c;
 

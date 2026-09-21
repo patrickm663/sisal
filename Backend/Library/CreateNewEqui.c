@@ -16,8 +16,7 @@
 /* PURPOSE: CREATE A NEW EQUIVALENCE CLASS WHOSE FIRST ENTRY IS r.        */
 /**************************************************************************/
 
-void CreateNewEquivClass( r )
-PINFO r;
+void CreateNewEquivClass(PINFO r)
 {
   if ( lclass++ >= MaxClass )
     Error1( "CreateNewEquivClass: OUT OF EQUIVALENCE CLASSES" );

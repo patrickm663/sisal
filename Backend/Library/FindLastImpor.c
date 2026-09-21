@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN THE LAST IMPORT TO NODE n.                             */
 /**************************************************************************/
 
-PEDGE FindLastImport( n )
-PNODE n;
+PEDGE FindLastImport(PNODE n)
 {
   register PEDGE i;
 

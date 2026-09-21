@@ -17,8 +17,7 @@
 /*          (status) IS RETURNED TO THE INVOKER OF THE PROGRAM.           */
 /**************************************************************************/
 
-void Stop( status )
-int status;
+void Stop(int status)
 {
   exit( status );
 }

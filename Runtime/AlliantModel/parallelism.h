@@ -14,13 +14,12 @@
  * Alliant
 \************************************************************************/
 
-void ReleaseSharedMemory()
+void ReleaseSharedMemory(void)
 {
   free( SharedBase );
 }
 
-void AcquireSharedMemory( NumBytes ) 
-int NumBytes;
+void AcquireSharedMemory(int NumBytes)
 {
   SharedSize = NumBytes + 100000;
 
@@ -32,18 +31,18 @@ int NumBytes;
   SharedMemory = ALIGN(char*,SharedMemory);
 }
 
-void StartWorkers()
+void StartWorkers(void)
 {
   EnterWorker( 0 );
 }
 
-void StopWorkers()
+void StopWorkers(void)
 {
   *SisalShutDown = TRUE;
   LeaveWorker();
 }
 
-void AbortParallel() 
+void AbortParallel(void) 
 { 
   (void)kill( 0, SIGKILL ); 
 }

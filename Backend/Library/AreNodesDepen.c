@@ -26,9 +26,7 @@
 /*          RETURN FALSE.                                                 */
 /**************************************************************************/
 
-int AreNodesDependent( n1, n2 )
-PNODE n1;
-PNODE n2;
+int AreNodesDependent(PNODE n1, PNODE n2)
 {
   register PEDGE e;
 

@@ -22,9 +22,7 @@
 static PNODE gpred = NULL;                 /* GRAPH INSERTION PREDECESSOR */
 
 
-static int Used( c, iport )
-PNODE c;
-int   iport;
+static int Used(PNODE c, int iport)
 {
   register PNODE sg;
   register int   u;
@@ -44,8 +42,7 @@ int   iport;
 /*          IS RETURNED IF THE CONVERSION IS MADE.                        */
 /**************************************************************************/
 
-static int WasConvertedToTagTest( n )
-PNODE n;
+static int WasConvertedToTagTest(PNODE n)
 {
   register PNODE sg;
   register int   f;
@@ -104,8 +101,7 @@ PNODE n;
 
 
 /* SPECIALIZED FOR SELECT NODES */
-static int YankIsInvariant( i )
-PEDGE i;
+static int YankIsInvariant(PEDGE i)
 {
   register PNODE l;
 
@@ -135,9 +131,7 @@ PEDGE i;
 
 
 /* ASSUMES n HAS NO EXPORTS! */
-static void MoveInvariant( c, n )
-PNODE c;
-PNODE n;
+static void MoveInvariant(PNODE c, PNODE n)
 {
   register PEDGE i;
   register PEDGE ii;
@@ -198,9 +192,7 @@ PNODE n;
 /*          REMOVAL.                                                      */
 /**************************************************************************/
 
-static void CallImprover( g, inloop )
-PNODE g;
-int   inloop;
+static void CallImprover(PNODE g, int inloop)
 {
   register PNODE n;
   register PEDGE i;
@@ -272,9 +264,7 @@ int   inloop;
 }
 
 
-static int IsSliceParamNeeded( g, i )
-PNODE g;
-PEDGE i;
+static int IsSliceParamNeeded(PNODE g, PEDGE i)
 {
     register PNODE f;
     register PEDGE e;
@@ -358,9 +348,7 @@ SkipIt:
 /*          INVARIANT REMOVAL IF inloop.                                  */
 /**************************************************************************/
 
-static void SliceImprover( g, inloop )
-PNODE g;
-int   inloop;
+static void SliceImprover(PNODE g, int inloop)
 {
   register PNODE n;
   register PEDGE i;
@@ -484,8 +472,7 @@ int   inloop;
 /* PURPOSE: PUSH NODE n ACROSS SELECT SUBGRAPHS.                          */
 /**************************************************************************/
 
-static void PushYankedNode( n ) 
-PNODE n;
+static void PushYankedNode(PNODE n)
 {
   register PNODE nn;
   register PNODE s;
@@ -566,8 +553,7 @@ PNODE n;
 /* PURPOSE: PREPARE BASIC CONSTANTS FOR PRINTING IN C.                    */
 /**************************************************************************/
 
-static void PrepareConst( n )
-PNODE n;
+static void PrepareConst(PNODE n)
 {
     register PEDGE  i;
     register char  *p;
@@ -612,10 +598,7 @@ PNODE n;
 /*          INFORMATION FIELD IS SET.                                     */
 /**************************************************************************/
 
-static void BuildFunctionTypes( s, g, nm )
-PNODE  s;
-PNODE  g;
-char  *nm;
+static void BuildFunctionTypes(PNODE s, PNODE g, char *nm)
 {
     register PEDGE e;
     register PEDGE i;
@@ -687,8 +670,7 @@ char  *nm;
 /*          TO ADDRESS THIS NODE!                                         */
 /**************************************************************************/
 
-static void InsertUGetTagNode( n )
-PNODE n;
+static void InsertUGetTagNode(PNODE n)
 {
   register PNODE nn;
   register PEDGE e;
@@ -726,9 +708,7 @@ PNODE n;
 /*          THE UNION VALUE IS REFERENCED.                                */
 /**************************************************************************/
 
-static void InsertUElementNode( t, sg )
-PNODE t;
-PNODE sg;
+static void InsertUElementNode(PNODE t, PNODE sg)
 {
     register PEDGE e;
     register PEDGE se;
@@ -767,8 +747,7 @@ PNODE sg;
 /*          NOTE: THE PRAGMAS ON s IMPORTS AND EXPORTS ARE NOT CHANGED.   */
 /**************************************************************************/
 
-static void YankSlicedLoop( s )
-PNODE s;
+static void YankSlicedLoop(PNODE s)
 {
   register PNODE g;
   register PNODE f;
@@ -852,8 +831,7 @@ PNODE s;
 /*          FROM THE BOTTOM-UP. CALL NAMES ARE CONVERTED TO UPPER CASE.   */
 /**************************************************************************/
 
-static void YankNodes( g )
-PNODE g;
+static void YankNodes(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -938,8 +916,7 @@ PNODE g;
 /* PURPOSE: YANK AND PUSH SELECTED RETURN NODES INTO THE LOOP BODY.       */
 /**************************************************************************/
 
-static void YankReturnNodes( g )
-PNODE g;
+static void YankReturnNodes(PNODE g)
 {
   register PNODE n, r;
   register PNODE nn, sg;
@@ -1080,7 +1057,7 @@ PNODE g;
 /* PURPOSE: YANK RETURN NODES AND OPTIMIZE ARGUMENT TRANSMISSION.         */
 /**************************************************************************/
 
-void If2Yank1()
+void If2Yank1(void)
 {
   register PNODE f;
 
@@ -1103,7 +1080,7 @@ void If2Yank1()
 /*          ARE DONE.                                                     */
 /**************************************************************************/
 
-void If2Yank0()
+void If2Yank0(void)
 {
   register PNODE f;
 
@@ -1116,7 +1093,7 @@ void If2Yank0()
 }
 
 
-void WriteYankInfo()
+void WriteYankInfo(void)
 {
 /*  FPRINTF( infoptr4, "\n **** NODE YANK OPTIMIZATIONS\n\n" );
   FPRINTF( infoptr4, " Pushed Yanked Return Nodes:   %d\n", pycnt   );

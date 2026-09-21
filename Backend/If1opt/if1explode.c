@@ -37,9 +37,7 @@ static PINFO aihash[MAX_HASH];
 /* PURPOSE: RETURNS TRUE IF NODE n IS A CANDIDATE FOR EXPLOSION.          */
 /**************************************************************************/
 
-static int IsExplodeCandidate( n , ReasonP)
-PNODE n;
-char **ReasonP;
+static int IsExplodeCandidate(PNODE n, char **ReasonP)
 {
   register PEDGE i;
 
@@ -90,9 +88,7 @@ char **ReasonP;
 /*          FORALL NODE.  THEN LINK THE NEW Forall TO f1.                 */
 /**************************************************************************/
 
-static PNODE BuildFragement( f1, n )
-PNODE f1;
-PNODE n;
+static PNODE BuildFragement(PNODE f1, PNODE n)
 {
   register PNODE gen;
   register PNODE body;
@@ -269,9 +265,7 @@ PNODE n;
 /*          TRUE IF g IS THE BODY OF AN INNER LOOP.                       */
 /**************************************************************************/
 
-static int ExplodeForalls( g, explodeI )
-PNODE g;
-int   explodeI;
+static int ExplodeForalls(PNODE g, int explodeI)
 {
   register PNODE sg;
   register PNODE n;
@@ -348,7 +342,7 @@ int   explodeI;
 /* PURPOSE: WRITE FORALL EXPLOSION INFORMATION TO stderr.                 */
 /**************************************************************************/
 
-void WriteExplodeInfo()
+void WriteExplodeInfo(void)
 {
   FPRINTF( infoptr, "\n\n **** FORALL EXPLOSIONS\n\n%s\n", printinfo);
   DYNFREE(printinfo, printbuf, printlen, printcount, char, NULL);
@@ -364,8 +358,7 @@ void WriteExplodeInfo()
 /* PURPOSE: EXPLODE THE FORALL NODES OF ALL FUNCTION GRAPHS.              */
 /**************************************************************************/
 
-void If1Explode( explodeI )
-int explodeI;
+void If1Explode(int explodeI)
 {
   register PNODE f;
   register int   i;

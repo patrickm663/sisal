@@ -17,9 +17,7 @@
 /*          EXPORT LIST IS SET TO NULL.                                   */
 /**************************************************************************/
 
-void LinkExportLists( n1, n2 )
-PNODE n1;
-PNODE n2;
+void LinkExportLists(PNODE n1, PNODE n2)
 {
   register PEDGE e;
   register PEDGE se;

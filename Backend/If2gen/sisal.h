@@ -168,23 +168,17 @@
 /* ************ DEBUG TOKEN DUMP ROUTINES ************ */
 
 
-static void IntDump( Value, Name )
-int   Value;
-char *Name;
+static void IntDump(int Value, char *Name)
 {
   fprintf( stderr, "TOKEN: (%s,val=%d)\n", Name, Value );
 }
 
-static void RealDump( Value, Name )
-double  Value;
-char   *Name;
+static void RealDump(double Value, char *Name)
 {
   fprintf( stderr, "TOKEN: (%s,val=%lf)\n", Name, Value );
 }
 
-static void ArrayDump( Ptr, Name )
-POINTER  Ptr;
-char    *Name;
+static void ArrayDump(POINTER Ptr, char *Name)
 {
   register ARRAYP Array = (ARRAYP) Ptr;
 

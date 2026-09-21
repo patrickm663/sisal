@@ -17,8 +17,7 @@
 /*          SUCH AN EXPORT IS GUARANTEED TO BE AN AGGREGATE.              */
 /**************************************************************************/
 
-int HasWriteExport( n )
-PNODE n;
+int HasWriteExport(PNODE n)
 {
   register PEDGE e;
 

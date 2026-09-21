@@ -16,9 +16,7 @@
 /* PURPOSE: RETURN TRUE IF nm IS AN INTRINSIC.                            */
 /**************************************************************************/
 
-int IsIntrinsic( nm, i )
-char  *nm;
-PINFO  i;
+int IsIntrinsic(char *nm, PINFO i)
 {
   register char *p;
 

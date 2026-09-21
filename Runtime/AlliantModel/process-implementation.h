@@ -17,9 +17,7 @@
 #define GetProcId lib_processor_number()
 #define GETPROCID(x) x = GetProc
 
-static int AlliantTransfer( ProcId, ARs )
-int ProcId;
-struct ActRec *ARs;
+static int AlliantTransfer(int ProcId, struct ActRec *ARs)
 {
   register struct ActRec *MyAR;
 

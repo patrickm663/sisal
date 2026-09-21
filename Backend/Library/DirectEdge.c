@@ -16,12 +16,7 @@
 /**************************************************************************/
 
 PEDGE
-DirectEdge(src, eport, dst, iport, info)
-  PNODE src;
-  int   eport;
-  PNODE dst;
-  int   iport;
-  PINFO info;
+DirectEdge(PNODE src, int eport, PNODE dst, int iport, PINFO info)
 {
   PNODE src_graph;
   PNODE dest_graph;

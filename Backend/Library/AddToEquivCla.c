@@ -16,9 +16,7 @@
 /* PURPOSE: ADD n TO THE END OF THE EQUIVALENCE CLASS HEADED BY r.        */
 /**************************************************************************/
 
-void AddToEquivClass( r, n )
-PINFO r;
-PINFO n;
+void AddToEquivClass(PINFO r, PINFO n)
 {
   register int c;
 

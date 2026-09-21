@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN TRUE IF AFill NODE n CYCLES THROUGH A LOOP.            */
 /**************************************************************************/
 
-int DontCombineFill( n )
-PNODE n;
+int DontCombineFill(PNODE n)
 {
   register PEDGE e;
 

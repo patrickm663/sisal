@@ -34,9 +34,7 @@ int recursive  = FALSE;                 /* GENERATING RECURSIVE CODE      */
 /* PURPOSE: PRINT THE CONSTANTS BEGINNING WITH frst AND ENDING BEFORE lst.*/
 /**************************************************************************/
 
-static void PrintConstants( frst, lst )
-PEDGE frst;
-PEDGE lst;
+static void PrintConstants(PEDGE frst, PEDGE lst)
 {
   register PEDGE i1;
   register PEDGE i2;
@@ -82,7 +80,7 @@ PEDGE lst;
 /* PURPOSE: PRINT ARRAY COPY FUNCTIONS TO output.                         */
 /**************************************************************************/
 
-static void PrintCopyFunctions()
+static void PrintCopyFunctions(void)
 {
   register char  *t;
   register PINFO  i;
@@ -103,12 +101,10 @@ static void PrintCopyFunctions()
     if ( printed[i->A_ELEM->type] )
       continue;
 
-    FPRINTF( output, "\nstatic void %s( dest, source, num )\n",
+    FPRINTF( output,
+             "\nstatic void %s( POINTER dest, POINTER source, int num )\n",
              GetCopyFunction( i )                            );
 
-    FPRINTF( output, "POINTER  dest;\n" );
-    FPRINTF( output, "POINTER  source;\n" );
-    FPRINTF( output, "register int num;\n" );
     FPRINTF( output, "{\n" );
   
     if ( IsBasic( i->A_ELEM ) ) {
@@ -167,7 +163,7 @@ static void PrintCopyFunctions()
 /* PURPOSE: PRINT GLOBAL CONSTANT RECORDS AND ARRAYS TO output.           */
 /**************************************************************************/
 
-static void PrintGlobals()
+static void PrintGlobals(void)
 {
   register PNODE n;
   register PEDGE i;
@@ -247,7 +243,7 @@ static void PrintGlobals()
 /*          WRITE, READ, COPY AND DEALLOCATION ROUTINE NAMES.             */
 /**************************************************************************/
 
-static void GenAssignNames()
+static void GenAssignNames(void)
 {
   register PINFO i;
 
@@ -352,7 +348,7 @@ static void GenAssignNames()
 /*          output.                                                       */
 /**************************************************************************/
 
-static void PrintStructs()
+static void PrintStructs(void)
 {
   register PINFO i;
   register PINFO ii;
@@ -481,14 +477,16 @@ static void PrintStructs()
 /* LOCAL  **************    PrintExternFunction    ************************/
 /**************************************************************************/
 /* PURPOSE: PRINT THE EXTERN DECLARATION FOR THE FUNCTION NAMED f WHICH   */
-/*          RETURNS TYPE t.  THE CALLED FUNCTION GRAPH IS ff, UNLESS IT   */
-/*          IS NULL.                                                      */
+/*          RETURNS TYPE t AND TAKES PARAMETERS a.  THE CALLED FUNCTION   */
+/*          GRAPH IS ff, UNLESS IT IS NULL.                               */
+/*                                                                        */
+/*          a must match the definition this declares.  It used to be     */
+/*          written as "()", which means "unspecified arguments" in C17   */
+/*          and "no arguments" in C23, so the declarations disagreed with */
+/*          their own definitions once a current compiler was used.       */
 /**************************************************************************/
 
-static void PrintExternFunction( t, f, ff )
-char  *t;
-char  *f;
-PNODE  ff;
+static void PrintExternFunction(char *t, char *f, char *a, PNODE ff)
 {
   /* ------------------------------------------------------------ */
   /* If this name happens to be a predefined macro, bad things    */
@@ -500,9 +498,9 @@ PNODE  ff;
   /* Mark internal forwards as static.  Otherwise, mark extern    */
   /* ------------------------------------------------------------ */
   if ( ff && MARKED_FOR_EXPORT(ff) ){
-    FPRINTF( output, "extern %-12s %s();", t, f );
+    FPRINTF( output, "extern %-12s %s(%s);", t, f, a );
   } else {
-    FPRINTF( output, "static %-12s %s();", t, f );
+    FPRINTF( output, "static %-12s %s(%s);", t, f, a );
   }
 
   if ( ff != NULL ) {
@@ -525,14 +523,14 @@ PNODE  ff;
 /*          FIBRE READ AND WRITE OPERATIONS TO output.                    */
 /**************************************************************************/
 
-static void PrintForwards()
+static void PrintForwards(void)
 {
   register PNODE f;
   register PINFO i;
            char  buf[100];
 
   /* PRINT FORWARD DECLARATIONS */
-  FPRINTF( output, "static void InitGlobalData();\n\n" );
+  FPRINTF( output, "static void InitGlobalData(void);\n\n" );
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     if ( IsIGraph( f ) ) {
@@ -540,12 +538,35 @@ static void PrintForwards()
         continue;
 
       if ( f->mark != 's' ) /* NEW CANN 2/92 */
-        PrintExternFunction( f->info->F_OUT->L_SUB->tname, f->G_NAME, f );
+        PrintExternFunction( f->info->F_OUT->L_SUB->tname, f->G_NAME,
+                             f->info->tname, f );
       else
-        PrintExternFunction( "void", f->G_NAME, f );
+        PrintExternFunction( "void", f->G_NAME, f->info->tname, f );
       }
-    else
-      PrintExternFunction( "void", f->G_NAME, f );
+    else {
+      /* ------------------------------------------------------------ */
+      /* A loop task is handed its slice bounds as well as its frame,  */
+      /* and the strided and runtime-decision styles take a step too.  */
+      /* This must agree with PrintFunctPrologue, which writes the     */
+      /* matching definition.                                          */
+      /* ------------------------------------------------------------ */
+      if ( f->type == IFLPGraph ) {
+        switch ( f->Style ) {
+        case 'G':
+        case 'B':
+        case 'C':
+          SPRINTF( buf, "%s, int, int", f->info->tname );
+          break;
+        default:
+          SPRINTF( buf, "%s, int, int, int", f->info->tname );
+          break;
+        }
+      }
+      else
+        SPRINTF( buf, "%s", f->info->tname );
+
+      PrintExternFunction( "void", f->G_NAME, buf, f );
+      }
     }
 
   /* PRINT DEALLOCATION AND FIBRE READ AND WRITE FORWARD DECLARATIONS */
@@ -556,24 +577,26 @@ static void PrintForwards()
     case IF_RECORD:
     case IF_ARRAY:
       if ( !i->LibNames ) {
-        PrintExternFunction( i->tname, i->rname,   NULL_NODE );
-        PrintExternFunction( "void",   i->wname,   NULL_NODE );
+        PrintExternFunction( i->tname, i->rname, "void",    NULL_NODE );
+        PrintExternFunction( "void",   i->wname, i->tname,  NULL_NODE );
       }
 
-      /* INTERFACE ROUTINES */
+      /* INTERFACE ROUTINES.  These are declared for every aggregate type
+         but defined by the foreign language interface, whose argument
+         lists vary, so they keep an unspecified parameter list. */
       SPRINTF( buf, "I%s", i->rname );
-      PrintExternFunction( i->tname, buf, NULL_NODE );
+      PrintExternFunction( i->tname, buf, "", NULL_NODE );
       SPRINTF( buf, "I%s", i->wname );
-      PrintExternFunction( "void", buf, NULL_NODE );
+      PrintExternFunction( "void", buf, "", NULL_NODE );
 
-      PrintExternFunction( "void",   i->fname1,  NULL_NODE );
-      PrintExternFunction( "void",   i->fname2,  NULL_NODE );
+      PrintExternFunction( "void",   i->fname1, i->tname, NULL_NODE );
+      PrintExternFunction( "void",   i->fname2, i->tname, NULL_NODE );
       break;
 
     case IF_BRECORD:
       if ( !i->LibNames ) {
-        PrintExternFunction( i->tname, i->rname,   NULL_NODE );
-        PrintExternFunction( "void",   i->wname,   NULL_NODE );
+        PrintExternFunction( i->tname, i->rname, "void",   NULL_NODE );
+        PrintExternFunction( "void",   i->wname, i->tname, NULL_NODE );
       }
       break;
 
@@ -591,7 +614,7 @@ static void PrintForwards()
 /*          AND ARUGMENT AND RECORD STRUCTURES TO output.                 */
 /**************************************************************************/
 
-void PrintFilePrologue()
+void PrintFilePrologue(void)
 {
   register PNODE f;
 
@@ -669,9 +692,7 @@ void PrintFilePrologue()
 /* PURPOSE: MARK ALL THE FUNCTIONS CALLED WITHIN GRAPH g AS RECURSIVE.    */
 /**************************************************************************/
 
-static int DriveRecursiveMarks( g, bmark )
-PNODE g;
-int   bmark;
+static int DriveRecursiveMarks(PNODE g, int bmark)
 {
   register PNODE n;
   register PNODE sg;
@@ -711,7 +732,7 @@ int   bmark;
 /* PURPOSE: MARK ALL THE RECURSIVE FUNCTIONS IN THE PROGRAM.              */
 /**************************************************************************/
 
-void MarkRecursiveFunctions()
+void MarkRecursiveFunctions(void)
 {
   register PNODE f;
   register int   change = TRUE;
@@ -757,8 +778,7 @@ void MarkRecursiveFunctions()
 /*          SIMILARLY.                                                    */
 /**************************************************************************/
 
-static void CheckParallelMarks( g )
-PNODE g;
+static void CheckParallelMarks(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -786,7 +806,7 @@ PNODE g;
 /* PURPOSE: VERIFY THE EXECUTION MODES FOR ALL THE FUNCTIONS.             */
 /**************************************************************************/
 
-void CheckParallelFunctions()
+void CheckParallelFunctions(void)
 {
   register PNODE f;
 
@@ -821,8 +841,7 @@ void CheckParallelFunctions()
 /* PURPOSE: PRINT FUNCTION f'S PROLOGUE TO output.                        */
 /**************************************************************************/
 
-void PrintFunctPrologue( f )
-PNODE f;
+void PrintFunctPrologue(PNODE f)
 {
   register PINFO ii;
   register int   eport;
@@ -845,26 +864,25 @@ PNODE f;
       if ( f->Style == 'C' ) FPRINTF( output, "/* CACHED STYLE */\n");
       if ( f->Style == 'G' ) FPRINTF( output, "/* GSS STYLE */\n");
       if ( f->Style == 'B' ) FPRINTF( output, "/* BLOCK STYLE */\n");
-      FPRINTF( output, "\nstatic void %s( args, lo, hi )\n", f->G_NAME );
-      FPRINTF( output, "%s args;\n", f->info->tname );
-      FPRINTF( output, "int lo, hi;\n{\n" );
+      FPRINTF( output, "\nstatic void %s( %s args, int lo, int hi )\n{\n",
+              f->G_NAME, f->info->tname );
       break;
 
       /* ------------------------------------------------------------ */
      case 'S':/* Strided */
       FPRINTF( output, "/* STRIDED STYLE */\n");
-      FPRINTF( output, "\nstatic void %s( args, lo, hi, step )\n", f->G_NAME );
-      FPRINTF( output, "%s args;\n", f->info->tname );
-      FPRINTF( output, "int lo, hi,step;\n{\n" );
+      FPRINTF( output,
+              "\nstatic void %s( %s args, int lo, int hi, int step )\n{\n",
+              f->G_NAME, f->info->tname );
       break;
 
       /* ------------------------------------------------------------ */
      case 'R':/* Runtime decision */
      case '\000':
       FPRINTF( output, "/* RUNTIME DECISION FOR STYLE */\n");
-      FPRINTF( output, "\nstatic void %s( args, lo, hi, step )\n", f->G_NAME );
-      FPRINTF( output, "%s args;\n", f->info->tname );
-      FPRINTF( output, "int lo, hi, step;\n{\n" );
+      FPRINTF( output,
+              "\nstatic void %s( %s args, int lo, int hi, int step )\n{\n",
+              f->G_NAME, f->info->tname );
       break;
     }
     break;
@@ -890,10 +908,10 @@ PNODE f;
     /* ------------------------------------------------------------ */
     /* A standard function has only its frame as an argument        */
     /* ------------------------------------------------------------ */
-    FPRINTF( output, "\n%svoid %s( args )\n",
+    FPRINTF( output, "\n%svoid %s( %s args )\n{\n",
             /* (f->emark)? "" : "static ", f->G_NAME ); */
-            MARKED_FOR_EXPORT(f)? "" : "static ", f->G_NAME);
-    FPRINTF( output, "%s args;\n{\n", f->info->tname );
+            MARKED_FOR_EXPORT(f)? "" : "static ", f->G_NAME,
+            f->info->tname );
     break;
   }
 
@@ -944,8 +962,7 @@ PNODE f;
 /*          IS RELEASED.                                                  */
 /**************************************************************************/
 
-void PrintFunctEpilogue( f )
-PNODE f;
+void PrintFunctEpilogue(PNODE f)
 {
   PrintFrameDeallocs();
 
@@ -986,13 +1003,13 @@ PNODE f;
 /* PURPOSE: PRINT THE GLOBAL CONSTANT INITIALIZATION FUNCTION.            */
 /**************************************************************************/
 
-static void PrintInitGlobalData()
+static void PrintInitGlobalData(void)
 {
   register PNODE n;
 
   FPRINTF( output, "\nstatic int *GInit = NULL;\n" ); 
 
-  FPRINTF( output, "\nstatic void InitGlobalData()\n" );
+  FPRINTF( output, "\nstatic void InitGlobalData(void)\n" );
   FPRINTF( output, "{\n" );
   FPRINTF( output, "  SLockParent;\n\n" );
   FPRINTF( output, "  if ( GInit == NULL )\n" );
@@ -1030,11 +1047,9 @@ static void PrintInitGlobalData()
 /* PURPOSE: PRINT STAND ALONE SISAL ENTRY POINT FOR FUNCTION f TO output. */
 /**************************************************************************/
 
-static void PrintStandAloneEntryPoint( f )
-PNODE f;
+static void PrintStandAloneEntryPoint(PNODE f)
 {
-  FPRINTF( output, "\nvoid SisalMain( args )\n" );
-  FPRINTF( output, "POINTER args;\n" );
+  FPRINTF( output, "\nvoid SisalMain( POINTER args )\n" );
   FPRINTF( output, "{\n" );
 
   FPRINTF( output, "#ifdef CInfo\n" );
@@ -1083,7 +1098,7 @@ PNODE f;
 /* PURPOSE: PRINT ALL REMAINING STUFF TO output TO COMPLETE THE C CODE.   */
 /**************************************************************************/
 
-void PrintFileEpilogue()
+void PrintFileEpilogue(void)
 {
   register PNODE f;
 

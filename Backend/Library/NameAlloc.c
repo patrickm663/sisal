@@ -16,10 +16,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A NAME NODE.                 */
 /**************************************************************************/
 
-PNAME NameAlloc( n, name, t )
-PNODE  n;
-char  *name;
-PINFO  t;
+PNAME NameAlloc(PNODE n, char *name, PINFO t)
 {
   register PNAME p;
 

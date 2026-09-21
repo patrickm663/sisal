@@ -40,8 +40,7 @@ DYNDECLARE(rollinfo,rollbuf,rolllen,rollcount,char,2000);
 /* PURPOSE: RETURN THE ESTIMATED OR REAL ITERATION COUNT OF Forall NODE f.*/
 /**************************************************************************/
 
-static double ForallIterationCount( f )
-PNODE f;
+static double ForallIterationCount(PNODE f)
 {
   register PNODE r;
   register int   l;
@@ -71,8 +70,7 @@ PNODE f;
 /* PURPOSE: DERIVE AN EXECUTION COST ESTIMATE FOR GRAPH g.                */
 /**************************************************************************/
 
-static double CostCount( g )
-PNODE  g;
+static double CostCount(PNODE g)
 {
   register PNODE sg;
   register PNODE n;
@@ -129,8 +127,7 @@ PNODE  g;
 /* PURPOSE: RETURN THE APPROPRIATE MUTATE NODE FOR RETURN SUBGRAPH NODE n.*/
 /**************************************************************************/
 
-static PNODE AllocMutateNode( n )
-PNODE n;
+static PNODE AllocMutateNode(PNODE n)
 {
   register PNODE m;
 
@@ -160,16 +157,14 @@ PNODE n;
 }
 
 
-void WriteUnrollInfo()
+void WriteUnrollInfo(void)
 {
   FPRINTF( infoptr, "\n\n **** LOOP UNROLLING\n\n%s\n", rollinfo); 
   FPRINTF( infoptr, " Unrolled Foralls: %d of %d\n", ucnt,Tucnt );
 }
 
 
-static int IsUnrollCandidate( f, ReasonP )
-PNODE f;
-char **ReasonP;
+static int IsUnrollCandidate(PNODE f, char **ReasonP)
 {
   register PNODE  r;
   register PNODE  n;
@@ -292,8 +287,7 @@ char **ReasonP;
 }
 
 
-static void UnrollForalls( g )
-PNODE g;
+static void UnrollForalls(PNODE g)
 {
   register PNODE sg;
   register PNODE n;
@@ -484,7 +478,7 @@ PNODE g;
 }
 
 
-void If1Unroll()
+void If1Unroll(void)
 {
   register PNODE f;
 

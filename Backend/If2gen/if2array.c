@@ -26,9 +26,7 @@
 /*          IS TAKEN AS AN ARGUMENT AND RETURNED AS A RESULT.             */
 /**************************************************************************/
 
-char *GetSisalInfo( n, buf )
-PNODE  n;
-char  *buf;
+char *GetSisalInfo(PNODE n, char *buf)
 {
   if ( n->line <= 0 ) {
     SPRINTF( buf, "\"%s,%s,line=lost\"",
@@ -53,9 +51,7 @@ char  *buf;
 /*          IS TAKEN AS AN ARGUMENT AND RETURNED AS A RESULT.             */
 /**************************************************************************/
 
-char *GetSisalInfoOnEdge( e, buf )
-PEDGE e;
-char  *buf;
+char *GetSisalInfoOnEdge(PEDGE e, char *buf)
 {
   if ( e->line > 0 ) 
     {
@@ -103,11 +99,7 @@ char  *buf;
 /* PURPOSE: PRINT A BOUNDS CHECK FOR ARRAY a AND INDEX i FOR NODE n.      */
 /**************************************************************************/
 
-void PrintBoundsCheck( indent, n, a, i )
-int   indent;
-PNODE n;
-PEDGE a;
-PEDGE i;
+void PrintBoundsCheck(int indent, PNODE n, PEDGE a, PEDGE i)
 {
   char buf[200];
 
@@ -146,9 +138,7 @@ PEDGE i;
 /* PURPOSE: PRINT ARRAY MEMORY RAGGED MANAGEMENT NODE n TO output.        */
 /**************************************************************************/
 
-void PrintRagged( indent, n )
-int   indent;
-PNODE n;
+void PrintRagged(int indent, PNODE n)
 {
   PrintIndentation( indent );
 
@@ -166,9 +156,7 @@ PNODE n;
 /* PURPOSE: PRINT POINTER SWAP MemAllocDVI NODE n TO output.              */
 /**************************************************************************/
 
-void PrintPSMemAllocDVI( indent, n )
-int   indent;
-PNODE n;
+void PrintPSMemAllocDVI(int indent, PNODE n)
 {
   PrintIndentation( indent );
   FPRINTF( output, "PSMAllocDVI( " );
@@ -189,9 +177,7 @@ PNODE n;
 /* PURPOSE: PRINT POINTER SWAP SCATTER NODE n TO output.                  */
 /**************************************************************************/
 
-void PrintPSScatter( indent, n )
-int   indent;
-PNODE n;
+void PrintPSScatter(int indent, PNODE n)
 {
   PrintIndentation( indent );
   FPRINTF( output,  "PSScatter( " );
@@ -212,10 +198,7 @@ PNODE n;
 /* PURPOSE: PRINT POINTER SWAP MANAGER NODE n OF TYPE nm TO output.       */
 /**************************************************************************/
 
-void PrintPSManager( indent, n, nm )
-int    indent;
-PNODE  n;
-char  *nm;
+void PrintPSManager(int indent, PNODE n, char *nm)
 {
   PrintIndentation( indent );
   FPRINTF( output, "PSManager%s( ", nm );
@@ -232,11 +215,7 @@ char  *nm;
 /* PURPOSE: PRINT POINTER SWAP FREE NODE n OF TYPE nm TO output.          */
 /**************************************************************************/
 
-void PrintPSFree( indent, n, nm, g )
-int    indent;
-PNODE  n;
-char  *nm;
-PNODE  g;
+void PrintPSFree(int indent, PNODE n, char *nm, PNODE g)
 {
   register PNODE nn;
 
@@ -277,10 +256,7 @@ PNODE  g;
 /* PURPOSE: PRINT POINTER SWAP ALLOCATION NODE n OF TYPE nm TO output.    */
 /**************************************************************************/
 
-void PrintPSAlloc( indent, n, nm )
-int    indent;
-PNODE  n;
-char  *nm;
+void PrintPSAlloc(int indent, PNODE n, char *nm)
 {
   register int   c;
   register PEDGE i;
@@ -319,9 +295,7 @@ char  *nm;
 /* PURPOSE: PRINT ARRAY MEMORY ALLOCATION NODE n TO output.               */
 /**************************************************************************/
 
-void PrintMemAlloc( indent, n )
-int   indent;
-PNODE n;
+void PrintMemAlloc(int indent, PNODE n)
 {
   register PEDGE se;
 
@@ -378,9 +352,7 @@ PNODE n;
 /* PURPOSE: PRINT GetArrayBase NODE n TO output.                          */
 /**************************************************************************/
 
-void PrintGABase( indent, n )
-int   indent;
-PNODE n;
+void PrintGABase(int indent, PNODE n)
 {
   PrintIndentation( indent );
 
@@ -402,9 +374,7 @@ PNODE n;
 /* PURPOSE: PRINT OptAElement NODE n TO output.                           */
 /**************************************************************************/
 
-void PrintOptAElement( indent, n )
-int   indent;
-PNODE n;
+void PrintOptAElement(int indent, PNODE n)
 {
     PrintIndentation( indent );
 
@@ -430,11 +400,7 @@ PNODE n;
 /*          AN ARRAY OR BUFFER REPRESENTING AN ARRAY.                     */
 /**************************************************************************/
 
-void PrintArrayMacro( indent, pre, macro, n )
-int    indent;
-char  *pre;
-char  *macro;
-PNODE  n;
+void PrintArrayMacro(int indent, char *pre, char *macro, PNODE n)
 {
     register PEDGE i;
 
@@ -464,9 +430,7 @@ PNODE  n;
 /*          ATTEMPT IS MADE TO DEALLOCATE THE REPLACED COMPONENTS.        */
 /**************************************************************************/
 
-void PrintAReplace( indent, n )
-int   indent;
-PNODE n;
+void PrintAReplace(int indent, PNODE n)
 {
     register PEDGE i;
     register PINFO ci;
@@ -532,9 +496,7 @@ PNODE n;
 /* PURPOSE: PRINT ABuild NODE n TO output.                                */
 /**************************************************************************/
 
-void PrintABuild( indent, n )
-int   indent;
-PNODE n;
+void PrintABuild(int indent, PNODE n)
 {
   register PEDGE i;
 
@@ -564,9 +526,7 @@ PNODE n;
 /* PURPOSE: PRINT ABuildAT NODE n TO output.                              */
 /**************************************************************************/
 
-void PrintABuildAT( indent, n )
-int   indent;
-PNODE n;
+void PrintABuildAT(int indent, PNODE n)
 {
     register PEDGE i;
     register PEDGE b;
@@ -664,9 +624,7 @@ PNODE n;
 /* PURPOSE: PRINT AAddLAT OR AAddHAT NODE n TO output.                    */
 /**************************************************************************/
 
-void PrintAAddHLAT( indent, n )
-int   indent;
-PNODE n;
+void PrintAAddHLAT(int indent, PNODE n)
 {
     char *s;
     int   assgnOK;
@@ -752,9 +710,7 @@ PNODE n;
 /* PURPOSE: PRINT AAddH NODE n TO output.                                 */
 /**************************************************************************/
 
-void PrintAAddH( indent, n )
-int   indent;
-PNODE n;
+void PrintAAddH(int indent, PNODE n)
 {
   PrintIndentation( indent );
 
@@ -785,9 +741,7 @@ PNODE n;
 /* PURPOSE: PRINT ACatenateAT NODE n TO output.                           */
 /**************************************************************************/
 
-void PrintACatenateAT( indent, n )
-int   indent;
-PNODE n;
+void PrintACatenateAT(int indent, PNODE n)
 {
     char buf[100];
     char *s;
@@ -885,9 +839,7 @@ PNODE n;
 /* PURPOSE: PRINT ARRAY NoOp NODE n TO output.                            */
 /**************************************************************************/
 
-void PrintArrayNoOp( indent, n )
-int   indent;
-PNODE n;
+void PrintArrayNoOp(int indent, PNODE n)
 {
     register PEDGE i; 
 

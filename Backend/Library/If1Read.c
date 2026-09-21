@@ -18,7 +18,7 @@
 /*          SYNTACTIC CORRECTNESS IS ASSUMED.                             */
 /**************************************************************************/
 
-void If1Read()
+void If1Read(void)
 {
   register int     label, type,  cnt;
   register int     snode, eport, dnode, iport;

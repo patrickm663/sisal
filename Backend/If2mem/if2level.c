@@ -31,7 +31,7 @@ static PNODE lstack[SIZE_LEVEL_STACK];             /* LEVEL STACK        */
 /* PURPOSE: RETURN A COPY OF THE CURRENT LEVEL STACK.                     */
 /**************************************************************************/
 
-static PPNODE CopyLevelStack()
+static PPNODE CopyLevelStack(void)
 {
     register PPNODE ls;
     register int    i;
@@ -56,8 +56,7 @@ static PPNODE CopyLevelStack()
 /*          FROM THE LEVEL STACK.                                         */
 /**************************************************************************/
 
-void AssignLevelNumbers( g )
-PNODE g;
+void AssignLevelNumbers(PNODE g)
 {
     register PNODE  n;
     register PPNODE ls;

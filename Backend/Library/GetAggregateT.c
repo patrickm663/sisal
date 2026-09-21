@@ -16,10 +16,7 @@
 /*           type.  If not found, make an anonymous new type              */
 /**************************************************************************/
 PINFO
-GetAggregate(AggregateType,T,name)
-     int        AggregateType;
-     PINFO      T;
-     char       *name;
+GetAggregate(int AggregateType, PINFO T, char *name)
 {
   register PINFO i;
 

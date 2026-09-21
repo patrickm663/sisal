@@ -17,10 +17,7 @@
 /*          IMPORT PORT iport.  EDGE e MAY BE A CONSTANT!                 */
 /**************************************************************************/
 
-void CopyEdgeAndThreadToUse( e, dst, iport )
-PEDGE e;
-PNODE dst;
-int   iport;
+void CopyEdgeAndThreadToUse(PEDGE e, PNODE dst, int iport)
 {
   register PEDGE ee;
   register PNODE sg;

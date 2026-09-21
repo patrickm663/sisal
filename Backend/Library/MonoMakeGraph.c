@@ -20,10 +20,7 @@
 /*          ARE NOT PLACED BACK INTO THE MONOLITH.                        */
 /**************************************************************************/
 
-void MonoMakeGraph( type, label, name )
-int   type;
-int   label;
-char *name;
+void MonoMakeGraph(int type, int label, char *name)
 {
   register PNODE n;
 

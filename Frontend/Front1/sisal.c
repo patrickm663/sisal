@@ -2648,7 +2648,7 @@ static int     spidx = MAX_SBLOCKS+100;
 
 
 
-static PSBLOCK MySBlockAlloc()
+static PSBLOCK MySBlockAlloc(void)
 {
   if ( spidx >= MAX_SBLOCKS ) {
     spool = (PSBLOCK) Malloc( sizeof(SBLOCK)*MAX_SBLOCKS );
@@ -2657,7 +2657,7 @@ static PSBLOCK MySBlockAlloc()
   return( &(spool[spidx++]) );
 }
 
-static PBBLOCK MyBBlockAlloc()
+static PBBLOCK MyBBlockAlloc(void)
 {
   if ( bpidx >= MAX_BBLOCKS ) {
     bpool = (PBBLOCK) Malloc( sizeof(BBLOCK)*MAX_BBLOCKS );
@@ -2817,10 +2817,7 @@ static stryng listfilename, stampstr, versionstr, versionnum;
 /* macro function StringLength( S: Stryng ): integer */
 /* macro function IsEmptyString( S: Stryng ): boolean */
 
-static void mymemcpy(s1,s2,n)
-char *s1;
-char *s2;
-int   n;
+static void mymemcpy(char *s1, char *s2, int n)
 {
   /* int i; */
 
@@ -2830,9 +2827,7 @@ int   n;
     s1[i] = s2[i]; */
 }
 
-static void PASCAL_MAIN(argc, argv)
-int argc;
-char **argv;
+static void PASCAL_MAIN(int argc, char **argv)
 {
     P_argc = argc;
     P_argv = argv;
@@ -2842,8 +2837,7 @@ char **argv;
 #endif
 }
 
-static int my_toupper(c)
-int c;
+static int my_toupper(int c)
 {
     if (islower(c))
         return z_toupper(c);
@@ -2852,8 +2846,7 @@ int c;
 }
 
 
-static int my_tolower(c)
-int c;
+static int my_tolower(int c)
 {
     if (isupper(c))
         return z_tolower(c);
@@ -2890,8 +2883,7 @@ int c;
 
 /* Peek at next character of input stream; return EOF at end-of-file. */
 
-static int P_peek(f)
-FILE *f;
+static int P_peek(FILE *f)
 {
     int ch;
 
@@ -2907,8 +2899,7 @@ FILE *f;
    stdin is broken; remove the special case for it to be broken in a
    different way. */
 
-static int P_eof(f)
-FILE *f;
+static int P_eof(FILE *f)
 {
     register int ch;
 
@@ -2926,8 +2917,7 @@ FILE *f;
 
 /* Check if at end of line (or end of entire file). */
 
-static int P_eoln(f)
-FILE *f;
+static int P_eoln(FILE *f)
 {
     register int ch;
 
@@ -2964,9 +2954,7 @@ FILE *f;
 
 
 
-static int P_inset(val, s)                 /* val IN s */
-register unsigned val;
-register long *s;
+static int P_inset(register unsigned val, register long *s)  /* val IN s */
 {
     register int bit;
     bit = val % SETBITS;
@@ -2976,9 +2964,7 @@ register long *s;
     return 0;
 }
 
-static long *P_addset(s, val)              /* s := s + [val] */
-register long *s;
-register unsigned val;
+static long *P_addset(register long *s, register unsigned val)  /* s := s + [val] */
 {
     register long *sbase = s;
     register int bit, size;
@@ -2997,9 +2983,9 @@ register unsigned val;
 }
 
 
-static long *P_addsetr(s, v1, v2)              /* s := s + [v1..v2] */
-register long *s;
-register unsigned v1, v2;
+static long *P_addsetr(register long *s,
+                       register unsigned v1,
+                       register unsigned v2)  /* s := s + [v1..v2] */
 {
     register long *sbase = s;
     register int b1, b2, size;
@@ -3030,9 +3016,7 @@ register unsigned v1, v2;
 }
 
 
-static long *P_remset(s, val)              /* s := s - [val] */
-register long *s;
-register unsigned val;
+static long *P_remset(register long *s, register unsigned val)  /* s := s - [val] */
 {
     register int bit;
     bit = val % SETBITS;
@@ -3054,9 +3038,7 @@ register unsigned val;
 /* s is a "smallset", i.e., a 32-bit or less set stored
    directly in a long. */
 
-static long *P_expset(d, s)                /* d := s */
-register long *d;
-register long s;
+static long *P_expset(register long *d, register long s)  /* d := s */
 {
     if (s) {
         d[1] = s;
@@ -3072,8 +3054,7 @@ register long s;
 
 
 #ifdef TURN_BACK_ON
-void TimeStamp(Day, Month, Year, Hour, Min, Sec)
-int *Day, *Month, *Year, *Hour, *Min, *Sec;
+void TimeStamp(int *Day, int *Month, int *Year, int *Hour, int *Min, int *Sec)
 {
 #ifndef NO_TIME
     struct tm *tm;
@@ -3099,9 +3080,7 @@ int *Day, *Month, *Year, *Hour, *Min, *Sec;
 
 /* SUN Berkeley Pascal extensions */
 
-static void P_sun_argv(s, len, n)
-register char *s;
-register int len, n;
+static void P_sun_argv(register char *s, register int len, register int n)
 {
     register char *cp;
 
@@ -3117,7 +3096,7 @@ register int len, n;
 
 
 /* int _OutMem() */
-static Anyptr _OutMem()
+static Anyptr _OutMem(void)
 {
     /* return _Escape(-2); */
     /* TO AVOID int->char* COERSION WARNING MESSAGES ON SOME MACHINES */
@@ -3132,9 +3111,7 @@ static Anyptr _OutMem()
    It might want to be revised when emulating another system. */
 
 static char *_ShowEscape(char*,int,int,char*);
-static char *_ShowEscape(buf, code, ior, prefix)
-char *buf, *prefix;
-int code, ior;
+static char *_ShowEscape(char *buf, int code, int ior, char *prefix)
 {
     char *bufp;
 
@@ -3184,8 +3161,7 @@ int code, ior;
 }
 
 
-static int _Escape(code)
-int code;
+static int _Escape(int code)
 {
     char buf[100];
 
@@ -3199,8 +3175,7 @@ int code;
     return code;
 }
 
-int _EscIO(code)
-int code;
+int _EscIO(int code)
 {
     P_ioresult = code;
     return _Escape(-10);
@@ -3210,9 +3185,7 @@ int code;
 
 
 
-static Char stringchar(s, n)
-stryng *s;
-int n;
+static Char stringchar(stryng *s, int n)
 {
   if (n > s->len)
     return ' ';
@@ -3221,9 +3194,7 @@ int n;
 }
 
 
-static void clearstring(s, first, last)
-stryng *s;
-int first, last;
+static void clearstring(stryng *s, int first, int last)
 {
   int i;
 
@@ -3235,10 +3206,7 @@ int first, last;
 
 
 /* macro procedure InitString( S: Stryng )  */
-static void insertchar(s, c, p)
-stryng *s;
-Char c;
-int p;
+static void insertchar(stryng *s, Char c, int p)
 {
   int i;
 
@@ -3252,9 +3220,7 @@ int p;
 }
 
 
-static void concatchar(s, c)
-stryng *s;
-Char c;
+static void concatchar(stryng *s, Char c)
 {
   if (s->len < maxstringchars) {
     s->len++;
@@ -3264,8 +3230,7 @@ Char c;
 
 
 /* macro procedure CharString( S: Stryng; C: Char ) */
-static void stripspaces(s)
-stryng *s;
+static void stripspaces(stryng *s)
 {
   boolean spaces;
 
@@ -3282,9 +3247,7 @@ stryng *s;
 }
 
 
-static void string10(s, s10)
-stryng *s;
-Char *s10;
+static void string10(stryng *s, Char *s10)
 {
   int i;
 
@@ -3295,9 +3258,7 @@ Char *s10;
 }
 
 
-static void string20(s, s20)
-stryng *s;
-Char *s20;
+static void string20(stryng *s, Char *s20)
 {
   int i;
 
@@ -3309,9 +3270,7 @@ Char *s20;
 
 
 
-static void insertstring(s, t, p)
-stryng *s, *t;
-int p;
+static void insertstring(stryng *s, stryng *t, int p)
 {
   int i, j, FORLIM;
 
@@ -3334,9 +3293,7 @@ int p;
 
 
 /* macro procedure ConcatString( var S: Stryng; T: Stryng ) */
-static void readstring(fil, s)
-FILE *fil;
-stryng *s;
+static void readstring(FILE *fil, stryng *s)
 {
   Char ch;
 
@@ -3357,9 +3314,7 @@ stryng *s;
 
 
 
-static void writestring(fil, s)
-FILE *fil;
-stryng *s;
+static void writestring(FILE *fil, stryng *s)
 {
   int i, FORLIM;
 
@@ -3369,10 +3324,7 @@ stryng *s;
 }
 
 
-static void substring(t, s, first, last)
-stryng *t, *s;
-int first;
-int last;
+static void substring(stryng *t, stryng *s, int first, int last)
 {
   int i, FORLIM;
 
@@ -3389,10 +3341,7 @@ int last;
 }
 
 
-static void deletestring(s, first, last)
-stryng *s;
-int first;
-int last;
+static void deletestring(stryng *s, int first, int last)
 {
   int i, offset, FORLIM;
 
@@ -3408,8 +3357,7 @@ int last;
 }
 
 
-static Char uppercase(c)
-Char c;
+static Char uppercase(Char c)
 {
   if (islower(c))
     return z_toupper(c);
@@ -3418,8 +3366,7 @@ Char c;
 }
 
 
-static void stringuppercase(s)
-stryng *s;
+static void stringuppercase(stryng *s)
 {
   int i, FORLIM;
 
@@ -3431,8 +3378,7 @@ stryng *s;
 }
 
 
-static Char lowercase(c)
-Char c;
+static Char lowercase(Char c)
 {
   if (isupper(c))
     return z_tolower(c);
@@ -3441,8 +3387,7 @@ Char c;
 }
 
 
-static void stringlowercase(s)
-stryng *s;
+static void stringlowercase(stryng *s)
 {
   int i, FORLIM;
 
@@ -3455,9 +3400,7 @@ stryng *s;
 }
 
 
-static boolean matchstrings(s1, s2, pos)
-stryng *s1, *s2;
-int pos;
+static boolean matchstrings(stryng *s1, stryng *s2, int pos)
 {
   int i, ix;
   boolean res;
@@ -3480,8 +3423,7 @@ int pos;
 }
 
 
-static boolean equalstrings(s1, s2)
-stryng *s1, *s2;
+static boolean equalstrings(stryng *s1, stryng *s2)
 {
   if (s1->len == s2->len)
     return (matchstrings(s1, s2, 1));
@@ -3491,10 +3433,7 @@ stryng *s1, *s2;
 
 
 
-static int findchar(c, s, pos)
-Char c;
-stryng *s;
-int pos;
+static int findchar(Char c, stryng *s, int pos)
 {
   int Result, i;
 
@@ -3507,9 +3446,7 @@ int pos;
 }
 
 
-static int findstring(s, t, pos)
-stryng *s, *t;
-int pos;
+static int findstring(stryng *s, stryng *t, int pos)
 {
   int chpos;
   boolean match;
@@ -3529,9 +3466,7 @@ int pos;
 }
 
 
-static int findlastchar(c, s)
-Char c;
-stryng *s;
+static int findlastchar(Char c, stryng *s)
 {
   int Result, i, FORLIM;
 
@@ -3545,9 +3480,7 @@ stryng *s;
 }
 
 
-static void numberstring(s, n, base)
-stryng *s;
-int n, base;
+static void numberstring(stryng *s, int n, int base)
 {
   int sign, ch;
 
@@ -3573,9 +3506,7 @@ int n, base;
 }
 
 
-static void integerstring(s, n, width)
-stryng *s;
-int n, width;
+static void integerstring(stryng *s, int n, int width)
 {
   numberstring(s, n, 10);
   while (s->len < width)
@@ -3583,8 +3514,7 @@ int n, width;
 }
 
 
-static int charval(ch)
-Char ch;
+static int charval(Char ch)
 {
   ch = uppercase(ch);
   if (isdigit(ch))
@@ -3598,9 +3528,7 @@ Char ch;
 }
 
 
-static long stringnumber(s, pos, base)
-stryng *s;
-int *pos, base;
+static long stringnumber(stryng *s, int *pos, int base)
 {
   long maxdivbase, maxmodbase, newval, res;
   boolean neg;
@@ -3637,7 +3565,7 @@ int *pos, base;
 
 
 /*#TITLE  IF1INIT ROUTINES          IFNAug83   Standard IF1 Routines*/
-static void initnames()
+static void initnames(void)
 {
   int i;
 
@@ -3918,8 +3846,7 @@ static void initnames()
 /*
 **  Code for BuildName and Splitname tends to be common to all systems
 */
-static void buildname(newname, dev, name, ext)
-stryng *newname, dev, name, ext;
+static void buildname(stryng *newname, stryng dev, stryng name, stryng ext)
 {
   if (dev.len > 0)
     *newname = dev;
@@ -3937,8 +3864,7 @@ stryng *newname, dev, name, ext;
 }
 
 
-static void splitname(origname, dev, name, ext)
-stryng *origname, *dev, *name, *ext;
+static void splitname(stryng *origname, stryng *dev, stryng *name, stryng *ext)
 {
   int pos, len;
 
@@ -3964,8 +3890,7 @@ stryng *origname, *dev, *name, *ext;
 }
 
 
-static void defaultfilename(name, defname)
-stryng *name, *defname;
+static void defaultfilename(stryng *name, stryng *defname)
 {
   stryng namedev, namenom, nameext, defdev, defnom, defext;
 
@@ -3985,9 +3910,7 @@ stryng *name, *defname;
 /*
 **  The rest of the functions tend to be system specific
 */
-boolean openread(fil, nom)
-FILE **fil;
-stryng *nom;
+boolean openread(FILE **fil, stryng *nom)
 {
   boolean Result;
   stryng s;
@@ -4016,9 +3939,7 @@ stryng *nom;
 }
 
 
-boolean openintread(fil, nom)
-FILE **fil;
-stryng *nom;
+boolean openintread(FILE **fil, stryng *nom)
 {
   boolean Result;
   stryng s;
@@ -4049,9 +3970,7 @@ stryng *nom;
 
 
 /* procedure CloseRead( var Fil: Text ); is a no-op on Unix*/
-boolean openwrite(fil, nom)
-FILE **fil;
-stryng *nom;
+boolean openwrite(FILE **fil, stryng *nom)
 {
   boolean Result;
   int mode, filedescriptor;
@@ -4096,8 +4015,7 @@ stryng *nom;
 }
 
 
-boolean canwrite(nom)
-stryng *nom;
+boolean canwrite(stryng *nom)
 {
   boolean Result;
   int mode, filedescriptor;
@@ -4135,16 +4053,14 @@ stryng *nom;
 
 
 /* procedure Page( var Fil: Text ); is defined on unix */
-static void gettermline(termline, termtext)
-stryng *termline, *termtext;
+static void gettermline(stryng *termline, stryng *termtext)
 {
   writestring(stdout, termtext);
   readstring(stdin, termline);
 }
 
 
-static void getcommandline(cmdline)
-stryng *cmdline;
+static void getcommandline(stryng *cmdline)
 {
   stryng sarg;
   stryngar arg;
@@ -4169,8 +4085,7 @@ stryng *cmdline;
 
 
 /* TO FIX A FILE REMOVAL BUG: CANN 1/92 */
-static void CANN_exit(status)
-int status;
+static void CANN_exit(int status)
 {
   if (CANN_source != NULL ) {
     fclose(CANN_source);
@@ -4190,11 +4105,12 @@ int status;
 
 
 /*#TITLE  PARUTL  ROUTINES        Oct82   Parameter Handling Routines.*/
-parrec *defineparameter(parlist, long_, short_, parsort, pos1, pos2)
-parrec **parlist;
-Char *long_, *short_;
-partyp parsort;
-int pos1, pos2;
+parrec *defineparameter(parrec **parlist,
+                        Char *long_,
+                        Char *short_,
+                        partyp parsort,
+                        int pos1,
+                        int pos2)
 {
   parrec *newpar;
   PBBLOCK b;
@@ -4219,9 +4135,7 @@ int pos1, pos2;
 
 
 /*macro procedure InitParameter( Param: ParRef ); */
-static void setparameter(param, paramvalue)
-parrec *param;
-stryng *paramvalue;
+static void setparameter(parrec *param, stryng *paramvalue)
 {
   int pos;
 
@@ -4264,8 +4178,7 @@ stryng *paramvalue;
 
 /*macro function ParamSet( Par: ParRef ): Boolean; */
 /*macro procedure StrParValue( var Str: Stryng; Par: ParRef ); */
-Char gettoken(token, cmd)
-stryng *token, *cmd;
+Char gettoken(stryng *token, stryng *cmd)
 {
   int pos;
   boolean quote, done;
@@ -4319,8 +4232,7 @@ stryng *token, *cmd;
 }
 
 
-boolean parsecommandline(parlist)
-parrec *parlist;
+boolean parsecommandline(parrec *parlist)
 {
   boolean Result;
   stryng commline, flagline, testline, tokenline;
@@ -4429,9 +4341,7 @@ parrec *parlist;
 }
 
 
-static void getparamvalue(param, prompt)
-parrec *param;
-stryng prompt;
+static void getparamvalue(parrec *param, stryng prompt)
 {
   stryng parvalue;
 
@@ -4442,9 +4352,7 @@ stryng prompt;
 }
 
 
-static void defaultext(name, oldname, ext)
-stryng *name, *oldname;
-Char *ext;
+static void defaultext(stryng *name, stryng *oldname, Char *ext)
 {
   stryng dev, nom;
 
@@ -4455,11 +4363,7 @@ Char *ext;
 
 
 
-static void askordefault(par, def, inter, prompt)
-parrec *par;
-stryng *def;
-boolean inter;
-Char *prompt;
+static void askordefault(parrec *par, stryng *def, boolean inter, Char *prompt)
 {
   stryng prstring;
 
@@ -4483,9 +4387,9 @@ Char *prompt;
 }
 
 
-static void readcommandline(infile, outfile, paramlist)
-parrec **infile;
-parrec **outfile, **paramlist;
+static void readcommandline(parrec **infile,
+                            parrec **outfile,
+                            parrec **paramlist)
 {
   boolean interact;
   stryng infilename;
@@ -4532,9 +4436,7 @@ strcpy( CANN_source_file, s.str );
 
 
 
-boolean openoutputfile(filename, source)
-stryng *filename;
-FILE **source;
+boolean openoutputfile(stryng *filename, FILE **source)
 {
   /* Insures an '.if1' extension is on the file name and then tries to
      open it for writing.  Returns true if file opens properly.
@@ -4545,8 +4447,7 @@ FILE **source;
 
 
 
-stentry *newtypealloc(sort)
-char sort;
+stentry *newtypealloc(char sort)
 {
   /*Allocates new type record, initializes fields, returns pointer*/
   stentry *t;
@@ -4598,8 +4499,7 @@ char sort;
 }  /*NewTypeAlloc*/
 
 
-port *newedgealloc(sort)
-portsort sort;
+port *newedgealloc(portsort sort)
 {
   /*Allocates new Edge (Port) record, initializes fields, returns pointer*/
   port *e;
@@ -4686,8 +4586,7 @@ portsort sort;
 }  /*NewEdgeAlloc*/
 
 
-node *newnodealloc(sort)
-nodesort sort;
+node *newnodealloc(nodesort sort)
 {
   /*Allocates new Node record, initializes fields, returns pointer*/
   node *n;
@@ -4769,7 +4668,7 @@ nodesort sort;
 }  /*NewNodeAlloc*/
 
 
-static void initstamps()
+static void initstamps(void)
 {
   Char c;
   stryng name;
@@ -4783,16 +4682,13 @@ static void initstamps()
 }  /* InitStamps */
 
 
-static void removestamp(ch)
-Char ch;
+static void removestamp(Char ch)
 {
   P_remset(stampset, ch);
 }  /* RemoveStamp */
 
 
-static void addstamp(ch, str)
-Char ch;
-stryng str;
+static void addstamp(Char ch, stryng str)
 {
   P_addset(stampset, ch);
   stamp[ch - 'A'] = str;
@@ -4811,8 +4707,7 @@ stryng str;
 /*macro function NotEndOfGraph( N: NdPtr ) : boolean */
 /*macro function IsFirstNodeInGraph( N: NdPtr ) : boolean */
 /* assumes N <> nil */
-static int numbofsubgraphs(cnode)
-node *cnode;
+static int numbofsubgraphs(node *cnode)
 {
   /* Assumes cnode <> nil and (cnode^.NDSort = NDCompound)
      returns the number of subgraphs of this compound node,
@@ -4830,8 +4725,7 @@ node *cnode;
 }  /* NumbOfSubgraphs */
 
 
-int numbnodesingraph(gnode)
-node *gnode;
+int numbnodesingraph(node *gnode)
 {
   /* Assumes gnode <> nil and (gnode^.NDSort = NDGraph)
      returns the number of nodes within this graph, the
@@ -4857,8 +4751,7 @@ node *gnode;
  One child graph is the selector graph, the others are Alternatives */
 /* macro function NodeKind( N: NDPtr ) : integer */
 
-int numberofwiredoutputports(n)
-node *n;
+int numberofwiredoutputports(node *n)
 {
   /* Assumes N <> nil and edges are ordered by port numbers */
   port *e;
@@ -4879,8 +4772,7 @@ node *n;
 }  /* NumberOfWiredOutputPorts */
 
 
-int largestinputportnumber(n)
-node *n;
+int largestinputportnumber(node *n)
 {
   /* Assumes N <> nil
      returns the largest port number on the nodes input port list.
@@ -4898,8 +4790,7 @@ node *n;
 }  /* LargestInputPortNumber */
 
 
-int largestoutputportnumber(n)
-node *n;
+int largestoutputportnumber(node *n)
 {
   /* Assumes N <> nil
      returns largest port number on nodes output list */
@@ -4916,8 +4807,7 @@ node *n;
 }  /* LargestOutputPortNumber */
 
 
-int nodelabel(n)
-node *n;
+int nodelabel(node *n)
 {
   if (n == NULL)
     return -1;
@@ -4943,8 +4833,7 @@ node *n;
 /* macro function ValueOfModRC(E : EGPtr ) : integer; */
 /* macro function ValueOfProdRC(E : EGPtr ) : integer; */
 /* macro function ConsumerNodeOfEdge( E : EGPtr ) : NDPtr; */
-node *producernodeofedge(e)
-port *e;
+node *producernodeofedge(port *e)
 {
   /* Assumes E <> nil
      if edge is a literal there is no producer node and nil is returned */
@@ -4965,8 +4854,7 @@ port *e;
 /* macro SetRCOfEdge( E : EGPtr; Value : integer); */
 /* macro SetProdModRCOfEdge( E : EGPtr; Value : integer); */
 /* macro SetConModRCOfEdge( E : EGPtr; Value : integer); */
-int producerportnumber(e)
-port *e;
+int producerportnumber(port *e)
 {
   /* Assumes E <> nil */
   if (e->ptsort == ptedge)
@@ -4995,8 +4883,7 @@ port *e;
 /* macro SetFrequencyOfNode( N : NDPtr; Value : real ); */
 /* macro IsNodeExpanded( N : NDPtr) : boolean; */
 /* macro SetExpandedValueOfNode(N : NDPtr; Val : boolean); */
-node *tolastnodeingraph(n)
-node *n;
+node *tolastnodeingraph(node *n)
 {
   /* assumes N <> nil and (N^.NDSort = NDGraph) */
   /* IfEmptyGraph(N) then it returns nil */
@@ -5017,8 +4904,7 @@ node *n;
 /* ToNextNode assumes gnode <> nil
    Returns next node in this graph to be executed,
    returns nil if no next node*/
-node *toprevnode(n)
-node *n;
+node *toprevnode(node *n)
 {
   /* Assumes N <> nil */
   /* if (N^.NDSort = NDGraph) or (n = n^.NDParent^.NDNext) then returns nil
@@ -5049,9 +4935,7 @@ node *n;
 /*macro function ToFirstChildGraph( cnode : NDPtr) : NDPtr */
 /* Assumes (cnode^.NDSort = NDCompound), with at least one subgraph.
    Result is a pointer to first subgraph of this compound node.  rky 8/87 */
-node *tochildgraph(cnode, gindex)
-node *cnode;
-int gindex;
+node *tochildgraph(node *cnode, int gindex)
 {
   /* Assumes (cnode^.NDSort = NDCompound) and Gindex >= 0
      returns a pointer to the i'th subgraph of this compound
@@ -5071,8 +4955,7 @@ int gindex;
 }  /* ToChildGraph */
 
 
-node *toenclosingcompound(gnode)
-node *gnode;
+node *toenclosingcompound(node *gnode)
 {
   /* Assumes gnode <> nil
      returns a pointer to the closest enclosing Compound node
@@ -5094,8 +4977,7 @@ node *gnode;
 }  /* ToEnclosingCompound */
 
 
-node *toenclosingfunction(n)
-node *n;
+node *toenclosingfunction(node *n)
 {
   /* ToEnclosingFunction assumes N <> nil and N <> Module,
      it returns a pointer to the function graph that properly contains
@@ -5115,8 +4997,7 @@ node *n;
 }  /* ToEnclosingFunction */
 
 
-node *toinitgraph(n)
-node *n;
+node *toinitgraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      If the node is not a LoopB or LoopA node then return nil */
@@ -5127,8 +5008,7 @@ node *n;
 }  /* ToInitGraph */
 
 
-node *tobodygraph(n)
-node *n;
+node *tobodygraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      If the node is not a LoopB or LoopA node then return nil */
@@ -5139,8 +5019,7 @@ node *n;
 }  /* ToBodyGraph */
 
 
-node *totestgraph(n)
-node *n;
+node *totestgraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      If the node is not a LoopB or LoopA node then return nil */
@@ -5151,8 +5030,7 @@ node *n;
 }  /* ToTestGraph */
 
 
-node *toreturnsgraph(n)
-node *n;
+node *toreturnsgraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      If the node is not a LoopB or LoopA node then return nil */
@@ -5163,8 +5041,7 @@ node *n;
 }  /* ToReturnsGraph */
 
 
-node *toiterbodygraph(n)
-node *n;
+node *toiterbodygraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      if N is not a Iter node, then return nil */
@@ -5175,8 +5052,7 @@ node *n;
 }  /* ToIterBodyGraph */
 
 
-node *toselectorgraph(n)
-node *n;
+node *toselectorgraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      If N is not a Select node, then return nil */
@@ -5187,8 +5063,7 @@ node *n;
 }  /* ToSelectorGraph */
 
 
-node *toforallgeneratorgraph(n)
-node *n;
+node *toforallgeneratorgraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      if N is not a Forall node, then return nil */
@@ -5199,8 +5074,7 @@ node *n;
 }  /* ToForallGeneratorGraph */
 
 
-node *toforallbodygraph(n)
-node *n;
+node *toforallbodygraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      if N is not a Forall node, then return nil */
@@ -5211,8 +5085,7 @@ node *n;
 }  /* ToForallBodyGraph */
 
 
-node *toforallreturnsgraph(n)
-node *n;
+node *toforallreturnsgraph(node *n)
 {
   /* Assumes (N^.NDSort = NDCompound)
      if N is not a Forall node, then return nil */
@@ -5233,9 +5106,7 @@ node *n;
 /*Returns a pointer to the N'th true subgraph      */
 /* macro function ToFalseGraph( N : NDPtr ) : NDPtr */
 /* N is an IfThenElse node.Returns a pointer to the false subgraph */
-port *getinputedge(n, portnum)
-node *n;
-int portnum;
+port *getinputedge(node *n, int portnum)
 {
   /* If no edge is connected to this port number then nil is returned */
   port *eptr;
@@ -5257,9 +5128,7 @@ int portnum;
 }  /* GetInputEdge */
 
 
-port *getoutputedge(n, portnum)
-node *n;
-int portnum;
+port *getoutputedge(node *n, int portnum)
 {
   /* If no edge is connected to this port number then nil is returned */
   port *eptr;
@@ -5281,8 +5150,7 @@ int portnum;
 }  /* GetOutputEdge */
 
 
-port *nextoutputedgesameport(e)
-port *e;
+port *nextoutputedgesameport(port *e)
 {
   /* Returns nil if no next edge exists */
   int portnum;
@@ -5307,9 +5175,7 @@ port *e;
 /* over port range      */
 
 
-port *outputedgegeport(n, p)
-node *n;
-int p;
+port *outputedgegeport(node *n, int p)
 {
   port *e;
   boolean found;
@@ -5330,9 +5196,7 @@ int p;
 }  /* OutputEdgeGEPort */
 
 
-node *getnodewithlabel(n, l)
-node *n;
-int l;
+node *getnodewithlabel(node *n, int l)
 {
   boolean found, finished;
 
@@ -5359,9 +5223,7 @@ int l;
 }  /* GetNodeWithLabel */
 
 
-node *getnodewithid(f, id)
-node *f;
-int id;
+node *getnodewithid(node *f, int id)
 {
   node *n, *gn;
   graph *g;
@@ -5398,8 +5260,7 @@ int id;
 }  /* GetNodeWithID */
 
 
-node *tonextfunction(f)
-node *f;
+node *tonextfunction(node *f)
 {
   if (f == NULL)
     return NULL;
@@ -5431,10 +5292,7 @@ node *f;
 /*macro function MakeFunctionType () : STPtr;*/
 /*macro function MakeRecordType () : STPtr;*/
 /*macro function MakeUnionType () : STPtr;*/
-stentry *searchtypetable(kind, x, y, name)
-char kind;
-stentry *x, *y;
-stryng name;
+stentry *searchtypetable(char kind, stentry *x, stentry *y, stryng name)
 {
   /* Search the Type Table for an entry of the given Kind that has:
       if Kind in [Stream, Array, Multiple, Record, Union, Buffer ] then
@@ -5512,9 +5370,7 @@ stryng name;
 
 
 
-static int equivclass(s, LINK)
-stentry *s;
-struct LOC_smashtypes *LINK;
+static int equivclass(stentry *s, struct LOC_smashtypes *LINK)
 {
   /* EquivClass */
   if (s != NULL)
@@ -5523,9 +5379,9 @@ struct LOC_smashtypes *LINK;
     return (-SHORT_MAX);
 }
 
-static boolean sameequivclass(a, b, LINK)
-stentry *a, *b;
-struct LOC_smashtypes *LINK;
+static boolean sameequivclass(stentry *a,
+                              stentry *b,
+                              struct LOC_smashtypes *LINK)
 {
   boolean Result, first;
 
@@ -5585,9 +5441,7 @@ struct LOC_smashtypes *LINK;
   return Result;
 }
 
-static void createnewequivclass(r, LINK)
-stentry *r;
-struct LOC_smashtypes *LINK;
+static void createnewequivclass(stentry *r, struct LOC_smashtypes *LINK)
 {
   /* CreateNewEquivClass */
   if (LINK->lastclass < maxclass)
@@ -5600,9 +5454,9 @@ struct LOC_smashtypes *LINK;
   LINK->lastinclass[LINK->lastclass] = r;
 }
 
-static void removefromequivclass(old, exile, LINK)
-stentry *old, *exile;
-struct LOC_smashtypes *LINK;
+static void removefromequivclass(stentry *old,
+                                 stentry *exile,
+                                 struct LOC_smashtypes *LINK)
 {
   /* RemoveFromEquivClass */
   if (exile == LINK->lastinclass[old->stid])
@@ -5610,9 +5464,9 @@ struct LOC_smashtypes *LINK;
   old->stequivchain = exile->stequivchain;
 }
 
-static void addtoequivclass(representative, newmember, LINK)
-stentry *representative, *newmember;
-struct LOC_smashtypes *LINK;
+static void addtoequivclass(stentry *representative,
+                            stentry *newmember,
+                            struct LOC_smashtypes *LINK)
 {
   int classnum;
 
@@ -5624,8 +5478,7 @@ struct LOC_smashtypes *LINK;
   LINK->lastinclass[classnum] = newmember;
 }
 
-static void initequivclasses(LINK)
-struct LOC_smashtypes *LINK;
+static void initequivclasses(struct LOC_smashtypes *LINK)
 {
   /* InitEquivClasses looks at every entry in the type table and places*/
   /* then non-nil ones into one of 12 equivilence classes:*/
@@ -5670,9 +5523,9 @@ struct LOC_smashtypes *LINK;
 
 /* macro function NextInEquivClass( M : STPtr ) : STPtr; */
 /* macro function MoreInEquivClass( M : STPtr ) : boolean; */
-static void gatherothers(prev, representative, LINK)
-stentry *prev, **representative;
-struct LOC_smashtypes *LINK;
+static void gatherothers(stentry *prev,
+                         stentry **representative,
+                         struct LOC_smashtypes *LINK)
 {
   /* GatherOthers tries to remove elements in the Class headed by */
   /* Prev and moves them to the class headed by Representative*/
@@ -5703,8 +5556,7 @@ struct LOC_smashtypes *LINK;
   }
 }
 
-static void pointtohead(LINK)
-struct LOC_smashtypes *LINK;
+static void pointtohead(struct LOC_smashtypes *LINK)
 {
   /* PointToHead makes the STEquivChain of each entry point at the */
   /*  representative of the equivalence class, and places a -1*/
@@ -5736,7 +5588,7 @@ struct LOC_smashtypes *LINK;
 
 /* -------------------------------------------------------------------- */
 /* --------------------------- SmashTypes ----------------------------- */
-static void smashtypes()
+static void smashtypes(void)
 {
   /* Smashtypes maps types that are structurally equivalent into the same*/
   /* type number.Note that SISAL type equivalence is not guaranteed, since */
@@ -5787,7 +5639,7 @@ static void smashtypes()
 
 /* --------------------------- SmashTypes ----------------------------- */
 /* -------------------------------------------------------------------- */
-static void adjustgraphptrs()
+static void adjustgraphptrs(void)
 {
   int typenum, FORLIM;
   stentry *WITH;
@@ -5834,8 +5686,7 @@ static void adjustgraphptrs()
 }  /* AdjustGraphPtrs */
 
 
-static void compacttypetable(tthwm, oldtthwm)
-int *tthwm, oldtthwm;
+static void compacttypetable(int *tthwm, int oldtthwm)
 {
   /*  Pre:  The TypeTable has been extended beyond OldTTHWM (Old Symbol
            Table High Water Mark) and the new types added have been
@@ -5884,8 +5735,7 @@ int *tthwm, oldtthwm;
 }  /* CompactTypeTable */
 
 
-stentry *getbasictype(base)
-char base;
+stentry *getbasictype(char base)
 {
   /* returns a pointer to the type table entry corresponding to
      the basic type specified by Base.  An entry MUST exist for
@@ -5895,7 +5745,7 @@ char base;
 }  /* GetBasicType */
 
 
-stentry *getwildtype()
+stentry *getwildtype(void)
 {
   /* Returns a type table entry corresponding to the Wild Card type.
      Note that this is NOT the BASIC Wild Card (IFBWild) but the
@@ -5925,9 +5775,7 @@ stentry *getwildtype()
 }  /* GetWildType */
 
 
-stentry *getconstructortype(kind, base)
-char kind;
-stentry *base;
+stentry *getconstructortype(char kind, stentry *base)
 {
   /* Requires that the Base type already be in the table - if not,
      an error message is printed and Nil is returned.
@@ -5971,8 +5819,7 @@ stentry *base;
 }  /* GetConstructorType */
 
 
-static void putintable(typ)
-stentry **typ;
+static void putintable(stentry **typ)
 {
   /* Enter Typ into the type table.
      If no room is left, send an error message
@@ -5988,8 +5835,7 @@ stentry **typ;
 }  /* PutInTable */
 
 
-static void putstruct(tt)
-stentry *tt;
+static void putstruct(stentry *tt)
 {
   if (tt == NULL) {
     return;
@@ -6034,8 +5880,7 @@ stentry *tt;
 }  /* PutStruct */
 
 
-stentry *addtotypetable(typ)
-stentry *typ;
+stentry *addtotypetable(stentry *typ)
 {
   stentry *Result, *newtyp, *elem, *nxt, *arg, *rets;
   stryng name;
@@ -6194,8 +6039,7 @@ stentry *typ;
 /* macro procedure ModuleNameOfFunction( var Name : Stryng; F : NDPtr); */
 /******************************************************************/
 /* These function must come last in the files due to dependencies */
-ifgraphtype graphkind(g)
-node *g;
+ifgraphtype graphkind(node *g)
 {
   /* Assumes (G^.NDSort = NDGraph)
      Analyses a graph node to determine its IFGraphType */
@@ -6283,8 +6127,7 @@ node *g;
    and not everyone needs them. */
 /*dlz - 8/87 updated to use new allocation routines in graph.m4,
   some cleanup, ***still confusion/glitch (?) in CopyEdges, CopyGraph*/
-static void disconnectedgefromsource(e)
-port *e;
+static void disconnectedgefromsource(port *e)
 {
   /*in out*/
   /* ----------------------------------------------------
@@ -6314,8 +6157,7 @@ port *e;
 }  /* DisconnectEdgeFromSource */
 
 
-static void disconnectedgefromdest(e)
-port *e;
+static void disconnectedgefromdest(port *e)
 {
   /*in out*/
   /* -------------------------------------------------------
@@ -6342,8 +6184,7 @@ port *e;
 }  /* DisconnectEdgeFromDest */
 
 
-static void removeedge(e)
-port **e;
+static void removeedge(port **e)
 {
   /* -------------------------------------------------
      RemoveEdge
@@ -6357,8 +6198,7 @@ port **e;
 }  /* RemoveEdge */
 
 
-static void removeinputedges(n)
-node *n;
+static void removeinputedges(node *n)
 {
   port *e, *tmpe;
 
@@ -6371,8 +6211,7 @@ node *n;
 }  /* RemoveInputEdges */
 
 
-static void removegraph(g)
-node *g;
+static void removegraph(node *g)
 {
   /* Walk the nodes of the graph G removing each in turn */
   node *tmpn, *nd;
@@ -6389,8 +6228,7 @@ node *g;
 
 /* macro procedure ChangeEdgeName( E : EGPtr; S : Stryng ) */
 /* macro procedure ChangeLiteralValue( E : EGPtr; S : Stryng ) */
-static void removenode(n)
-node *n;
+static void removenode(node *n)
 {
   /*  Remove Node :
         - if N is a compound node it removes the subgraphs first.
@@ -6432,8 +6270,7 @@ node *n;
 }  /* RemoveNode */
 
 
-node *createsimplenode(opcode)
-int opcode;
+node *createsimplenode(int opcode)
 {
   /* Create a Simple node with the opcode given.
      The new node will have no input or output edges and will
@@ -6449,8 +6286,7 @@ int opcode;
 }  /* CreateSimpleNode */
 
 
-node *createcompoundnode(opcode)
-int opcode;
+node *createcompoundnode(int opcode)
 {
   /* Create a Compound node with the opcode given.
      The new node will have no input or output edges and will
@@ -6466,8 +6302,7 @@ int opcode;
 }  /* CreateCompoundNode */
 
 
-static void insertnode(parentnode, prevnode, newnode)
-node *parentnode, *prevnode, *newnode;
+static void insertnode(node *parentnode, node *prevnode, node *newnode)
 {
   /* Inserts NewNode into graph of ParentNode after PrevNode.
      If Prevnode = nil then the NewNode is inserted as the first
@@ -6498,10 +6333,7 @@ node *parentnode, *prevnode, *newnode;
 }  /* InsertNode*/
 
 
-static void changeedgedest(e, newdestnode, newdestport)
-port *e;
-node *newdestnode;
-int newdestport;
+static void changeedgedest(port *e, node *newdestnode, int newdestport)
 {
   /* -----------------------------------------------------------------
      Step 1  Removes E from it's current destination node's input list
@@ -6543,10 +6375,7 @@ int newdestport;
 }  /* ChangeEdgeDest */
 
 
-static void changeedgesrc(e, newsrcnode, newsrcport)
-port *e;
-node *newsrcnode;
-int newsrcport;
+static void changeedgesrc(port *e, node *newsrcnode, int newsrcport)
 {
   /* -----------------------------------------------------------------
      Step 1  Removes E from it's current source node's output list
@@ -6587,13 +6416,12 @@ int newsrcport;
 }  /* ChangeEdgeSrc */
 
 
-port *insertedge(fromnode, fromport, tonode, toport, etype, name)
-node *fromnode;
-int fromport;
-node *tonode;
-int toport;
-stentry *etype;
-stryng name;
+port *insertedge(node *fromnode,
+                 int fromport,
+                 node *tonode,
+                 int toport,
+                 stentry *etype,
+                 stryng name)
 {  /* Does NOT work for inserting Literals */
   port *newedge;
 
@@ -6608,11 +6436,11 @@ stryng name;
 }  /* InsertEdge */
 
 
-port *insertliteral(tonode, toport, etype, lvalue, lname)
-node *tonode;
-int toport;
-stentry *etype;
-stryng lvalue, lname;
+port *insertliteral(node *tonode,
+                    int toport,
+                    stentry *etype,
+                    stryng lvalue,
+                    stryng lname)
 {
   port *newedge;
 
@@ -6627,9 +6455,7 @@ stryng lvalue, lname;
 }  /* InsertLiteral */
 
 
-static void renumbergraph(g, recurse)
-node *g;
-boolean recurse;
+static void renumbergraph(node *g, boolean recurse)
 {
   /* Walks the graph G renumbering then nodes as it comes to them.
      If Recurse = true then it recursively renumbers the
@@ -6657,9 +6483,7 @@ boolean recurse;
 }  /* RenumberGraph */
 
 
-static void shiftinputports(n, startport, amount)
-node *n;
-int startport, amount;
+static void shiftinputports(node *n, int startport, int amount)
 {
   /* Shifts the port numbers of the input edges of N, starting from
      port StartPort and shifting by Amount.
@@ -6684,9 +6508,7 @@ int startport, amount;
 }  /* ShiftInputPorts */
 
 
-static void shiftoutputports(n, startport, amount)
-node *n;
-int startport, amount;
+static void shiftoutputports(node *n, int startport, int amount)
 {
   /* Shifts the port numbers of the output edges of N, starting from
      port StartPort and shifting by Amount.
@@ -6711,8 +6533,7 @@ int startport, amount;
 }  /* ShiftOutputPorts */
 
 
-node *copynode(n)
-node *n;
+node *copynode(node *n)
 {
   /* Create and return a new node identical to N except without any
      input or output edges and detached from any surrounding graph.
@@ -6743,8 +6564,7 @@ node *n;
 }  /* CopyNode */
 
 
-node *copycompound(oldn)
-node *oldn;
+node *copycompound(node *oldn)
 {
   /*( OldN : NDPtr ) : NDPtr*/
   /* Returns a pointer to a newly created compound node
@@ -6806,8 +6626,7 @@ node *oldn;
 }  /* CopyCompound */
 
 
-static void copyedges(newg, oldg)
-node *newg, *oldg;
+static void copyedges(node *newg, node *oldg)
 {
   /* NewG is a skeleton structure of OldG.  It consists of
      Nodes identical to that of OldG and connected in the
@@ -6861,8 +6680,7 @@ node *newg, *oldg;
 }  /* CopyEdges */
 
 
-node *copygraph(oldg)
-node *oldg;
+node *copygraph(node *oldg)
 {
   /* ( OldG : NDPtr ) : NDPtr */
   /* Returns a pointer to a new graph that is an exact copy
@@ -6925,8 +6743,7 @@ node *oldg;
 /* Changes the type of the edge E to T */
 /* macro procedure ChangeNextNode( CurrentNode, NextNode : NDPtr ); */
 /* Assumes CurrentNode <> nil */
-static void cleanupnewiter(loop)
-node *loop;
+static void cleanupnewiter(node *loop)
 {
   node *bodyg;
   int lstart, lend, port_, maxloopin;
@@ -6974,8 +6791,7 @@ node *loop;
 }  /*CleanUpNewIter*/
 
 
-static void cleanupforall(loop)
-node *loop;
+static void cleanupforall(node *loop)
 {
   int port_, count, k, l, t;
   port *e;
@@ -7041,8 +6857,7 @@ node *loop;
 }  /* CleanUpForall */
 
 
-static void cleanupiterloop(loop)
-node *loop;
+static void cleanupiterloop(node *loop)
 {
   node *initg, *testg, *bodyg, *retg;
   int k, l, t, port_, count;
@@ -7127,8 +6942,7 @@ node *loop;
 }  /* CleanUpIterLoop */
 
 
-static void cleanupselect(n)
-node *n;
+static void cleanupselect(node *n)
 {
   int k, r, maxr, grnum, subgr, count, port_;
   node *g;
@@ -7179,8 +6993,7 @@ node *n;
 }  /* CleanUpSelect */
 
 
-static void cleanuptagcase(n)
-node *n;
+static void cleanuptagcase(node *n)
 {
   int k, r, maxr, grnum, subgr, count, port_;
   node *g;
@@ -7232,8 +7045,7 @@ node *n;
 }  /* CleanUpTagCase */
 
 
-static void cleanupifthenelse(n)
-node *n;
+static void cleanupifthenelse(node *n)
 {
   int k, r, maxr, grnum, subgr, count, port_;
   node *g;
@@ -7292,23 +7104,19 @@ node *n;
 
 
 
-static void nsinit(s)
-ndstack *s;
+static void nsinit(ndstack *s)
 {
   s->length = 0;
   s->firstbucket = NULL;
   s->lastbucket = NULL;
 }
 
-static boolean nsempty(s)
-ndstack *s;
+static boolean nsempty(ndstack *s)
 {
   return (s->length == 0);
 }
 
-static void nspush(s, n)
-ndstack *s;
-node *n;
+static void nspush(ndstack *s, node *n)
 {
   nodebucket *b;
   int ix;
@@ -7337,8 +7145,7 @@ node *n;
   s->lastbucket->elems[ix - 1] = n;   /* with */
 }  /* NSPush */
 
-static node *nspop(s)
-ndstack *s;
+static node *nspop(ndstack *s)
 {
   node *Result;
   int ix;
@@ -7373,8 +7180,7 @@ ndstack *s;
 }  /* NSPop */
 
 
-static void cleanupgraph(g)
-node *g;
+static void cleanupgraph(node *g)
 {
   /*( G : NDPtr )*/
   ndstack stk;
@@ -7450,7 +7256,7 @@ if ( !(CANN_GlueMode && (curr->ndcode == ifncall)) ) { /* NEW CANN */
 
 
 
-static void removedeadcode()
+static void removedeadcode(void)
 {
   /* This routine walks the function graphs of a module, searching for
      and removing dead code.  Code is dead if it produces values that
@@ -7478,8 +7284,7 @@ static void removedeadcode()
 }  /* RemoveDeadCode */
 
 
-static void rm(n)
-node *n;
+static void rm(node *n)
 {
   port *e, *ie, *oe;
   node *srcnode, *cn;
@@ -7529,8 +7334,7 @@ node *n;
 }  /* rm */
 
 
-static void removenoop(g)
-node *g;
+static void removenoop(node *g)
 {
   node *gn, *n;
   int grnum, FORLIM;
@@ -7549,9 +7353,7 @@ node *g;
 }  /* RemoveNoOp */
 
 
-static int compactinputs(c, startport, lastport)
-node *c;
-int startport, lastport;
+static int compactinputs(node *c, int startport, int lastport)
 {
   /* -- C is a compound node
      -- 1 <= StartPort <= LastPort <= LargestInputPortNumber( C )
@@ -7594,8 +7396,7 @@ int startport, lastport;
 }  /* CompactInputs */
 
 
-static void compactports(c)
-node *c;
+static void compactports(node *c)
 {
   /* -- C is a compound node
      This routine examines the implicit port connections of C searching
@@ -7755,9 +7556,7 @@ node *c;
 }  /* CompactPorts */
 
 
-static void buildbasictype(base, name)
-char base;
-Char *name;
+static void buildbasictype(char base, Char *name)
 {
   /* builds a symbol table entry an IF1 basic type */
   /* BaseRange is a subrange of defined constants  */
@@ -7776,7 +7575,7 @@ Char *name;
    Also, rewrote pragma assignments thru new routines AssignNodePragma
    and AssignEdgePragma, now pragmas not usable in this version
    ignored and a cautionary message printed */
-static void initmodule()
+static void initmodule(void)
 {
   /* Initializes the global variables needed for loading the program */
   int i;
@@ -7817,9 +7616,7 @@ static void initmodule()
 
 staticforward void dumpgraph PROTO((node*,struct LOC_dumpprogram *));
 
-static void writetypenumber(entry_, LINK)
-stentry *entry_;
-struct LOC_dumpprogram *LINK;
+static void writetypenumber(stentry *entry_, struct LOC_dumpprogram *LINK)
 {
   /* Print out the type number associated with this type pointer.
      If the pointer is nill the type number is zero.  */
@@ -7830,9 +7627,7 @@ struct LOC_dumpprogram *LINK;
     fprintf(LINK->diag, "%c%d", (Char)tab_, entry_->stlabel);
 }
 
-static void dumpentry(eptr, LINK)
-stentry *eptr;
-struct LOC_dumpprogram *LINK;
+static void dumpentry(stentry *eptr, struct LOC_dumpprogram *LINK)
 {
   /* Print the type table entry for this Type pointer. */
   /* DumpEntry */
@@ -7882,9 +7677,7 @@ struct LOC_dumpprogram *LINK;
   putc('\n', LINK->diag);
 }
 
-static void writeedgepragmas(e, LINK)
-port *e;
-struct LOC_dumpprogram *LINK;
+static void writeedgepragmas(port *e, struct LOC_dumpprogram *LINK)
 {
   if (e->ptname.len != 0) {
     fprintf(LINK->diag, "%c %%na=", (Char)tab_);
@@ -7913,9 +7706,7 @@ struct LOC_dumpprogram *LINK;
   putc('\n', LINK->diag);
 }  /*WriteEdgePragmas*/
 
-static void dumpinputedges(n, LINK)
-node *n;
-struct LOC_dumpprogram *LINK;
+static void dumpinputedges(node *n, struct LOC_dumpprogram *LINK)
 {
   /* Walk the input edges of the node N and print out
      each in turn.
@@ -7952,9 +7743,7 @@ struct LOC_dumpprogram *LINK;
   }
 }  /* DumpInputEdges */
 
-static void writenodepragmas(n, LINK)
-node *n;
-struct LOC_dumpprogram *LINK;
+static void writenodepragmas(node *n, struct LOC_dumpprogram *LINK)
 {
    if (n->ndsrcline >= 0) {
       fprintf(LINK->diag, "%c%%sl=%d", (Char)tab_, n->ndsrcline);
@@ -7974,9 +7763,7 @@ struct LOC_dumpprogram *LINK;
   putc('\n', LINK->diag);   /*with*/
 }  /*WriteNodePragmas*/
 
-static void dumpsimple(n, LINK)
-node *n;
-struct LOC_dumpprogram *LINK;
+static void dumpsimple(node *n, struct LOC_dumpprogram *LINK)
 {
   /* Print out the simple node N along with its pragmas */
 /* CANN PEEK */  if ( n->ndcode == ifnpeek )
@@ -7986,9 +7773,7 @@ struct LOC_dumpprogram *LINK;
   writenodepragmas(n, LINK);
 }  /* DumpSimple */
 
-static void dumpcompound(n, LINK)
-node *n;
-struct LOC_dumpprogram *LINK;
+static void dumpcompound(node *n, struct LOC_dumpprogram *LINK)
 {
   /* N is a compound node.
      This will consist of :
@@ -8037,9 +7822,7 @@ struct LOC_dumpprogram *LINK;
   writenodepragmas(n, LINK);
 }
 
-Static void dumpgraph(g, LINK)
-node *g;
-struct LOC_dumpprogram *LINK;
+Static void dumpgraph(node *g, struct LOC_dumpprogram *LINK)
 {
   /*( G : NDPtr )*/
   /* Print out the appropriate IF1 line depending on the type
@@ -8087,9 +7870,7 @@ struct LOC_dumpprogram *LINK;
   dumpinputedges(g, LINK); /* CANN 1/92 DUMP GRAPH INPUT EDGES LAST */
 }  /* DumpGraph */
 
-static void dumpif1file(diag, LINK)
-FILE *diag;
-struct LOC_dumpprogram *LINK;
+static void dumpif1file(FILE *diag, struct LOC_dumpprogram *LINK)
 {
   /* Module = A pointer to a dummy compound node whose subsidiary
              graphs are the graphnodes of the if file being produced.*/
@@ -8123,8 +7904,7 @@ struct LOC_dumpprogram *LINK;
 
 /* dlz, reorganized and consolidated 8/87: 3 deep procedure nesting to 1,
    conditional comp. of vivek's stuff, new procs Write(Node/Edge)Pragmas */
-static void dumpprogram(outfile)
-stryng outfile;
+static void dumpprogram(stryng outfile)
 {
   struct LOC_dumpprogram V;
 
@@ -8142,7 +7922,7 @@ stryng outfile;
 
 
 
-static void dumpmodule()
+static void dumpmodule(void)
 {
   stryng outfilename;
 
@@ -8155,9 +7935,7 @@ static void dumpmodule()
 
 
 
-static char hashfunction(name, LINK)
-Char *name;
-struct LOC_graphwalk *LINK;
+static char hashfunction(Char *name, struct LOC_graphwalk *LINK)
 {
   int sum, pos;
   sum = (name[0] - '0') * name[1] % 89;
@@ -8173,23 +7951,17 @@ struct LOC_graphwalk *LINK;
 
 /* ---------------------------------------------------------------- */
 /* A collection of routines to implement lists of integers          */
-static boolean emptylist(l, LINK)
-intlist *l;
-struct LOC_graphwalk *LINK;
+static boolean emptylist(intlist *l, struct LOC_graphwalk *LINK)
 {
   return (l->length == 0);
 }  /* EmptyList */
 
-static void initlist(l, LINK)
-intlist *l;
-struct LOC_graphwalk *LINK;
+static void initlist(intlist *l, struct LOC_graphwalk *LINK)
 {
   l->length = 0;
 }  /* InitList */
 
-static int poplist(l, LINK)
-intlist *l;
-struct LOC_graphwalk *LINK;
+static int poplist(intlist *l, struct LOC_graphwalk *LINK)
 {
   int Result;
 
@@ -8198,10 +7970,7 @@ struct LOC_graphwalk *LINK;
   return Result;
 }  /* PopList */
 
-static void addtolist(l, ele, LINK)
-intlist *l;
-int ele;
-struct LOC_graphwalk *LINK;
+static void addtolist(intlist *l, int ele, struct LOC_graphwalk *LINK)
 {
   int i;
   boolean found;
@@ -8226,8 +7995,7 @@ struct LOC_graphwalk *LINK;
 }  /* AddToList */
 
 /* ---------------------------------------------------------------- */
-static void displaytable(LINK)
-struct LOC_graphwalk *LINK;
+static void displaytable(struct LOC_graphwalk *LINK)
 {
   int loc;
   commandrec *WITH;
@@ -8239,10 +8007,9 @@ struct LOC_graphwalk *LINK;
   }
 }  /* DisplayTable */
 
-static void insert_(cname_, command, LINK)
-Char *cname_;
-commandtype command;
-struct LOC_initcommandtable *LINK;
+static void insert_(Char *cname_,
+                    commandtype command,
+                    struct LOC_initcommandtable *LINK)
 {
   commandname cname;
   int loc;
@@ -8261,8 +8028,7 @@ struct LOC_initcommandtable *LINK;
   WITH->commvalue = command;
 }  /* Insert */
 
-static void initcommandtable(LINK)
-struct LOC_graphwalk *LINK;
+static void initcommandtable(struct LOC_graphwalk *LINK)
 {
   struct LOC_initcommandtable V;
   int loc;
@@ -8303,8 +8069,7 @@ struct LOC_graphwalk *LINK;
   insert_("dallo", ccdumpalloutput, &V);
 }  /* InitCommandTable */
 
-static void skipblanks(LINK)
-struct LOC_graphwalk *LINK;
+static void skipblanks(struct LOC_graphwalk *LINK)
 {
   boolean finished;
 
@@ -8321,9 +8086,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* SkipBlanks */
 
-static boolean readinteger_(i, LINK)
-int *i;
-struct LOC_graphwalk *LINK;
+static boolean readinteger_(int *i, struct LOC_graphwalk *LINK)
 {
   Char ch;
 
@@ -8335,9 +8098,7 @@ struct LOC_graphwalk *LINK;
     return false;
 }  /* ReadInteger */
 
-static void readcommandname(cname, LINK)
-Char *cname;
-struct LOC_getvalidcommand *LINK;
+static void readcommandname(Char *cname, struct LOC_getvalidcommand *LINK)
 {
   /* Read the command entered from the command line.
        -- Skip leading blanks and tabs
@@ -8376,10 +8137,9 @@ struct LOC_getvalidcommand *LINK;
     cname[i] = ' ';
 }  /* ReadCommandName */
 
-static boolean foundintable(cname, command, LINK)
-Char *cname;
-commandtype *command;
-struct LOC_getvalidcommand *LINK;
+static boolean foundintable(Char *cname,
+                            commandtype *command,
+                            struct LOC_getvalidcommand *LINK)
 {
   boolean Result;
   int loc;
@@ -8408,9 +8168,7 @@ struct LOC_getvalidcommand *LINK;
   return Result;
 }  /* FoundInTable */
 
-static void getvalidcommand(command, LINK)
-commandtype *command;
-struct LOC_graphwalk *LINK;
+static void getvalidcommand(commandtype *command, struct LOC_graphwalk *LINK)
 {
   struct LOC_getvalidcommand V;
   boolean found;
@@ -8433,9 +8191,7 @@ struct LOC_graphwalk *LINK;
 /* -------------------------------------------------------------- */
 /* The following procedures  the operations of the          */
 /* graphwalker.            */
-static int findlooplevel(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static int findlooplevel(node *n, struct LOC_graphwalk *LINK)
 {
   int level;
   boolean found;
@@ -8485,9 +8241,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* FindLoopLevel */
 
-static int findlexicallevel(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static int findlexicallevel(node *n, struct LOC_graphwalk *LINK)
 {
   /* Function graphs are considered to be at level 0
      and the level number increases each time you dive
@@ -8507,9 +8261,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* FindLexicalLevel */
 
-static void displayedge(e, LINK)
-port *e;
-struct LOC_graphwalk *LINK;
+static void displayedge(port *e, struct LOC_graphwalk *LINK)
 {
   if (e == NULL) {
     printf("Error:  nil edge pointer\n");
@@ -8536,9 +8288,7 @@ struct LOC_graphwalk *LINK;
   putchar('\n');
 }  /* DisplayEdge */
 
-static void displaynode(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void displaynode(node *n, struct LOC_graphwalk *LINK)
 {
   int i, pos;
   printable name;
@@ -8579,8 +8329,7 @@ struct LOC_graphwalk *LINK;
   printf("  Id: %4d   Level: %2d\n", n->ndid, findlexicallevel(n, LINK));
 }  /* DisplayNode */
 
-static void writetype(t)
-stentry *t;
+static void writetype(stentry *t)
 {
   if (t == NULL) {
     printf("Nil");
@@ -8652,8 +8401,7 @@ stentry *t;
   }/* case */
 }  /* WriteType */
 
-static void displaytype(LINK)
-struct LOC_graphwalk *LINK;
+static void displaytype(struct LOC_graphwalk *LINK)
 {
   int typenum;
 
@@ -8670,24 +8418,17 @@ struct LOC_graphwalk *LINK;
   putchar('\n');
 }  /* DisplayType */
 
-static void marknode(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void marknode(node *n, struct LOC_graphwalk *LINK)
 {
   n->ndid = -n->ndid;
 }
 
-static boolean nodemarked(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static boolean nodemarked(node *n, struct LOC_graphwalk *LINK)
 {
   return (n->ndid < 0);
 }
 
-static void unmarkgraph(g, count, LINK)
-node *g;
-int count;
-struct LOC_graphwalk *LINK;
+static void unmarkgraph(node *g, int count, struct LOC_graphwalk *LINK)
 {
   node *n;
 
@@ -8701,11 +8442,10 @@ struct LOC_graphwalk *LINK;
   }
 }
 
-static void gatherboundaryedges(l, n, mcount, LINK)
-intlist *l;
-node *n;
-int *mcount;
-struct LOC_graphwalk *LINK;
+static void gatherboundaryedges(intlist *l,
+                                node *n,
+                                int *mcount,
+                                struct LOC_graphwalk *LINK)
 {
   node *pn;
   port *e;
@@ -8726,8 +8466,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* GatherBoundaryEdges */
 
-static void listallfuns(LINK)
-struct LOC_graphwalk *LINK;
+static void listallfuns(struct LOC_graphwalk *LINK)
 {
   node *fun;
 
@@ -8738,9 +8477,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* ListAllFuns */
 
-static void listallnodes(current, LINK)
-node *current;
-struct LOC_graphwalk *LINK;
+static void listallnodes(node *current, struct LOC_graphwalk *LINK)
 {
   node *g, *n;
 
@@ -8759,9 +8496,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* ListAllNodes */
 
-static void gotonextnode(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void gotonextnode(node **cursor, struct LOC_graphwalk *LINK)
 {
   node *n;
 
@@ -8774,9 +8509,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* GotoNextNode */
 
-static void gotoparent(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void gotoparent(node **cursor, struct LOC_graphwalk *LINK)
 {
   if (*cursor == module) {
     printf("How did you get here?  Module is off limits!\n");
@@ -8790,9 +8523,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* GotoParent */
 
-static void showcurrfun(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void showcurrfun(node *cursor, struct LOC_graphwalk *LINK)
 {
   boolean finished;
 
@@ -8813,9 +8544,7 @@ struct LOC_graphwalk *LINK;
   displaynode(cursor, LINK);
 }  /* ShowCurrFun */
 
-static void gotonodeid(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void gotonodeid(node **cursor, struct LOC_graphwalk *LINK)
 {
   node *n;
   int id;
@@ -8838,9 +8567,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* GotoNodeId */
 
-static void showoutedges(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void showoutedges(node *cursor, struct LOC_graphwalk *LINK)
 {
   port *e;
   int port_;
@@ -8868,9 +8595,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* ShowOutEdges */
 
-static void showinedges(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void showinedges(node *cursor, struct LOC_graphwalk *LINK)
 {
   port *e;
   int port_;
@@ -8896,9 +8621,7 @@ struct LOC_graphwalk *LINK;
   /* No argument, display all edges */
 }  /* ShowInEdges */
 
-static void gotosubgraph(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void gotosubgraph(node **cursor, struct LOC_graphwalk *LINK)
 {
   int graphnum;
 
@@ -8918,9 +8641,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* GotoSubgraph */
 
-static void gotonodelabel(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void gotonodelabel(node **cursor, struct LOC_graphwalk *LINK)
 {
   node *g, *n;
   int lab;
@@ -8944,10 +8665,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* GotoNodeLabel */
 
-static void searchgraph(g, opcode, LINK)
-node *g;
-int opcode;
-struct LOC_findnodes *LINK;
+static void searchgraph(node *g, int opcode, struct LOC_findnodes *LINK)
 {
   node *n;
   int graphnum, FORLIM;
@@ -8965,10 +8683,9 @@ struct LOC_findnodes *LINK;
   }
 }  /* SearchGraph */
 
-static void findnodes(cursor, recursive_, LINK)
-node *cursor;
-boolean recursive_;
-struct LOC_graphwalk *LINK;
+static void findnodes(node *cursor,
+                      boolean recursive_,
+                      struct LOC_graphwalk *LINK)
 {
   struct LOC_findnodes V;
   node *g;
@@ -8988,9 +8705,7 @@ struct LOC_graphwalk *LINK;
     printf("Invalid Integer Argument\n");
 }  /* FindNodes */
 
-static void moveright_(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void moveright_(node **cursor, struct LOC_graphwalk *LINK)
 {
   /* If Cursor is positioned in a subgraph of a compound
      node, move to the sibling graph to the right (if one
@@ -9018,9 +8733,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* MoveRight */
 
-static void moveleft_(cursor, LINK)
-node **cursor;
-struct LOC_graphwalk *LINK;
+static void moveleft_(node **cursor, struct LOC_graphwalk *LINK)
 {
   /* If Cursor is positioned in a subgraph of a compound
      node, move to the sibling graph to the left (if one
@@ -9048,9 +8761,7 @@ struct LOC_graphwalk *LINK;
   displaynode(*cursor, LINK);
 }  /* MoveLeft */
 
-static void shownodesabove(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void shownodesabove(node *cursor, struct LOC_graphwalk *LINK)
 {
   int port_;
   port *e;
@@ -9088,9 +8799,7 @@ struct LOC_graphwalk *LINK;
   }
 }  /* ShowNodesAbove */
 
-static void shownodesbelow(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void shownodesbelow(node *cursor, struct LOC_graphwalk *LINK)
 {
   int port_;
   port *e;
@@ -9123,9 +8832,7 @@ struct LOC_graphwalk *LINK;
     displaynode(getnodewithlabel(g, poplist(&l, LINK)), LINK);
 }  /* ShowNodesBelow */
 
-static void showgraph(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void showgraph(node *cursor, struct LOC_graphwalk *LINK)
 {
   if (cursor == module) {
     printf("Not in a graph\n");
@@ -9137,8 +8844,7 @@ struct LOC_graphwalk *LINK;
     displaynode(cursor->ndparent, LINK);
 }  /* ShowGraph */
 
-static void givehelp(LINK)
-struct LOC_graphwalk *LINK;
+static void givehelp(struct LOC_graphwalk *LINK)
 {
   printf("above [port]     : List nodes directly above current node\n");
   printf("allf             : List all function in Module\n");
@@ -9171,9 +8877,7 @@ struct LOC_graphwalk *LINK;
   printf("type <typenum>   : Show structure of given type\n");
 }  /* GiveHelp */
 
-static void showgraphports(cursor, LINK)
-node *cursor;
-struct LOC_graphwalk *LINK;
+static void showgraphports(node *cursor, struct LOC_graphwalk *LINK)
 {
   intlist l;
   int markcount;
@@ -9192,9 +8896,7 @@ struct LOC_graphwalk *LINK;
   putchar('\n');
 }  /* ShowGraphPorts */
 
-static void dumpnode(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpnode(node *n, struct LOC_graphwalk *LINK)
 {
   int count;
   graph *g;
@@ -9322,9 +9024,7 @@ struct LOC_graphwalk *LINK;
   }/* case */
 }  /* DumpNode */
 
-static void dumponeedge(e, LINK)
-port *e;
-struct LOC_graphwalk *LINK;
+static void dumponeedge(port *e, struct LOC_graphwalk *LINK)
 {
 /* p2c: mono.bin.noblank.p, line 9523:
  * Internal error in writeelement: got a char * instead of a string [214] */
@@ -9381,9 +9081,7 @@ struct LOC_graphwalk *LINK;
   putchar('\n');
 }  /* DumpOneEdge */
 
-static void dumpdepinputedges(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpdepinputedges(node *n, struct LOC_graphwalk *LINK)
 {
   port *e;
 
@@ -9404,9 +9102,7 @@ struct LOC_graphwalk *LINK;
   }
 }
 
-static void dumpdepoutputedges(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpdepoutputedges(node *n, struct LOC_graphwalk *LINK)
 {
   port *e;
 
@@ -9421,9 +9117,7 @@ struct LOC_graphwalk *LINK;
   }
 }
 
-static void dumpinputedges_(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpinputedges_(node *n, struct LOC_graphwalk *LINK)
 {
   int port_;
   port *e;
@@ -9447,9 +9141,7 @@ struct LOC_graphwalk *LINK;
   /* Dump All Input Edges */
 }
 
-static void dumpallinput(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpallinput(node *n, struct LOC_graphwalk *LINK)
 {  /* Dump All Input Edges */
   port *e;
 
@@ -9465,9 +9157,7 @@ struct LOC_graphwalk *LINK;
   }
 }
 
-static void dumpoutputedges(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpoutputedges(node *n, struct LOC_graphwalk *LINK)
 {
   int port_;
   port *e;
@@ -9497,9 +9187,7 @@ struct LOC_graphwalk *LINK;
   /* Dump All Input Edges */
 }  /* DumpOutputEdges */
 
-static void dumpalloutput(n, LINK)
-node *n;
-struct LOC_graphwalk *LINK;
+static void dumpalloutput(node *n, struct LOC_graphwalk *LINK)
 {  /* Dump All Output Edges */
   port *e;
 
@@ -9516,8 +9204,7 @@ struct LOC_graphwalk *LINK;
 }
 
 
-node *graphwalk(start)
-node *start;
+node *graphwalk(node *start)
 {
   struct LOC_graphwalk V;
   node *Result, *cursor;
@@ -9666,7 +9353,7 @@ node *start;
 /***********************NODE AND EDGE COUNT ROUTINES *******************/
 
 
-int nextnodenum()
+int nextnodenum(void)
 {
   int Result;
 
@@ -9676,7 +9363,7 @@ int nextnodenum()
 }
 
 
-int nextedgenum()
+int nextedgenum(void)
 {
   int Result;
 
@@ -9686,8 +9373,7 @@ int nextedgenum()
 }
 
 
-int nextsgnodenum(fromlevel)
-treestackobj *fromlevel;
+int nextsgnodenum(treestackobj *fromlevel)
 {
   int Result;
   treestackobj *level;
@@ -9701,8 +9387,7 @@ treestackobj *fromlevel;
 }  /* NextSGNodeNum */
 
 
-int nextreturnport(fromlevel)
-treestackobj *fromlevel;
+int nextreturnport(treestackobj *fromlevel)
 {
   int Result;
   treestackobj *level;
@@ -9729,9 +9414,7 @@ treestackobj *fromlevel;
 }
 
 
-static void nextbodyportname(level, str)
-treestackobj *level;
-stryng *str;
+static void nextbodyportname(treestackobj *level, stryng *str)
 {
   level->UU.U0.bodyoutputportnum++;
   integerstring(str, level->UU.U0.bodyoutputportnum, 10);
@@ -9741,23 +9424,19 @@ stryng *str;
 
 
 /*------------------  MEMORY MANAGEMENT --------------------*/
-static void freesymptr(sym)
-symtblbucket *sym;
+static void freesymptr(symtblbucket *sym)
 {
   /* Free(sym); */
 }
 
 
-static void freetreestack(tree)
-treestackobj *tree;
+static void freetreestack(treestackobj *tree)
 {
   /* Free(tree); */
 }
 
 
-static void newsemantic(ptr, tagtype)
-semanticrec **ptr;
-typesemanticdata tagtype;
+static void newsemantic(semanticrec **ptr, typesemanticdata tagtype)
 {
   PSBLOCK b;
 
@@ -9831,15 +9510,13 @@ typesemanticdata tagtype;
 }
 
 
-static void freesemantic(ptr)
-semanticrec **ptr;
+static void freesemantic(semanticrec **ptr)
 {
   Free(*ptr);
 }
 
 
-static void newnamelist(ptr)
-namelistrec **ptr;
+static void newnamelist(namelistrec **ptr)
 {
   PBBLOCK b;
 
@@ -9856,15 +9533,13 @@ namelistrec **ptr;
 }
 
 
-static void freenamelist(ptr)
-namelistrec **ptr;
+static void freenamelist(namelistrec **ptr)
 {
   Free(*ptr);
 }
 
 
-static void newtypelist(ptr)
-typelistrec **ptr;
+static void newtypelist(typelistrec **ptr)
 {
   PSBLOCK b;
 
@@ -9879,16 +9554,13 @@ typelistrec **ptr;
 }
 
 
-static void freetypelist(ptr)
-typelistrec **ptr;
+static void freetypelist(typelistrec **ptr)
 {
   Free(*ptr);
 }
 
 
-static void newtornlist(ptr, tag)
-tornrec **ptr;
-torntype tag;
+static void newtornlist(tornrec **ptr, torntype tag)
 {
   *ptr = (tornrec *)Malloc(sizeof(tornrec));
   (*ptr)->torntag = tag;
@@ -9907,16 +9579,13 @@ torntype tag;
 }
 
 
-static void freetornlist(ptr)
-tornrec **ptr;
+static void freetornlist(tornrec **ptr)
 {
   Free(*ptr);
 }
 
 
-static void newttptr(ptr, tagtype)
-stentry **ptr;
-char tagtype;
+static void newttptr(stentry **ptr, char tagtype)
 {
   PBBLOCK b;
   /* *ptr = (stentry *)Malloc(sizeof(stentry)); */
@@ -9964,16 +9633,13 @@ char tagtype;
 }
 
 
-static void freettptr(ptr)
-stentry **ptr;
+static void freettptr(stentry **ptr)
 {
   Free(*ptr);
 }
 
 
-node *newnodeptr(ntype, level)
-nodesort ntype;
-treestackobj *level;
+node *newnodeptr(nodesort ntype, treestackobj *level)
 {
   node *node_;
 
@@ -9984,8 +9650,7 @@ treestackobj *level;
 }  /* NewNode */
 
 
-port *newedgeptr(ptype)
-portsort ptype;
+port *newedgeptr(portsort ptype)
 {
   port *edge;
 
@@ -9995,8 +9660,7 @@ portsort ptype;
 }
 
 
-linkrec *newlinkageptr(linkagesort)
-linksort linkagesort;
+linkrec *newlinkageptr(linksort linkagesort)
 {
   linkrec *lk;
   PBBLOCK b;
@@ -10019,7 +9683,7 @@ linksort linkagesort;
 }  /*NewLinkagePtr*/
 
 
-graph *newgraphptr()
+graph *newgraphptr(void)
 {
   graph *gr;
   PSBLOCK b;
@@ -10035,7 +9699,7 @@ graph *newgraphptr()
 
 
 
-edgelisthead *newheadptr()
+edgelisthead *newheadptr(void)
 {
   edgelisthead *head;
   PBBLOCK b;
@@ -10052,14 +9716,13 @@ edgelisthead *newheadptr()
 }
 
 
-static void freeheadptr(head)
-edgelisthead **head;
+static void freeheadptr(edgelisthead **head)
 {
   Free(*head);
 }
 
 
-edgelist *newedgelistptr()
+edgelist *newedgelistptr(void)
 {
   edgelist *edgelist_;
   PSBLOCK b;
@@ -10075,14 +9738,13 @@ edgelist *newedgelistptr()
 }
 
 
-static void freeedgelistptr(edgelist_)
-edgelist **edgelist_;
+static void freeedgelistptr(edgelist **edgelist_)
 {
   Free(*edgelist_);
 }
 
 
-refrec *newreferencesptr()
+refrec *newreferencesptr(void)
 {
   refrec *refptr_;
   PSBLOCK b;
@@ -10097,7 +9759,7 @@ refrec *newreferencesptr()
 }
 
 
-static inforecord *newinfoptr()
+static inforecord *newinfoptr(void)
 {
   inforecord *ptr;
   PBBLOCK b;
@@ -10118,14 +9780,13 @@ static inforecord *newinfoptr()
 }
 
 
-static void freeinfoptr(ptr)
-inforecord **ptr;
+static void freeinfoptr(inforecord **ptr)
 {
   Free(*ptr);
 }
 
 
-static explistnode *newexplistptr()
+static explistnode *newexplistptr(void)
 {
   explistnode *explist;
   PSBLOCK b;
@@ -10140,7 +9801,7 @@ static explistnode *newexplistptr()
 }  /* NewExpList */
 
 
-static tcstacklistrec *newtcstacklist()
+static tcstacklistrec *newtcstacklist(void)
 {
   tcstacklistrec *ptr;
 
@@ -10154,8 +9815,7 @@ static tcstacklistrec *newtcstacklist()
 }  /* NewExpList */
 
 
-static errorrecord *newerrorptr(etype)
-errortypes etype;
+static errorrecord *newerrorptr(errortypes etype)
 {
   errorrecord *newe;
 
@@ -10329,14 +9989,13 @@ errortypes etype;
 }  /* NewErrorPtr */
 
 
-static void freeerrorptr(errorrec)
-errorrecord **errorrec;
+static void freeerrorptr(errorrecord **errorrec)
 {
   Free(*errorrec);
 }
 
 
-static symlistnode *newsymlistptr()
+static symlistnode *newsymlistptr(void)
 {
   symlistnode *slptr;
   PSBLOCK b;
@@ -10380,9 +10039,7 @@ Char *errortypes_NAMES[] = {
 } ;
 
 
-static void printtypesort(filename, typeptr)
-FILE *filename;
-stentry *typeptr;
+static void printtypesort(FILE *filename, stentry *typeptr)
 {
   switch (typeptr->stsort) {
 
@@ -10461,9 +10118,7 @@ stentry *typeptr;
   }/*case*/
 }  /*PrintTypeSort*/
 
-static void printoperation(filename, op)
-FILE *filename;
-opertype op;
+static void printoperation(FILE *filename, opertype op)
 {
   switch (op) {
 
@@ -10529,9 +10184,7 @@ opertype op;
   }/*case*/
 }  /*PrintOperation*/
 
-static void printerror(filename, errorrec)
-FILE *filename;
-errorrecord *errorrec;
+static void printerror(FILE *filename, errorrecord *errorrec)
 {
    writestring(filename,&infile[0]->parvalue);
   fprintf(filename, ":%d: ERROR - ",errorrec->linenumber);
@@ -11211,8 +10864,7 @@ errorrecord *errorrec;
 
 
 /*------------------- ERROR ROUTINES -------------------------*/
-static void semerror(errorrec)
-errorrecord *errorrec;
+static void semerror(errorrecord *errorrec)
 {  /*semerr*/
   semerrcnt++;
   printerror(stdout, errorrec);
@@ -11223,8 +10875,7 @@ errorrecord *errorrec;
 
 
 /*------------------- GRAPH ROUTINES -----------------------*/
-node *findparent(level)
-treestackobj *level;
+node *findparent(treestackobj *level)
 {
   node *Result;
 
@@ -11249,9 +10900,7 @@ treestackobj *level;
 }
 
 
-static void linkparent(nd, level)
-node *nd;
-treestackobj *level;
+static void linkparent(node *nd, treestackobj *level)
 {
   while (level->lleveltag == let)
     level = level->lastlevel;
@@ -11262,15 +10911,14 @@ treestackobj *level;
 
 
 /*------------------- SEMANTIC STACK -------------------*/
-static void pushsemantic(stackitem)
-semanticrec *stackitem;
+static void pushsemantic(semanticrec *stackitem)
 {
   stackitem->next = topsemstk;
   topsemstk = stackitem;
 }
 
 
-semanticrec *popsemantic()
+semanticrec *popsemantic(void)
 {
   semanticrec *Result;
 
@@ -11284,10 +10932,7 @@ semanticrec *popsemantic()
 
 
 /*--------------- LIST ROUTINES ---------------------------*/
-static void linkname(name, line, col, list)
-stryng name;
-int line, col;
-namelistrec **list;
+static void linkname(stryng name, int line, int col, namelistrec **list)
 {
   namelistrec *listptr;
 
@@ -11308,8 +10953,7 @@ namelistrec **list;
 }  /* linkname */
 
 
-tornrec *linktorntype(elem, list)
-tornrec *elem, *list;
+tornrec *linktorntype(tornrec *elem, tornrec *list)
 {
   if (list != NULL)
     list->prev = elem->next;
@@ -11319,9 +10963,7 @@ tornrec *elem, *list;
 }
 
 
-static void linktype(typeptr, list)
-stentry *typeptr;
-typelistrec **list;
+static void linktype(stentry *typeptr, typelistrec **list)
 {
   typelistrec *listptr;
 
@@ -11339,9 +10981,7 @@ typelistrec **list;
 }  /* linktype */
 
 
-static void addtonamelist(inputtoken, line, col)
-stryng inputtoken;
-int line, col;
+static void addtonamelist(stryng inputtoken, int line, int col)
 {
   /*action 3*/
   /*stackpops - tgnamelist
@@ -11363,7 +11003,7 @@ int line, col;
 }  /* addtonamelist */
 
 
-static void startnamelist()
+static void startnamelist(void)
 {
   /*action 2*/
   /*stackpops - nothing
@@ -11380,8 +11020,7 @@ static void startnamelist()
 }  /* startnamelist */
 
 
-static void addtoexplist(list, exp)
-explistnode **list, *exp;
+static void addtoexplist(explistnode **list, explistnode *exp)
 {
   /* Add the graph info pointed to by exp to the end of the list pointed
      to by list.*/
@@ -11400,7 +11039,7 @@ explistnode **list, *exp;
 }  /*AddToExpList*/
 
 
-static void pushemptyexplist()
+static void pushemptyexplist(void)
 {
   /*action 107 PushEmptyExpList*/
   /*stackpops - nothing
@@ -11416,7 +11055,7 @@ static void pushemptyexplist()
 }
 
 
-inforecord *getalit1()
+inforecord *getalit1(void)
 {
   inforecord *info;
 
@@ -11427,9 +11066,7 @@ inforecord *getalit1()
 }
 
 
-int assignports(list, portnum)
-edgelisthead *list;
-int portnum;
+int assignports(edgelisthead *list, int portnum)
 {
   edgelist *edgelist_, *tempedge;
   edgelisthead *headlist, *temphead;
@@ -11471,8 +11108,7 @@ int portnum;
 /**************************************************************************/
 
 
-static node *buildcompound_(leveltype)
-lexleveltype leveltype;
+static node *buildcompound_(lexleveltype leveltype)
 {
   node *compnd;
 
@@ -11512,9 +11148,7 @@ lexleveltype leveltype;
 }
 
 
-static void addgrptr(gr, comp)
-graph *gr;
-node *comp;
+static void addgrptr(graph *gr, node *comp)
 {
   graph *curgrptr;
 
@@ -11531,8 +11165,7 @@ node *comp;
 }  /*AddGRptr*/
 
 
-static node *buildsubgraph(comp)
-node *comp;
+static node *buildsubgraph(node *comp)
 {
   node *subgr;
   graph *gr;
@@ -11551,10 +11184,7 @@ node *comp;
 }
 
 
-comparetype stringcompare(str1, str2, mpt)
-stryng *str1;
-stryng *str2;
-int     mpt;
+comparetype stringcompare(stryng *str1, stryng *str2, int mpt)
 {
   /*  The strutil routines have not been called here because this procedure
       will eventually end up in strutl.m4.*/
@@ -11602,8 +11232,7 @@ _L999:
 }  /*stringcompare*/
 
 
-static void insertat(place)
-int place;
+static void insertat(int place)
 {
   int i, temp;
 
@@ -11614,8 +11243,7 @@ int place;
   idsorted[place] = temp;
 }
 
-static void addtolist_(low, high)
-int low, high;
+static void addtolist_(int low, int high)
 {
   if (high == 0)
     return;
@@ -11649,8 +11277,7 @@ int low, high;
 }
 
 
-static void addtoxref(buck)
-symtblbucket *buck;
+static void addtoxref(symtblbucket *buck)
 {
   /*AddBuck to the sorted XRef array.*/
   idxrefmax++;
@@ -11663,7 +11290,7 @@ symtblbucket *buck;
 }
 
 
-static void printxref()
+static void printxref(void)
 {
   int i;
   xrefrec xrefbuck;
@@ -11695,7 +11322,7 @@ static void printxref()
 }
 
 
-static void endlevel()
+static void endlevel(void)
 {
   /*If XRef, add the entrys in the symbol table to the sorted Xref array.
           If XRef and we are ending a function, print the XRef and then clear
@@ -11732,7 +11359,7 @@ static void endlevel()
 }  /* EndLevel */
 
 
-static void endcompound()
+static void endcompound(void)
 {
   /*stackpops - nothing
                   pushes - tgexplist*/
@@ -11783,9 +11410,7 @@ static void endcompound()
 }  /*EndCompound*/
 
 
-static void addtoassolist(node_, asso)
-node *node_;
-int asso;
+static void addtoassolist(node *node_, int asso)
 {
   assoclist *newa, *assoclist_;
   PSBLOCK b;
@@ -11809,8 +11434,7 @@ int asso;
 }  /* AddToAssoList */
 
 
-port *orderolist(list)
-port *list;
+port *orderolist(port *list)
 {
   int num, j, pass;
   boolean interch;
@@ -11856,8 +11480,7 @@ port *list;
 }
 
 
-port *orderilist(list)
-port *list;
+port *orderilist(port *list)
 {
   int num, j, pass;
   boolean interch;
@@ -11903,9 +11526,7 @@ port *list;
 }
 
 
-boolean openlistfile(listfilename, listfile)
-stryng listfilename;
-FILE **listfile;
+boolean openlistfile(stryng listfilename, FILE **listfile)
 {
   stryng dev, name, ext;
 
@@ -11921,8 +11542,7 @@ FILE **listfile;
   }
 }
 
-Static void createlevel(curlex)
-lexleveltype curlex;
+Static void createlevel(lexleveltype curlex)
 {
   /* Create a new Lex Level of type CurLex and add it to the LL stack.*/
   treestackobj *newelement;
@@ -11993,8 +11613,7 @@ lexleveltype curlex;
   currentlevel = newelement;
 }
 
-symtblbucket *createbucket(bucktype)
-identtype bucktype;
+symtblbucket *createbucket(identtype bucktype)
 {
   /*Create a symbol table entry of type BuckType and returns its pointer.  */
   symtblbucket *newbuck;
@@ -12069,18 +11688,14 @@ identtype bucktype;
 }
 
 
-static void setname(inbucket, ident)
-symtblbucket *inbucket;
-stryng ident;
+static void setname(symtblbucket *inbucket, stryng ident)
 {
   inbucket->name = ident;
   inbucket->graphinfo->name = ident;
 }
 
 
-static void setdefloc(inbucket, line, column)
-symtblbucket *inbucket;
-int line, column;
+static void setdefloc(symtblbucket *inbucket, int line, int column)
 {
   if (inbucket->defloc->fline < 0) {
     inbucket->defloc->fline = line;
@@ -12092,9 +11707,7 @@ int line, column;
 }
 
 
-static void addref(inbucket, line, column)
-symtblbucket *inbucket;
-int line, column;
+static void addref(symtblbucket *inbucket, int line, int column)
 {
   reflist *ref;
   PSBLOCK b;
@@ -12114,9 +11727,7 @@ int line, column;
 }
 
 
-static void setlowerbound(level, lower)
-treestackobj *level;
-inforecord *lower;
+static void setlowerbound(treestackobj *level, inforecord *lower)
 {
   /*Set the lower bound info in the lex level passed in.*/
   if (level->UU.U0.lowerbound == NULL)
@@ -12147,9 +11758,7 @@ inforecord *lower;
 /*macro function GetLowerBound(Level : TreeStackPtr): InfoPtr; */
 /*macro function GetIdentTag(InBucket : SymTblPtr): IdentType; */
 /*macro function GetName(InBucket : SymTblPtr) : Stryng); */
-int getdefline(inbucket, time)
-symtblbucket *inbucket;
-int time;
+int getdefline(symtblbucket *inbucket, int time)
 {
   if (time == 1)
     return (inbucket->defloc->fline);
@@ -12158,9 +11767,7 @@ int time;
 }
 
 
-int getdefcolumn(inbucket, time)
-symtblbucket *inbucket;
-int time;
+int getdefcolumn(symtblbucket *inbucket, int time)
 {
   if (time == 1)
     return (inbucket->defloc->fcolumn);
@@ -12171,8 +11778,7 @@ int time;
 
 /*macro function GetType(InBucket: SymTblPtr) : STPtr; */
 /*macro function GetUndefTypePtrs(InBucket : SymTblPtr) : pttypelistrec; */
-loopvarflags getloopflag(inbucket)
-symtblbucket *inbucket;
+loopvarflags getloopflag(symtblbucket *inbucket)
 {
   if (inbucket->identtag == tvariable && inbucket->UU.U4.loopflag != NULL)
     return (*inbucket->UU.U4.loopflag);
@@ -12192,8 +11798,7 @@ symtblbucket *inbucket;
 /*macro function GetTypePtrGraphInfo(InBucket : SymTblPtr) : TypeTPtr;*/
 /*macro function GetNameGraphInfo(InBucket : SymTblPtr) : stryng); */
 /*macro function GetOnListGraphInfo(InBucket : SymTblPtr) : EdgeHeadPtr; */
-int hash(firstch, lastch)
-Char firstch, lastch;
+int hash(Char firstch, Char lastch)
 {
   return ((firstch + lastch) % hashtablesize);
 /* p2c: mono.bin.noblank.p, line 11587:
@@ -12201,9 +11806,7 @@ Char firstch, lastch;
 }
 
 
-static void addtotable(bucket, level)
-symtblbucket *bucket;
-treestackobj *level;
+static void addtotable(symtblbucket *bucket, treestackobj *level)
 {
   /*Hash the bucket in the symbol table for Level.*/
   int position;
@@ -12216,9 +11819,7 @@ treestackobj *level;
 }
 
 
-symtblbucket *incurrentlevel(ident, itype)
-stryng ident;
-identtype itype;
+symtblbucket *incurrentlevel(stryng ident, identtype itype)
 {
   /*Search current symbol table for an entry with name = Ident and
           IdentTag = IType.  Return its pointer or nil if not found.*/
@@ -12270,11 +11871,10 @@ identtype itype;
 }
 
 
-static void findname(ident, itype, level, place)
-stryng ident;
-identtype itype;
-treestackobj **level;
-symtblbucket **place;
+static void findname(stryng ident,
+                     identtype itype,
+                     treestackobj **level,
+                     symtblbucket **place)
 {
   /*Search all symbol tables back to  a function boundary for an
           entry with name = Ident and IdentTag = IType.*/
@@ -12340,9 +11940,7 @@ symtblbucket **place;
 }
 
 
-static void addpredefined(name, tag)
-stryng name;
-predeftype tag;
+static void addpredefined(stryng name, predeftype tag)
 {
   symtblbucket *bucket;
 
@@ -12353,7 +11951,7 @@ predeftype tag;
 }
 
 
-static void initsymtable()
+static void initsymtable(void)
 {
   /*Initialize the root symbol table to contain all the predefined
           functions.*/
@@ -12441,10 +12039,7 @@ static void initsymtable()
 }
 
 
-Static void outtype(fil, typ, printname)
-FILE *fil;
-stentry *typ;
-boolean printname;
+Static void outtype(FILE *fil, stentry *typ, boolean printname)
 {
   /*Output to the file = Fil the type = Typ.  If PrintName is true
           and the type has a name, just print the name.  Otherwise print
@@ -12593,8 +12188,7 @@ Char *loopvarflags_NAMES[] = {
 } ;
 
 
-static void printbucket(symbucket)
-symtblbucket *symbucket;
+static void printbucket(symtblbucket *symbucket)
 {
   /*Print the contents of the symbol table entry.*/
   reflist *ref;
@@ -12660,9 +12254,7 @@ symtblbucket *symbucket;
 
 
 staticforward void newsymlist PROTO(( symlistobj**,struct LOC_printtable* ));
-static void newsymlist(sym, LINK)
-symlistobj **sym;
-struct LOC_printtable *LINK;
+static void newsymlist(symlistobj **sym, struct LOC_printtable *LINK)
 {
   *sym = (symlistobj *)Malloc(sizeof(symlistobj));
   (*sym)->entry_ = NULL;
@@ -12670,17 +12262,13 @@ struct LOC_printtable *LINK;
 }  /* NewSymList */
 
 staticforward void freesymlist PROTO(( symlistobj*,struct LOC_printtable* ));
-static void freesymlist(sym, LINK)
-symlistobj *sym;
-struct LOC_printtable *LINK;
+static void freesymlist(symlistobj *sym, struct LOC_printtable *LINK)
 {
   /* Free(sym); */
 }  /* FreeSymList */
 
 staticforward void addtofunctlist PROTO(( symtblbucket*,struct LOC_printtable* ));
-static void addtofunctlist(sym, LINK)
-symtblbucket *sym;
-struct LOC_printtable *LINK;
+static void addtofunctlist(symtblbucket *sym, struct LOC_printtable *LINK)
 {
   symlistobj *syml;
 
@@ -12694,9 +12282,7 @@ struct LOC_printtable *LINK;
 }  /* addtofunctlist */
 
 
-static void printtable(fil, node_)
-FILE *fil;
-treestackobj *node_;
+static void printtable(FILE *fil, treestackobj *node_)
 {
   /*Print the symbol table node to the file.*/
   struct LOC_printtable V;
@@ -12738,8 +12324,7 @@ treestackobj *node_;
 }
 
 
-static void printtypes(fil)
-FILE *fil;
+static void printtypes(FILE *fil)
 {
   /*Print out the IF1 type table.*/
   int i;
@@ -12765,9 +12350,7 @@ Char *lexleveltype_NAMES[] = {
 } ;
 
 
-static void printtree(fil, current)
-FILE *fil;
-treestackobj *current;
+static void printtree(FILE *fil, treestackobj *current)
 {
   /*Print all the symbol tables from current down to root.*/
   symtblbucket *fun;
@@ -12801,9 +12384,7 @@ treestackobj *current;
 }  /* PrintTree */
 
 
-static void crossref(fil, level)
-FILE *fil;
-treestackobj *level;
+static void crossref(FILE *fil, treestackobj *level)
 {
   /*Print out sym table at Level, used only by debugger.*/
   if (level == NULL) {
@@ -12816,9 +12397,7 @@ treestackobj *level;
 }
 
 
-symtblbucket *getsymtabentry(id, bucktype)
-stryng id;
-identtype bucktype;
+symtblbucket *getsymtabentry(stryng id, identtype bucktype)
 {
   /*Get a symbol table entry of type Bucktype and set its name to
           id.  Returns its pointer.*/
@@ -12830,9 +12409,7 @@ identtype bucktype;
 }  /* getsymtabentry */
 
 
-edgelisthead *addnametolist(list, name)
-edgelisthead **list;
-stryng name;
+edgelisthead *addnametolist(edgelisthead **list, stryng name)
 {
   edgelisthead *newhead, *inlist;
 
@@ -12850,10 +12427,7 @@ stryng name;
 }
 
 
-edgelisthead *addtoklist(name, edge, list)
-stryng name;
-port *edge;
-edgelisthead *list;
+edgelisthead *addtoklist(stryng name, port *edge, edgelisthead *list)
 {
   edgelisthead *Result;
   edgelist *newedgerec;
@@ -12894,10 +12468,7 @@ edgelisthead *list;
 }  /* AddToKList */
 
 
-edgelisthead *addtoforklist(name, edge, level)
-stryng name;
-port *edge;
-treestackobj *level;
+edgelisthead *addtoforklist(stryng name, port *edge, treestackobj *level)
 {
   edgelisthead *klist;
   edgelist *newedgerec;
@@ -12924,10 +12495,7 @@ treestackobj *level;
 }  /* AddToForKList */
 
 
-edgelisthead *addtoiklist(name, edge, level)
-stryng name;
-port *edge;
-treestackobj *level;
+edgelisthead *addtoiklist(stryng name, port *edge, treestackobj *level)
 {
   edgelisthead *klist;
   edgelist *newedgerec;
@@ -12954,9 +12522,7 @@ treestackobj *level;
 }  /* AddToIKList */
 
 
-static void addtoolist(edge, node_)
-port *edge;
-node *node_;
+static void addtoolist(port *edge, node *node_)
 {
   /* Add the edge to the output port list of the node suppiled.*/
   port *trail, *olist;
@@ -13022,9 +12588,7 @@ node *node_;
 }  /* AddToOList */
 
 
-static void addtoilist(edge, node_)
-port *edge;
-node *node_;
+static void addtoilist(port *edge, node *node_)
 {
   /*  Add the edge to the input port list of the supplied node*/
   port *trail, *ilist;
@@ -13083,8 +12647,7 @@ node *node_;
 }  /* AddToIList */
 
 
-symtblbucket *copysym(old)
-symtblbucket *old;
+symtblbucket *copysym(symtblbucket *old)
 {
   /*  Build a new sym table bucket with the same info as the one passed in */
   symtblbucket *new_;
@@ -13129,8 +12692,7 @@ symtblbucket *old;
 }  /* CopySym */
 
 
-port *emptyoldedge(sym)
-symtblbucket *sym;
+port *emptyoldedge(symtblbucket *sym)
 {
   /* Return an edge that comes from the OldFrom graph info in Sym*/
   port *newedge;
@@ -13149,8 +12711,7 @@ symtblbucket *sym;
 }
 
 
-port *emptyedge(sym)
-symtblbucket *sym;
+port *emptyedge(symtblbucket *sym)
 {
   /* Return an edge that comes from the graph info in Sym*/
   port *newedge;
@@ -13165,8 +12726,7 @@ symtblbucket *sym;
 }
 
 
-int nextkport(level)
-treestackobj *level;
+int nextkport(treestackobj *level)
 {
   if (level->lleveltag == ifcomp || level->lleveltag == nestedifcomp) {
     level->UU.U8.kiport++;
@@ -13178,10 +12738,7 @@ treestackobj *level;
 }  /* NexrKPort */
 
 
-symtblbucket *pullname(symname, level, line)
-symtblbucket *symname;
-treestackobj *level;
-int line;
+symtblbucket *pullname(symtblbucket *symname, treestackobj *level, int line)
 {
   /* This routine connects the edges required to bring the value represented
      by SymName in Lex Level Level into the current lex level.  If SymName is
@@ -13383,9 +12940,7 @@ int line;
 }  /* PullName */
 
 
-static void addedge(from, tonode)
-inforecord *from;
-inforecord *tonode;
+static void addedge(inforecord *from, inforecord *tonode)
 {
   /* This routine do everything necessary to create and edge between the
      From graphinfo and the To graphinfo.  */
@@ -13466,7 +13021,7 @@ inforecord *tonode;
 }  /* AddEdge */
 
 
-static void pushnilttptr()
+static void pushnilttptr(void)
 {
   /*action 93 PushNilTTPtr*/
   /*stack              pops - nothing
@@ -13483,8 +13038,7 @@ static void pushnilttptr()
 }  /* PushNilTTPtr*/
 
 
-static void pushbasic(token)
-int token;
+static void pushbasic(int token)
 {
   /*action 10 PushBasic*/
   /*stack              pops - nothing
@@ -13530,9 +13084,7 @@ int token;
 }  /* PushBasic */
 
 
-static void pushtypename(inputtoken, line, column)
-stryng inputtoken;
-int line, column;
+static void pushtypename(stryng inputtoken, int line, int column)
 {
   /*action 11 PushTypeName*/
   /*stack              pops - nothing
@@ -13570,8 +13122,7 @@ int line, column;
 }  /* PushTypeName */
 
 
-static void pusharray(flgaddtotable)
-boolean flgaddtotable;
+static void pusharray(boolean flgaddtotable)
 {
   /*action 12 PushArray*/
   /*stack              pops - nothing
@@ -13593,8 +13144,7 @@ boolean flgaddtotable;
 }  /* PushArray */
 
 
-static void pushstream(flgaddtotable)
-boolean flgaddtotable;
+static void pushstream(boolean flgaddtotable)
 {
   /*action 16 PushStream*/
   /*stack              pops - nothing
@@ -13616,8 +13166,7 @@ boolean flgaddtotable;
 }  /* PushStream */
 
 
-static void pushrecord(flgaddtotable)
-boolean flgaddtotable;
+static void pushrecord(boolean flgaddtotable)
 {
   /*action 17 PushRecord*/
   /*stack              pops - nothing
@@ -13644,8 +13193,7 @@ boolean flgaddtotable;
 }  /* PushRecord */
 
 
-static void pushunion(flgaddtotable)
-boolean flgaddtotable;
+static void pushunion(boolean flgaddtotable)
 {
   /*action 19 PushUnion*/
   /*stack              pops - nothing
@@ -13667,7 +13215,7 @@ boolean flgaddtotable;
 }  /* PushUnion */
 
 
-static void pushnulltype()
+static void pushnulltype(void)
 {
   /*action 21 PushNullType*/
   /*stack              pops - nothing
@@ -13688,9 +13236,7 @@ static void pushnulltype()
 }  /* PushNullType */
 
 
-static void checktypename(inputtoken, line, column)
-stryng inputtoken;
-int line, column;
+static void checktypename(stryng inputtoken, int line, int column)
 {
   /*action 14 CheckTypeName*/
   /*stack              pops - nothing
@@ -13759,7 +13305,7 @@ int line, column;
 }  /* CheckTypeName */
 
 
-static void finishtypelinks()
+static void finishtypelinks(void)
 {
   /*action 13 FinishTypeLinks*/
   /*stack              pops - TGTTPtr or TGSymTblPtr
@@ -13851,7 +13397,7 @@ static void finishtypelinks()
 }  /* FinishTypeLinks */
 
 
-static void linkbase()
+static void linkbase(void)
 {
   /*action 15 LinkBase*/
   /*stack              pops - TGTTPtr or TGSymPtr
@@ -13890,9 +13436,7 @@ static void linkbase()
 }  /* LinkBase */
 
 
-static void buildfort(ifttype, flgaddtotable)
-char ifttype;
-boolean flgaddtotable;
+static void buildfort(char ifttype, boolean flgaddtotable)
 {
   semanticrec *typef, *namelist, *struct_;
   namelistrec *dump, *names;
@@ -13957,8 +13501,7 @@ boolean flgaddtotable;
 }  /* BuildForT */
 
 
-static void buildfield(flgaddtotable)
-boolean flgaddtotable;
+static void buildfield(boolean flgaddtotable)
 {
   /*action 18 BuildField*/
   /*stack              pops - TGTTPtr or TGSymptr
@@ -13983,8 +13526,7 @@ boolean flgaddtotable;
 }
 
 
-static void buildtag(flgaddtotable)
-boolean flgaddtotable;
+static void buildtag(boolean flgaddtotable)
 {
   /*action 20 BuildTag*/
   /*stack              pops - TGTTPtr or TGSymPtr
@@ -14004,7 +13546,7 @@ boolean flgaddtotable;
 }
 
 
-static void starttypedefs()
+static void starttypedefs(void)
 {
   /*action 152  StartTypeDefs*/
   /*stackpops - nothing
@@ -14016,7 +13558,7 @@ static void starttypedefs()
 
 
 
-static void endtypedefs()
+static void endtypedefs(void)
 {
   /*action 145  EndTypeDefs*/
   /*stackpops - nothing
@@ -14108,7 +13650,7 @@ static void endtypedefs()
 }
 
 
-static void smashintotable()
+static void smashintotable(void)
 {
   /*action  8  SmashIntoTable*/
   /*stackpops - TgTTPtr
@@ -14128,7 +13670,7 @@ static void smashintotable()
 }
 
 
-static void startabuild()
+static void startabuild(void)
 {
   /*action 99 StartABuild*/
   /*stackpops - nothing
@@ -14151,7 +13693,7 @@ static void startabuild()
 }
 
 
-static void dolowerbound()
+static void dolowerbound(void)
 {
   /*action 101 DoLowerBound*/
   /*stackpops - tgexplist  (for lower bound)
@@ -14202,7 +13744,7 @@ static void dolowerbound()
 }
 
 
-static void endabuild()
+static void endabuild(void)
 {
   /*action 102 EndABuild*/
   /*stackpops - tgexplist  (array elem)
@@ -14322,7 +13864,7 @@ static void endabuild()
 }
 
 
-static void doarrayindex()
+static void doarrayindex(void)
 {
   /*action 109 DoArrayIndex*/
   /*stackpops - tgexplist  (for indexing expression)
@@ -14413,7 +13955,7 @@ static void doarrayindex()
 }
 
 
-static void doarrayreplace()
+static void doarrayreplace(void)
 {
   /*action 110 DoArrayReplace*/
   /*stackpops - tgexplist  (element to replace)
@@ -14525,7 +14067,7 @@ static void doarrayreplace()
 }
 
 
-static void startsbuild()
+static void startsbuild(void)
 {
   /*action 100 StartSBuild                                                     */
   /*stack           pops - nothing
@@ -14557,8 +14099,7 @@ static void startsbuild()
 }
 
 
-inforecord *createerr(stype)
-stentry **stype;
+inforecord *createerr(stentry **stype)
 {
   inforecord *info;
 
@@ -14571,8 +14112,7 @@ stentry **stype;
 }  /* CreateErr */
 
 
-static void endsbuild(line, col)
-int line, col;
+static void endsbuild(int line, int col)
 {
   /*action  103 EndSBuild                                                     */
   /*stack           pops - TGExpList
@@ -14671,7 +14211,7 @@ int line, col;
 }
 
 
-static void beforeexp()
+static void beforeexp(void)
 {
   /*action 86 BeforeExp*/
   /*stackpops - nothing
@@ -14694,7 +14234,7 @@ static void beforeexp()
 }
 
 
-static void incboostfac()
+static void incboostfac(void)
 {
   /*action 87 IncBoostFac*/
   /*stackpops - nothing
@@ -14707,7 +14247,7 @@ static void incboostfac()
 }
 
 
-static void decboostfac()
+static void decboostfac(void)
 {
   /*action 88 DecBoostFac*/
   /*stackpops - nothing
@@ -14720,10 +14260,7 @@ static void decboostfac()
 }
 
 
-static void buildunarynode(exp1list, oper, line)
-explistnode *exp1list;
-opertype oper;
-int line;
+static void buildunarynode(explistnode *exp1list, opertype oper, int line)
 {
   explistnode *expresult;
   semanticrec *semexplist;
@@ -14798,10 +14335,10 @@ int line;
   pushsemantic(semexplist);
 }  /*BuildUnaryNode*/
 
-static void buildbinarynode(exp1list, exp2list, oper, line)
-explistnode *exp1list, *exp2list;
-opertype oper;
-int line;
+static void buildbinarynode(explistnode *exp1list,
+                            explistnode *exp2list,
+                            opertype oper,
+                            int line)
 {
   inforecord *exp1, *exp2;
   explistnode *expresult;
@@ -14990,7 +14527,7 @@ int line;
 }  /*BuildBinaryNode*/
 
 
-boolean Reduce()
+boolean Reduce(void)
 {
   /* This function checks the precedence of the top 2 operations on the
      stack.  If the one lower on the stack has higher or equal precedence,
@@ -15041,7 +14578,7 @@ boolean Reduce()
 }  /*Reduce*/
 
 
-static void reduceexp()
+static void reduceexp(void)
 {
   /*action 89 ReduceExp*/
   /*stackpops - All tgexplist and tgpreclevel down to tgpreclevel
@@ -15068,7 +14605,7 @@ static void reduceexp()
 }
 
 
-static void afterexp()
+static void afterexp(void)
 {
   /*action 91 AfterExp*/
   /*stackpops - tgexplist (single expression)
@@ -15094,7 +14631,7 @@ static void afterexp()
 }
 
 
-static void aftersimpexp()
+static void aftersimpexp(void)
 {
   /*action 144 AfterSimpExp*/
   /*stackpops - tgexplist (single expression)
@@ -15122,8 +14659,7 @@ static void aftersimpexp()
 }
 
 
-static void dobinaryop(token, line, col)
-int token, line, col;
+static void dobinaryop(int token, int line, int col)
 {
   /*action 112 DoBinaryOp*/
   /*stackpops - nothing
@@ -15212,7 +14748,7 @@ int token, line, col;
 }
 
 
-static void poppreclevel()
+static void poppreclevel(void)
 {
   /*action 90 PopPrecLevel*/
   /*stackpops tgpreclevel
@@ -15227,11 +14763,10 @@ static void poppreclevel()
 }
 
 
-static void findfieldname(name, fields, found, place)
-stryng name;
-stentry **fields;
-boolean *found;
-int *place;
+static void findfieldname(stryng name,
+                          stentry **fields,
+                          boolean *found,
+                          int *place)
 {
   stryng name1, name2;
 
@@ -15251,7 +14786,7 @@ int *place;
 }  /* FindFieldName */
 
 
-inforecord *createerrlit()
+inforecord *createerrlit(void)
 {
   inforecord *info;
 
@@ -15262,8 +14797,7 @@ inforecord *createerrlit()
 }  /* CreateErrLit */
 
 
-static void dofieldlist(line, col)
-int line, col;
+static void dofieldlist(int line, int col)
 {
   /*action 92 DoFieldList                                                     */
   /*stack             pops - TGNameList
@@ -15351,7 +14885,7 @@ int line, col;
 }  /* DoFieldList */
 
 
-static void startrbuild()
+static void startrbuild(void)
 {
   /*action 95 StartRBuild                                                     */
   /*stack             pops - nothing
@@ -15380,8 +14914,7 @@ static void startrbuild()
 }
 
 
-static void buildfieldlist(line, col)
-int line, col;
+static void buildfieldlist(int line, int col)
 {
   /*action 97 BuildFieldList                                                  */
   /*stack             pops - TGExpList
@@ -15422,8 +14955,7 @@ int line, col;
 }
 
 
-static void endrbuild(line, col)
-int line, col;
+static void endrbuild(int line, int col)
 {
   /*action 98 EndRBuild                                                       */
   /*stack             pops - TGExpList
@@ -15459,7 +14991,7 @@ int line, col;
 }
 
 
-static void pushniltag()
+static void pushniltag(void)
 {
   /*action  105  PushNilTag                                                    */
   /*stack            pops - nothing
@@ -15483,8 +15015,9 @@ static void pushniltag()
 }
 
 
-static void builderrunion(expl, namel, tnt)
-semanticrec *expl, *namel, **tnt;
+static void builderrunion(semanticrec *expl,
+                          semanticrec *namel,
+                          semanticrec **tnt)
 {
   semanticrec *ntsem;
 
@@ -15499,8 +15032,7 @@ semanticrec *expl, *namel, **tnt;
 }  /* BuildErrUnion */
 
 
-static void endubuild(line, col)
-int line, col;
+static void endubuild(int line, int col)
 {
   /*action  106  EndUBuild                                                    */
   /*stack              pops - TGExpList
@@ -15604,9 +15136,7 @@ int line, col;
 }  /* EndUBuild */
 
 
-static void pushinfolist(infol, newinfo)
-ilistrec **infol;
-inforecord *newinfo;
+static void pushinfolist(ilistrec **infol, inforecord *newinfo)
 {
   ilistrec *newl;
 
@@ -15616,8 +15146,7 @@ inforecord *newinfo;
   *infol = newl;
 }  /* PushInfoList */
 
-static inforecord *popinfolist(infol)
-ilistrec **infol;
+static inforecord *popinfolist(ilistrec **infol)
 {
   inforecord *Result;
 
@@ -15626,9 +15155,7 @@ ilistrec **infol;
   return Result;
 }  /* PopInfoList */
 
-static void pushpositionlist(positionl, newpos)
-plistrec **positionl;
-int newpos;
+static void pushpositionlist(plistrec **positionl, int newpos)
 {
   plistrec *newl;
 
@@ -15638,8 +15165,7 @@ int newpos;
   *positionl = newl;
 }  /* PushPositionList */
 
-static int poppositionlist(positionl)
-plistrec **positionl;
+static int poppositionlist(plistrec **positionl)
 {
   int Result;
 
@@ -15649,8 +15175,7 @@ plistrec **positionl;
 }  /* PopPositionList */
 
 
-static void buildreplace(line, col)
-int line, col;
+static void buildreplace(int line, int col)
 {  /* Build Replace */
   /*action  111  BuildReplace                                                 */
   /*stack              pops - TGExpList
@@ -15818,7 +15343,7 @@ int line, col;
 }
 
 
-static void popsymlist()
+static void popsymlist(void)
 {
   /*action 113 PopSymList                                                   */
   /*stack          pops - TGSymList
@@ -15834,7 +15359,7 @@ static void popsymlist()
 }  /* PopSymList */
 
 
-static void startsymlist()
+static void startsymlist(void)
 {
   /*action 32 StartSymList                                                    */
   /*stack          pops - nothing
@@ -15851,8 +15376,7 @@ static void startsymlist()
 }  /* StartSymList */
 
 
-static void checkatypes(line, col)
-int line, col;
+static void checkatypes(int line, int col)
 {
   /*action 33 CheckATypes                                                     */
   /*stack          pops - TGExpList
@@ -16051,7 +15575,7 @@ int line, col;
 }  /* CheckATypes */
 
 
-static void checkarity()
+static void checkarity(void)
 {
   /*action 34 CheckArity                                                      */
   /*stack          pops - TGExpList
@@ -16264,7 +15788,7 @@ static void checkarity()
 }  /* CheckArity */
 
 
-static void assoctypes()
+static void assoctypes(void)
 {
   /*action 35 AssocTypes                                                      */
   /*stack          pops - TGTTPtr
@@ -16321,9 +15845,7 @@ static void assoctypes()
 }
 
 
-static void errindexnames(indexnames, col)
-namelistrec **indexnames;
-int col;
+static void errindexnames(namelistrec **indexnames, int col)
 {
   symtblbucket *sym;
 
@@ -16339,7 +15861,7 @@ int col;
 }  /* ErrIndexNames */
 
 
-static void startbody()
+static void startbody(void)
 {
   /*action 39  StartBody*/
   /*stackpops - nothing
@@ -16385,7 +15907,7 @@ static void startbody()
 }  /* StartBody */
 
 
-static void checkcross()
+static void checkcross(void)
 {
   /*action 37  CheckCross*/
   /*stackpops - nothing
@@ -16408,7 +15930,7 @@ static void checkcross()
 }  /* CheckCross */
 
 
-static void preparefordot()
+static void preparefordot(void)
 {
   /*action 153 PrepareForDot*/
   /*stackpops - nothing
@@ -16422,7 +15944,7 @@ static void preparefordot()
 }
 
 
-static void endbody()
+static void endbody(void)
 {
   /*action 77  EndBody*/
   /*stackpops - nothing
@@ -16477,7 +15999,7 @@ static void endbody()
 }  /* EndBody */
 
 
-static explistnode *createerrint()
+static explistnode *createerrint(void)
 {
   explistnode *expr;
 
@@ -16488,9 +16010,7 @@ static explistnode *createerrint()
 }  /* CreateErrInt */
 
 
-static void checkexptype(exp, line, col)
-explistnode **exp;
-int line, col;
+static void checkexptype(explistnode **exp, int line, int col)
 {
   errorrecord *errorrec;
 
@@ -16514,11 +16034,11 @@ int line, col;
 }  /* CheckExpType */
 
 
-static void makearrayfor(indexnames, exp, name, line, column)
-namelistrec *indexnames;
-explistnode *exp;
-namelistrec *name;
-int line, column;
+static void makearrayfor(namelistrec *indexnames,
+                         explistnode *exp,
+                         namelistrec *name,
+                         int line,
+                         int column)
 {
   /* This routine builds the generator for a array or stream driven forall.
      It calls itself recursively to build nested foralls when implicit
@@ -16737,10 +16257,11 @@ int line, column;
 }  /* MakeArrayFor */
 
 
-static void makerangefor(exp, exp2, name, line, col)
-explistnode *exp, *exp2;
-namelistrec *name;
-int line, col;
+static void makerangefor(explistnode *exp,
+                         explistnode *exp2,
+                         namelistrec *name,
+                         int line,
+                         int col)
 {
   /* This routine builds the generator for a range driven forall. */
   symtblbucket *sym;
@@ -16850,8 +16371,7 @@ int line, col;
 }  /* MakeRangeFor */
 
 
-static void makeforall(line, col)
-int line, col;
+static void makeforall(int line, int col)
 {
   /*action 41  MakeForAll*/
   /*stackpops - tgnamelist  (index names)
@@ -16951,8 +16471,7 @@ int line, col;
 }  /* MakeForall */
 
 
-static void increasegenerator(line, col)
-int line, col;
+static void increasegenerator(int line, int col)
 {
   /*action 36  IncreaseGenerator*/
   /*stackpops - tgnamelist  (index names)
@@ -17043,8 +16562,7 @@ int line, col;
 }  /* IncreaseGenerator */
 
 
-static void explicitcross(line, col)
-int line, col;
+static void explicitcross(int line, int col)
 {
   /*action 38  ExplicitCross*/
   /*stackpops - tgnamelist  (index names)
@@ -17151,7 +16669,7 @@ int line, col;
 }  /* ExplicitCross */
 
 
-static void endforall()
+static void endforall(void)
 {
   /*action 140  EndForAll*/
   /*stackpops - nothing
@@ -17211,9 +16729,7 @@ static void endforall()
 }
 
 
-edgelisthead *findnameonlist(name, list)
-stryng name;
-edgelisthead *list;
+edgelisthead *findnameonlist(stryng name, edgelisthead *list)
 {
   /* returns nil if name is not found */
   boolean found;
@@ -17229,7 +16745,7 @@ edgelisthead *list;
 }  /* FindNameOnList */
 
 
-static void endinitpart()
+static void endinitpart(void)
 {
   /*action 50  EndInitPart*/
   /*stackpops - nothing
@@ -17272,8 +16788,7 @@ static void endinitpart()
 }  /* EndInitPart */
 
 
-static void endabody(line, col)
-int line, col;
+static void endabody(int line, int col)
 {
   /*action 40  EndABody*/
   /*stackpops - nothing
@@ -17377,8 +16892,7 @@ int line, col;
 }  /* EndABody */
 
 
-static void endbbody(line, col)
-int line, col;
+static void endbbody(int line, int col)
 {
   /*action 143  EndBBody*/
   /*stackpops - nothing
@@ -17473,7 +16987,7 @@ int line, col;
 }  /* EndBBody */
 
 
-static void startbtest()
+static void startbtest(void)
 {
   /*action 80  StartBTest*/
   /*stackpops - nothing
@@ -17515,7 +17029,7 @@ static void startbtest()
 }  /* StartBTest */
 
 
-static void startatest()
+static void startatest(void)
 {
   /*action 53  StartATest*/
   /*stackpops - nothing
@@ -17549,7 +17063,7 @@ static void startatest()
 }  /* StartATest */
 
 
-static void startbinitbody()
+static void startbinitbody(void)
 {
   /*action 84  StartBInitBody*/
   /*stackpops - nothing
@@ -17585,7 +17099,7 @@ static void startbinitbody()
 }  /* StartBInitBody */
 
 
-static void startainitbody()
+static void startainitbody(void)
 {
   /*action 76  StartAInitBody*/
   /*stackpops - nothing
@@ -17619,7 +17133,7 @@ static void startainitbody()
 }  /* StartAInitBody */
 
 
-static void startforinit()
+static void startforinit(void)
 {
   /*action 49  StartForInit*/
   /*stackpops - nothing
@@ -17636,7 +17150,7 @@ static void startforinit()
 }
 
 
-static void pushwhile()
+static void pushwhile(void)
 {
   /*action 51  PushWhile*/
   /*stackpops - nothing
@@ -17654,7 +17168,7 @@ static void pushwhile()
 }
 
 
-static void pushuntil()
+static void pushuntil(void)
 {
   /*action 52  PushUntil*/
   /*stackpops - nothing
@@ -17672,7 +17186,7 @@ static void pushuntil()
 }
 
 
-static void endtest()
+static void endtest(void)
 {
   /*action 54  EndTest*/
   /*stackpops - tgExpList
@@ -17727,8 +17241,7 @@ static void endtest()
 }  /* EndTest */
 
 
-assoclist *buildforinitasslist(initnode)
-node *initnode;
+assoclist *buildforinitasslist(node *initnode)
 {
   assoclist *Result;
   int count;
@@ -17754,7 +17267,7 @@ node *initnode;
 }
 
 
-static void loopbassoclist()
+static void loopbassoclist(void)
 {
   /*action 55  LoopBAssocList*/
   /*stackpops - nothing
@@ -17776,7 +17289,7 @@ static void loopbassoclist()
 }
 
 
-static void loopaassoclist()
+static void loopaassoclist(void)
 {
   /*action 56  LoopAAssocList*/
   /*stackpops - nothing
@@ -17798,7 +17311,7 @@ static void loopaassoclist()
 }
 
 
-static void pushold()
+static void pushold(void)
 {
   /*action 57 PushOld*/
   /*stackpops - nothing
@@ -17815,7 +17328,7 @@ static void pushold()
 }
 
 
-static void pushnoold()
+static void pushnoold(void)
 {
   /*action 58 PushNoOld*/
   /*stackpops - nothing
@@ -17832,8 +17345,7 @@ static void pushnoold()
 }
 
 
-static void doreduce(action)
-int action;
+static void doreduce(int action)
 {
   /*action 59 DoRedRight
            60 DoRedLeft
@@ -17870,7 +17382,7 @@ int action;
 }
 
 
-static void dosum()
+static void dosum(void)
 {
   /*action 63 DoSum*/
   /*stackpops - nothing
@@ -17887,7 +17399,7 @@ static void dosum()
 }
 
 
-static void doproduct()
+static void doproduct(void)
 {
   /*action 64 DoProduct*/
   /*stackpops - nothing
@@ -17904,7 +17416,7 @@ static void doproduct()
 }
 
 
-static void dogreatest()
+static void dogreatest(void)
 {
   /*action 65 DoGreatest*/
   /*stackpops - nothing
@@ -17921,7 +17433,7 @@ static void dogreatest()
 }
 
 
-static void doleast()
+static void doleast(void)
 {
   /*action 66 DoLeast*/
   /*stackpops - nothing
@@ -17938,7 +17450,7 @@ static void doleast()
 }
 
 
-static void docatenate()
+static void docatenate(void)
 {
   /*action 67 DoCatenate*/
   /*stackpops - nothing
@@ -17955,7 +17467,7 @@ static void docatenate()
 }
 
 
-static void noredop()
+static void noredop(void)
 {
   /*action 68  NoRedOp*/
   /*stackpops - nothing
@@ -17977,8 +17489,7 @@ static void noredop()
 }
 
 
-static void checkmask(explist)
-explistnode *explist;
+static void checkmask(explistnode *explist)
 {
   errorrecord *errorrec;
 
@@ -17998,7 +17509,7 @@ explistnode *explist;
 }
 
 
-static void dounlessexp()
+static void dounlessexp(void)
 {
   /*action 69  DoUnlessExp*/
   /*stackpops - tgexplist
@@ -18029,7 +17540,7 @@ static void dounlessexp()
 }
 
 
-static void dowhenexp()
+static void dowhenexp(void)
 {
   /*action 70 DoWhenExp*/
   /*stackpops - tgexplist
@@ -18046,7 +17557,7 @@ static void dowhenexp()
 }
 
 
-static void nomaskingexp()
+static void nomaskingexp(void)
 {
   /*action 71 NoMaskingExp*/
   /*stackpops - nothing
@@ -18062,9 +17573,7 @@ static void nomaskingexp()
 }
 
 
-inforecord *removelast(inputgi, level)
-inforecord *inputgi;
-treestackobj *level;
+inforecord *removelast(inforecord *inputgi, treestackobj *level)
 {
   /* Attach an AllButLastValue node to the expression supplied and return
      graph info for the output of the ABLV node.*/
@@ -18082,8 +17591,7 @@ treestackobj *level;
 }
 
 
-stentry *buildredtype(intypeptr)
-stentry *intypeptr;
+stentry *buildredtype(stentry *intypeptr)
 {
   stentry *functtype, *tuple1type, *tuple2type;
 
@@ -18102,8 +17610,7 @@ stentry *intypeptr;
 }
 
 
-static void switchtoreturngraph(level)
-treestackobj *level;
+static void switchtoreturngraph(treestackobj *level)
 {
   level->UU.U0.bodynodecount = level->nodecounter;
   level->nodecounter = level->UU.U0.returnnodecount;
@@ -18113,8 +17620,7 @@ treestackobj *level;
 }
 
 
-static void switchtobodygraph(level)
-treestackobj *level;
+static void switchtobodygraph(treestackobj *level)
 {
   level->UU.U0.returnnodecount = level->nodecounter;
   level->nodecounter = level->UU.U0.bodynodecount;
@@ -18124,7 +17630,7 @@ treestackobj *level;
 }
 
 
-static void dovalueof()
+static void dovalueof(void)
 {
   /*action 72  DoValueOf*/
   /*stackpops - tgExpList     (masking exp)
@@ -18446,8 +17952,7 @@ static void dovalueof()
 }
 
 
-static void doarrayof(action)
-int action;
+static void doarrayof(int action)
 {
   /*action 73 DoArrayOf  74 DoStreamOf*/
   /*stackpops tgexplist  (masking exp)
@@ -18638,7 +18143,7 @@ int action;
 }
 
 
-static void startreturns()
+static void startreturns(void)
 {
   /*action 75  StartReturns*/
   /*stackpops - nothing
@@ -18704,7 +18209,7 @@ static void startreturns()
 }
 
 
-static void endforinit()
+static void endforinit(void)
 {
   /*action 78  EndForInit*/
   /*stackpops - nothing
@@ -18745,9 +18250,7 @@ static void endforinit()
 }
 
 
-static void notenoughargs(functname, LINK)
-stryng functname;
-struct LOC_dopredefined *LINK;
+static void notenoughargs(stryng functname, struct LOC_dopredefined *LINK)
 {
   errorrecord *errorrec;
 
@@ -18758,9 +18261,7 @@ struct LOC_dopredefined *LINK;
   semerror(errorrec);
 }
 
-static void toomanyargs(functname, LINK)
-stryng functname;
-struct LOC_dopredefined *LINK;
+static void toomanyargs(stryng functname, struct LOC_dopredefined *LINK)
 {
   errorrecord *errorrec;
 
@@ -18771,10 +18272,9 @@ struct LOC_dopredefined *LINK;
   semerror(errorrec);
 }
 
-static void wrongargtype(argnum, functname, LINK)
-int argnum;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static void wrongargtype(int argnum,
+                         stryng functname,
+                         struct LOC_dopredefined *LINK)
 {
   errorrecord *errorrec;
 
@@ -18785,8 +18285,7 @@ struct LOC_dopredefined *LINK;
   semerror(errorrec);
 }
 
-static inforecord *getalit1_(LINK)
-struct LOC_dopredefined *LINK;
+static inforecord *getalit1_(struct LOC_dopredefined *LINK)
 {
   inforecord *info;
 
@@ -18796,11 +18295,10 @@ struct LOC_dopredefined *LINK;
   return info;
 }
 
-static void checknumberofargs(expl, num, functname, LINK)
-semanticrec *expl;
-int num;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static void checknumberofargs(semanticrec *expl,
+                              int num,
+                              stryng functname,
+                              struct LOC_dopredefined *LINK)
 {
   int cnum;
   explistnode *listptr;
@@ -18850,9 +18348,7 @@ struct LOC_dopredefined *LINK;
   /* else */
 }  /* CheckNumberOfArgs */
 
-static inforecord *addintnode(gi, LINK)
-inforecord *gi;
-struct LOC_dopredefined *LINK;
+static inforecord *addintnode(inforecord *gi, struct LOC_dopredefined *LINK)
 {
   /* Since the IF1 exp node does not output integer values we need to
      add an integer node after the exp node if the inputs were integers. */
@@ -18871,9 +18367,9 @@ struct LOC_dopredefined *LINK;
   return intgi;
 }
 
-static inforecord *buildpredefnode(nodecode, line, LINK)
-int nodecode, line;
-struct LOC_dopredefined *LINK;
+static inforecord *buildpredefnode(int nodecode,
+                                   int line,
+                                   struct LOC_dopredefined *LINK)
 {
   inforecord *predefgraphinfo;
 
@@ -18885,10 +18381,9 @@ struct LOC_dopredefined *LINK;
   return predefgraphinfo;
 }
 
-static inforecord *errtype_(iftype, base, LINK)
-char iftype;
-stentry *base;
-struct LOC_dopredefined *LINK;
+static inforecord *errtype_(char iftype,
+                            stentry *base,
+                            struct LOC_dopredefined *LINK)
 {
   stentry *ptype;
   inforecord *info;
@@ -18902,12 +18397,11 @@ struct LOC_dopredefined *LINK;
   return info;
 }  /* ErrType */
 
-static inforecord *maxmin(ifntype, expl, line, functname, LINK)
-unchar ifntype;
-semanticrec *expl;
-int line;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static inforecord *maxmin(unchar ifntype,
+                          semanticrec *expl,
+                          int line,
+                          stryng functname,
+                          struct LOC_dopredefined *LINK)
 {
   explistnode *exp1, *exp2;
   inforecord *preinfo;
@@ -18945,13 +18439,12 @@ struct LOC_dopredefined *LINK;
   return preinfo;
 }  /* MaxMin */
 
-static inforecord *addhlarrayorstream(iftype, expl, ifntype, line, functname, LINK)
-char iftype;
-semanticrec *expl;
-unchar ifntype;
-int line;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static inforecord *addhlarrayorstream(char iftype,
+                                      semanticrec *expl,
+                                      unchar ifntype,
+                                      int line,
+                                      stryng functname,
+                                      struct LOC_dopredefined *LINK)
 {
   explistnode *exp;
   inforecord *predefgraphinfo;
@@ -18976,13 +18469,12 @@ struct LOC_dopredefined *LINK;
   return predefgraphinfo;
 }  /* AddHLArrayOrStream */
 
-static inforecord *sizearrayorstream(predefkind, iftype, expl, line, functname, LINK)
-predeftype predefkind;
-char iftype;
-semanticrec *expl;
-int line;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static inforecord *sizearrayorstream(predeftype predefkind,
+                                     char iftype,
+                                     semanticrec *expl,
+                                     int line,
+                                     stryng functname,
+                                     struct LOC_dopredefined *LINK)
 {
   explistnode *exp;
   inforecord *info;
@@ -19008,13 +18500,12 @@ struct LOC_dopredefined *LINK;
   return info;
 }  /* SizeArrayOrStream */
 
-static inforecord *remhlarrayorstream(iftype, expl, ifntype, line, functname, LINK)
-char iftype;
-semanticrec *expl;
-unchar ifntype;
-int line;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static inforecord *remhlarrayorstream(char iftype,
+                                      semanticrec *expl,
+                                      unchar ifntype,
+                                      int line,
+                                      stryng functname,
+                                      struct LOC_dopredefined *LINK)
 {
   stentry *bwild;
   inforecord *info;
@@ -19036,12 +18527,11 @@ struct LOC_dopredefined *LINK;
   return info;
 }  /* RemHLArrayOrStream */
 
-static inforecord *arraylimhorl(ntype, semexplist, line, functname, LINK)
-unchar ntype;
-semanticrec *semexplist;
-int line;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static inforecord *arraylimhorl(unchar ntype,
+                                semanticrec *semexplist,
+                                int line,
+                                stryng functname,
+                                struct LOC_dopredefined *LINK)
 {
   stentry *bwild;
   inforecord *predefgraphinfo;
@@ -19063,12 +18553,11 @@ struct LOC_dopredefined *LINK;
   return predefgraphinfo;
 }  /* ArrayLimHOrL*/
 
-static inforecord *floorortrunc(ntype, semexplist, line, functname, LINK)
-unchar ntype;
-semanticrec *semexplist;
-int line;
-stryng functname;
-struct LOC_dopredefined *LINK;
+static inforecord *floorortrunc(unchar ntype,
+                                semanticrec *semexplist,
+                                int line,
+                                stryng functname,
+                                struct LOC_dopredefined *LINK)
 {
   explistnode *exp;
   inforecord *predefgraphinfo;
@@ -19092,10 +18581,9 @@ struct LOC_dopredefined *LINK;
 }  /* FloorOrTrunc */
 
 
-static void dopredefined(symptr, semexplist, line_)
-symtblbucket *symptr;
-semanticrec *semexplist;
-int line_;
+static void dopredefined(symtblbucket *symptr,
+                         semanticrec *semexplist,
+                         int line_)
 {
   /*  This procedure builds a call node for any of the predefined SISAL
       functions.  It checks the types and arity of the arguments and
@@ -19439,7 +18927,7 @@ int line_;
 }  /*DoPreDefined*/
 
 
-static void initsem()
+static void initsem(void)
 {
   /*action 9 initsem*/
   /*stackpops - nothing
@@ -19471,9 +18959,7 @@ static void initsem()
 }
 
 
-static boolean linkdefinename(name, list)
-stryng name;
-namelistrec **list;
+static boolean linkdefinename(stryng name, namelistrec **list)
 {
   /* Check to see if name is already on list, if not return false and
      add it to the end of the list, else return true.*/
@@ -19516,8 +19002,7 @@ namelistrec **list;
 }  /*LinkDefineName*/
 
 
-static void addtodefinelist(inputtoken)
-stryng inputtoken;
+static void addtodefinelist(stryng inputtoken)
 {
   /*action 23*/
   /*stackpops - tgnamelist
@@ -19544,7 +19029,7 @@ stryng inputtoken;
 }  /* addtodefinelist */
 
 
-static void addtotypelist()
+static void addtotypelist(void)
 {
   /*action 5 AddToTypeList*/
   /*stackpops - tgTTptr
@@ -19576,7 +19061,7 @@ static void addtotypelist()
 }  /* addtotypelist */
 
 
-static void starttypelist()
+static void starttypelist(void)
 {
   /*action 4 StartTypeList*/
   /*stackpops - nothing
@@ -19592,8 +19077,7 @@ static void starttypelist()
 }  /* starttypelist */
 
 
-stryng buildfunctname(name)
-stryng name;
+stryng buildfunctname(stryng name)
 {
   /* Build the IF1 function name by prepending all the outer function names
      to the SISAL function name.  This is required because IF1 doesn't have
@@ -19622,8 +19106,7 @@ stryng name;
 }  /*BuildFunctName*/
 
 
-static void addlkptr(lk)
-linkrec *lk;
+static void addlkptr(linkrec *lk)
 {
   linkrec *curlkptr;
 
@@ -19639,8 +19122,7 @@ linkrec *lk;
   /* else */
 }  /*AddLKptr*/
 
-static void addgrptr_(gr)
-graph *gr;
+static void addgrptr_(graph *gr)
 {
   graph *curgrptr;
 
@@ -19657,11 +19139,10 @@ graph *gr;
   /*else*/
 }  /*AddGRptr*/
 
-static void buildfunctgraph(symptr, functname, action, exported)
-symtblbucket *symptr;
-stryng functname;
-int action;
-boolean exported;
+static void buildfunctgraph(symtblbucket *symptr,
+                            stryng functname,
+                            int action,
+                            boolean exported)
 {
   /* Build the framework for a new function and hook it into the
      IF1 graph we are creating.*/
@@ -19697,9 +19178,7 @@ boolean exported;
   symptr->graphinfo->node_ = nd;
 }  /*BuildFunctGraph*/
 
-static boolean checkdefinelist(functname, action)
-stryng functname;
-int action;
+static boolean checkdefinelist(stryng functname, int action)
 {
   /*Check the DefineList for FunctName, if found remove it.*/
   namelistrec *nameptr;
@@ -19736,9 +19215,7 @@ int action;
 }  /*CheckDefineList*/
 
 
-static void startfunction(inputtoken, action, line, col)
-stryng inputtoken;
-int action, line, col;
+static void startfunction(stryng inputtoken, int action, int line, int col)
 {
   /*action 1 StartFunction and 25 StartGlobalFunct*/
   /*stackpops - nothing
@@ -19798,7 +19275,7 @@ int action, line, col;
 }  /* startfunction */
 
 
-static void enddefinelist()
+static void enddefinelist(void)
 {
   /*action 22 EndDefineList*/
   /*stackpops - tgnamelist
@@ -19819,9 +19296,7 @@ static void enddefinelist()
 }
 
 
-static void startforwardfunct(inputtoken, line, col)
-stryng inputtoken;
-int line, col;
+static void startforwardfunct(stryng inputtoken, int line, int col)
 {
   /*action 24 StartForwardFunct*/
   /*stackpops - nothing
@@ -19848,8 +19323,7 @@ int line, col;
 }
 
 
-static void addfunctargtype(functttptr, argttptr)
-stentry *functttptr, *argttptr;
+static void addfunctargtype(stentry *functttptr, stentry *argttptr)
 {
   /* Add the type ArgTTptr to the argument type list of function type
      functTTptr.*/
@@ -19870,7 +19344,7 @@ stentry *functttptr, *argttptr;
 }  /*AddFunctArgType*/
 
 
-static void processparam()
+static void processparam(void)
 {
   /*action 27 ProcessParam*/
   /*stackpops - tgTTPtr
@@ -19937,8 +19411,7 @@ static void processparam()
 }
 
 
-static void addfunctrestype(functttptr, resttptr)
-stentry *functttptr, *resttptr;
+static void addfunctrestype(stentry *functttptr, stentry *resttptr)
 {
   /* Add the type ResTTptr to the result type list of function type
      functTTptr.*/
@@ -19959,9 +19432,7 @@ stentry *functttptr, *resttptr;
 }  /*AddFunctResType*/
 
 
-static void doresultlist(typelist, symptr)
-typelistrec *typelist;
-symtblbucket *symptr;
+static void doresultlist(typelistrec *typelist, symtblbucket *symptr)
 {
   /* Build the result list for the function.*/
   typelistrec *curtypelist;
@@ -19983,10 +19454,7 @@ symtblbucket *symptr;
 }  /*DoResultList*/
 
 
-boolean checklastlevel(name, itype, bucket)
-stryng name;
-identtype itype;
-symtblbucket **bucket;
+boolean checklastlevel(stryng name, identtype itype, symtblbucket **bucket)
 {
   /* Search level one back from current for a function of type Itype and
      name name.*/
@@ -20021,8 +19489,7 @@ symtblbucket **bucket;
 }  /*CheckLastLevel*/
 
 
-static void freelist(list)
-stentry *list;
+static void freelist(stentry *list)
 {
   stentry *nexttypeptr, *freetypeptr;
 
@@ -20040,8 +19507,7 @@ stentry *list;
 }  /*FreeList*/
 
 
-static void freefuncttype(functtypeptr)
-stentry *functtypeptr;
+static void freefuncttype(stentry *functtypeptr)
 {  /*FreeTypeList*/
   freelist(functtypeptr->UU.U3.starg);
   freelist(functtypeptr->UU.U3.stres);
@@ -20049,7 +19515,7 @@ stentry *functtypeptr;
 }  /*FreeTypeList*/
 
 
-static void endfunctionheader()
+static void endfunctionheader(void)
 {
   /*action 29 EndFunctionHeader*/
   /*stackpops - tgtypelist
@@ -20142,7 +19608,7 @@ static void endfunctionheader()
 }
 
 
-static void endforwardglobheader()
+static void endforwardglobheader(void)
 {
   /*action 7 EndForwardGlobHeader*/
   /*stackpops - tgtypelist
@@ -20187,7 +19653,7 @@ static void endforwardglobheader()
 }
 
 
-static void endfunctionlist()
+static void endfunctionlist(void)
 {
   /*action 30 EndFunctionList*/
   /*stackpops - nothing
@@ -20218,7 +19684,7 @@ static void endfunctionlist()
 }
 
 
-static void endfunction()
+static void endfunction(void)
 {
   /*action 31 EndFunction*/
   /*stackpops - tgexplist
@@ -20280,7 +19746,7 @@ static void endfunction()
 }
 
 
-static void dofunctcall()
+static void dofunctcall(void)
 {
   /*action 108 DoFunctionCall*/
   /*stackpops - tgexplist
@@ -20413,7 +19879,7 @@ static void dofunctcall()
 }
 
 
-static void endprogram()
+static void endprogram(void)
 {
   /*action 141  EndProgram*/
   /*stackpops - nothing
@@ -20435,8 +19901,7 @@ static void endprogram()
 }
 
 
-static void startif(iftype)
-lexleveltype iftype;
+static void startif(lexleveltype iftype)
 {
   /*action 79 StartIf*/
   /*stackpops - tgexplist
@@ -20484,7 +19949,7 @@ lexleveltype iftype;
 }
 
 
-static void startifsubgraph()
+static void startifsubgraph(void)
 {
   /*action 81 StartIfSubGraph*/
   /*stackpops - tgSubGraphNum
@@ -20525,8 +19990,7 @@ static void startifsubgraph()
 }
 
 
-static void endiftagsubgraph(predflag)
-boolean predflag;
+static void endiftagsubgraph(boolean predflag)
 {
   /*stackpops - tgexplist
                   pushes - nothing*/
@@ -20632,7 +20096,7 @@ boolean predflag;
 }  /*EndIfTagSubGraph*/
 
 
-static void endifsubgraph()
+static void endifsubgraph(void)
 {
   /*action 82 EndIFSubGraph*/
   /*stackpops - nothing
@@ -20657,7 +20121,7 @@ begin
   EndIfTagSubGraph(true);
 end;
 */
-static void endif()
+static void endif(void)
 {
   /*action 85  EndIf*/
   /*stackpops - tgSubGraphNum
@@ -20681,7 +20145,7 @@ static void endif()
 }
 
 
-static void findandpushname()
+static void findandpushname(void)
 {
   /*action 137 FindAndPushName*/
   /*stack                pops - TGNameList
@@ -20792,7 +20256,7 @@ static void findandpushname()
 }
 
 
-static void pushnilcons()
+static void pushnilcons(void)
 {
   /*action 129 PushNilCons*/
   /*stack        pops - nothing
@@ -20814,7 +20278,7 @@ static void pushnilcons()
 }  /* PushNilCons */
 
 
-static void pushtruecons()
+static void pushtruecons(void)
 {
   /*action 130 PushTrueCons*/
   /*stack        pops - nothing
@@ -20836,7 +20300,7 @@ static void pushtruecons()
 }  /* PushTrueCons */
 
 
-static void pushfalsecons()
+static void pushfalsecons(void)
 {
   /*action 131 PushFalseCons*/
   /*stack        pops - nothing
@@ -20858,7 +20322,7 @@ static void pushfalsecons()
 }  /* PushFalseCons */
 
 
-static void pushintcons()
+static void pushintcons(void)
 {
   /*action 132 PushIntCons*/
   /*stack        pops - nothing
@@ -20880,7 +20344,7 @@ static void pushintcons()
 }  /* PushIntCons */
 
 
-static void pushrealcons()
+static void pushrealcons(void)
 {
   /*action 133 PushRealCons*/
   /*stack        pops - nothing
@@ -20902,7 +20366,7 @@ static void pushrealcons()
 }  /* PushRealCons */
 
 
-static void pushdoubcons()
+static void pushdoubcons(void)
 {
   /*action 142 PushDoubCons*/
   /*stack        pops - nothing
@@ -20924,7 +20388,7 @@ static void pushdoubcons()
 }  /* PushDoubCons */
 
 
-static void pushcharcons()
+static void pushcharcons(void)
 {
   /*action 134 PushCharCons*/
   /*stack        pops - nothing
@@ -20948,7 +20412,7 @@ static void pushcharcons()
 }  /* PushCharCons */
 
 
-static void pushstringcons()
+static void pushstringcons(void)
 {
   /*action 135 PushStringCons*/
   /*stack        pops - nothing
@@ -20973,7 +20437,7 @@ static void pushstringcons()
 }  /* PushStringCons */
 
 
-static void pusherrorcons()
+static void pusherrorcons(void)
 {
   /*action 136 PushErrorCons*/
   /*stack        pops - TGTTPtr
@@ -20996,7 +20460,7 @@ static void pusherrorcons()
 }  /* PushErrorCons */
 
 
-static void buildchar()
+static void buildchar(void)
 {
   /*action 114 BuildChar*/
   /*stack        pops - TGExpList
@@ -21050,7 +20514,7 @@ static void buildchar()
 }  /* BuildChar */
 
 
-static void builddouble()
+static void builddouble(void)
 {
   /*action 116 BuildDouble*/
   /*stack        pops - TGExpList
@@ -21105,7 +20569,7 @@ static void builddouble()
 }  /* BuildDouble */
 
 
-static void buildint()
+static void buildint(void)
 {
   /*action 118 BuildInt*/
   /*stack        pops - TGExpList
@@ -21162,7 +20626,7 @@ static void buildint()
 }  /* BuildInt */
 
 
-static void buildreal()
+static void buildreal(void)
 {
   /*action 120 BuildReal*/
   /*stack        pops - TGExpList
@@ -21218,9 +20682,7 @@ static void buildreal()
 }  /* BuildReal */
 
 
-static void createsub(tagcasenode, tagvalue)
-node *tagcasenode;
-tagflag tagvalue;
+static void createsub(node *tagcasenode, tagflag tagvalue)
 {
   node *subn0;
   inforecord *lit, *nod;
@@ -21240,8 +20702,7 @@ tagflag tagvalue;
   addedge(lit, nod);
 }  /* CreateSub */
 
-static void changeto2(assolist)
-assoclist *assolist;
+static void changeto2(assoclist *assolist)
 {
   while (assolist != NULL) {
     assolist->graphnum = 2;
@@ -21250,8 +20711,7 @@ assoclist *assolist;
 }  /* ChangeTo2 */
 
 
-static void createisunion(line, col)
-int line, col;
+static void createisunion(int line, int col)
 {
   /*action 121 CreateUsUnion*/
   /*stack        pops - TGExpList
@@ -21340,9 +20800,7 @@ int line, col;
 }  /* CreateIsUnion */
 
 
-static void checkold(inputtoken, line, column)
-stryng inputtoken;
-int line, column;
+static void checkold(stryng inputtoken, int line, int column)
 {
   /*action 122 CheckOld*/
   /*stack        pops - nothing
@@ -21442,8 +20900,7 @@ int line, column;
 }  /* CheckOld */
 
 
-static void pushuplus(line, column)
-int line, column;
+static void pushuplus(int line, int column)
 {
   /*action 123 PushUPlus*/
   /*stack        pops - nothing
@@ -21463,8 +20920,7 @@ int line, column;
 }  /* PushUPLus */
 
 
-static void pushuminus(line, column)
-int line, column;
+static void pushuminus(int line, int column)
 {
   /*action 124 PushUMinus*/
   /*stack        pops - nothing
@@ -21484,8 +20940,7 @@ int line, column;
 }  /* PushUMinus */
 
 
-static void pushunot(line, column)
-int line, column;
+static void pushunot(int line, int column)
 {
   /*action 125 PushUNot*/
   /*stack        pops - nothing
@@ -21505,8 +20960,7 @@ int line, column;
 }  /* PushUNot */
 
 
-static void createiserror(line, column)
-int line, column;
+static void createiserror(int line, int column)
 {
   /*action 127 CreateIsError*/
   /*stack        pops - TGExpList
@@ -21550,7 +21004,7 @@ int line, column;
 }  /* CreateIsError */
 
 
-static void fixforfunct()
+static void fixforfunct(void)
 {
   /*action 42 FixForFunct*/
   /*stack        pops - TGNameList
@@ -21571,7 +21025,7 @@ static void fixforfunct()
 }  /* FixForFunct */
 
 
-stentry *errorstruct()
+stentry *errorstruct(void)
 {
   semanticrec *nsem, *tsem, *errstr;
 
@@ -21590,8 +21044,7 @@ stentry *errorstruct()
 }  /* ErrorStruct */
 
 
-static void fixfortag(line, col)
-int line, col;
+static void fixfortag(int line, int col)
 {
   /*action 115 FixForTag*/
   /*stack        pops - TGNameList
@@ -21630,8 +21083,7 @@ int line, col;
 }  /* FixForTag */
 
 
-static void processtaghead(line, col)
-int line, col;
+static void processtaghead(int line, int col)
 {
   /*action 43 ProcessTaghead*/
   /*stack        pops - TGExpList
@@ -21714,7 +21166,7 @@ int line, col;
 }  /* ProcessTagHead */
 
 
-static void createtagsubgraph()
+static void createtagsubgraph(void)
 {
   /*action 44 CreateTagSubgraph*/
   /*stack        pops - TGSubGrahpNum
@@ -21755,9 +21207,7 @@ static void createtagsubgraph()
 }  /* CreateTagSubgraph */
 
 
-tcstacklistrec *findtag(name, struct_)
-stryng name;
-tcstacklistrec *struct_;
+tcstacklistrec *findtag(stryng name, tcstacklistrec *struct_)
 {
   boolean found;
   stryng name2;
@@ -21781,8 +21231,7 @@ tcstacklistrec *struct_;
 }  /* FindTag */
 
 
-static void checktagnames(line, col)
-int line, col;
+static void checktagnames(int line, int col)
 {
   /*action 45 CheckTagNames*/
   /*stack        pops - TGNameList
@@ -21862,7 +21311,7 @@ int line, col;
 }  /* CheckTagNames */
 
 
-static void assocexprs()
+static void assocexprs(void)
 {
   /*action 46 AssocExprs*/
   /*stack        pops - nothing
@@ -21876,7 +21325,7 @@ static void assocexprs()
 }  /* AssocExprs */
 
 
-static void endtagcase()
+static void endtagcase(void)
 {
   /*action 47 EndTagcase*/
   /*stack        pops - TGSubGraphNum
@@ -21914,8 +21363,7 @@ static void endtagcase()
 }  /* EndTagcase */
 
 
-static void otherwisetag(line, col)
-int line, col;
+static void otherwisetag(int line, int col)
 {
   /*action 48 OtherwiseTag*/
   /*stack        pops - TGSubGraphNum
@@ -21974,7 +21422,7 @@ Char *reduceflag_NAMES[] = {
 } ;
 
 
-static void setstep()
+static void setstep(void)
 {
   printf("Please enter step count: ");
   if (scanf("%d", &stepcount) != 1) {
@@ -21986,7 +21434,7 @@ static void setstep()
   currentstep = stepcount;
 }
 
-static void showbrkpts()
+static void showbrkpts(void)
 {
   int i, j;
 
@@ -22006,7 +21454,7 @@ static void showbrkpts()
     putchar('\n');
 }  /* ShowBrkPts */
 
-static void removebrkpts()
+static void removebrkpts(void)
 {
   unchar rembrkpt;   /**************/
   int TEMP;
@@ -22024,7 +21472,7 @@ static void removebrkpts()
   showbrkpts();
 }  /* RemoveBrkPts */
 
-static void addbrkpts()
+static void addbrkpts(void)
 {
   unchar newbrkpt;   /************/
   int TEMP;
@@ -22042,8 +21490,7 @@ static void addbrkpts()
   showbrkpts();
 }  /* AddBrkPts */
 
-static void printnames(namelist)
-namelistrec *namelist;
+static void printnames(namelistrec *namelist)
 {
   if (namelist == NULL)
     printf("namelist is nil\n");
@@ -22057,8 +21504,7 @@ namelistrec *namelist;
   putchar('\n');
 }  /* PrintNames */
 
-static void printtypes_(typelist)
-typelistrec *typelist;
+static void printtypes_(typelistrec *typelist)
 {
   if (typelist == NULL) {
     printf("typelist is nil\n");
@@ -22074,8 +21520,7 @@ typelistrec *typelist;
   }  /* while */
 }  /* PrintTypes */
 
-static void printgraphinfo(info)
-inforecord *info;
+static void printgraphinfo(inforecord *info)
 {
   if (info->node_ != NULL)
     printf(" ^.NDId  %5d ", info->node_->ndid);
@@ -22098,8 +21543,7 @@ inforecord *info;
   putchar('\n');
 }  /* PrintGraphInfo */
 
-static void printsymlist(symlist)
-symlistnode *symlist;
+static void printsymlist(symlistnode *symlist)
 {
   while (symlist != NULL) {
     printbucket(symlist->sym);
@@ -22108,8 +21552,7 @@ symlistnode *symlist;
   }  /* while */
 }  /* PrintSymList */
 
-static void printexplist(explist)
-explistnode *explist;
+static void printexplist(explistnode *explist)
 {
   while (explist != NULL) {
     printgraphinfo(explist->graphinfo);
@@ -22118,8 +21561,7 @@ explistnode *explist;
   }  /* while */
 }  /* PrintExpList */
 
-static void printtclist(tclist)
-tcstacklistrec *tclist;
+static void printtclist(tcstacklistrec *tclist)
 {
   while (tclist != NULL) {
     writestring(stdout, &tclist->tagname);
@@ -22130,7 +21572,7 @@ tcstacklistrec *tclist;
   }
 }
 
-static void printstack()
+static void printstack(void)
 {
   int i;
   semanticrec *semstack;
@@ -22235,8 +21677,7 @@ static void printstack()
 }  /* PrintStack */
 
 
-boolean debugger(action, token)
-int action, token;
+boolean debugger(int action, int token)
 {
   boolean Result;
   int i;
@@ -22943,9 +22384,11 @@ int action, token;
 }  /* Debugger */
 
 
-boolean announceaction(action, token, line, col, inputtoken)
-int action, token, line, col;
-stryng inputtoken;
+boolean announceaction(int action,
+                       int token,
+                       int line,
+                       int col,
+                       stryng inputtoken)
 {
   /*--------------------------------------------------------------------
     call the semantic routine
@@ -23567,7 +23010,7 @@ static void ReadTableInt( FILE *tablefile, int *dest )
   }
 }
 
-static void readcosts()
+static void readcosts(void)
 {
   /*-----------------------------------------------------------------
     read the correction costs for the terminals
@@ -23592,7 +23035,7 @@ static void readcosts()
 }  /* readcosts */
 
 
-static void reads()
+static void reads(void)
 {
   /*-----------------------------------------------------------------
     read in the S table
@@ -23623,8 +23066,7 @@ static void reads()
 }  /* readS */
 
 
-static void checkinsertsize(l)
-int l;
+static void checkinsertsize(int l)
 {
   /*-------------------------------------------------------------------
     check to see if a string of length l will fit into insertspace
@@ -23636,7 +23078,7 @@ int l;
 }  /* checkinsertsize */
 
 
-static void get1prefix()
+static void get1prefix(void)
 {
   /*-------------------------------------------------------------------
       read in all the prefix entries for this terminal symbol
@@ -23669,7 +23111,7 @@ static void get1prefix()
 }  /* get1prefix */
 
 
-static void skipcosts()
+static void skipcosts(void)
 {
   /*-----------------------------------------------------------------
     same as readcosts, but ignore the info
@@ -23686,7 +23128,7 @@ static void skipcosts()
 }  /* skipcosts */
 
 
-static void skips()
+static void skips(void)
 {
   /*-----------------------------------------------------------------
      same as readS, but ignore the info
@@ -23705,7 +23147,7 @@ static void skips()
 }  /* skipS */
 
 
-static void skip1prefix()
+static void skip1prefix(void)
 {
   /*------------------------------------------------------------------
          same as get1prefix, but ignore the info
@@ -23730,9 +23172,7 @@ static void skip1prefix()
 }  /* skip1prefix */
 
 
-static void seeke(term, directoryname)
-char term;
-stryng directoryname;
+static void seeke(char term, stryng directoryname)
 {
   /*------------------------------------------------------------------
        position the file pointer to the proper place to
@@ -23776,9 +23216,7 @@ stryng directoryname;
 }  /* seekE */
 
 
-static void getprefixinfo(term, directoryname)
-char term;
-stryng directoryname;
+static void getprefixinfo(char term, stryng directoryname)
 {
   /*------------------------------------------------------------------
     get the prefixtable entries for term;
@@ -23811,8 +23249,7 @@ stryng directoryname;
 }  /* getprefixinfo */
 
 
-static void readerrtables(directoryname)
-stryng *directoryname;
+static void readerrtables(stryng *directoryname)
 {
   /*----------------------------------------------------------------
     read in all the error table info
@@ -23849,9 +23286,7 @@ stryng *directoryname;
 }  /* readerrtables */
 
 
-static void copye(source, dest)
-SHORT source;
-stagerec *dest;
+static void copye(SHORT source, stagerec *dest)
 {
   /*-------------------------------------------------------------------
      copy source to dest, converting type of string
@@ -23874,9 +23309,7 @@ stagerec *dest;
 }  /* copyE */
 
 
-static void copys(source, dest)
-SHORT source;
-stagerec *dest;
+static void copys(SHORT source, stagerec *dest)
 {
   /*-------------------------------------------------------------------
      copy source to dest, converting type of string
@@ -23900,8 +23333,7 @@ stagerec *dest;
 }  /* copyS */
 
 
-static void printinsertion(ins)
-stagerec ins;
+static void printinsertion(stagerec ins)
 {
   /*---------------------------------------------------------------
     print out the insertion string ins.
@@ -23916,9 +23348,7 @@ stagerec ins;
 }  /*printinsertion*/
 
 
-static void expandinsertion(minpos, insert)
-SHORT minpos;
-stagerec *insert;
+static void expandinsertion(SHORT minpos, stagerec *insert)
 {
   /*----------------------------------------------------------------
     expand out the insertion determined by the position in
@@ -23943,10 +23373,7 @@ stagerec *insert;
 }  /* expandinsertion */
 
 
-static void llinsert(errsym, insertion, directoryname)
-char errsym;
-stagerec *insertion;
-stryng *directoryname;
+static void llinsert(char errsym, stagerec *insertion, stryng *directoryname)
 {
   /*---------------------------------------------------------------
     compute the least-cost insertion to make errsym legal given the
@@ -23984,7 +23411,7 @@ stryng *directoryname;
 }  /* LLInsert */
 
 
-static void inoverflow()
+static void inoverflow(void)
 {
   /*---------------------------------------------------------------
     input buffer is full.
@@ -24000,9 +23427,7 @@ static void inoverflow()
 }  /* inoverflow */
 
 
-static void llcorrector(token, directoryname)
-SHORT *token;
-stryng *directoryname;
+static void llcorrector(SHORT *token, stryng *directoryname)
 {
   /*-------------------------------------------------------------------
     find the least cost correction to get us out of this error situation
@@ -24078,7 +23503,7 @@ stryng *directoryname;
 }  /* LLcorrector */
 
 
-static void myabort()
+static void myabort(void)
 {
   printf("************************ A B O R T *************************\n\n");
 
@@ -24093,7 +23518,7 @@ static void myabort()
 
 
 
-static void initptab()
+static void initptab(void)
 {
   /*------------------------------------------------------------------
     initialize the table to all nils
@@ -24109,9 +23534,7 @@ static void initptab()
 }  /* initPtab */
 
 
-SHORT findlltab(sym, term)
-SHORT sym;
-char term;
+SHORT findlltab(SHORT sym, char term)
 {
   /*-----------------------------------------------------------------
       lookup  the parse action for sym, term
@@ -24145,8 +23568,7 @@ char term;
 
 /*this procedure is not suited for use with text/binary option
   but is left here just in case you want to put in such a feature */
-static void printstring(string)
-stryng string;
+static void printstring(stryng string)
 {
   /*----------------------------------------------------------------
     print out a string.
@@ -24172,8 +23594,7 @@ stryng string;
 }  /* printstring */
 
 
-static void printsym(sym)
-int sym;
+static void printsym(int sym)
 {
   /*-----------------------------------------------------------------
     print out symbol number sym
@@ -24206,8 +23627,7 @@ int sym;
      the first character AFTER the changes. (displaydeletions calls 'scan'
      to accomplish this)
 ======================================================================*/
-static void printline(buffer)
-inputbuffer *buffer;
+static void printline(inputbuffer *buffer)
 {
   /* (buffer: InBufPtr);forward */
   /*-------------------------------------------------------------------
@@ -24287,8 +23707,7 @@ inputbuffer *buffer;
 }  /* printline */
 
 
-static void modify(buffer)
-inputbuffer *buffer;
+static void modify(inputbuffer *buffer)
 {
   /*-------------------------------------------------------------
     set the modified' flag for the buffer.
@@ -24310,7 +23729,7 @@ inputbuffer *buffer;
 }  /* modify */
 
 
-static void flushlines()
+static void flushlines(void)
 {
   /*-----------------------------------------------------------------
       after the program has been accepted,
@@ -24328,8 +23747,7 @@ static void flushlines()
 }  /* flushline */
 
 
-static void readline(buffer)
-inputbuffer *buffer;
+static void readline(inputbuffer *buffer)
 {
   /*--------------------------------------------------------------------
   actually read the line into buffer
@@ -24426,8 +23844,7 @@ inputbuffer *buffer;
 }  /* readline */
 
 
-static void sisal_getline(buffer)
-inputbuffer **buffer;
+static void sisal_getline(inputbuffer **buffer)
 {
   /*(var buffer: InBufPtr); forward*/
   /*-----------------------------------------------------------------
@@ -24461,9 +23878,7 @@ inputbuffer **buffer;
 }  /* sisal_getline */
 
 
-static void readchar(ch, buffer)
-Char *ch;
-inputbuffer **buffer;
+static void readchar(Char *ch, inputbuffer **buffer)
 {
   /*---------------------------------------------------------------
     read in one character from the buffer.
@@ -24483,9 +23898,7 @@ inputbuffer **buffer;
 }  /* readchar */
 
 
-static void unreadchar(ch, buff)
-Char ch;
-inputbuffer *buff;
+static void unreadchar(Char ch, inputbuffer *buff)
 {
   /*----------------------------------------------------------------
     put a character back into the buffer
@@ -24504,10 +23917,7 @@ inputbuffer *buff;
 }  /* unreadchar */
 
 
-static void insertcharbuf(ch, loc, buffer)
-Char ch;
-unchar loc;
-inputbuffer *buffer;
+static void insertcharbuf(Char ch, unchar loc, inputbuffer *buffer)
 {
   /*-------------------------------------------------------------------
       stick ch into the line held in buffer, at location loc
@@ -24527,8 +23937,7 @@ inputbuffer *buffer;
 }  /* insertcharbuf */
 
 
-static void displaydeletions(pighowmany)
-int pighowmany;
+static void displaydeletions(int pighowmany)
 {
   /*----------------------------------------------------------------
     show that pighowmany tokens have been deleted
@@ -24566,8 +23975,7 @@ int pighowmany;
 }  /* displaydeletions */
 
 
-static void displayinsertion(token)
-SHORT token;
+static void displayinsertion(SHORT token)
 {
   /*-------------------------------------------------------------
     show that token has been inserted
@@ -24632,7 +24040,7 @@ SHORT token;
 /*===================SCANNER======================================*/
 /*================================================================*/
 /*----------------------------------------------------------------*/
-static void scanerror()
+static void scanerror(void)
 {
   /*----------------------------------------------------------------*/
   if (listing) {
@@ -24647,10 +24055,7 @@ static void scanerror()
 
 
 /*------------------------------------------------------------------*/
-SHORT searchsymboltable(low, high, s, default_)
-int low, high;
-stryng *s;
-SHORT default_;
+SHORT searchsymboltable(int low, int high, stryng *s, SHORT default_)
 {
   /*------------------------------------------------------------------*/
   int guess;
@@ -24689,10 +24094,7 @@ SHORT default_;
 
 
 /*----------------------------------------------------------*/
-static SHORT lookupterm(term, default_, LINK)
-stryng *term;
-SHORT default_;
-struct LOC_scan *LINK;
+static SHORT lookupterm(stryng *term, SHORT default_, struct LOC_scan *LINK)
 {
   /*----------------------------------------------------------*/
   SHORT result;
@@ -24704,10 +24106,7 @@ struct LOC_scan *LINK;
 }  /*LookupTerm*/
 
 /*-------------------------------------------------------------------*/
-static void ctrlchtooctal(c, s, LINK)
-Char c;
-stryng *s;
-struct LOC_scan *LINK;
+static void ctrlchtooctal(Char c, stryng *s, struct LOC_scan *LINK)
 {
   /*---------------------------------------------------------------*/
   int i, d, m;
@@ -24747,8 +24146,7 @@ struct LOC_scan *LINK;
 }  /* CtrlChToOctal */
 
 /*---------------------------------------------------------------------*/
-static int branchonfirstchar(LINK)
-struct LOC_scan *LINK;
+static int branchonfirstchar(struct LOC_scan *LINK)
 {
   /*---------------------------------------------------------------------*/
   int Result;
@@ -24897,9 +24295,7 @@ struct LOC_scan *LINK;
   return Result;
 }
 
-static void scannererr(err, LINK)
-errtype err;
-struct LOC_scan *LINK;
+static void scannererr(errtype err, struct LOC_scan *LINK)
 {
   switch (err) {
 
@@ -24909,10 +24305,9 @@ struct LOC_scan *LINK;
   }/*case*/
 }
 
-static void unappend(string, buffer, LINK)
-stryng *string;
-inputbuffer **buffer;
-struct LOC_scan *LINK;
+static void unappend(stryng *string,
+                     inputbuffer **buffer,
+                     struct LOC_scan *LINK)
 {
   /*---------------------------------------------------------------
          remove last char from string
@@ -24923,10 +24318,7 @@ struct LOC_scan *LINK;
 
 
 /*-----------------------------------------------------------*/
-static void scan(token, tokenlineno, buffer)
-SHORT *token;
-int *tokenlineno;
-inputbuffer **buffer;
+static void scan(SHORT *token, int *tokenlineno, inputbuffer **buffer)
 {  /* Scanner */
   /* (var token : SymIndex ; var buffer: InBufPtr );forward */
   /* written by sks 83/2/2          */
@@ -25556,7 +24948,7 @@ inputbuffer **buffer;
      input to be rescanned, endfile must be cleared by the correction routines.
      When the end is again reached, endfile will be set again.
 ================================================================*/
-static void initscanner()
+static void initscanner(void)
 {
   /*---------------------------------------------------------------
     do any initialization needed
@@ -25597,8 +24989,7 @@ static void initscanner()
 }  /* initscanner */
 
 
-static void peek(sym)
-SHORT *sym;
+static void peek(SHORT *sym)
 {
   /*(var sym: SymIndex); forward */
   /*----------------------------------------------------------------
@@ -25616,9 +25007,7 @@ SHORT *sym;
 }  /* peek */
 
 
-static void gettok(tok, tokenlineno)
-SHORT *tok;
-int *tokenlineno;
+static void gettok(SHORT *tok, int *tokenlineno)
 {
   /*-----------------------------------------------------------------
     return the next token:
@@ -25688,8 +25077,7 @@ int *tokenlineno;
 }  /* gettok */
 
 
-static void deletetokens(pighowmany)
-int pighowmany;
+static void deletetokens(int pighowmany)
 {
   /* (pighowmany: integer);forward*/
   /*----------------------------------------------------------
@@ -25706,8 +25094,7 @@ int pighowmany;
 }  /* deletetokens */
 
 
-static void inserttokens(fix)
-stagerec fix;
+static void inserttokens(stagerec fix)
 {
   /* (fix: StageRec);forward*/
   /*---------------------------------------------------------------
@@ -25742,7 +25129,7 @@ stagerec fix;
 }  /* inserttoken */
 
 
-static void checkerrorok()
+static void checkerrorok(void)
 {
   /*--------------------------------------------------------------
     check that an error is 'acceptable' in this situation.
@@ -25766,8 +25153,7 @@ static void checkerrorok()
 }  /* checkerrorok */
 
 
-static void readtables(directoryname)
-stryng directoryname;
+static void readtables(stryng directoryname)
 {
   /*------------------------------------------------------------
     read in the various tables.
@@ -25893,8 +25279,7 @@ stryng directoryname;
 }  /* readtables */
 
 
-static void push(prod)
-SHORT prod;
+static void push(SHORT prod)
 {
   /*----------------------------------------------------------
     push action onto parse stack
@@ -25923,7 +25308,7 @@ SHORT prod;
 }  /* push */
 
 
-int tos()
+int tos(void)
 {
   /*--------------------------------------------------------------
     return the value at the top of the parse stack
@@ -25932,7 +25317,7 @@ int tos()
 }  /* tos */
 
 
-static void pop()
+static void pop(void)
 {
   /*------------------------------------------------------------
     pop pighowmany items from the stack.
@@ -25949,7 +25334,7 @@ static void pop()
 }  /* pop */
 
 
-static void trace()
+static void trace(void)
 {
   /*--------------------------------------------------------------
     print out a parse trace
@@ -25972,8 +25357,7 @@ static void trace()
 }  /* trace */
 
 
-boolean checkepsilonok(term)
-char term;
+boolean checkepsilonok(char term)
 {
   /*--------------------------------------------------------------
     check whether an epsilon production would be OK
@@ -26018,9 +25402,7 @@ char term;
 }  /* checkepsilonok */
 
 
-static void parseerror(token, directoryname)
-SHORT token;
-stryng *directoryname;
+static void parseerror(SHORT token, stryng *directoryname)
 {
   /*---------------------------------------------------------------
     Handle the syntax error.
@@ -26067,7 +25449,7 @@ stryng *directoryname;
 }  /*parseerror*/
 
 
-static void printstats()
+static void printstats(void)
 {
   /*---------------------------------------------------------------
     print assorted statistics about whats going on
@@ -26094,7 +25476,7 @@ static void printstats()
 }  /* PrintStats */
 
 
-static void init()
+static void init(void)
 {
   /*-=-----------------------------------------------------------
     initialize anything and everything except scanner, need to read tables first
@@ -26126,8 +25508,7 @@ static void init()
 }  /* init */
 
 
-static void parse(directoryname)
-stryng *directoryname;
+static void parse(stryng *directoryname)
 {
   /* ---------------------------------------------------------
    parse
@@ -26219,11 +25600,10 @@ stryng *directoryname;
 }  /* parse */
 
 
-static void readline_(linenum, linebuf, infile, LINK)
-int linenum;
-inputbuffer *linebuf;
-FILE *infile;
-struct LOC_pass1 *LINK;
+static void readline_(int linenum,
+                      inputbuffer *linebuf,
+                      FILE *infile,
+                      struct LOC_pass1 *LINK)
 {
   Char ch;
   int length;
@@ -26244,9 +25624,7 @@ struct LOC_pass1 *LINK;
   linebuf->length = length;
 }
 
-static boolean recursiveincl(fname, LINK)
-stryng fname;
-struct LOC_pass1 *LINK;
+static boolean recursiveincl(stryng fname, struct LOC_pass1 *LINK)
 {
   namelistrec *listptr;
   boolean found;
@@ -26267,10 +25645,7 @@ struct LOC_pass1 *LINK;
   return found;
 }
 
-static void pushinclstack(fname, linenum, LINK)
-stryng fname;
-int linenum;
-struct LOC_pass1 *LINK;
+static void pushinclstack(stryng fname, int linenum, struct LOC_pass1 *LINK)
 {
   namelistrec *listptr;
 
@@ -26285,15 +25660,12 @@ struct LOC_pass1 *LINK;
   }
 }
 
-static void popinclstack(LINK)
-struct LOC_pass1 *LINK;
+static void popinclstack(struct LOC_pass1 *LINK)
 {
   includelist = includelist->next;
 }
 
-static void dumpline(linebuf, LINK)
-inputbuffer *linebuf;
-struct LOC_pass1 *LINK;
+static void dumpline(inputbuffer *linebuf, struct LOC_pass1 *LINK)
 {
   int pointer;
 
@@ -26313,9 +25685,7 @@ int ENum = 0;
 int FNum = 0;
 int CNum = 0;
 
-static char *CANN_StringCopy(length,buf)
-int   length;
-char *buf;
+static char *CANN_StringCopy(int length, char *buf)
 {
   register char *s;
   register char *r;
@@ -26331,8 +25701,7 @@ char *buf;
   return( r );
 }
 
-static int CANN_PreparePragmaName( s )
-char *s;
+static int CANN_PreparePragmaName(char *s)
 {
   register int   e;
   register char *p;
@@ -26348,8 +25717,7 @@ char *s;
   return( -1 );
 }
 
-static int CANN_IsEntryPragma(b)
-char *b;
+static int CANN_IsEntryPragma(char *b)
 {
   register int e;
 
@@ -26366,8 +25734,7 @@ char *b;
   return( -1 );
 }
 
-static int CANN_IsFortranPragma(b)
-char *b;
+static int CANN_IsFortranPragma(char *b)
 {
   register int e;
 
@@ -26386,8 +25753,7 @@ char *b;
   return( -1 );
 }
 
-static int CANN_IsCPragma(b)
-char *b;
+static int CANN_IsCPragma(char *b)
 {
   register int e;
 
@@ -26400,11 +25766,7 @@ char *b;
   return( -1 );
 }
 
-static void CANN_ProcessPragmaFields(e,b,dbase,num)
-int   e;
-char *b;
-char **dbase;
-int  *num;
+static void CANN_ProcessPragmaFields(int e, char *b, char **dbase, int *num)
 {
   register char *r;
   register char *p;
@@ -26439,10 +25801,7 @@ int  *num;
     }
 }
 
-static int CANN_DissectSpecialPragmas(pointer,length,buf)
-int   pointer;
-int   length;
-char *buf;
+static int CANN_DissectSpecialPragmas(int pointer, int length, char *buf)
 {
   register char *b;
   register char *s;
@@ -26465,8 +25824,7 @@ char *buf;
   return( 1 );
 }
 
-char *CANN_StripWhites( s )
-char *s;
+char *CANN_StripWhites(char *s)
 {
   register char *b;
 
@@ -26484,8 +25842,7 @@ char *s;
   return( b );
 }
 
-static void CANN_DumpSpecialPragmas(fd)
-FILE *fd;
+static void CANN_DumpSpecialPragmas(FILE *fd)
 {
   register int i;
   register char *s;
@@ -26515,8 +25872,7 @@ FILE *fd;
       }
 }
 
-static void error(LINK)
-struct LOC_dissectpragma *LINK;
+static void error(struct LOC_dissectpragma *LINK)
 {
   printf("*** malformed pragma in file ");
   writestring(stdout, &LINK->LINK->fname);
@@ -26525,13 +25881,12 @@ struct LOC_dissectpragma *LINK;
   myabort();
 }
 
-static void dissectpragma(linebuf, linenum_, pragmastart, pname_, pragmaparam, LINK)
-inputbuffer *linebuf;
-int linenum_;
-int pragmastart;
-pragmaname *pname_;
-stryng *pragmaparam;
-struct LOC_pass1 *LINK;
+static void dissectpragma(inputbuffer *linebuf,
+                          int linenum_,
+                          int pragmastart,
+                          pragmaname *pname_,
+                          stryng *pragmaparam,
+                          struct LOC_pass1 *LINK)
 {
   struct LOC_dissectpragma V;
   int namestart, nameend, paramstart, paramend, length, pointer;
@@ -26615,10 +25970,7 @@ myabort();
 }  /*DissectPragma*/
 
 
-boolean pass1(txtp,fname_p, outfile_)
-stryng *txtp;
-stryng *fname_p;
-FILE *outfile_;
+boolean pass1(stryng *txtp, stryng *fname_p, FILE *outfile_)
 {
   /* This pass will expand the  pragmas.  An internal pragma
      (UNINCLUDE) is used to pass infomation about the actual name of
@@ -26754,8 +26106,7 @@ FILE *outfile_;
 }  /*pass1*/
 
 
-static void splitaelement(n)
-node *n;
+static void splitaelement(node *n)
 {
   /* - N is an AElement node with more than one index inputs on ports 2, 3,...
      - A new AElement node is constructed and placed in front of this node.
@@ -26785,8 +26136,7 @@ node *n;
   /* newe = */ (void)insertedge(newn, 1, n, 1, edgebasetype, ename);
 }  /* SplitAElement */
 
-static void convertareplacen(n)
-node *n;
+static void convertareplacen(node *n)
 {
   /* - N is an AReplaceN node with the number of levels on port 2
      - Iteratively convert this node to a sequence of three nodes by:
@@ -26862,8 +26212,7 @@ node *n;
   n->ndcode = ifnareplace;
 }  /* ConvertAReplaceN */
 
-static void removeunusedports(seln)
-node *seln;
+static void removeunusedports(node *seln)
 {
   /* - SelN is a select node with K inputs and no input gaps.
      - This routine removed any input edges not used
@@ -26895,8 +26244,7 @@ node *seln;
   }
 }  /* RemoveUnusedPorts */
 
-static node *createselectorgraph(n)
-node *n;
+static node *createselectorgraph(node *n)
 {
   node *g;
   /* port *e;*/
@@ -26913,8 +26261,7 @@ node *n;
   return g;
 }  /* CreateSelectorGraph */
 
-static void convertiftoselect(n)
-node *n;
+static void convertiftoselect(node *n)
 {
   /* Preconditions
         - N is an IfThenElse node with two subgraphs
@@ -26973,8 +26320,7 @@ node *n;
   removeunusedports(n);
 }  /* ConvertIfToSelect */
 
-static void convertelseiftoselect(n)
-node *n;
+static void convertelseiftoselect(node *n)
 {
   /* In this case, N is an IfThenElse node with more than two subgraphs,
      the last three are (1) a predicate graph, (2) its true branch, and
@@ -27050,8 +26396,7 @@ node *n;
   removeunusedports(seln);
 }  /* ConvertElseIfToSelect */
 
-static void searchgraph_(g)
-node *g;
+static void searchgraph_(node *g)
 {
   node *n;
   int grnum, FORLIM;
@@ -27082,7 +26427,7 @@ node *g;
 }  /* SearchGraph */
 
 
-static void converttoversion1()
+static void converttoversion1(void)
 {
   /* This routine converts IF1 version 1.1 to version 1.0 by
       - Translating IfThenElse nodes to nested Select nodes.
@@ -27101,9 +26446,9 @@ static void converttoversion1()
 }  /* ConvertToVersion1 */
 
 
-static boolean nodesareequivalent(n1, n2, LINK)
-node *n1, *n2;
-struct LOC_removegraphcse *LINK;
+static boolean nodesareequivalent(node *n1,
+                                  node *n2,
+                                  struct LOC_removegraphcse *LINK)
 {
   /* Pre:  (N1^.NDSort = NDAtomic) and (N2^.NDSort = NDAtomic) and OpCode(N1) = OpCode(N2)
      Post: NodesAreEquivalent := (Input edges of N1 and N2 are equivalent)
@@ -27163,8 +26508,7 @@ struct LOC_removegraphcse *LINK;
   /* one is an edge and the other is a literal */
 }  /* NodesAreEquivalent */
 
-static void inittable(LINK)
-struct LOC_removegraphcse *LINK;
+static void inittable(struct LOC_removegraphcse *LINK)
 {
   /* Think of the Table as a collection of sets, one for each
      simple opcode.  InitTable initiallizes all these sets to
@@ -27176,10 +26520,7 @@ struct LOC_removegraphcse *LINK;
     LINK->table[index - firstatom] = NULL;
 }  /* InitTable */
 
-static void addtotable_(key, n, LINK)
-unchar key;
-node *n;
-struct LOC_removegraphcse *LINK;
+static void addtotable_(unchar key, node *n, struct LOC_removegraphcse *LINK)
 {
   /* Add node N to the set identified by Key */
   trec *t;
@@ -27190,10 +26531,9 @@ struct LOC_removegraphcse *LINK;
   LINK->table[key - firstatom] = t;
 }  /* AddToTable */
 
-static node *getequivnode(opcode, n, LINK)
-unchar opcode;
-node *n;
-struct LOC_removegraphcse *LINK;
+static node *getequivnode(unchar opcode,
+                          node *n,
+                          struct LOC_removegraphcse *LINK)
 {
   /* Search the table for a node with the given OpCode and
      Matches N's input edges
@@ -27218,9 +26558,9 @@ struct LOC_removegraphcse *LINK;
     return NULL;
 }  /* GetEquivNode */
 
-static void movealloutputedges(fromnode, tonode, LINK)
-node *fromnode, *tonode;
-struct LOC_removegraphcse *LINK;
+static void movealloutputedges(node *fromnode,
+                               node *tonode,
+                               struct LOC_removegraphcse *LINK)
 {
   /* move all the output edges of FromNode to corresponding
      output edges of ToNode.
@@ -27240,9 +26580,7 @@ struct LOC_removegraphcse *LINK;
   }
 }  /* MoveAllOutputEdges */
 
-static void moveoutputedges(n, fromport, toport)
-node *n;
-int fromport, toport;
+static void moveoutputedges(node *n, int fromport, int toport)
 {
   /* detach the output edges from port 'fromport' and reattach
      then to port 'toport'
@@ -27259,9 +26597,7 @@ int fromport, toport;
   }
 }  /* MoveOutputEdges */
 
-static void pushfanoutout(n, LINK)
-node *n;
-struct LOC_removegraphcse *LINK;
+static void pushfanoutout(node *n, struct LOC_removegraphcse *LINK)
 {
   /* If fanout was created from nodes inside the returns
      graph to the boundry of that edge, we wnat to push the
@@ -27333,9 +26669,7 @@ struct LOC_removegraphcse *LINK;
   }
 }  /* PushFanoutOut */
 
-static int removegraphcse(g, recurse)
-node *g;
-boolean recurse;
+static int removegraphcse(node *g, boolean recurse)
 {
   /* Search this graph removing all common subexpressions involving
      simple nodes.
@@ -27410,7 +26744,7 @@ boolean recurse;
 
 
 
-static ndptrreclist *ndptrnewlist()
+static ndptrreclist *ndptrnewlist(void)
 {
   ndptrreclist *templis;
 
@@ -27421,14 +26755,12 @@ static ndptrreclist *ndptrnewlist()
   return templis;
 }
 
-static boolean ndptrisnull(lisptr)
-ndptrreclist *lisptr;
+static boolean ndptrisnull(ndptrreclist *lisptr)
 {
   return (lisptr->length == 0);
 }
 
-static node *ndptrrmhead(lisptr)
-ndptrreclist *lisptr;
+static node *ndptrrmhead(ndptrreclist *lisptr)
 {
   node *Result;
 
@@ -27444,15 +26776,12 @@ ndptrreclist *lisptr;
   return Result;
 }
 
-static int ndptrlength(lisptr)
-ndptrreclist *lisptr;
+static int ndptrlength(ndptrreclist *lisptr)
 {
   return (lisptr->length);
 }
 
-static ndptrreclist *ndptrappend(lisptr, element)
-ndptrreclist *lisptr;
-node *element;
+static ndptrreclist *ndptrappend(ndptrreclist *lisptr, node *element)
 {
   ndptrelmlist *elmptr;
 
@@ -27468,9 +26797,7 @@ node *element;
   return lisptr;
 }
 
-static void imposegraphordering(neworder, g)
-ndptrreclist *neworder;
-node *g;
+static void imposegraphordering(ndptrreclist *neworder, node *g)
 {
   /* ImposeGraphOrdering*/
   /*   Rearrange the links on the nodes in G to reflect the*/
@@ -27494,8 +26821,7 @@ node *g;
   previousnode->ndnext = NULL;
 }
 
-static int numancestors(n)
-node *n;
+static int numancestors(node *n)
 {
   /* NumAncestors*/
   /*   Return the number of direct ancestor nodes*/
@@ -27521,21 +26847,17 @@ node *n;
 }
 
 /* Store the reference count of a node in the Misc field of the node */
-static void setrefcount(n, count)
-node *n;
-int count;
+static void setrefcount(node *n, int count)
 {
   n->ndmisc.numb = count;
 }  /* SetRefCount */
 
-static int refcount(n)
-node *n;
+static int refcount(node *n)
 {
   return (n->ndmisc.numb);
 }  /* RefCount */
 
-static boolean dfordergraph(g)
-node *g;
+static boolean dfordergraph(node *g)
 {
   /* DFOrderGraph*/
   /*   Rearrange nodes in a graph so that if node A depends*/
@@ -27621,9 +26943,7 @@ node *g;
   return noerror;
 }
 
-static boolean allconstantinputs(n, LINK)
-node *n;
-struct LOC_fixreturnsgraph *LINK;
+static boolean allconstantinputs(node *n, struct LOC_fixreturnsgraph *LINK)
 {
   /* Returns true if all inputs of N are either literals or come from
      K ports.
@@ -27646,8 +26966,7 @@ struct LOC_fixreturnsgraph *LINK;
   return constant;
 }  /* AllConstantInputs */
 
-static void createnewkport(LINK)
-struct LOC_fixreturnsgraph *LINK;
+static void createnewkport(struct LOC_fixreturnsgraph *LINK)
 {
   /* Creates ONE new K port on the compound node Loop.
      -- Imports the following variables:
@@ -27672,8 +26991,7 @@ struct LOC_fixreturnsgraph *LINK;
   shiftoutputports(LINK->retg, LINK->k, 1);
 }  /* CreateNewKPort */
 
-static void createnewlport(LINK)
-struct LOC_fixreturnsgraph *LINK;
+static void createnewlport(struct LOC_fixreturnsgraph *LINK)
 {
   /* Creates ONE new L port on the compound node Loop.
      -- Imports the following variables:
@@ -27693,10 +27011,9 @@ struct LOC_fixreturnsgraph *LINK;
   shiftoutputports(LINK->retg, LINK->l, 1);
 }  /* CreateNewLPort */
 
-static void insureedgeisnotconstant(n, p, LINK)
-node *n;
-int p;
-struct LOC_fixreturnsgraph *LINK;
+static void insureedgeisnotconstant(node *n,
+                                    int p,
+                                    struct LOC_fixreturnsgraph *LINK)
 {
   /* The edge on input port P of node N is not supposed to be
      a literal or from a K port.  If it is, a new L or T port is
@@ -27750,9 +27067,7 @@ struct LOC_fixreturnsgraph *LINK;
   /* Should come from an L port */
 }  /* InsureEdgeIsNotConstant */
 
-static void moveoutsideofloop(n, LINK)
-node *n;
-struct LOC_fixreturnsgraph *LINK;
+static void moveoutsideofloop(node *n, struct LOC_fixreturnsgraph *LINK)
 {
   /* -- N is a node in the returns graph that is to be moved outside
        the loop.  Its inputs are either literals for edges directly from
@@ -27821,10 +27136,10 @@ struct LOC_fixreturnsgraph *LINK;
   }
 }  /* MoveOutsideOfLoop */
 
-static void copynodetograph(n, g, startport, LINK)
-node *n, *g;
-int startport;
-struct LOC_fixreturnsgraph *LINK;
+static void copynodetograph(node *n,
+                            node *g,
+                            int startport,
+                            struct LOC_fixreturnsgraph *LINK)
 {
   /* -- N is a node in the returns graph.
      -- All input edges of N are Literals or from K or L ports.
@@ -27888,9 +27203,10 @@ struct LOC_fixreturnsgraph *LINK;
   /* GE is a literal edge */
 }  /* CopyNodeToGraph */
 
-static void movenodeafterloop(node_, fvnode, loop, LINK)
-node *node_, *fvnode, *loop;
-struct LOC_fixreturnsgraph *LINK;
+static void movenodeafterloop(node *node_,
+                              node *fvnode,
+                              node *loop,
+                              struct LOC_fixreturnsgraph *LINK)
 {
   /* -- Node is a node in the returns graph.
      -- FVNode is the final value node that an input edge at port 1 which
@@ -27991,9 +27307,9 @@ struct LOC_fixreturnsgraph *LINK;
   removeedge(&tempe);
 }  /* MoveNodeAfterLoop */
 
-static void removefinalvalue(n, loop, LINK)
-node *n, *loop;
-struct LOC_fixreturnsgraph *LINK;
+static void removefinalvalue(node *n,
+                             node *loop,
+                             struct LOC_fixreturnsgraph *LINK)
 {
   int pp, foroutport;
   port *fvinedge, *fvoutedge, *foroutedge, *loopinedge, /* *newe,*/ *tempe;
@@ -28034,8 +27350,7 @@ struct LOC_fixreturnsgraph *LINK;
   }  /*while*/
 }  /*RemoveFinalValue*/
 
-static void fixreturnsgraph(loop_)
-node *loop_;
+static void fixreturnsgraph(node *loop_)
 {
   /*  -- Loop is either a FORALL, LOOPA or LOOPB compound node.
       -- All the subgraphs of Loop must be complete and must have
@@ -28247,8 +27562,7 @@ node *loop_;
   /* Move N out of RetG */
 }  /* FixReturnsGraph */
 
-static void findloopnodes(g)
-node *g;
+static void findloopnodes(node *g)
 {
   node *n;
   int grnum, FORLIM;
@@ -28280,8 +27594,7 @@ node *g;
 }  /* FindLoopNodes */
 
 
-static boolean dforder(module)
-node *module;
+static boolean dforder(node *module)
 {
   boolean Result;
   node *g;
@@ -28316,7 +27629,7 @@ node *module;
 
 /*  This code calls the routines that do the processing that used to be done
     separatly in if1prepare.*/
-static boolean backend()
+static boolean backend(void)
 {  /* Back End */
   boolean ok;
   stryng checkstring;
@@ -28336,9 +27649,7 @@ static boolean backend()
 
 extern int main(int,char**);
 int
-main(argc, argv)
-int argc;
-Char *argv[];
+main(int argc, Char *argv[])
 {
   register int i;                                /* NEW CANN */
   stryng txt;

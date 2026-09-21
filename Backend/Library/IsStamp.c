@@ -16,8 +16,7 @@
 /* PURPOSE: RETURNS TRUE IF STAMP stamp IS DEFINED, ELSE FALSE.           */
 /**************************************************************************/
 
-int  IsStamp( stamp )
-char stamp;
+int  IsStamp(int stamp)
 {
   if ( stamps[ (int)stamp ] == NULL )
     return( FALSE );

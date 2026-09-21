@@ -17,7 +17,7 @@
 /*          output.                                                       */
 /**************************************************************************/
 
-void MonoWriteNodes()
+void MonoWriteNodes(void)
 {
   register PNODE n;
 

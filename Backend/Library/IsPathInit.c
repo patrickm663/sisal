@@ -9,8 +9,7 @@
 
 #include "world.h"
 
-void IsPathInit( nn )
-PNODE nn;
+void IsPathInit(PNODE nn)
 {
   register PNODE g, n;
 

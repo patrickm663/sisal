@@ -22,8 +22,7 @@
 /**************************************************************************/
 /* GLOBAL **************    OptRemoveDeadNode      ************************/
 /**************************************************************************/
-void OptRemoveDeadNode( n )
-PNODE n;
+void OptRemoveDeadNode(PNODE n)
 {
   /* Just a stub for the util.c module */
    return;
@@ -32,8 +31,7 @@ PNODE n;
 /**************************************************************************/
 /* GLOBAL **************     OptNormalizeNode      ************************/
 /**************************************************************************/
-void OptNormalizeNode( n )
-PNODE n;
+void OptNormalizeNode(PNODE n)
 {
   /* Just a stub for the util.c module */
    return;
@@ -45,8 +43,7 @@ PNODE n;
 /* PURPOSE: WRITE COUNT VALUES TO stderr: TOTALS AND A SUMMARY BY LEVEL.  */
 /**************************************************************************/
 
-static void WriteOptCountInfo( msg )
-char *msg;
+static void WriteOptCountInfo(char *msg)
 {
     register struct level *l;
     register int           i;
@@ -105,8 +102,7 @@ char *msg;
 /*          GRAPHS.  THE COUNTS ARE PRINTED TO stderr.                    */
 /**************************************************************************/
 
-void If1Count( msg )
-char *msg;
+void If1Count(char *msg)
 {
     register struct level *l;
     register PNODE         f;

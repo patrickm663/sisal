@@ -16,8 +16,7 @@
 /* PURPOSE: TOUCH ALL UNION TYPES (touch2) REACHED THROUGH TYPE i.        */
 /**************************************************************************/
 
-void TouchTheUnions( i )
-PINFO i;
+void TouchTheUnions(PINFO i)
 {
   register PINFO ii;
 

@@ -30,8 +30,7 @@ static int  amcnt = 0;                     /* COUNT OF ANTI-MOVEMENTS     */
 /* PURPOSE: RETURN TRUE IF NODE n IS LOOP INVARIANT. RETURN AND GENERATE  */
 /**************************************************************************/
 
-int OptIsEdgeInvariant( i )
-PEDGE i;
+int OptIsEdgeInvariant(PEDGE i)
 {
   register PNODE dad;
 
@@ -60,9 +59,7 @@ PEDGE i;
 /*          TERMINATED BY s, GIVEN t IS A PREDECESSOR TO s ON THE CHAIN.  */
 /**************************************************************************/
 
-void ExposeInvariants( s, t )
-PNODE s;
-PNODE t;
+void ExposeInvariants(PNODE s, PNODE t)
 {
   register PEDGE e;
   register PEDGE ee;
@@ -135,9 +132,7 @@ MoveUpTheChain:
 /*          INVARIANT NODES IN THE SAME SCOPE ARE EASILY DETECTED.        */
 /**************************************************************************/
 
-static void RemoveInvariants( lvl, g )
-int   lvl;
-PNODE g;
+static void RemoveInvariants(int lvl, PNODE g)
 {
     register PNODE n;
     register PNODE nd;
@@ -209,9 +204,7 @@ PNODE g;
 /*          IMPORT iport,  ELSE RETURN NULL.                              */
 /**************************************************************************/
 
-static PNODE ExclusiveUse( s, iport )
-PNODE s;
-int   iport;
+static PNODE ExclusiveUse(PNODE s, int iport)
 {
   register PEDGE e1;
   register PEDGE e2;
@@ -243,8 +236,7 @@ int   iport;
 /*          CONSUMERS.                                                    */
 /**************************************************************************/
 
-void AntiMovement( g )
-PNODE g;
+void AntiMovement(PNODE g)
 {
   register PNODE n;
   register PEDGE e;
@@ -369,7 +361,7 @@ PNODE g;
 /* PURPOSE: PRINT INFORMATION GATHERED DURING INVARIANT REMOVAL TO stderr.*/
 /**************************************************************************/
 
-void WriteInvarInfo()
+void WriteInvarInfo(void)
 {
   FPRINTF( infoptr, "\n **** LOOP INVARIANT NODE REMOVAL\n\n" );
   FPRINTF( infoptr, " Loop Invariants Removed:   %d\n", icnt   );
@@ -388,7 +380,7 @@ void WriteInvarInfo()
 static int first = TRUE;
 static int adone = FALSE;
 
-void If1Invar()
+void If1Invar(void)
 {
   register PNODE f;
 

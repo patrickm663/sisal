@@ -18,7 +18,7 @@ LOCK_TYPE *UtilityLock;
 LOCK_TYPE *SUtilityLock;
 #endif
 
-void InitSpawn()
+void InitSpawn(void)
 {
   UtilityLock = (LOCK_TYPE*) SharedMalloc( SIZEOF(LOCK_TYPE) );
   MY_INIT_LOCK( UtilityLock );
@@ -83,16 +83,14 @@ void InitSpawn()
 /**************************************************************************/
 /* PURPOSE:  Specialized Loop Slicing                                     */
 /**************************************************************************/
-void BuildStridedSlices(Head,Count,ChildCode,ArgPointer,Low,High,
-                        MinSlice,LoopSliceCount)
-struct ActRec   **Head;
-int             *Count;
-PCODE           ChildCode;
-POINTER         ArgPointer;
-register int    Low;
-int             High;
-int             MinSlice;
-int             LoopSliceCount;
+void BuildStridedSlices(struct ActRec **Head,
+                        int *Count,
+                        PCODE ChildCode,
+                        POINTER ArgPointer,
+                        register int Low,
+                        int High,
+                        int MinSlice,
+                        int LoopSliceCount)
 {
   register struct ActRec *NewAR;
   register int            Thickness;
@@ -132,16 +130,14 @@ int             LoopSliceCount;
 /**************************************************************************/
 /* PURPOSE:  Build blockwise loop slices                                  */
 /**************************************************************************/
-void BuildBlockSlices(Head, Count, ChildCode, ArgPointer, Low, High, MinSlice,
-                      LoopSliceCount)
-struct ActRec **Head;
-int            *Count;
-PCODE           ChildCode;
-POINTER         ArgPointer;
-register int    Low;
-register int    High;
-int             MinSlice;
-int             LoopSliceCount;
+void BuildBlockSlices(struct ActRec **Head,
+                      int *Count,
+                      PCODE ChildCode,
+                      POINTER ArgPointer,
+                      register int Low,
+                      register int High,
+                      int MinSlice,
+                      int LoopSliceCount)
 {
   register struct ActRec *NewAR;
   register int            Thickness;
@@ -182,18 +178,16 @@ int             LoopSliceCount;
 /**************************************************************************/
 /* PURPOSE:  Build cache lines size loop slices                           */
 /**************************************************************************/
-void BuildCachedSlices(Head, Count, ChildCode, ArgPointer, Low, High, MinSlice,
-                      LoopSliceCount,Size,Norm)
-struct ActRec **Head;
-int            *Count;
-PCODE           ChildCode;
-POINTER         ArgPointer;
-register int    Low;
-register int    High;
-int             MinSlice;
-int             LoopSliceCount;
-int             Size;
-int             Norm;
+void BuildCachedSlices(struct ActRec **Head,
+                       int *Count,
+                       PCODE ChildCode,
+                       POINTER ArgPointer,
+                       register int Low,
+                       register int High,
+                       int MinSlice,
+                       int LoopSliceCount,
+                       int Size,
+                       int Norm)
 {
   register struct ActRec *NewAR;
   register int           *SliceBounds;
@@ -328,16 +322,14 @@ int             Norm;
 /**************************************************************************/
 /* PURPOSE:  Build triangular blockwise loop slices                       */
 /**************************************************************************/
-void BuildTriangleSlices(Head, Count, ChildCode, ArgPointer, Low, TrueHigh,
-                      MinSlice, LoopSliceCount)
-struct ActRec **Head;
-int            *Count;
-PCODE           ChildCode;
-POINTER         ArgPointer;
-register int    Low;
-register int    TrueHigh;
-int             MinSlice;
-int             LoopSliceCount;
+void BuildTriangleSlices(struct ActRec **Head,
+                         int *Count,
+                         PCODE ChildCode,
+                         POINTER ArgPointer,
+                         register int Low,
+                         register int TrueHigh,
+                         int MinSlice,
+                         int LoopSliceCount)
 {
   register struct ActRec *NewAR;
   register int            Thickness;
@@ -384,16 +376,14 @@ int             LoopSliceCount;
 /**************************************************************************/
 /* PURPOSE:  Build slices according to the guided self scheduling algor.  */
 /**************************************************************************/
-void BuildGssSlices( Head, Count, ChildCode, ArgPointer, Low, High,
-                    MinSlice, LoopSliceCount )
-struct ActRec **Head;
-int           *Count;
-PCODE         ChildCode;
-POINTER       ArgPointer;
-int           Low;
-int           High;
-int           MinSlice;
-int           LoopSliceCount;
+void BuildGssSlices(struct ActRec **Head,
+                    int *Count,
+                    PCODE ChildCode,
+                    POINTER ArgPointer,
+                    int Low,
+                    int High,
+                    int MinSlice,
+                    int LoopSliceCount)
 {
   register struct ActRec *NewAR;
   register int            ThisHi;
@@ -434,19 +424,17 @@ int           LoopSliceCount;
 /*           accordingly.  This routine is called by the generic BSlice   */
 /*           macro.                                                       */
 /**************************************************************************/
-void BuildSlices( LoopType, Head, Count, ChildCode, ArgPointer, Low, High,
-                 MinSlice, LoopSliceCount ,Size, Norm )
-int             LoopType;
-struct ActRec **Head;
-int            *Count;
-PCODE           ChildCode;
-POINTER         ArgPointer;
-int             Low;
-int             High;
-int             MinSlice;
-int             LoopSliceCount;
-int             Size;
-int             Norm;
+void BuildSlices(int LoopType,
+                 struct ActRec **Head,
+                 int *Count,
+                 PCODE ChildCode,
+                 POINTER ArgPointer,
+                 int Low,
+                 int High,
+                 int MinSlice,
+                 int LoopSliceCount,
+                 int Size,
+                 int Norm)
 {
   switch ( DefaultLoopStyle ) {
    case 'G': /* GSS */
@@ -489,9 +477,7 @@ int             Norm;
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
-void OptSpawnSlicesFast( FirstAR, Count )
-struct  ActRec *FirstAR;
-int     Count;
+void OptSpawnSlicesFast(struct ActRec *FirstAR, int Count)
 {
   register struct ActRec *LastAR;
 
@@ -528,9 +514,7 @@ int     Count;
   return;
 }
 
-void OptSpawnSlices( FirstAR, Count )
-struct  ActRec *FirstAR;
-int     Count;
+void OptSpawnSlices(struct ActRec *FirstAR, int Count)
 {
   register struct ActRec *LastAR;
 
@@ -569,13 +553,12 @@ int     Count;
 /* ------------------------------------------------------------ */
 /* Specialized Spawns */
 /* ------------------------------------------------------------ */
-void SpawnStridedSlices( ChildCode, ArgPointer, Low, High, MinSlice, LoopSliceCount )
-PCODE   ChildCode;
-POINTER ArgPointer;
-int     Low;
-int     High;
-int     MinSlice;
-int     LoopSliceCount;
+void SpawnStridedSlices(PCODE ChildCode,
+                        POINTER ArgPointer,
+                        int Low,
+                        int High,
+                        int MinSlice,
+                        int LoopSliceCount)
 {
   struct ActRec *FirstAR;
   int            Count;
@@ -587,12 +570,11 @@ int     LoopSliceCount;
   DeAlloc((POINTER)FirstAR);
 }
 /* ------------------------------------------------------------ */
-void SpawnBlockSlices( ChildCode, ArgPointer, Low, High, LoopSliceCount )
-PCODE   ChildCode;
-POINTER ArgPointer;
-int     Low;
-int     High;
-int     LoopSliceCount;
+void SpawnBlockSlices(PCODE ChildCode,
+                      POINTER ArgPointer,
+                      int Low,
+                      int High,
+                      int LoopSliceCount)
 {
   struct ActRec *FirstAR;
   int            Count;
@@ -604,15 +586,13 @@ int     LoopSliceCount;
   DeAlloc((POINTER)FirstAR);
 }
 
-void SpawnCachedSlices( ChildCode, ArgPointer, Low, High, LoopSliceCount ,Size,
-                                Norm)
-PCODE   ChildCode;
-POINTER ArgPointer;
-int     Low;
-int     High;
-int     LoopSliceCount;
-int     Size;
-int     Norm;
+void SpawnCachedSlices(PCODE ChildCode,
+                       POINTER ArgPointer,
+                       int Low,
+                       int High,
+                       int LoopSliceCount,
+                       int Size,
+                       int Norm)
 {
   struct ActRec *FirstAR;
   int            Count;
@@ -626,13 +606,12 @@ int     Norm;
 }
 
 /* ------------------------------------------------------------ */
-void SpawnGssSlices( ChildCode, ArgPointer, Low, High, MinSlice, LoopSliceCount)
-PCODE   ChildCode;
-POINTER ArgPointer;
-int     Low;
-int     High;
-int     MinSlice;
-int     LoopSliceCount;
+void SpawnGssSlices(PCODE ChildCode,
+                    POINTER ArgPointer,
+                    int Low,
+                    int High,
+                    int MinSlice,
+                    int LoopSliceCount)
 {
   struct ActRec *FirstAR;
   int            Count;
@@ -648,14 +627,13 @@ int     LoopSliceCount;
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
-void SpawnSlices( LoopType, ChildCode, ArgPointer, Low, High, MinSlice, LoopSliceCount )
-int     LoopType;         /* CONCUR_VECTOR or CONCUR */
-PCODE   ChildCode;
-POINTER ArgPointer;
-int     Low;
-int     High;
-int     MinSlice;
-int     LoopSliceCount;
+void SpawnSlices(int LoopType,  /* CONCUR_VECTOR or CONCUR */
+                 PCODE ChildCode,
+                 POINTER ArgPointer,
+                 int Low,
+                 int High,
+                 int MinSlice,
+                 int LoopSliceCount)
 {
   struct ActRec *FirstAR;
   int            Count;

@@ -17,7 +17,7 @@
 /*          STACK. WHEN DONE, glstop WILL ADDRESS THIS NEW HEADER.        */
 /**************************************************************************/
 
-void PushGraphList() 
+void PushGraphList(void) 
 { 
   glstop = LinkNode( glstop, NodeAlloc( 0, 0 ) );
 }

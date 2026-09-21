@@ -22,10 +22,7 @@
 /*          glstop.                                                       */
 /**************************************************************************/
 
-void MakeGraph( type, label, name )
-int   type;
-int   label;
-char *name;
+void MakeGraph(int type, int label, char *name)
 {
   register PNODE n;
 

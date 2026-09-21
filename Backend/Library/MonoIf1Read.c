@@ -17,7 +17,7 @@
 /*          SYNTACTIC CORRECTNESS IS ASSUMED.                             */
 /**************************************************************************/
 
-void MonoIf1Read()
+void MonoIf1Read(void)
 {
   register int     label, type;
   register int     snode, eport, dnode, iport;

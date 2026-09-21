@@ -16,9 +16,7 @@
 /* PURPOSE: PRINT TWO ERROR MEASAGES TO stderr AND ABORT EXECUTION.       */
 /**************************************************************************/
 
-void Error2( msg1, msg2 )
-char *msg1;
-char *msg2;
+void Error2(char *msg1, char *msg2)
 {
   FPRINTF( stderr, "%s: E - %s %s\n", program, msg1, msg2 );
   Stop( ERROR );

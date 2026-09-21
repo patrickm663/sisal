@@ -18,8 +18,7 @@
 /*          PORT NUMBER IS RETURNED.                                      */
 /**************************************************************************/
 
-int AssignNewKports( c )
-PNODE c;
+int AssignNewKports(PNODE c)
 {
   register PNODE g;
   register PEDGE i;

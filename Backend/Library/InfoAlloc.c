@@ -16,9 +16,7 @@
 /**************************************************************************/
 
 
-PINFO InfoAlloc( label, type )
-int   label;
-int   type;
+PINFO InfoAlloc(int label, int type)
 {
   register PINFO i;
   register PBBLOCK b;

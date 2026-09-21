@@ -30,11 +30,7 @@
 /*                                                                        */
 /**************************************************************************/
 
-PINFO NewType(type,ref1,ref2,name)
-int type;
-int ref1;
-int ref2;
-char *name;
+PINFO NewType(int type, int ref1, int ref2, char *name)
 {
   pragmas.name = name;
   MakeInfo(++LargestTypeLabelSoFar,type,ref1,ref2);

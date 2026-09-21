@@ -16,8 +16,7 @@
 /* PURPOSE: RETURN A COPY OF THE INPUT STRING s.                          */
 /**************************************************************************/
 
-char *CopyString( s ) 
-char *s;
+char *CopyString(char *s)
 {
   return( strcpy( MyAlloc( (int)(strlen( s ) + 1) ), s ) );
 }

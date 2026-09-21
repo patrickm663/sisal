@@ -17,8 +17,7 @@
 /*          LINE READ AND ABORT EXECUTION.                                */
 /**************************************************************************/
 
-void ReadError( msg )
-char *msg;
+void ReadError(char *msg)
 {
   FPRINTF( stderr, "%s: -E (line %d) %s\n", program, line, msg );
   Stop( ERROR );

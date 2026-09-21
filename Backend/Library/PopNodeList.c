@@ -21,7 +21,7 @@
 /*          THE REMOVED HEADER IS FREED.                                  */
 /**************************************************************************/
 
-void  PopNodeList() 
+void  PopNodeList(void) 
 { 
   register int   idx;
 

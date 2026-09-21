@@ -21,9 +21,7 @@
 /* BY EDGE f TO output.                                                   */
 /**************************************************************************/
 
-void PrintUReduceInit( indent, n )
-int   indent;
-PNODE n;
+void PrintUReduceInit(int indent, PNODE n)
 {
     UNIMPLEMENTED( "IFUReduceInit" );
     PrintIndentation( indent );
@@ -47,9 +45,7 @@ PNODE n;
 /* BY EDGE f TO output.                                                   */
 /**************************************************************************/
 
-void PrintUReduceUpd( indent, n )
-int   indent;
-PNODE n;
+void PrintUReduceUpd(int indent, PNODE n)
 {
     UNIMPLEMENTED( "IFUReduceUpd" );
     PrintIndentation( indent );
@@ -71,9 +67,7 @@ PNODE n;
 /* THIS IS DONE AFTER THE LOOP HAS COMPLETED TO FINALIZE THE RESULTS.     */
 /**************************************************************************/
 
-void PrintUReduceRapUp( indent, n )
-int   indent;
-PNODE n;
+void PrintUReduceRapUp(int indent, PNODE n)
 {
     UNIMPLEMENTED( "IFUReduceRapUp" );
     PrintIndentation( indent );
@@ -95,10 +89,7 @@ PNODE n;
 /* IS INITIALIZED ACCORDING TO THE MULTIPLE NODE BUILDING IT.             */
 /**************************************************************************/
 
-void PrintUReduceSlice( indent, f, e )
-int   indent;
-PEDGE f;
-PEDGE e;
+void PrintUReduceSlice(int indent, PEDGE f, PEDGE e)
 {
     UNIMPLEMENTED( "IFUReduceSlice" );
     PrintIndentation( indent );

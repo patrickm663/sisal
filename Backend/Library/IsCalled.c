@@ -16,8 +16,7 @@
 /* PURPOSE: RETURNS TRUE IF who IS CALLED BY A GRAPH IN THE GRAPH LIST.   */
 /**************************************************************************/
 
-int IsCalled( who )
-char *who;
+int IsCalled(char *who)
 {
   register PNODE f;
 

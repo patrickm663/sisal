@@ -17,9 +17,7 @@
 /*          EXPORT PORT eport.                                            */
 /**************************************************************************/
 
-int UsageCount( n, eport )
-PNODE n;
-int   eport;
+int UsageCount(PNODE n, int eport)
 {
   register PEDGE e;
   register int   cnt = 0;

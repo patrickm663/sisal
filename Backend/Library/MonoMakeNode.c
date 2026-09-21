@@ -16,9 +16,7 @@
 /* PURPOSE: MAKE A SIMPLE NODE AND ADD IT TO THE NODE LIST.               */
 /**************************************************************************/
 
-void MonoMakeNode( label, type )
-int   label;
-int   type;
+void MonoMakeNode(int label, int type)
 {
   register PNODE n;
 

@@ -17,8 +17,7 @@
 /*          LIST.                                                         */
 /**************************************************************************/
 
-void UnlinkAdeImport( a )
-PADE a;
+void UnlinkAdeImport(PADE a)
 {
   if ( a->ipred == NULL ) {     /* FIRST ONE IN LIST */
     a->dst->aimp = a->isucc;

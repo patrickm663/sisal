@@ -25,7 +25,7 @@ struct WorkerInfo *AllWorkerInfo;
 #endif
 
 
-void InitWorkers()
+void InitWorkers(void)
 {
   int    WorkerCount;
   struct WorkerInfo *InfoPtr;
@@ -80,7 +80,7 @@ void InitWorkers()
 }
 
 
-void LeaveWorker()
+void LeaveWorker(void)
 {
   if ( GatherPerfInfo )
     StopTimer();
@@ -90,8 +90,7 @@ void LeaveWorker()
     }
 }
 
-void EnterWorker( ProcId )
-int ProcId;
+void EnterWorker(int ProcId)
 {
   if ( NumWorkers > 1 ) {
     WAIT_BARRIER(StartBarrier);

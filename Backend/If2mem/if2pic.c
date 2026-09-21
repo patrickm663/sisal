@@ -19,8 +19,7 @@
 #include "world.h"
 
 
-static void GatherATNodeInfo( n )
-PNODE n;
+static void GatherATNodeInfo(PNODE n)
 {
   register PEDGE e;
 
@@ -136,7 +135,7 @@ PNODE n;
 }
 
 
-static void PrintATNodeInfo()
+static void PrintATNodeInfo(void)
 {
   FPRINTF( infoptr, "\n **** INSERTED AT-NODE INFORMATION\n\n" );
   FPRINTF( infoptr, " Total Number of AT-NODES:                         %d\n", inatns );
@@ -157,8 +156,7 @@ static void PrintATNodeInfo()
 /* PURPOSE: WRITE COUNT VALUES TO stderr: TOTALS AND A SUMMARY BY LEVEL.  */
 /**************************************************************************/
 
-static void WriteMemCountInfo( msg )
-char *msg;
+static void WriteMemCountInfo(char *msg)
 {
     register struct level *l;
     register int           i;
@@ -226,8 +224,7 @@ char *msg;
 /*          GRAPHS.  THE COUNTS ARE PRINTED TO stderr.                    */
 /**************************************************************************/
 
-void CountNodesAndEdges( msg )
-char *msg;
+void CountNodesAndEdges(char *msg)
 {
     register struct level *l;
     register PNODE         f;
@@ -274,9 +271,7 @@ char *msg;
 /*          PRINTED.                                                      */
 /**************************************************************************/
 
-static void WriteNotConverted( n, op )
-PNODE  n;
-char  *op;
+static void WriteNotConverted(PNODE n, char *op)
 {
     if ( !IsArray( n->exp->info ) )
         return;
@@ -295,9 +290,7 @@ char  *op;
 /*          RELAVENT IMPORTS ARE PRINTED.                                 */
 /**************************************************************************/
 
-void TraceBuffer( n, eport )
-PNODE n;
-int   eport;
+void TraceBuffer(PNODE n, int eport)
 {
     register PEDGE e;
     register PEDGE ee;
@@ -480,8 +473,7 @@ ReduceFinish:
 /*          IN THIS ROUTINE.                                              */
 /**************************************************************************/
 
-static void WriteGraphPicture( g )
-PNODE g;
+static void WriteGraphPicture(PNODE g)
 {
     register PNODE n;
 
@@ -604,7 +596,7 @@ PNODE g;
 /*          TO stderr; INCLUDING IF1 TO IF2 AT-NODE CONVERSION FAILURES.  */
 /**************************************************************************/
 
-void WriteIf2memPicture()
+void WriteIf2memPicture(void)
 {
    /* PNODE f;
 
@@ -630,8 +622,7 @@ void WriteIf2memPicture()
 /* PURPOSE: WRITE BUILD COPY WARNINGS FOR GRAPH g TO stderr.              */
 /**************************************************************************/
 
-static void MemWriteGraphWarnings( g )
-PNODE g;
+static void MemWriteGraphWarnings(PNODE g)
 {
   register PNODE n;
   register PNODE sg;
@@ -749,7 +740,7 @@ PNODE g;
 /* PURPOSE: WRITE AGGREGATE CONSTRUCTION COPY WARNINGS TO stderr.         */
 /**************************************************************************/
 
-void WriteIf2memWarnings()
+void WriteIf2memWarnings(void)
 {
   PNODE f;
 

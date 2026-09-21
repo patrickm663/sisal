@@ -17,8 +17,7 @@ int Warnings = TRUE;            /* TRUE iff we want to see warning msgs */
 /* PURPOSE: PRINT A WARNING MESSAGE TO stderr, THEN CONTINUE AS NORMAL.   */
 /**************************************************************************/
 
-void Warning1( msg1 )
-char *msg1;
+void Warning1(char *msg1)
 {
   if ( Warnings ) FPRINTF( stderr, "%s: W - %s\n", program, msg1 );
 }

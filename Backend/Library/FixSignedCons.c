@@ -17,9 +17,7 @@
 /*          DEFINES AN ERROR VALUE.                                       */
 /**************************************************************************/
 
-int FixSignedConstantImports( n, lab )
-PNODE n;
-int   lab;
+int FixSignedConstantImports(PNODE n, int lab)
 {
   register PEDGE  i;
   register PEDGE  ii;

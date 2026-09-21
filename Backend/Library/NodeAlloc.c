@@ -16,9 +16,7 @@
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A NODE.                      */
 /**************************************************************************/
 
-PNODE NodeAlloc( label, type )
-int   label;
-int   type;
+PNODE NodeAlloc(int label, int type)
 {
   register PNODE n;
   register PBBLOCK b;

@@ -43,11 +43,7 @@ static PNODE scope[MAX_SCOPE];         /* SCOPE STACK FOR THREADING EDGES */
 /*          (AN ARRAY IMPORT TO THE FORALL NODE) USING i+c AS THE INDEX.  */
 /**************************************************************************/
 
-static void AddAElement( i, c, b, a )
-PEDGE i;
-int   c;
-PNODE b;
-PEDGE a;
+static void AddAElement(PEDGE i, int c, PNODE b, PEDGE a)
 {
   register PNODE plus;
   register PNODE aelm;
@@ -112,9 +108,7 @@ PEDGE a;
 /*          OF E1 AND E2 ARE EQUAL. ELSE ZERO IS RETURNED.                */
 /**************************************************************************/
 
-static int AreDopesEqual( e1, e2 )
-PEDGE e1;
-PEDGE e2;
+static int AreDopesEqual(PEDGE e1, PEDGE e2)
 {
   register PDOPE d1;
   register PDOPE d2;
@@ -227,7 +221,7 @@ MoveOn:
 /* PURPOSE: ALLOCATE, INITIALIZE, AND RETURN A DOPE VECTOR.               */
 /**************************************************************************/
 
-static PDOPE DopeAlloc()
+static PDOPE DopeAlloc(void)
 {
   register PDOPE d;
 
@@ -250,10 +244,7 @@ static PDOPE DopeAlloc()
 /*          NUMBER eport.                                                 */
 /**************************************************************************/
 
-static void BindDopeInfo( n, eport, d )
-PNODE n;
-int   eport;
-PDOPE d;
+static void BindDopeInfo(PNODE n, int eport, PDOPE d)
 {
   register PEDGE e;
 
@@ -270,9 +261,7 @@ PDOPE d;
 /*          TO ITS SUBGRAPH sg.                                           */
 /**************************************************************************/
 
-static void PropagateDopeInfo( c, sg )
-PNODE c;
-PNODE sg;
+static void PropagateDopeInfo(PNODE c, PNODE sg)
 {
   register PEDGE i;
   register PEDGE e;
@@ -308,11 +297,7 @@ PNODE sg;
 /*          IS AT LEVEL lvl AND i IS AT LEVEL i->lvl.                     */
 /**************************************************************************/
 
-static int ObviateNode( n, lvl, i, v )
-PNODE  n;
-int    lvl;
-PEDGE  i;
-int    v;
+static int ObviateNode(PNODE n, int lvl, PEDGE i, int v)
 {
   register PEDGE e;
   register PEDGE se;
@@ -386,9 +371,7 @@ int    v;
 /*          Lvl DEFINES THE CURRENT SCOPE LEVEL FOR GRAPH g.              */
 /**************************************************************************/
 
-static void ProcessDopeInfo( g, lvl )
-PNODE g;
-int   lvl;
+static void ProcessDopeInfo(PNODE g, int lvl)
 {
   register PNODE n;
   register PNODE sn;
@@ -787,7 +770,7 @@ int   lvl;
 /*          If1Dope CANULD ONLY BE CALLED ONCE DURING if1opt EXECUTION.   */
 /**************************************************************************/
 
-void If1Dope()
+void If1Dope(void)
 {
   register PNODE f;
 
@@ -806,7 +789,7 @@ void If1Dope()
 /* PURPOSE: WRITE DOPE VECTOR OPTIMIZATION INFORMATION TO stderr.         */
 /**************************************************************************/
 
-void WriteDopeInfo()
+void WriteDopeInfo(void)
 {
     FPRINTF( infoptr, "\n **** DOPE VECTOR OPTIMIZATIONS\n\n" );
 

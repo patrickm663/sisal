@@ -22,8 +22,7 @@
 /*          WITH WHITE_CHAR.  AT NO TIME IS A LINE BOUNDARY BROKEN.       */
 /**************************************************************************/
 
-char *ReadString( delim )
-char delim;
+char *ReadString(int delim)
 {
   register int  idx   = 0;
   register char prev1 = '\0';

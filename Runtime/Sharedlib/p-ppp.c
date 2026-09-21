@@ -32,8 +32,7 @@ void StartWorkers();
 void (*Entry_point)();
 #endif
 
-void StartWorkersWithEntry(entry)
-void (*entry)();
+void StartWorkersWithEntry(void (*entry)())
 {
         Entry_point = entry;
         StartWorkers();
@@ -41,8 +40,7 @@ void (*entry)();
 }
 
 
-POINTER SharedMalloc( NumBytes )
-int NumBytes;
+POINTER SharedMalloc(int NumBytes)
 {
   register POINTER ReturnPtr;
 
