@@ -19,9 +19,9 @@
 /*          AND RETURNED.                                                 */
 /**************************************************************************/
 
-PINFO LookupInfo(register int label, int type)
+PINFO LookupInfo(int label, int type)
 {
-  register PINFO i;
+  PINFO i;
 
   for ( i = ihead; i != NULL; i = i->next )
     if ( label == i->label ) {

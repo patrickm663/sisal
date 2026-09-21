@@ -217,7 +217,7 @@ void PrintPSManager(int indent, PNODE n, char *nm)
 
 void PrintPSFree(int indent, PNODE n, char *nm, PNODE g)
 {
-  register PNODE nn;
+  PNODE nn;
 
   if ( !freeall ) {
     /* SKIP DEALLOCATIONS IF THEY ARE THE LAST THINGS DONE IN THE PROGRAM */
@@ -258,8 +258,8 @@ void PrintPSFree(int indent, PNODE n, char *nm, PNODE g)
 
 void PrintPSAlloc(int indent, PNODE n, char *nm)
 {
-  register int   c;
-  register PEDGE i;
+  int   c;
+  PEDGE i;
 
   PrintIndentation( indent );
 
@@ -297,7 +297,7 @@ void PrintPSAlloc(int indent, PNODE n, char *nm)
 
 void PrintMemAlloc(int indent, PNODE n)
 {
-  register PEDGE se;
+  PEDGE se;
 
   PrintIndentation( indent );
 
@@ -402,7 +402,7 @@ void PrintOptAElement(int indent, PNODE n)
 
 void PrintArrayMacro(int indent, char *pre, char *macro, PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     PrintIndentation( indent );
 
@@ -432,11 +432,11 @@ void PrintArrayMacro(int indent, char *pre, char *macro, PNODE n)
 
 void PrintAReplace(int indent, PNODE n)
 {
-    register PEDGE i;
-    register PINFO ci;
-    register int   c;
-    register PEDGE ab;
-    register int   opt = FALSE;
+    PEDGE i;
+    PINFO ci;
+    int   c;
+    PEDGE ab;
+    int   opt = FALSE;
              char  buf[100];
 
     if ( n->exp->temp != n->imp->temp )
@@ -498,7 +498,7 @@ void PrintAReplace(int indent, PNODE n)
 
 void PrintABuild(int indent, PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   PrintIndentation( indent );
 
@@ -528,10 +528,10 @@ void PrintABuild(int indent, PNODE n)
 
 void PrintABuildAT(int indent, PNODE n)
 {
-    register PEDGE i;
-    register PEDGE b;
-    register int   c;
-    register int   s;
+    PEDGE i;
+    PEDGE b;
+    int   c;
+    int   s;
 
     if ( n->cmark ) {
         PrintIndentation( indent );
@@ -594,7 +594,7 @@ void PrintABuildAT(int indent, PNODE n)
       FPRINTF( output, "{\n" );
 
       PrintIndentation( indent );
-      FPRINTF( output, "  register %s *pp;\n", n->exp->info->A_ELEM->tname );
+      FPRINTF( output, "  %s *pp;\n", n->exp->info->A_ELEM->tname );
 
       PrintIndentation( indent );
       FPRINTF( output, "  pp = (%s*) ", n->exp->info->A_ELEM->tname );
@@ -841,7 +841,7 @@ void PrintACatenateAT(int indent, PNODE n)
 
 void PrintArrayNoOp(int indent, PNODE n)
 {
-    register PEDGE i; 
+    PEDGE i; 
 
     if ( n->imp->rmark1 == RMARK )
         if ( n->imp->omark1 || n->imp->pmark ) {           /* A TRUE NoOp */

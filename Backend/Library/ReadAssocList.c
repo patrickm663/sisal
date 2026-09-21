@@ -17,9 +17,9 @@
 /*          cnt UNSINGED INTEGERS.                                        */
 /**************************************************************************/
 
-PALIST ReadAssocList(register int cnt)
+PALIST ReadAssocList(int cnt)
 {
-  register PALIST l = AssocListAlloc( ReadInteger() );
+  PALIST l = AssocListAlloc( ReadInteger() );
 
   while ( (--cnt) > 0 )
     l = LinkAssocLists( l, AssocListAlloc( ReadInteger() ) );

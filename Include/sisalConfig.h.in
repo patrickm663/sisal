@@ -38,9 +38,6 @@
 /* Define to 1 if you have the `psignal' function. */
 #undef HAVE_PSIGNAL
 
-/* Define if the register keyword works */
-#undef HAVE_REGISTER_KEYWORD
-
 /* Define if we can get usage times with the getrusage() call */
 #undef HAVE_RUSAGE
 
@@ -94,9 +91,6 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
-
-/* Define if the volatile keyword works */
-#undef HAVE_VOLATILE_KEYWORD
 
 /* Define to 1 if you have the <wchar.h> header file. */
 #undef HAVE_WCHAR_H

@@ -20,7 +20,7 @@
 
 int AssignNewMports(int p, PNODE f)
 {
-  register PEDGE i;
+  PEDGE i;
 
   for ( i = f->F_GEN->imp; i != NULL; i = i->isucc, p++ )
     if ( i->iport != p ) {

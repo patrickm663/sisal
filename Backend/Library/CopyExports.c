@@ -19,7 +19,7 @@
 
 void CopyExports(PNODE n1, PNODE n2)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n1->exp; e != NULL; e = e->esucc )
         LinkExport( n2, CopyEdge( e, n2, NULL_NODE ) );

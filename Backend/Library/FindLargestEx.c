@@ -17,7 +17,7 @@
 
 int FindLargestExport(PNODE node)
 {
-  register PEDGE edge;
+  PEDGE edge;
   int largest_port = 0;
 
   if ( IsCompound ( node ) ) {

@@ -32,7 +32,7 @@ double atcosts[IF2AtNodes];                    /* AT-NODE COST TABLE     */
 
 static void SetArithmeticCost(PNODE n)
 {
-   register int extra;
+   int extra;
 
    switch ( n->exp->info->type ) {
      case IF_DOUBLE:
@@ -102,7 +102,7 @@ void ReadCostFile(char *fn)
 
 static void WriteCostTables(void)
 {
- /*   register int i;
+ /*   int i;
 
       if ( RequestInfo(I_Info4,info)  ) {
 
@@ -165,8 +165,8 @@ static void WriteCostTables(void)
 
 static double MaxSubgraphCost(PNODE n)
 {
-    register PNODE  g;
-    register double x;
+    PNODE  g;
+    double x;
 
     g = (IsSelect( n ))? n->C_SUBS->gsucc : n->C_SUBS;
     x = 0.0;
@@ -188,9 +188,9 @@ static double MaxSubgraphCost(PNODE n)
 
 static void CalculateRefCntCosts(PNODE n)
 {
-    register PEDGE i;
-    register PEDGE e;
-    register PEDGE ee;
+    PEDGE i;
+    PEDGE e;
+    PEDGE ee;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( i->cm != 0 )
@@ -226,7 +226,7 @@ static void CalculateRefCntCosts(PNODE n)
 
 double NumberOfIterations(PNODE f)
 {
-    register PNODE n;
+    PNODE n;
 
     n = f->F_GEN->imp->src; /* THE CONTROL */
 
@@ -251,8 +251,8 @@ double NumberOfIterations(PNODE f)
 
 static void CalculateCost(PNODE g)
 {
-  register PNODE n;
-  register PNODE gg;
+  PNODE n;
+  PNODE gg;
   char     *Reason;
 
   g->ccost = 0.0;
@@ -456,7 +456,7 @@ static void CalculateCost(PNODE g)
 
 void If2Cost(void)
 {
-    register PNODE f;
+    PNODE f;
 
     if ( RequestInfo(I_Info4,info)  ) {
       WriteCostTables();

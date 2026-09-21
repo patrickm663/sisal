@@ -33,9 +33,9 @@ PNODE fhead;                           /* DEFINED FOR if2util.c           */
 
 static void CheckDataFlowOrder(PNODE g)
 {
-    register PNODE n;
-    register PEDGE i;
-    register PADE  a;
+    PNODE n;
+    PEDGE i;
+    PADE  a;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc )
         if ( n->nsucc != NULL )
@@ -172,8 +172,8 @@ static void PPrintEdgePragmas(PEDGE e)
 
 static void PPrintImports(PNODE n, int indent)
 {
-    register PADE  a;
-    register PEDGE i;
+    PADE  a;
+    PEDGE i;
 
     FPRINTF( output, "(" );
 
@@ -215,7 +215,7 @@ static void PPrintImports(PNODE n, int indent)
 
 static void If2PPrintNode(PNODE g, int indent)
 {
-    register PNODE n;
+    PNODE n;
 
     if ( !nopp ) {
         PPrintIndentation( indent, g->if1line );
@@ -280,7 +280,7 @@ static void If2PPrintNode(PNODE g, int indent)
 
 void If2PPrint(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
         if ( !nopp )

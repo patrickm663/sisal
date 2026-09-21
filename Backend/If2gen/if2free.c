@@ -30,11 +30,11 @@ static void PrintFreeOp(int, PINFO, int, char*);
 
 static int IsReadOnlyOuter(PNODE n, int eport)
 {
-  register PEDGE ee;
-  register PEDGE e;
-  register int   pm;
-  register int   u;
-  register int   w;
+  PEDGE ee;
+  PEDGE e;
+  int   pm;
+  int   u;
+  int   w;
 
   u  = 0;
   pm = 0;
@@ -82,7 +82,7 @@ static int IsReadOnlyOuter(PNODE n, int eport)
 
 char *GetFreeName(PINFO i)
 {
-  register char *nm;
+  char *nm;
 
   switch ( i->type ) {
     case IF_UNION:
@@ -128,15 +128,15 @@ static void PrintFreeUnion(int indent,
                            int par,  /* TRUE ASSUMED!!! */
                            char *src)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
            char  buf[100];
 
   PrintIndentation( indent );
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %s *un%d = (%s*) %s;\n", u->sname, indent,
+  FPRINTF( output, "%s *un%d = (%s*) %s;\n", u->sname, indent,
            u->sname, src                                             );
 
   PrintIndentation( indent+2 );
@@ -220,15 +220,15 @@ static void PrintFreeUnion(int indent,
 
 static void PrintFreeRecord(int indent, PINFO r, int par, char *src)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
            char  buf[100];
 
   PrintIndentation( indent );
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %s *rec%d = (%s*) %s;\n", r->sname, indent,
+  FPRINTF( output, "%s *rec%d = (%s*) %s;\n", r->sname, indent,
            r->sname, src                                              );
 
   if ( par ) {
@@ -300,17 +300,17 @@ static void PrintFreeArray(int indent, PINFO i, int par, char *src)
 
   if ( !IsBasic( i->A_ELEM ) ) {
     PrintIndentation( indent+2 );
-    FPRINTF( output, "register %s *First%d;\n", i->A_ELEM->tname, indent );
+    FPRINTF( output, "%s *First%d;\n", i->A_ELEM->tname, indent );
 
     PrintIndentation( indent+2 );
-    FPRINTF( output, "register %s *Last%d;\n", i->A_ELEM->tname, indent );
+    FPRINTF( output, "%s *Last%d;\n", i->A_ELEM->tname, indent );
     }
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register PHYSP   phys;\n" );
+  FPRINTF( output, "PHYSP   phys;\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register ARRAYP arr = (ARRAYP) %s;\n", src );
+  FPRINTF( output, "ARRAYP arr = (ARRAYP) %s;\n", src );
 
   if ( par ) {
     PrintIndentation( indent+2 );
@@ -452,7 +452,7 @@ static void PrintFreeRoutine(PINFO i, int par)
 {
   FPRINTF( output, "\nstatic void %s( %s ptr )\n{\n",
           (par)? i->fname2 : i->fname1, i->tname );
-  FPRINTF( output, "  register int RefCount;\n" );
+  FPRINTF( output, "  int RefCount;\n" );
 
   if ( !par )
     FPRINTF( output, "  Sequential = TRUE;\n" );
@@ -475,7 +475,7 @@ static void PrintFreeRoutine(PINFO i, int par)
 
 void PrintFreeUtilities(void)
 {
-  register PINFO i;
+  PINFO i;
 
   for ( i = ihead; i != NULL; i = i->next ) {
     if ( !i->touch2 )
@@ -507,9 +507,9 @@ void PrintFreeUtilities(void)
 
 void PrintInputDeallocs(char *nm, int indent, PNODE f)
 {
-  register PINFO i;
-  register int   eport;
-  register int   ronly;
+  PINFO i;
+  int   eport;
+  int   ronly;
            char  buf[100];
 
   SPRINTF( buf, "((%s*)args)->In", f->info->sname );
@@ -555,9 +555,9 @@ void PrintInputDeallocs(char *nm, int indent, PNODE f)
 
 void PrintOutputDeallocs(int indent, PNODE f)
 {
-  register PINFO i;
-  register PEDGE ii;
-  register int   c;
+  PINFO i;
+  PEDGE ii;
+  int   c;
            char  buf[100];
 
   SPRINTF( buf, "((%s*)args)->Out", f->info->sname );

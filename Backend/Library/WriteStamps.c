@@ -18,7 +18,7 @@
 
 void WriteStamps(void)
 {
-  register int i;
+  int i;
 
   for ( i = 0; i < 127; i++ )
     if ( stamps[i] != NULL )

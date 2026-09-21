@@ -19,7 +19,7 @@
 
 PNODE UnlinkNode(PNODE n)
 {
-  register PNODE pred = n->npred;
+  PNODE pred = n->npred;
 
   nchange = TRUE;
 

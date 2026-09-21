@@ -51,16 +51,16 @@ static SCOPE scopes[MAX_SCOPE];                            /* SCOPE STACK */
 
 void NormalizeVectorLoop(PNODE f)
 {
-  register PEDGE e;
-  register PEDGE ee;
-  register PNODE nn;
-  register PEDGE c;
-  register int   v;
-  register PNODE aelm;
-  register PEDGE lo;
-  register PEDGE hi;
-  register int   max;
-  register int   eport;
+  PEDGE e;
+  PEDGE ee;
+  PNODE nn;
+  PEDGE c;
+  int   v;
+  PNODE aelm;
+  PEDGE lo;
+  PEDGE hi;
+  int   max;
+  int   eport;
            char  buf[100];
 
   max = 0;
@@ -247,8 +247,8 @@ static PINFO GetGABType(PINFO i)
 
 static void DoTypeChange(PNODE n, int eport, PINFO i)
 {
-  register PEDGE e;
-  register PNODE sg;
+  PEDGE e;
+  PNODE sg;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != eport )
@@ -271,9 +271,9 @@ static void DoTypeChange(PNODE n, int eport, PINFO i)
 
 static void FixGABExportTypes(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PINFO i;
+  PNODE n;
+  PNODE sg;
+  PINFO i;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -289,9 +289,9 @@ static void FixGABExportTypes(PNODE g)
 }
 
 
-static int IsInplace(register PEDGE i, register PEDGE e)
+static int IsInplace(PEDGE i, PEDGE e)
 {
-  register PNODE nop;
+  PNODE nop;
 
   if ( i == NULL ) 
     return( FALSE );
@@ -331,13 +331,13 @@ static int IsInplace(register PEDGE i, register PEDGE e)
 
 static void OptSpecGABPaths(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE e;
-  register PEDGE ii;
-  register PEDGE se;
-  register PEDGE ee;
-  register PNODE gab;
+  PNODE n;
+  PNODE sg;
+  PEDGE e;
+  PEDGE ii;
+  PEDGE se;
+  PEDGE ee;
+  PNODE gab;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -408,15 +408,15 @@ static void OptSpecGABPaths(PNODE g)
 
 static void OptGABPaths(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE nop;
-  register int   l;
-  register PEDGE gab1;
-  register PEDGE gab2;
-  register PEDGE e;
-  register PEDGE ii;
-  register PEDGE m;
+  PNODE n;
+  PNODE sg;
+  PNODE nop;
+  int   l;
+  PEDGE gab1;
+  PEDGE gab2;
+  PEDGE e;
+  PEDGE ii;
+  PEDGE m;
 
   for ( n = FindLastNode( g ); n != g; n = n->npred ) {
     if ( IsCompound( n ) ) {
@@ -528,8 +528,8 @@ MoveOn:
 
 static void SelectTestOpt(PNODE s)
 {
-    register PEDGE i;
-    register PEDGE e;
+    PEDGE i;
+    PEDGE e;
 
     e = s->S_TEST->imp; scnt++;
 
@@ -600,8 +600,8 @@ static PEDGE GenFindSource(PEDGE e)
 
 static int GenAreNodesEqual(PNODE n1, PNODE n2)
 {
-    register PEDGE i1;
-    register PEDGE i2;
+    PEDGE i1;
+    PEDGE i2;
 
     if ( n1->type != n2->type )
         return( FALSE );
@@ -633,9 +633,9 @@ static int GenAreNodesEqual(PNODE n1, PNODE n2)
 
 static int GenAssignNewKports(PNODE c)
 {
-    register PNODE g;
-    register PEDGE i;
-    register int   p = 1;
+    PNODE g;
+    PEDGE i;
+    int   p = 1;
 
     for ( i = c->imp; i != NULL; i = i->isucc, p++ ) {
         if ( (i->iport != p) && (i->iport != 0) ) {
@@ -663,7 +663,7 @@ static int GenAssignNewKports(PNODE c)
 
 static int GenAssignNewLports(int p, PNODE l)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = l->L_INIT->imp; i != NULL; i = i->isucc, p++ ) {
         if ( (i->iport != p) && (i->iport != 0) ) {
@@ -693,7 +693,7 @@ static int GenAssignNewLports(int p, PNODE l)
 
 static int GenAssignNewMports(int p, PNODE f)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = f->F_GEN->imp; i != NULL; i = i->isucc, p++ ) {
         if ( (i->iport != p) && (i->iport != 0) ) {
@@ -720,7 +720,7 @@ static int GenAssignNewMports(int p, PNODE f)
 
 static void GenAssignNewTports(int p, PNODE f)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = f->F_BODY->imp; i != NULL; i = i->isucc, p++ ) {
         if ( (i->iport != p) && (i->iport != 0) ) {
@@ -743,7 +743,7 @@ static void GenAssignNewTports(int p, PNODE f)
 
 static void GenAssignNewLoopTports(int p, PNODE l)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = l->L_BODY->imp; i != NULL; i = i->isucc )
         if ( !IsImport( l->L_INIT, i->iport ) ) {
@@ -768,8 +768,8 @@ static void GenAssignNewLoopTports(int p, PNODE l)
 
 static void GenAssignNewRports(PNODE g)
 {
-    register PEDGE i;
-    register int   p = 1;
+    PEDGE i;
+    int   p = 1;
 
     for ( i = g->imp; i != NULL; i = i->isucc, p++ ) {
         if ( (i->iport != p) && (i->iport != 0) ) {
@@ -794,12 +794,12 @@ static void GenAssignNewRports(PNODE g)
 /*          LOOPB :  K < L      AND K AND R PORTS  START AT 1 BY 1        */
 /**************************************************************************/
 
-void  AssignNewPortNums(register PNODE g, int STestOpt)
+void  AssignNewPortNums(PNODE g, int STestOpt)
 {
-    register PNODE n;
-    register int   p;
-    register PEDGE e;
-    register PEDGE i;
+    PNODE n;
+    int   p;
+    PEDGE e;
+    PEDGE i;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
         if ( !IsCompound( n ) )
@@ -888,9 +888,9 @@ void  AssignNewPortNums(register PNODE g, int STestOpt)
 
 static PEDGE AReplaceOpt(PNODE n, PEDGE i, int iport)
 {
-  register PEDGE e;
-  register PEDGE ee;
-  register PEDGE ii;
+  PEDGE e;
+  PEDGE ee;
+  PEDGE ii;
 
   if ( i == NULL )               /* PREVIOUS FindImport MAY HAVE FAILED */
     return( NULL );
@@ -967,9 +967,9 @@ static PEDGE AReplaceOpt(PNODE n, PEDGE i, int iport)
 
 static void TryAndInsertSpecGABNode(PNODE n)
 {
-  register PNODE nop;
-  register PNODE nn;
-  register PEDGE e;
+  PNODE nop;
+  PNODE nn;
+  PEDGE e;
 
   nop = n->imp->src;
 
@@ -1014,8 +1014,8 @@ static void TryAndInsertSpecGABNode(PNODE n)
 
 static void DecoupleAReplaceNodes(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -1047,11 +1047,11 @@ static void DecoupleAReplaceNodes(PNODE g)
 
 static void InsertGABNodes(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE nn;
-  register PEDGE i;
-  register PEDGE e;
+  PNODE n;
+  PNODE sg;
+  PNODE nn;
+  PEDGE i;
+  PEDGE e;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -1099,7 +1099,7 @@ static void InsertGABNodes(PNODE g)
 
 static int GenIsUsed(PNODE c, PEDGE i)
 {
-    register PNODE g;
+    PNODE g;
 
     if ( IsTagCase(c) && i->iport == 1 )
         return( TRUE );
@@ -1121,7 +1121,7 @@ static int GenIsUsed(PNODE c, PEDGE i)
 
 static int GenIsInvariant(PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   if ( !IsSGraph( n->imp->src ) ) {
     return( FALSE );
@@ -1154,9 +1154,9 @@ static int GenIsInvariant(PNODE n)
 
 static void CommonGABRemoval(PNODE g)
 {
-  register PNODE n1;
-  register PNODE n2;
-  register PNODE sn;
+  PNODE n1;
+  PNODE n2;
+  PNODE sn;
 
   for ( n1 = g->G_NODES; n1 != NULL; n1 = n1->nsucc ) {
     if ( n1->type == IFGetArrayBase ) {
@@ -1198,13 +1198,13 @@ static void CommonGABRemoval(PNODE g)
 
 static void InvarGABRemoval(PNODE g)
 {
-  register PNODE n;
-  register PNODE nd;
-  register PEDGE i;
-  register PEDGE e;
-  register PNODE sn;
-  register PNODE nn;
-  register PEDGE ii;
+  PNODE n;
+  PNODE nd;
+  PEDGE i;
+  PEDGE e;
+  PNODE sn;
+  PNODE nn;
+  PEDGE ii;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc )
     if ( IsCompound( n ) ) {
@@ -1286,11 +1286,11 @@ static void InvarGABRemoval(PNODE g)
 
 static void GenCombineKports(PNODE c)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PNODE g;
-    register PEDGE si;
-    register PEDGE sii;
+    PEDGE i1;
+    PEDGE i2;
+    PNODE g;
+    PEDGE si;
+    PEDGE sii;
 
     i1 = (IsTagCase( c ))? c->imp->isucc : c->imp;
 
@@ -1348,10 +1348,10 @@ static void GenCombineKports(PNODE c)
 
 static void CombineGGABNode(PNODE g1, PNODE n1)
 {
-  register PNODE n2;
-  register PEDGE e;
-  register int   t, f, l;
-  register PEDGE se;
+  PNODE n2;
+  PEDGE e;
+  int   t, f, l;
+  PEDGE se;
 
   for ( f = top; f >= 0; f-- ) {
     l = TRUE; /* ON THE LEFT OR RIGHT OF THE COMPOUND NODE? */
@@ -1417,9 +1417,9 @@ DoThreading:
 
 static void GCommonGABRemoval(PNODE g)
 {
-  register PNODE n;
-  register PNODE sn;
-  register PNODE sg;
+  PNODE n;
+  PNODE sn;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = sn ) {
     sn = n->nsucc;
@@ -1450,8 +1450,8 @@ static void GCommonGABRemoval(PNODE g)
 
 static void CombineKs(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc )
     if ( IsCompound( n ) ) {
@@ -1473,9 +1473,9 @@ static void CombineKs(PNODE g)
 
 static void ImproveIndexing(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE e;
+  PNODE n;
+  PNODE sg;
+  PEDGE e;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( alliantfx )
@@ -1565,8 +1565,8 @@ MoveOn:
 
 static PNODE NearestSuccessor(PNODE n)
 {
-  register PNODE ns;
-  register PEDGE e;
+  PNODE ns;
+  PEDGE e;
 
   for ( ns = NULL, e = n->exp; e != NULL; e = e->esucc ) {
     if ( ns == NULL )
@@ -1617,11 +1617,11 @@ static int IsChained(PNODE n)
 
 static void FormCrayXmpChains(PNODE g)
 {
-  register PNODE n;
-  register PNODE nn;
-  register PNODE sn;
-  register int   l;
-  register PNODE sg;
+  PNODE n;
+  PNODE nn;
+  PNODE sn;
+  int   l;
+  PNODE sg;
 
   for ( l = 0, n = g; n != NULL; n = n->nsucc )
     n->label = l++;
@@ -1713,13 +1713,13 @@ static void FormCrayXmpChains(PNODE g)
 
 static void MigrateReadsUpward(PNODE g, int vmode)
 {
-  register PNODE sg;
-  register PNODE n;
-  register int   l;
-  register PNODE nn;
-  register PNODE nnn;
-  register PNODE sn;
-  register PEDGE i;
+  PNODE sg;
+  PNODE n;
+  int   l;
+  PNODE nn;
+  PNODE nnn;
+  PNODE sn;
+  PEDGE i;
 
   /* DO NOT MOVE READS UPWARD INSIDE A VECTOR LOOP! */
   /* BUT FORM CRAY-XMP CHAINS                       */
@@ -1796,7 +1796,7 @@ static void MigrateReadsUpward(PNODE g, int vmode)
 
 void If2AImp(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     if ( aimp ) {

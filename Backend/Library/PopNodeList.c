@@ -23,7 +23,7 @@
 
 void  PopNodeList(void) 
 { 
-  register int   idx;
+  int   idx;
 
   /* CLEAR THE FAST NODE LOOKUP HASH TABLE */
   for ( idx = 0; idx < MAX_NHASH; idx++ )

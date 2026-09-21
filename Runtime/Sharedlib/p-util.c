@@ -18,10 +18,10 @@
 
 PHYSP DoPhysExpand(POINTER Array, int CompSize)
 {
-  register PHYSP  Phys;
-  register char  *Dest;
-  register char  *Source;
-  register PHYSP  APhys;
+  PHYSP  Phys;
+  char  *Dest;
+  char  *Source;
+  PHYSP  APhys;
   APhys = ((ARRAYP)Array)->Phys;
 
   Phys = (PHYSP) Alloc( SIZE_OF(PHYS) +
@@ -50,8 +50,8 @@ PHYSP DoPhysExpand(POINTER Array, int CompSize)
 
 POINTER ArrayDuplicate(POINTER OldArray, int CompSize)
 {
-  register ARRAYP Array;
-  register PHYSP  Phys;
+  ARRAYP Array;
+  PHYSP  Phys;
 
   Array = (ARRAYP) Alloc( SIZEOF(ARRAY) );
 
@@ -80,8 +80,8 @@ POINTER ArrayDuplicate(POINTER OldArray, int CompSize)
 
 POINTER ArrayDuplicatePlus(POINTER OldArray, int CompSize)
 {
-  register ARRAYP Array;
-  register PHYSP  Phys;
+  ARRAYP Array;
+  PHYSP  Phys;
 
   Array = (ARRAYP) Alloc( SIZEOF(ARRAY) );
 

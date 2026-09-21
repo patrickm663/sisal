@@ -24,9 +24,9 @@
 
 char *ReadString(int delim)
 {
-  register int  idx   = 0;
-  register char prev1 = '\0';
-  register char prev2 = '\0';
+  int  idx   = 0;
+  char prev1 = '\0';
+  char prev2 = '\0';
 
   for (;;) {
     if ( delim == WHITE_CHARS ) {

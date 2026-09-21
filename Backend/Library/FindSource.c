@@ -16,10 +16,10 @@
 /* PURPOSE: FIND THE ACTUAL SOURCE NODE OF THE VALUE CARRIED ON EDGE e.   */
 /**************************************************************************/
 
-PEDGE FindSource(register PEDGE e)
+PEDGE FindSource(PEDGE e)
 {
-  register PEDGE ee;
-  register PNODE src;
+  PEDGE ee;
+  PNODE src;
 
   for ( ;; ) {
     if ( IsConst( e ) )

@@ -19,7 +19,7 @@
 
 void MonoWriteNodes(void)
 {
-  register PNODE n;
+  PNODE n;
 
   for ( n = nhead; n != NULL; n = n->next ) {
     switch ( n->type ) {

@@ -206,24 +206,24 @@ static void ConvertIfThenElse(PNODE node) {
 
 static void SimplifyGenerates(PNODE g)
 {
-    register PNODE n;
-    register PNODE sn;
-    register PNODE sg;
-    register PNODE plus;
-    register PNODE neg;
-    register PNODE minus;
-    register PNODE rg1;
-    register PNODE rg2;
-    register PEDGE se;
-    register PEDGE e;
-    register PEDGE x;
-    register PEDGE T;
-    register int   t;
+    PNODE n;
+    PNODE sn;
+    PNODE sg;
+    PNODE plus;
+    PNODE neg;
+    PNODE minus;
+    PNODE rg1;
+    PNODE rg2;
+    PEDGE se;
+    PEDGE e;
+    PEDGE x;
+    PEDGE T;
+    int   t;
 
-    register PEDGE c;
-    register PEDGE hi;
-    register PEDGE lo;
-    register PNODE not;
+    PEDGE c;
+    PEDGE hi;
+    PEDGE lo;
+    PNODE not;
 
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
@@ -458,8 +458,8 @@ MoveOn2:
 
 static int IsRecursive(PINFO from, PINFO to)
 {
-  register PINFO r;
-  register PINFO ato;
+  PINFO r;
+  PINFO ato;
 
   if ( from == to ) 
     return( TRUE );
@@ -496,8 +496,8 @@ static int IsRecursive(PINFO from, PINFO to)
 /* ERROR MESSAGE AND SHUTS DOWN EXECUTION.                            */
 static void BindIsError(PNODE n)
 {
-  register PEDGE e;
-  register PEDGE se;
+  PEDGE e;
+  PEDGE se;
 
   for ( e = n->exp; e != NULL; e = se ) {
     se = e->esucc;
@@ -513,9 +513,9 @@ static void BindIsError(PNODE n)
 }
 
 
-static PNODE FindFunctionGraph(register PNODE f, char *nm)
+static PNODE FindFunctionGraph(PNODE f, char *nm)
 {
-  register PNODE g;
+  PNODE g;
 
   for ( g = glstop->gsucc; g != NULL; g = g->gsucc ) {
     if ( g == f ) continue;
@@ -530,9 +530,9 @@ static PNODE FindFunctionGraph(register PNODE f, char *nm)
 
 static void MarkReferencedFunctions(PNODE f, PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE ff;
+  PNODE n;
+  PNODE sg;
+  PNODE ff;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -551,8 +551,8 @@ static void MarkReferencedFunctions(PNODE f, PNODE g)
 
 void EliminateDeadFunctions(void)
 {
-  register PNODE f;
-  register PNODE sf;
+  PNODE f;
+  PNODE sf;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     if ( f->mark == 'e' || f->mark == 's' || 
@@ -582,13 +582,13 @@ void EliminateDeadFunctions(void)
 
 static void ConvertFillToForall(PNODE n)
 {
-  register PNODE  g;
-  register PNODE  b;
-  register PNODE  r;
-  register PNODE  gat;
-  register PNODE  range;
-  register PEDGE  e;
-  register PALIST l;
+  PNODE  g;
+  PNODE  b;
+  PNODE  r;
+  PNODE  gat;
+  PNODE  range;
+  PEDGE  e;
+  PALIST l;
 
   g = NodeAlloc( 0, IFSGraph );
   b = NodeAlloc( 0, IFSGraph );
@@ -668,8 +668,8 @@ static void ConvertFillToForall(PNODE n)
 
 static void FixBooleanAndErrorConsts(PNODE n)
 {
-    register PEDGE i;
-    register PNODE nn;
+    PEDGE i;
+    PNODE nn;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( !IsConst( i ) )
@@ -708,8 +708,8 @@ static void FixBooleanAndErrorConsts(PNODE n)
 
 static void RemoveIntNode(PNODE s)
 {
-    register PEDGE i;
-    register PEDGE ii;
+    PEDGE i;
+    PEDGE ii;
 
     if ( !native )
         return;
@@ -757,13 +757,13 @@ static void RemoveIntNode(PNODE s)
 
 static void NormalizeGenerateSubgraph(PNODE f)
 {
-    register PNODE n;
-    register PNODE nd;
-    register PEDGE e;
-    register PEDGE se;
-    register PEDGE a;
-    register PEDGE v;
-    register PNODE sn;
+    PNODE n;
+    PNODE nd;
+    PEDGE e;
+    PEDGE se;
+    PEDGE a;
+    PEDGE v;
+    PNODE sn;
 
     NormalizeNodes( f->F_GEN  );                        /* WORK BOTTOM-UP */
 
@@ -956,9 +956,9 @@ static void NormalizeGenerateSubgraph(PNODE f)
 
 static void EliminateFanout(PNODE n, PNODE n1, PNODE n2, int eport)
 {
-    register PEDGE e;
-    register PEDGE se;
-    register int   iport;
+    PEDGE e;
+    PEDGE se;
+    int   iport;
 
     for ( e = n->exp; e != NULL; e = e->esucc )
         if ( e->eport == eport )
@@ -997,8 +997,8 @@ static void EliminateFanout(PNODE n, PNODE n1, PNODE n2, int eport)
 
 static void RemoveSLimLNode(PNODE n)
 {
-    register PEDGE e;
-    register PEDGE se;
+    PEDGE e;
+    PEDGE se;
 
     for ( e = n->exp; e != NULL; e = se ) {
         se = e->esucc;
@@ -1026,10 +1026,10 @@ static void RemoveSLimLNode(PNODE n)
 
 static void FoldNegNode(PNODE n)
 {
-    register PEDGE  i;
-    register PEDGE  e;
-    register PEDGE  se;
-    register char  *r;
+    PEDGE  i;
+    PEDGE  e;
+    PEDGE  se;
+    char  *r;
              char   buf[100];
 
     if ( DeBuG ) return;
@@ -1077,12 +1077,12 @@ static void FoldNegNode(PNODE n)
 
 static void RemoveSetLowNode(PNODE s)
 {
-    register PEDGE i;
-    register PEDGE e;
-    register PEDGE a = s->imp;
-    register PEDGE l = s->imp->isucc;
-    register PNODE n;
-    register PEDGE lb;
+    PEDGE i;
+    PEDGE e;
+    PEDGE a = s->imp;
+    PEDGE l = s->imp->isucc;
+    PNODE n;
+    PEDGE lb;
 
     if ( DeBuG ) return;
 
@@ -1188,12 +1188,12 @@ DoRemoval:
 
 static void ConvertStringImports(PNODE n)
 {
-    register char  *s;
-    register PEDGE  i;
-    register PEDGE  c;
-    register PNODE  bld;
-    register int    idx;
-    register int    ip;
+    char  *s;
+    PEDGE  i;
+    PEDGE  c;
+    PNODE  bld;
+    int    idx;
+    int    ip;
              char   buf[100];
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
@@ -1264,9 +1264,9 @@ static void ConvertStringImports(PNODE n)
 
 static void RemoveNotNodePair(PNODE n)
 {
-    register PEDGE e;
-    register PEDGE se;
-    register PNODE src;
+    PEDGE e;
+    PEDGE se;
+    PNODE src;
 
     if ( DeBuG ) return;
 
@@ -1313,10 +1313,10 @@ static void RemoveNotNodePair(PNODE n)
 
 static void ConvertReduceCatenate(PNODE n)
 {
-    register PNODE c;
-    register PNODE g;
-    register PEDGE u;
-    register int   p;
+    PNODE c;
+    PNODE g;
+    PEDGE u;
+    int   p;
 
     redc++;
 
@@ -1363,9 +1363,9 @@ static void ConvertReduceCatenate(PNODE n)
 
 static void NormalizeLoopRet(PNODE l)
 {
-  register PNODE n;
-  register PNODE sn;
-  register PNODE nn;
+  PNODE n;
+  PNODE sn;
+  PNODE nn;
 
   for ( n = l->L_RET->G_NODES; n != NULL; n = sn ) {
     sn = n->nsucc;
@@ -1414,8 +1414,8 @@ static void NormalizeLoopRet(PNODE l)
 
 static void NormalizeForallRet(PNODE f)
 {
-  register PNODE n;
-  register PNODE sn;
+  PNODE n;
+  PNODE sn;
 
   for ( n = f->F_RET->G_NODES; n != NULL; n = sn ) {
     sn = n->nsucc;
@@ -1470,8 +1470,8 @@ static void NormalizeForallRet(PNODE f)
 
 static int IsRetNormalized(PNODE l)
 {
-    register PNODE n;
-    register PEDGE i;
+    PNODE n;
+    PEDGE i;
 
     if ( IsForall( l ) )
         n = l->F_RET->G_NODES;
@@ -1531,7 +1531,7 @@ static int IsRetNormalized(PNODE l)
 
 static void MarkLegalTestNodes(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     if ( n == NULL )
         return;
@@ -1576,9 +1576,9 @@ static void MarkLegalTestNodes(PNODE n)
 
 static void NormalizeLoopTest(PNODE l)
 {
-    register PNODE n;
-    register PNODE nn;
-    register PNODE sn;
+    PNODE n;
+    PNODE nn;
+    PNODE sn;
 
     MarkLegalTestNodes( l->L_TEST->imp->src );
 
@@ -1643,11 +1643,11 @@ static void NormalizeLoopTest(PNODE l)
 
 static void NormalizeNodes(PNODE g)
 {
-    register PNODE n;
-    register PNODE nd;
-    register PNODE sn;
-    register PNODE nn;
-    register PEDGE e;
+    PNODE n;
+    PNODE nd;
+    PNODE sn;
+    PNODE nn;
+    PEDGE e;
 
     ConvertStringImports( g );
     FixBooleanAndErrorConsts( g );
@@ -1868,10 +1868,10 @@ StartForall:
 
 static void ConvertStreamsToArrays(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE e;
-  register PNODE nn;
+  PNODE n;
+  PNODE sg;
+  PEDGE e;
+  PNODE nn;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -1945,8 +1945,8 @@ static void ConvertStreamsToArrays(PNODE g)
 
 void If1Normalize(void)
 {
-  register PNODE f;
-  register PINFO i;
+  PNODE f;
+  PINFO i;
 
   /* FOR NATIVE COMPILATION, REMOVE ALL STREAM DATA TYPES */
   if ( native ) {

@@ -42,9 +42,9 @@ DYNDECLARE(rollinfo,rollbuf,rolllen,rollcount,char,2000);
 
 static double ForallIterationCount(PNODE f)
 {
-  register PNODE r;
-  register int   l;
-  register int   h;
+  PNODE r;
+  int   l;
+  int   h;
 
   r = f->F_GEN->G_NODES;
 
@@ -72,11 +72,11 @@ static double ForallIterationCount(PNODE f)
 
 static double CostCount(PNODE g)
 {
-  register PNODE sg;
-  register PNODE n;
-  register double cnt;
-  register double cnt2;
-  register double c;
+  PNODE sg;
+  PNODE n;
+  double cnt;
+  double cnt2;
+  double c;
 
   cnt = 1.0;
 
@@ -129,7 +129,7 @@ static double CostCount(PNODE g)
 
 static PNODE AllocMutateNode(PNODE n)
 {
-  register PNODE m;
+  PNODE m;
 
   switch ( n->imp->CoNsT[0] ) {
     case REDUCE_GREATEST:
@@ -166,10 +166,10 @@ void WriteUnrollInfo(void)
 
 static int IsUnrollCandidate(PNODE f, char **ReasonP)
 {
-  register PNODE  r;
-  register PNODE  n;
-  register PEDGE  i;
-  register double cnt;
+  PNODE  r;
+  PNODE  n;
+  PEDGE  i;
+  double cnt;
 
   /* IS THE GENERATE A CONSTANT RangeGenerate THAT MEETS THE REQUIREMENTS */
   /* FOR UNROLLING */
@@ -289,21 +289,21 @@ static int IsUnrollCandidate(PNODE f, char **ReasonP)
 
 static void UnrollForalls(PNODE g)
 {
-  register PNODE sg;
-  register PNODE n;
-  register PNODE nn;
-  register PEDGE e;
-  register PEDGE i;
-  register PEDGE se;
-  register PNODE b;
-  register PNODE ag;
-  register PNODE sn;
-  register PNODE snn;
-  register char  *r;
-  register PNODE pr;
-  register PNODE pb;
+  PNODE sg;
+  PNODE n;
+  PNODE nn;
+  PEDGE e;
+  PEDGE i;
+  PEDGE se;
+  PNODE b;
+  PNODE ag;
+  PNODE sn;
+  PNODE snn;
+  char  *r;
+  PNODE pr;
+  PNODE pb;
            PNODE c[MAX_UNROLL];
-  register int   idx;
+  int   idx;
            char  s[100];
            char *Reason;
 
@@ -480,7 +480,7 @@ static void UnrollForalls(PNODE g)
 
 void If1Unroll(void)
 {
-  register PNODE f;
+  PNODE f;
 
   if ( maxunroll > MAX_UNROLL )
     maxunroll = MAX_UNROLL;

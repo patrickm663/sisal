@@ -22,7 +22,7 @@
 
 int ReadInteger(void)
 {
-  register int val = 0;
+  int val = 0;
 
   EatSpaces;
 

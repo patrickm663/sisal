@@ -22,8 +22,8 @@
 
 int AssignNewLports(int p, PNODE l)
 {
-  register PEDGE i;
-  register PNODE n;
+  PEDGE i;
+  PNODE n;
 
   if (l->L_INIT)
     {

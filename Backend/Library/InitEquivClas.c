@@ -20,8 +20,8 @@
 
 void InitEquivClasses(void)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
 
   for ( c = 0; c < MaxClass; c++ ) {
     htable[ c ] = NULL;

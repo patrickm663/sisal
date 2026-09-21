@@ -20,9 +20,9 @@
 
 void MakeEdge(int snode, int eport, int dnode, int iport, int type)
 {
-  register PNODE dst;
-  register PNODE src;
-  register PEDGE e;
+  PNODE dst;
+  PNODE src;
+  PEDGE e;
 
   dst  = FindNode( dnode, IFUndefined );
   src  = FindNode( snode, IFUndefined );

@@ -112,8 +112,8 @@ DyadicFinish:
 
 void PrintTagCase(int indent, PNODE n)
 {
-  register PALIST c;
-  register PNODE sg;
+  PALIST c;
+  PNODE sg;
 
   PrintIndentation( indent );
 

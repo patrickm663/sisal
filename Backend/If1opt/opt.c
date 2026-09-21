@@ -151,10 +151,10 @@ static char *ofile = NULL;   /* NAME OF THE OUTPUT FILE                   */
 static void ParseCommandLine(int,char**);
 static void ParseCommandLine(int argc, char **argv)
 {
-    register char *c;
-    register int   fmode = 0;
-    register int   idx;
-    register FILE *fd;
+    char *c;
+    int   fmode = 0;
+    int   idx;
+    FILE *fd;
 
     for ( idx = 1; idx < argc; ++idx ) {
         if ( *(c = argv[ idx ]) != '-' ) {
@@ -429,9 +429,9 @@ static void ParseCommandLine(int argc, char **argv)
 extern int main(int,char**);
 int main(int argc, char **argv)
 {
-  register FILE *fd;
-  register int   i;
-  register int   c;
+  FILE *fd;
+  int   i;
+  int   c;
   PNODE          f;
 
   /* fix by dj raymond 25 nov 2000 */

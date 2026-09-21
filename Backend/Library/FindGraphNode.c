@@ -18,7 +18,7 @@
 
 PNODE FindGraphNode(PNODE n)
 {
-  register PNODE nn;
+  PNODE nn;
 
   for ( nn = n; !IsGraph(nn); nn = nn->npred ) 
     /* DO NOTHING */;

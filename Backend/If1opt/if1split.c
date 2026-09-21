@@ -48,7 +48,7 @@ DYNDECLARE(printinfo,printbuf,printlen,printcount,char,2000);
 
 static PEDGE GetOperand(PNODE f, PEDGE e)
 {
-  register PEDGE i1;
+  PEDGE i1;
 
   if ( IsConst( e ) )
     return( e );
@@ -78,8 +78,8 @@ static PEDGE GetOperand(PNODE f, PEDGE e)
 
 static int SplitType(PNODE f, PNODE n)
 {
-   register PEDGE i1;
-   register PEDGE i2;
+   PEDGE i1;
+   PEDGE i2;
 
    switch ( n->type ) {
       case IFNotEqual:
@@ -142,11 +142,11 @@ static int SplitType(PNODE f, PNODE n)
 
 static void FixBody(int t, PNODE f, char *v)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE se;
-  register int   tt;
-  register PNODE sn;
+  PNODE n;
+  PEDGE e;
+  PEDGE se;
+  int   tt;
+  PNODE sn;
 
   for ( n = f->F_BODY->G_NODES; n != NULL; n = sn ) {
     sn = n->nsucc;
@@ -187,10 +187,10 @@ static void FixBody(int t, PNODE f, char *v)
 
 static void FixControl2(PEDGE kk, PEDGE ee, PNODE rg, char *v)
 {
-  register PNODE f;
-  register PEDGE e;
-  register int   iport;
-  register PNODE op;
+  PNODE f;
+  PEDGE e;
+  int   iport;
+  PNODE op;
 
   f = rg->exp->dst->G_DAD;
 
@@ -239,10 +239,10 @@ static void FixControl2(PEDGE kk, PEDGE ee, PNODE rg, char *v)
 
 static void FixControl1(PEDGE ee, PNODE rg, int mt)
 {
-  register PNODE f;
-  register PEDGE e;
-  register int   iport;
-  register PNODE min;
+  PNODE f;
+  PEDGE e;
+  int   iport;
+  PNODE min;
 
   f = rg->exp->dst->G_DAD;
 
@@ -310,10 +310,10 @@ void WriteSplitInfo(void)
 
 static int IsSplitCandidate(PNODE f, char **ReasonP)
 {
-  register PNODE r;
-  register PNODE n;
-  register int   s;
-  register int   t;
+  PNODE r;
+  PNODE n;
+  int   s;
+  int   t;
 
   r = f->F_GEN->G_NODES;
 
@@ -409,14 +409,14 @@ static int IsSplitCandidate(PNODE f, char **ReasonP)
 
 static void DoHighSplit(PNODE f1, int kind)
 {
-  register PNODE f2;
-  register PNODE cat;
-  register PEDGE e;
-  register PEDGE i;
-  register PEDGE se;
-  register PEDGE e1;
-  register PEDGE e2;
-  register PNODE ag;
+  PNODE f2;
+  PNODE cat;
+  PEDGE e;
+  PEDGE i;
+  PEDGE se;
+  PEDGE e1;
+  PEDGE e2;
+  PNODE ag;
 
   f2 = CopyNode( f1 );
   LinkNode( f1, f2 );
@@ -484,14 +484,14 @@ static void DoHighSplit(PNODE f1, int kind)
 
 static void DoLowSplit(PNODE f1, int kind)
 {
-  register PNODE f2;
-  register PNODE cat;
-  register PEDGE e;
-  register PEDGE i;
-  register PEDGE se;
-  register PEDGE e1;
-  register PEDGE e2;
-  register PNODE ag;
+  PNODE f2;
+  PNODE cat;
+  PEDGE e;
+  PEDGE i;
+  PEDGE se;
+  PEDGE e1;
+  PEDGE e2;
+  PNODE ag;
 
   f2 = CopyNode( f1 );
   LinkNode( f1, f2 );
@@ -557,9 +557,9 @@ static void DoLowSplit(PNODE f1, int kind)
 
 static void SplitForalls(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register int   kind;
+  PNODE n;
+  PNODE sg;
+  int   kind;
   char *Reason;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
@@ -617,7 +617,7 @@ static void SplitForalls(PNODE g)
 
 void If1Split(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     SplitForalls( f );

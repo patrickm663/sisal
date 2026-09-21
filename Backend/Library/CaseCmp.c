@@ -15,9 +15,9 @@
 /**************************************************************************/
 /* PURPOSE:  Case insenstivie compare of two strings                      */
 /**************************************************************************/
-int CaseCmp(register char *s1, register char *s2)
+int CaseCmp(char *s1, char *s2)
 {
-    register unsigned char c1, c2;
+    unsigned char c1, c2;
 
     while (*s1) {
         if (*s1++ != *s2++) {

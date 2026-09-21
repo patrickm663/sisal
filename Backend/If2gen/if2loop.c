@@ -24,9 +24,9 @@ static void PrintVecNode(int, PNODE);
 /* NOT ALREADY SUBJECTED TO cse AND gcse OPTIMIZATIONS                  */
 static int WasCseANDGcseDone(void)
 {
-  register char *s;
-  register int   gcse;
-  register int   cse;
+  char *s;
+  int   gcse;
+  int   cse;
   
   if ( (s = stamps[ IF1OPTIMIZED ]) == NULL )
     return( FALSE );
@@ -56,7 +56,7 @@ static int WasCseANDGcseDone(void)
 
 static int AreImportReferenceCountOps(PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   for ( i = n->imp; i != NULL; i = i->isucc )
     if ( i->cm != 0 || i->pm > 0 || i->sr > 0 || i->pl > 0 )
@@ -68,7 +68,7 @@ static int AreImportReferenceCountOps(PNODE n)
 
 static int AreComplexImports(PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   i = (IsCall( n ))? n->imp->isucc : n->imp;
   for ( /* NOTHING */; i != NULL; i = i->isucc )
@@ -83,8 +83,8 @@ static int AreComplexImports(PNODE n)
 
 static int IsIvdepOk(PNODE g, char **ReasonP)
 {
-  register PNODE n;
-  register PEDGE e;
+  PNODE n;
+  PEDGE e;
 
   if ( !WasCseANDGcseDone() ) {
     *ReasonP = "Didn't do CSE and GCSE";
@@ -184,7 +184,7 @@ static int IsIvdepOk(PNODE g, char **ReasonP)
 
 static char *PrintVectorTemp(FILE *fd, PEDGE i)
 {
-  register int  type;
+  int  type;
            char buf[100];
 
   if ( i->vtemp <= 0 )
@@ -231,7 +231,7 @@ static char *PrintVectorTemp(FILE *fd, PEDGE i)
 
 void PrintAStore(int indent, PNODE n, PNODE gat)
 {
-  register PNODE l;
+  PNODE l;
 
   l = gat->exp->dst->G_DAD;
 
@@ -260,7 +260,7 @@ void PrintAStore(int indent, PNODE n, PNODE gat)
 
 void PrintYankedRed(int indent, PNODE n, char *macro)
 {
-    register PEDGE i = n->gsucc->exp;
+    PEDGE i = n->gsucc->exp;
 
     FPRINTF( output, "/* YankedRed */\n" );
     PrintIndentation( indent );
@@ -284,7 +284,7 @@ void PrintYankedRed(int indent, PNODE n, char *macro)
 
 int AreAllUnitFanout(PNODE g)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc )
         if ( n->exp->esucc != NULL )
@@ -398,7 +398,7 @@ static void PrintLoopTest(PEDGE i)
 
 void PrintSumOfTerms(int indent, PEDGE e)
 {
-    register PEDGE i = FindImport( e->src->F_RET, e->eport );
+    PEDGE i = FindImport( e->src->F_RET, e->eport );
 
     PrintIndentation( indent );
 
@@ -464,7 +464,7 @@ void PrintSumOfTerms(int indent, PEDGE e)
 
 static void PrintBasicRed(int indent, PEDGE i, char *macro)
 {
-    register PEDGE v = i->src->imp->isucc->isucc;
+    PEDGE v = i->src->imp->isucc->isucc;
 
     PrintIndentation( indent );
 
@@ -549,7 +549,7 @@ static void PrintUserRed(int indent, PEDGE i)  /* TBD */
 
 static void PrintRCatUpd(int indent, PEDGE i, PEDGE v, PEDGE bool_, int atnode)
 {
-  register char  *macro;
+  char  *macro;
 
   macro = (atnode)? "RCatAT" : "RCat";
 
@@ -599,7 +599,7 @@ static void PrintBldAT(int indent,
                        PEDGE b,
                        PNODE n)
 {
-    register char *s;
+    char *s;
 
     PrintIndentation( indent );
 
@@ -746,7 +746,7 @@ static void PrintReduceInit(int indent, PEDGE f, PEDGE e)
 
 PEDGE GetSliceParam(PEDGE i, PNODE n)
 {
-    register PEDGE ii;
+    PEDGE ii;
 
     if ( IsConst( i ) )
         return( i );
@@ -800,7 +800,7 @@ void PrintRanges(PNODE n)
 }
 void PrintRangeLow(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     /* GUARANTEED NOT TO BE ScatterBufPartitions                         */
     i = n->usucc->imp->src->F_GEN->imp;
@@ -809,7 +809,7 @@ void PrintRangeLow(PNODE n)
 }
 void PrintRangeHigh(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     /* GUARANTEED NOT TO BE ScatterBufPartitions                         */
     i = n->usucc->imp->src->F_GEN->imp;
@@ -828,7 +828,7 @@ void PrintRangeHigh(PNODE n)
 
 void PrintSliceTaskInit(int indent, PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->usucc->imp->src->F_RET->imp; i != NULL; i = i->isucc ) {
         if ( i->iport == 0 )
@@ -906,7 +906,7 @@ void PrintSliceTaskInit(int indent, PNODE n)
 
 void PrintReturnRapUp(int indent, PNODE r)
 {
-    register PEDGE i;
+    PEDGE i;
     PNODE n;
 
     if ( r->G_DAD->smark )                               /* SLICED LOOP? */
@@ -988,8 +988,8 @@ void PrintReturnRapUp(int indent, PNODE r)
 
 static void PrintReturnUpd(int indent, PNODE r)
 {
-    register PEDGE i;
-    register PEDGE b;
+    PEDGE i;
+    PEDGE b;
     PNODE n;
 
     for ( i = r->imp; i != NULL; i = i->isucc ) {
@@ -1179,8 +1179,8 @@ static void PrintReturnUpd(int indent, PNODE r)
 
 static void PrintReturnInit(int indent, PNODE r)
 {
-    register PEDGE  i;
-    register char  *s;
+    PEDGE  i;
+    char  *s;
     PNODE n;
 
     for ( i = r->imp; i != NULL; i = i->isucc ) {
@@ -1311,8 +1311,8 @@ static void PrintReturnInit(int indent, PNODE r)
 
 static void PrintGenInit(int indent, PNODE f)
 {
-    register PNODE n;
-    register PEDGE i;
+    PNODE n;
+    PEDGE i;
              char  buf[100];
 
     if ( f->smark ) {
@@ -1387,7 +1387,7 @@ static void PrintGenInit(int indent, PNODE f)
 
 static void PrintGenUpd(int indent, PNODE f)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = f->F_GEN->G_NODES; n != NULL; n = n->nsucc )
         switch ( n->type ) {
@@ -1440,11 +1440,11 @@ static void PrintGenRapUp(int indent, PNODE f)
 
 static void PrintGenControl(int indent, PNODE f)
 {
-    register PNODE  n;
-    register PNODE  nn;
-    register PEDGE  i;
-    register PEDGE  e;
-    register PNODE  g;
+    PNODE  n;
+    PNODE  nn;
+    PEDGE  i;
+    PEDGE  e;
+    PNODE  g;
              char   buf[200];
              char   *Reason;
 
@@ -1649,7 +1649,7 @@ static int ncnt = 0;
 
 static void PrintVecNode(int indent, PNODE n)
 {
-  register char op;
+  char op;
 
   switch ( n->type ) {
     case IFPlus:
@@ -1765,7 +1765,7 @@ PrintIt:
 
 static void PrintVecUpd(int indent, PEDGE i, PNODE f)
 {
-  register PEDGE e;
+  PEDGE e;
 
   if ( IsConst( i ) )
     FPRINTF( output, "%s", i->CoNsT );
@@ -1778,9 +1778,9 @@ static void PrintVecUpd(int indent, PEDGE i, PNODE f)
 
 static void PrintVecBody(int indent, PNODE f)
 {
-  register PNODE n;
-  register PEDGE i;
-  register char  op;
+  PNODE n;
+  PEDGE i;
+  char  op;
 
   for ( n = f->F_BODY->G_NODES; n != NULL; n = n->nsucc )
     if ( n->exp->temp != NULL ) {
@@ -1974,8 +1974,8 @@ static char *GetHybridTypeProlog(PEDGE i)
 
 static void PrintHybridGraph(PNODE f, PNODE g, PEDGE crod)
 {
-  register PNODE  n;
-  register char  *op;
+  PNODE  n;
+  char  *op;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     switch ( n->type ) {
@@ -2185,9 +2185,9 @@ DoPrefix:
 
 static void PrintHybrid(PNODE f)
 {
-  register PEDGE  i;
-  register char  *nm;
-  register PEDGE  crod;
+  PEDGE  i;
+  char  *nm;
+  PEDGE  crod;
            char   buf[100];
 
   SPRINTF( buf, "h%d%3.3s", ++hcnt, hybrid );
@@ -2359,10 +2359,10 @@ static void PrintHybrid(PNODE f)
 
 static int IsHybridGraph(PNODE g, int outer)
 {
-  register PNODE n;
-  register PEDGE i;
-  register PNODE f;
-  register int   c;
+  PNODE n;
+  PEDGE i;
+  PNODE f;
+  int   c;
 
   for ( c = 0, n = g->G_NODES; n != NULL; n = n->nsucc ) {
     switch ( n->type ) {
@@ -2528,11 +2528,11 @@ DoIntrinsic:
 
 static int IsHybridCandidate(PNODE f)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE i;
-  register int   c;
-  register PTEMP t;
+  PNODE n;
+  PEDGE e;
+  PEDGE i;
+  int   c;
+  PTEMP t;
 
   if ( f->F_GEN->imp->isucc != NULL )
     return( FALSE );
@@ -2653,8 +2653,8 @@ MoveOn:
 
 void PrintLoop(int indent, PNODE l)
 {
-    register PEDGE i;
-    register PEDGE ii;
+    PEDGE i;
+    PEDGE ii;
 
     PrintProducerModifiers( indent, l->L_INIT );
     PrintReturnInit( indent, l->L_RET );
@@ -2778,7 +2778,7 @@ void PrintLoop(int indent, PNODE l)
 
     /* SKIP DEALLOCATIONS IF THEY ARE THE LAST THINGS DONE IN THE PROGRAM */
     if ( sequential && standalone ) {
-      register PNODE nn;
+      PNODE nn;
 
       /* IF COMPLEX LIES AHEAD THEN FREE THE STORAGE */
       for ( nn = l->nsucc; nn != NULL; nn = nn->nsucc )
@@ -2786,8 +2786,8 @@ void PrintLoop(int indent, PNODE l)
           break;
 
       if ( nn == NULL ) {
-        register PEDGE ee;
-        register PEDGE iii;
+        PEDGE ee;
+        PEDGE iii;
 
         for ( ee = l->exp; ee != NULL; ee = ee->esucc )
           if ( ee->dst != NULL )
@@ -2840,11 +2840,11 @@ static char GetTypePrefix(PINFO i)
 void PrintFirstSum(int indent, PNODE l)
 {
              char   fn[100];
-    register PEDGE  x;
-    register PEDGE  y;
-    register PEDGE  lo;
-    register PEDGE  hi;
-    register PEDGE  iv;
+    PEDGE  x;
+    PEDGE  y;
+    PEDGE  lo;
+    PEDGE  hi;
+    PEDGE  iv;
 
     PrintReturnInit( indent, l->L_RET );
 
@@ -2897,13 +2897,13 @@ void PrintFirstSum(int indent, PNODE l)
 void PrintTri(int indent, PNODE l)
 {
              char  fn[100];
-    register PEDGE x;
-    register PEDGE y;
-    register PEDGE z;
-    register PEDGE e;
-    register PEDGE lo;
-    register PEDGE hi;
-    register PEDGE iv;
+    PEDGE x;
+    PEDGE y;
+    PEDGE z;
+    PEDGE e;
+    PEDGE lo;
+    PEDGE hi;
+    PEDGE iv;
 
     PrintReturnInit( indent, l->L_RET );
 
@@ -2970,11 +2970,11 @@ void PrintTri(int indent, PNODE l)
 void PrintVMinMax(int indent, PNODE l, char *root)
 {
              char  fn[100];
-    register PEDGE x;
-    register PEDGE y;
-    register PEDGE lo;
-    register PEDGE hi;
-    register PEDGE iv;
+    PEDGE x;
+    PEDGE y;
+    PEDGE lo;
+    PEDGE hi;
+    PEDGE iv;
 
     PrintReturnInit( indent, l->L_RET );
 

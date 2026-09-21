@@ -20,7 +20,7 @@
 
 char *UpperCase(char *n, int underl, int underr)
 {
-  register char *p;
+  char *p;
   char  buf[100];
 
   SPRINTF( buf, "%s%s%s", (underl)? "_" : "", n, (underr)? "_" : "" );

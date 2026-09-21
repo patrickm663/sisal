@@ -20,7 +20,7 @@
 
 void MakeNode(int label, int type)
 {
-  register PNODE n;
+  PNODE n;
 
   if ( type == IFReplaceMulti )
     Error1( "ReplaceMulti NODEs NOT RECOGNIZED" );

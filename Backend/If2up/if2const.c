@@ -41,10 +41,10 @@
 
 void If2ConstGenerators(void)
 {
-    register PNODE n;
-    register PEDGE i;
-    register int   ch;
-    register PEDGE e;
+    PNODE n;
+    PEDGE i;
+    int   ch;
+    PEDGE e;
 
     ch = TRUE;
 

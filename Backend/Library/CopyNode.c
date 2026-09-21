@@ -20,10 +20,10 @@
 
 PNODE CopyNode(PNODE n)
 {
-  register PNODE nn;
-  register PNODE nd;
-  register PNODE p;
-  register PNODE g;
+  PNODE nn;
+  PNODE nd;
+  PNODE p;
+  PNODE g;
   
   n->copy = nn = NodeAlloc( n->label, n->type );
   

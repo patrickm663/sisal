@@ -18,8 +18,8 @@
 
 int IsABRecord(PINFO i)
 {
-  register PINFO ii;
-  register int   c;
+  PINFO ii;
+  int   c;
 
   if ( i->type != IF_RECORD )
     return( FALSE );

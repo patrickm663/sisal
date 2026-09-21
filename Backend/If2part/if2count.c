@@ -95,7 +95,7 @@ static int syncs;           /* COUNT OF SYNCRONIZATION OPERATIONS          */
 
 static void WriteTaskInfo(char *msg, PNODE n, int indent)
 {
-    register    int     i;
+    int     i;
     static      int     LoopCount = 0;
 
     /* ------------------------------------------------------------ */
@@ -130,7 +130,7 @@ static void WriteTaskInfo(char *msg, PNODE n, int indent)
 
 static void WriteMap(PNODE g, int indent, int plvl)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = g; n != NULL; n = n->nsucc ) {
         if ( n->wmark )
@@ -196,7 +196,7 @@ static void WriteMap(PNODE g, int indent, int plvl)
 
 void PartIf2Count(void)
 {
-    register PNODE f;
+    PNODE f;
 
     fnodes = vecs = slices = strcps = syncs = 0;
 

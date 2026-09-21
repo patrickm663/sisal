@@ -24,8 +24,8 @@
 
 void ReadStamp(void)
 {
-  register char stamp;
-  register int  kind;
+  char stamp;
+  int  kind;
 
   if ( token == '$' ) {
     NextToken;

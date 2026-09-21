@@ -17,9 +17,9 @@
 /*          THE PREDECESSOR OF THE FIRST IMPORT IS ALWAYS NULL.           */
 /**************************************************************************/
 
-void LinkImport(register PNODE dst, register PEDGE e)
+void LinkImport(PNODE dst, PEDGE e)
 {
-  register PEDGE i;
+  PEDGE i;
 
   echange = TRUE;
 

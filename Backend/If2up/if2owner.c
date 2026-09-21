@@ -24,10 +24,10 @@ static int Sharing = FALSE;
 
 static void DoSharingAnalysis(PNODE g)
 {
-    register PNODE n;
-    register PNODE sg;
-    register PEDGE i;
-    register PEDGE e;
+    PNODE n;
+    PNODE sg;
+    PEDGE i;
+    PEDGE e;
 
     for ( n = g; n != NULL; n = n->nsucc ) {
         if ( IsCompound( n ) )
@@ -87,12 +87,12 @@ static void DoSharingAnalysis(PNODE g)
 
 void If2Ownership(void)
 {
-    register PNODE n;
-    register PEDGE i;
-    register PEDGE e;
-    register int   suow = TRUE;
-    register int   auow = TRUE;
-    register PNODE f;
+    PNODE n;
+    PEDGE i;
+    PEDGE e;
+    int   suow = TRUE;
+    int   auow = TRUE;
+    PNODE f;
 
     /* EXAMINE NoOp NODES TO DETERMINE UNIVERSAL OWNERSHIP                */
 
@@ -183,17 +183,17 @@ int swcnt = 0;
 
 void OptimizeSwaps(void)
 {
-  register PNODE n1;
-  register PNODE n2;
-  register PNODE r1;
-  register PNODE r2;
-  register PNODE a1;
-  register PNODE a2;
-  register PEDGE e1;
-  register PEDGE e2;
-  register PEDGE c;
-  register PEDGE r;
-  register PEDGE e;
+  PNODE n1;
+  PNODE n2;
+  PNODE r1;
+  PNODE r2;
+  PNODE a1;
+  PNODE a2;
+  PEDGE e1;
+  PEDGE e2;
+  PEDGE c;
+  PEDGE r;
+  PEDGE e;
 
   /* EXAMINE NoOp NODES */
 

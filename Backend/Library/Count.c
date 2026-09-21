@@ -17,8 +17,8 @@
 
 void Count(PNODE g)
 {
-  register PNODE n;
-  register PEDGE i;
+  PNODE n;
+  PEDGE i;
 
   if ( (++topl) >= MaxLevel )
     Error1( "Count: LEVEL STACK OVERFLOW" );

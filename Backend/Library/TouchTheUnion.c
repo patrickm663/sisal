@@ -18,7 +18,7 @@
 
 void TouchTheUnions(PINFO i)
 {
-  register PINFO ii;
+  PINFO ii;
 
   /* WATCH OUT FOR RECURSIVE UNIONS! */
   if ( i->touch2 )

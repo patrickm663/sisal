@@ -25,7 +25,7 @@ extern void    WriteFibreOutputs(POINTER);;
 
 #define PrintIndent \
 {                                                  \
-  register int Counter;                            \
+  int Counter;                            \
   for ( Counter = Indent; Counter > 0; Counter-- ) \
     fprintf( FibreOutFd, " " );                    \
 }

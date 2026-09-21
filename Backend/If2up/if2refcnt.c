@@ -27,7 +27,7 @@
 
 static void AssignPMPragmas(PNODE n, int v)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( !IsAggregate( e->info ) )
@@ -46,7 +46,7 @@ static void AssignPMPragmas(PNODE n, int v)
 
 void AssignCMPragmas(PNODE n, int v)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( !IsAggregate( i->info ) )
@@ -65,7 +65,7 @@ void AssignCMPragmas(PNODE n, int v)
 
 static void AssignSRPragmas(PNODE n)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( !IsAggregate( e->info ) )
@@ -144,8 +144,8 @@ static void AssignSRPragmas(PNODE n)
 
 static void AssignReferenceCounts(PNODE g)
 {
-    register PNODE n;
-    register PEDGE i;
+    PNODE n;
+    PEDGE i;
 
     AssignPMPragmas( g, 0 );
       
@@ -285,7 +285,7 @@ static void AssignReferenceCounts(PNODE g)
 
 void If2ReferenceCount(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = fhead; f != NULL; f = f->gsucc )
         AssignReferenceCounts( f );

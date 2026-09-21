@@ -20,9 +20,9 @@
 
 void PropagateConst(PNODE c)
 {
-  register PNODE g;
-  register PEDGE i;
-  register PEDGE si;
+  PNODE g;
+  PEDGE i;
+  PEDGE si;
 
   for ( i = c->imp; i != NULL; i = si ) {
     si = i->isucc;

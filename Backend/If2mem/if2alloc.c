@@ -28,7 +28,7 @@ extern int agg;
 
 static void AttachSizeExpression(PNODE p, PEDGE expr, int iport)
 {
-  register PEDGE e;
+  PEDGE e;
 
   if ( IsConstSize( expr ) ) {
     e = EdgeAlloc( NULL_NODE, CONST_PORT, p, iport );
@@ -51,7 +51,7 @@ static void AttachSizeExpression(PNODE p, PEDGE expr, int iport)
 
 static PINFO MakeMultipleOrBufferInfo(int type, PINFO aelem)
 {
-    register PINFO i;
+    PINFO i;
 
     i = FindInfo( ++maxint, type );
 
@@ -74,10 +74,10 @@ static PINFO MakeMultipleOrBufferInfo(int type, PINFO aelem)
 
 static PEDGE ABuildReconstruction(PEDGE e)
 {
-    register PNODE pr;
-    register PEDGE ee;
-    register PEDGE i;
-    register PNODE bld;
+    PNODE pr;
+    PEDGE ee;
+    PEDGE i;
+    PNODE bld;
 
     pr = e->dst->npred;
     ee = FindSource( e );
@@ -136,9 +136,9 @@ static PEDGE ABuildReconstruction(PEDGE e)
 
 static PEDGE AllocNewBuffer(PNODE rpoint, PEDGE e)
 {
-    register PEDGE ee;
-    register PNODE pr;
-    register PNODE n;
+    PEDGE ee;
+    PNODE pr;
+    PNODE n;
 
     /* WHERE SHOULD THE SUBGRAPH BE PLACED WITHIN rpoint's NODE LIST?     */
 
@@ -201,15 +201,15 @@ static PEDGE AllocNewBuffer(PNODE rpoint, PEDGE e)
 
 static PEDGE GetBuffer(PNODE p)
 {
-    register PEDGE e;
-    register PNODE n;
-    register PEDGE i1;
-    register PNODE pr;
-    register PEDGE ee;
-    register PEDGE b;
-    register PEDGE rat;
-    register PNODE scat;
-    register int   eport;
+    PEDGE e;
+    PNODE n;
+    PEDGE i1;
+    PNODE pr;
+    PEDGE ee;
+    PEDGE b;
+    PEDGE rat;
+    PNODE scat;
+    int   eport;
 
     /* ATTEMPT TO LOCATE AN AT-NODE CHILD OF p GIVING PRIORITY TO        */
     /* IFReduceAT NODES (A SPECIAL CASE!).                               */
@@ -464,11 +464,11 @@ static PEDGE GetBuffer(PNODE p)
 
 void AllocIf2Nodes(PNODE f)
 {
-    register PNODE p, n, nn, m;
-    register PEDGE b, init;
-    register PNODE l, g, bld; 
-    register PEDGE e, lval, lbody;
-    register int   old;
+    PNODE p, n, nn, m;
+    PEDGE b, init;
+    PNODE l, g, bld; 
+    PEDGE e, lval, lbody;
+    int   old;
 
     while ( (p = PopAtNode()) != NULL ) {
         if ( IsAtNode( p ) )

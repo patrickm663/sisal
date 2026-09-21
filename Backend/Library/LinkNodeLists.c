@@ -19,9 +19,9 @@
 
 void LinkNodeLists(PNODE g1, PNODE g2)
 {
-  register PNODE ln;
-  register PNODE n;
-  register PNODE ns;
+  PNODE ln;
+  PNODE n;
+  PNODE ns;
 
   ln = FindLastNode( g1 );
 

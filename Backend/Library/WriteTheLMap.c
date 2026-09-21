@@ -17,7 +17,7 @@
 /**************************************************************************/
 void WriteTheLMap(int lvl, int plvl, PNODE g)
 {
-  register PNODE n;
+  PNODE n;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     switch ( n->type ) {

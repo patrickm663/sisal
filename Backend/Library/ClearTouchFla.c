@@ -18,7 +18,7 @@
 
 void ClearTouchFlags(void)
 {
-  register PINFO i;
+  PINFO i;
 
   for ( i = ihead; i != NULL; i = i->next ) {
     i->touch1 = FALSE;

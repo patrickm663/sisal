@@ -36,9 +36,9 @@ char *noin[500];                                    /* FUNCTION CALL LIST */
 
 static int GetGraphSize(PNODE g)
 {
-  register PNODE sg;
-  register int   size;
-  register PNODE n;
+  PNODE sg;
+  int   size;
+  PNODE n;
 
   size = 1;
 
@@ -63,7 +63,7 @@ static int GetGraphSize(PNODE g)
 
 static PCALL OptFindCallee(char *nm)
 {
-    register PCALL c;
+    PCALL c;
 
     for ( c = callhead; c != NULL; c = c->callee )
         if ( strcmp( nm, c->graph->G_NAME ) == 0 )
@@ -84,9 +84,9 @@ static PCALL OptFindCallee(char *nm)
 
 static void OptAddCalleeReferences(PCALL c, PNODE g)
 {
-    register PNODE n;
-    register PCALL r;
-    register PCALL cee; 
+    PNODE n;
+    PCALL r;
+    PCALL cee; 
 
     if ( IsIGraph( g ) )
         return;
@@ -129,8 +129,8 @@ static void OptAddCalleeReferences(PCALL c, PNODE g)
 
 static void OptMakeCallGraph(void)
 {
-    register PNODE f;
-    register PCALL c;
+    PNODE f;
+    PCALL c;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
         c = CallAlloc( cfunct = f );
@@ -164,8 +164,8 @@ static void OptMakeCallGraph(void)
 
 static void ReadInlineRequests(void)
 {
-    register int   x;
-    register PCALL c;
+    int   x;
+    PCALL c;
              char  ans;
 
     /* FIRST, OBEY COMMAND LINE REQUESTS FOR FUNCTION PRESERVATION */
@@ -213,7 +213,7 @@ static void ReadInlineRequests(void)
 
 static void OptBreakCycles(PCALL c)
 {
-    register PCALL r;
+    PCALL r;
 
     if ( c->checked )
         return;
@@ -244,14 +244,14 @@ static void OptBreakCycles(PCALL c)
 
 void SpliceInGraph(PNODE g, PNODE c)
 {
-    register PEDGE e;
-    register PEDGE i;
-    register PNODE n;
-    register PNODE sn;
-    register PEDGE se;
-    register PEDGE si;
-    register PEDGE ee;
-    register PEDGE see;
+    PEDGE e;
+    PEDGE i;
+    PNODE n;
+    PNODE sn;
+    PEDGE se;
+    PEDGE si;
+    PEDGE ee;
+    PEDGE see;
 
     for ( i = c->imp; i != NULL; i = i->isucc )  /* SO ARGUMENTS USE PORTS    */
         i->iport--;                              /* 1 -> N AND NOT 2 -> N + 1 */
@@ -322,8 +322,8 @@ void SpliceInGraph(PNODE g, PNODE c)
 
 static void ExpandCalls(PCALL c)
 {
-    register PCALL r;
-    register int   size;
+    PCALL r;
+    int   size;
 
     if ( c->expanded )
         return;
@@ -386,8 +386,8 @@ TheEnd:
 
 static void WriteInlineInfo(void)
 {
-    register PCALL c;
-    register PCALL r;
+    PCALL c;
+    PCALL r;
     char *prevc = "prevc";
     
 
@@ -437,8 +437,8 @@ static void WriteInlineInfo(void)
 
 void If1Inline(void)
 {
-    register PNODE f;
-    register PCALL c;
+    PNODE f;
+    PCALL c;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
       f->size = GetGraphSize( f );

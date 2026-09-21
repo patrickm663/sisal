@@ -11,7 +11,7 @@
 
 void PrintLInfo(int lvl, int plvl, char *c, PNODE loop)
 {
-  register int i;
+  int i;
   char     lbuf[1024];          /* Assemble the loop info string */
   char     *lb;                 /* Pointer within lbuf */
   char     fname[100];          /* Want to restructure the file name */

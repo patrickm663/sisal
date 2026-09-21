@@ -20,7 +20,7 @@
 
 int ReadLineId(void) 
 { 
-  register int id;
+  int id;
 
   while ( IsWhite( token )  ) {
     if ( IsEoln( token ) ) 

@@ -20,8 +20,8 @@
 
 void MakeConst(int dnode, int iport, int label, char *CoNsT)
 {
-  register PEDGE c;
-  register PNODE dst;
+  PEDGE c;
+  PNODE dst;
 
   dst = FindNode( dnode, IFUndefined );
     

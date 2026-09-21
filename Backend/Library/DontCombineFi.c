@@ -18,7 +18,7 @@
 
 int DontCombineFill(PNODE n)
 {
-  register PEDGE e;
+  PEDGE e;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( IsLoop( e->dst ) ) {

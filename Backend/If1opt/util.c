@@ -55,7 +55,7 @@
 
 int OptIsInvariant(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     if ( IsReturn( n ) || IsGenerate( n ) )
         return( FALSE );
@@ -87,11 +87,11 @@ int OptIsInvariant(PNODE n)
 
 void DecodeIndexing(PNODE b)
 {
-  register PNODE n;
-  register PNODE nn;
-  register PEDGE ee;
-  register PEDGE ii;
-  register PEDGE iii;
+  PNODE n;
+  PNODE nn;
+  PEDGE ee;
+  PEDGE ii;
+  PEDGE iii;
 
   for ( n = b->G_NODES; n != NULL; n = n->nsucc ) {
     /* DO SOME CLEANUP!!! */
@@ -152,10 +152,10 @@ void DecodeIndexing(PNODE b)
 
 void EncodeIndexing(PNODE b, int cport, int *maelmp)
 {
-  register PNODE n;
-  register PNODE op;
-  register PEDGE i;
-  register int   eport;
+  PNODE n;
+  PNODE op;
+  PEDGE i;
+  int   eport;
 
   for ( n = b->G_NODES; n != NULL; n = n->nsucc ) {
     /* DO SOME CLEANUP AND MAKE SURE ALL LABELS ARE GREATER THAN ZERO */

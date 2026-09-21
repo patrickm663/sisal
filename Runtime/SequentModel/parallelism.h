@@ -39,7 +39,7 @@ void ReleaseSharedMemory(void)
 #ifdef GANGD
 void StartWorkers(void)
 {
-  register int pID;
+  int pID;
 
   begin_parallel( NumWorkers );
 
@@ -74,7 +74,7 @@ int p_procnum = 0;
 
 void StartWorkers(void)
 {
-  register int NumProcs = NumWorkers;
+  int NumProcs = NumWorkers;
 
   while( --NumProcs > 0 )
     if ( fork() == 0 )

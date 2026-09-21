@@ -52,7 +52,7 @@ static int   frametop = 1;             /* NUMBER OF ALLOCATE LOOP POOL FRAMES */
 
 static void AssignVectorTemps(PNODE l)
 {
-    register PEDGE i;
+    PEDGE i;
 
     /* PROPAGATE K PORT TEMPORARIES TO ALL SUBGRAPHS                      */
 
@@ -100,7 +100,7 @@ static void AssignVectorTemps(PNODE l)
 
 static void DecImportPopularity(PNODE g)
 {
-    register PEDGE i;
+    PEDGE i;
 
     switch ( g->G_DAD->type ) {
         case IFSelect:
@@ -135,7 +135,7 @@ static void DecImportPopularity(PNODE g)
 
 static void DecExportPopularity(PNODE g)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = g->exp; e != NULL; e = e->esucc )
         if ( e->temp != NULL )
@@ -187,7 +187,7 @@ static void DecExportPopularity(PNODE g)
 
 static int IsDerefCandidate(int iport, PNODE r, PNODE b)
 {
-    register PEDGE e;
+    PEDGE e;
 
     if ( IsExport( b, iport ) )
         return( TRUE );
@@ -242,12 +242,12 @@ static int IsDerefCandidate(int iport, PNODE r, PNODE b)
 
 static void ReduceArgAccessCost(PNODE f)
 {
-    register PEDGE e;
-    register PEDGE ee;
-    register int   u;
-    register PEDGE se;
-    register PNODE n;
-    register int   eport;
+    PEDGE e;
+    PEDGE ee;
+    int   u;
+    PEDGE se;
+    PNODE n;
+    int   eport;
 
     for ( ;; ) {
         for ( e = f->exp; e != NULL; e = e->esucc ) {
@@ -353,8 +353,8 @@ char *MakeName(char *s1, char *s2, int id)
 
 static int IsOnlyFinalValueNode(PNODE n)
 {
-    register PEDGE e;
-    register int   c = 0;
+    PEDGE e;
+    int   c = 0;
 
     if ( IsConst( n->imp ) ) /* CANN 9/8/89 */
         return( TRUE );      /* CANN 9/8/89 */
@@ -377,7 +377,7 @@ static int IsOnlyFinalValueNode(PNODE n)
 
 static void DecrementRefCount(PNODE n, int eport)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc )
         if ( e->eport == eport )
@@ -455,10 +455,10 @@ static int IsTNameMatch(char *t1, char *t2)
 
 PTEMP GetTemp(char *name, PINFO TempInfo, int mod)
 {
-    register PTEMP  t;
-    register PTEMP  c;
-    register double c1;
-    register double c2;
+    PTEMP  t;
+    PTEMP  c;
+    double c1;
+    double c2;
 
     /* TRY AND FIND A FREE TEMPORARY IN THE TEMP LIST WITH A COST      */
     /* NEAREST TO ccost. IN A TIE, THE MOST POPULAR TEMP IS RETURNED.  */
@@ -515,8 +515,8 @@ PTEMP GetTemp(char *name, PINFO TempInfo, int mod)
 
 void InitializeSymbolTable(void)
 {
-    register PTEMP t;
-    register PTEMP ti;
+    PTEMP t;
+    PTEMP ti;
 
     for ( t = thead; t != NULL; t = ti ) {
         ti = t->next;
@@ -543,7 +543,7 @@ void InitializeSymbolTable(void)
 
 void ChangeToAllocated(PEDGE e, PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( i->temp == NULL )                                /* CONSTANT */
@@ -592,11 +592,11 @@ void FreeTemp(PEDGE e)
 }
 
 
-static int DistanceFromCriticalLoop(register PEDGE i)
+static int DistanceFromCriticalLoop(PEDGE i)
 {
-    register PEDGE ii;
-    register PNODE owner;
-    register int   d = 0;
+    PEDGE ii;
+    PNODE owner;
+    int   d = 0;
 
     for ( ;; ) {
         if ( IsConst( i ) )
@@ -632,9 +632,9 @@ static int DistanceFromCriticalLoop(register PEDGE i)
 
 void PropagateTemp(PNODE n, int eport, int ronly, PTEMP t)
 {
-    register PEDGE  e;
-    register PEDGE  i;
-    register int    u = UsageCount( n, eport );
+    PEDGE  e;
+    PEDGE  i;
+    int    u = UsageCount( n, eport );
 
     /* CONSTANT */
     if ( t == NULL )
@@ -674,7 +674,7 @@ void PropagateTemp(PNODE n, int eport, int ronly, PTEMP t)
 
 int IsTempExported(PNODE n, PTEMP t)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc )
         if ( e->temp == t )
@@ -692,7 +692,7 @@ int IsTempExported(PNODE n, PTEMP t)
 
 int IsTempImported(PNODE n, PTEMP t)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc )
         if ( i->temp == t )
@@ -710,10 +710,10 @@ int IsTempImported(PNODE n, PTEMP t)
 
 static PTEMP SortByCost(PTEMP h)
 {
-    register PTEMP p;
-    register PTEMP pr;
-    register PTEMP pn;
-    register int   chng = TRUE;
+    PTEMP p;
+    PTEMP pr;
+    PTEMP pn;
+    int   chng = TRUE;
 
     if ( h == NULL )
         return( NULL );
@@ -756,11 +756,11 @@ static PTEMP SortByCost(PTEMP h)
 
 static PTEMP SortByPopularity(PTEMP h)
 {
-    register PTEMP p;
-    register PTEMP pr;
-    register PTEMP pn;
-    register int   chng = TRUE;
-    register int   p1,p2;
+    PTEMP p;
+    PTEMP pr;
+    PTEMP pn;
+    int   chng = TRUE;
+    int   p1,p2;
 
     if ( h == NULL )
         return( NULL );
@@ -808,11 +808,11 @@ static PTEMP SortByPopularity(PTEMP h)
 
 static PTEMP SortByDistance(PTEMP h)
 {
-    register PTEMP p;
-    register PTEMP pr;
-    register PTEMP pn;
-    register int   chng = TRUE;
-    register int   d1,d2;
+    PTEMP p;
+    PTEMP pr;
+    PTEMP pn;
+    int   chng = TRUE;
+    int   d1,d2;
 
     if ( h == NULL )
         return( NULL );
@@ -864,11 +864,11 @@ static PTEMP SortByDistance(PTEMP h)
 
 void PrintLocals(void)
 {
-    register PTEMP p;
-    register PINFO i;
-    register int   bcnt = 0;
-    register int   callcnt = 0;
-    register int   v;
+    PTEMP p;
+    PINFO i;
+    int   bcnt = 0;
+    int   callcnt = 0;
+    int   v;
 
     thead = SortByPopularity( SortByDistance( SortByCost( thead ) ) );
 
@@ -878,7 +878,7 @@ void PrintLocals(void)
         switch ( i->type ) {
             case IF_BUFFER:
                 FPRINTF( output, "  %s buffer%d;\n", i->sname, ++bcnt );
-                FPRINTF( output, "  register %s %s = &buffer%d;", 
+                FPRINTF( output, "  %s %s = &buffer%d;", 
                          i->tname, p->name, bcnt                 );
                 break;
 
@@ -886,19 +886,19 @@ void PrintLocals(void)
                 if ( p->mod == NONE ) {
                   FPRINTF( output, "  %s CallFrame%d;\n", 
                            i->sname, ++callcnt            );
-                  FPRINTF( output, "  register %s %s = ", 
+                  FPRINTF( output, "  %s %s = ", 
                            i->tname, p->name           );
                   FPRINTF( output, "(%s) &CallFrame%d;",
                            i->tname, callcnt              );
                   }
                 else if ( p->mod == FPTR ) {
                   if ( p->DeAl ) {
-                    FPRINTF( output, "  register %s %s = ", i->tname, p->name );
+                    FPRINTF( output, "  %s %s = ", i->tname, p->name );
                     FPRINTF( output, "(%s) Alloc(sizeof(%s));",
                              i->tname, i->sname              );
                     }
                   else
-                    FPRINTF( output, "  register %s %s = (%s) &FrAmE%d;",
+                    FPRINTF( output, "  %s %s = (%s) &FrAmE%d;",
                              i->tname, p->name, i->tname, p->fid       );
                   }
                 else
@@ -909,7 +909,7 @@ void PrintLocals(void)
             case IF_BOOL:
             case IF_CHAR:
             case IF_NULL:
-                FPRINTF( output, "  register int %s;", p->name );
+                FPRINTF( output, "  int %s;", p->name );
                 break;
 
             case IF_BRECORD:
@@ -917,7 +917,7 @@ void PrintLocals(void)
                 break;
 
             default:
-                FPRINTF( output, "  register %s %s;", i->tname, p->name );
+                FPRINTF( output, "  %s %s;", i->tname, p->name );
                 break;
             }
 
@@ -928,16 +928,16 @@ void PrintLocals(void)
       FPRINTF( output, "  PSBUFFER psb%d;\n", v );
 
     for ( v = 0; v <= rags; v++ )
-      FPRINTF( output, "  register int rag%d = 0;\n", v );
+      FPRINTF( output, "  int rag%d = 0;\n", v );
 
     for ( v = 1; v <= vdmax; v++ )
-      FPRINTF( output, "  register double *VD%d;\n", v );
+      FPRINTF( output, "  double *VD%d;\n", v );
 
     for ( v = 1; v <= vfmax; v++ )
-      FPRINTF( output, "  register float *VF%d;\n", v );
+      FPRINTF( output, "  float *VF%d;\n", v );
 
     for ( v = 1; v <= vimax; v++ )
-      FPRINTF( output, "  register int *VI%d;\n", v );
+      FPRINTF( output, "  int *VI%d;\n", v );
 
     FPRINTF( output, "\n" );
 }
@@ -953,8 +953,8 @@ void PrintLocals(void)
 
 static PEDGE AddAssignNode(PNODE pr, PNODE dst, PEDGE i, PTEMP t)
 {
-    register PNODE a;
-    register PEDGE e;
+    PNODE a;
+    PEDGE e;
 
     a = NodeAlloc( ++maxint, IFAssign );
     LinkNode( pr, a );
@@ -989,8 +989,8 @@ static PEDGE AddAssignNode(PNODE pr, PNODE dst, PEDGE i, PTEMP t)
 
 static void FixAlternatives(PEDGE i, PNODE st)
 {
-    register PNODE sg;
-    register PEDGE ii;
+    PNODE sg;
+    PEDGE ii;
 
     for ( sg = st->gsucc; sg != NULL; sg = sg->gsucc ) {
         ii = FindImport( sg, i->iport );
@@ -1017,8 +1017,8 @@ static void FixAlternatives(PEDGE i, PNODE st)
 
 static int SafeInAlternatives(PEDGE i, PNODE st)
 {
-    register PNODE sg;
-    register PEDGE ii;
+    PNODE sg;
+    PEDGE ii;
 
     for ( sg = st->gsucc; sg != NULL; sg = sg->gsucc )
         for ( ii = sg->imp; ii != NULL; ii = ii->isucc )
@@ -1039,10 +1039,10 @@ static int SafeInAlternatives(PEDGE i, PNODE st)
 
 static void AssignUReduceTemps(PNODE r)
 {
-    register PEDGE i;
-    register PEDGE ii;
-    register PEDGE si;
-    register PNODE n;
+    PEDGE i;
+    PEDGE ii;
+    PEDGE si;
+    PNODE n;
 
     /* PROPAGATE K PORT TEMPORARIES TO ALL SUBGRAPHS                      */
 
@@ -1229,7 +1229,7 @@ static void AssignUReduceTemps(PNODE r)
 
 static void AssignReturnsTemps(PNODE g)
 {
-    register PNODE r;
+    PNODE r;
 
     for ( r = g->nsucc; r != NULL; r = r->nsucc ) {
         if ( r->type == IFUReduce )
@@ -1248,14 +1248,14 @@ static void AssignReturnsTemps(PNODE g)
 
 static void AssignSelectTemps(PNODE s)
 {
-    register PEDGE e  = NULL;
-    register PEDGE i;
-    register PNODE st;
-    register PNODE sg;
-    register PEDGE ii;
-    register PEDGE iii;
-    register PEDGE si;
-    register PTEMP t;
+    PEDGE e  = NULL;
+    PEDGE i;
+    PNODE st;
+    PNODE sg;
+    PEDGE ii;
+    PEDGE iii;
+    PEDGE si;
+    PTEMP t;
 
     /* PROPAGATE SELECTION TEMPORARY INTO TEST SUBGRAPH OF Select NODE    */
     /* AND FREE IT IF IT ISN'T REFERENCED IN THE OTHER SUBGRAPHS.         */
@@ -1462,15 +1462,15 @@ static int CriticalPath(PEDGE i)
 
 static void AssignForallTemps(PNODE f)
 {
-    register PEDGE i;
-    register PEDGE si;
-    register PEDGE e;
-    register PNODE n;
-    register PTEMP t;
-    register int   mtmp;
-    register int   idx;
-    register int   iidx;
-    register int   u;
+    PEDGE i;
+    PEDGE si;
+    PEDGE e;
+    PNODE n;
+    PTEMP t;
+    int   mtmp;
+    int   idx;
+    int   iidx;
+    int   u;
     struct { PNODE node; int ucnt; } fan[MAX_VEC_REGS+10];
 
     /* ASSIGN TEMPORARIES IN THE RETURN SUBGRAPH                          */
@@ -1721,10 +1721,10 @@ static void AssignForallTemps(PNODE f)
 
 static void AssignLoopTemps(PNODE l)
 {
-    register PEDGE i;
-    register PEDGE ii;
-    register PEDGE si;
-    register PNODE n;
+    PEDGE i;
+    PEDGE ii;
+    PEDGE si;
+    PNODE n;
 
     /* PROPAGATE K PORT TEMPORARIES TO ALL SUBGRAPHS                      */
 
@@ -1926,7 +1926,7 @@ static void AssignLoopTemps(PNODE l)
 
 static void BindExportTemps(PNODE n, PINFO TempInfo, char *name)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         e->temp = TempAlloc( "", TempInfo, NONE, e->eport );
@@ -1939,8 +1939,8 @@ static void BindExportTemps(PNODE n, PINFO TempInfo, char *name)
 
 PNODE  FindCriticalPath(PNODE g, PNODE cbody)
 {
-    register PNODE n;
-    register PNODE cb;
+    PNODE n;
+    PNODE cb;
 
     cb = NULL; 
 
@@ -1985,13 +1985,13 @@ PNODE  FindCriticalPath(PNODE g, PNODE cbody)
 
 void AssignTemps(PNODE g)
 {
-    register PNODE  n;
-    register PEDGE  e;
-    register PNODE  f;
-    register PTEMP  t;
-    register PEDGE  i;
-    register int    cnt;
-    register PEDGE  ii;
+    PNODE  n;
+    PEDGE  e;
+    PNODE  f;
+    PTEMP  t;
+    PEDGE  i;
+    int    cnt;
+    PEDGE  ii;
              char   buf[100];
 
     switch ( g->type ) {
@@ -2620,8 +2620,8 @@ if ( IsConst( n->L_TEST->imp ) )
                 f = FindFunction( n->imp->CoNsT );
 
  {
-  register int eport;
-  register PINFO iii;
+  int eport;
+  PINFO iii;
 
   eport = 1;
 
@@ -2867,7 +2867,7 @@ FreeRest:
 
 void PrintFrameDeallocs(void)
 {
-  register PTEMP p;
+  PTEMP p;
 
   for ( p = thead; p != NULL; p = p->next )
     if ( p->DeAl )

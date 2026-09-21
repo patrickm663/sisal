@@ -18,7 +18,7 @@
 
 void CopyEdgeAndReset(PEDGE e, PNODE src, PNODE dst)
 {
-  register PEDGE ee;
+  PEDGE ee;
 
   ee = CopyEdge( e, (IsConst(e))? NULL : src, dst );
 

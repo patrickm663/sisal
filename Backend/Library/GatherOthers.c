@@ -20,7 +20,7 @@
 
 void GatherOthers(PINFO p, PINFO r)
 {
-  register PINFO pm;
+  PINFO pm;
 
   /* MARK ALL ENTRIES EQUIVALENT TO REPRESENTATIVE r */
 

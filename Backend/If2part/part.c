@@ -95,13 +95,13 @@ static char *ofile = NULL;      /* OUTPUT FILE NAME */
 
 static void ParseCommandLine(int argc, char **argv)
 {
-  register char *c;
-  register int   fmode = 0;
-  register int   idx;
-  register FILE *fd;
-  register double huge = -1.0;
-  register int   iter = -1;
-  register int   rcf = FALSE;
+  char *c;
+  int   fmode = 0;
+  int   idx;
+  FILE *fd;
+  double huge = -1.0;
+  int   iter = -1;
+  int   rcf = FALSE;
   char     *report_out_name  = NULL;
 
   for ( idx = 1; idx < argc; ++idx ) {
@@ -331,7 +331,7 @@ static void ParseCommandLine(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-    register FILE *fd;
+    FILE *fd;
     int i4 = I_Info4;
 
     /* fix by dj raymond 25 nov 2000 */

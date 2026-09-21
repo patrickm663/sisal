@@ -19,9 +19,9 @@
 
 int FixSignedConstantImports(PNODE n, int lab)
 {
-  register PEDGE  i;
-  register PEDGE  ii;
-  register PNODE  neg;
+  PEDGE  i;
+  PEDGE  ii;
+  PNODE  neg;
 
   for ( i = n->imp; i != NULL; i = i->isucc ) {
     if ( !IsConst( i ) || (i->CoNsT == NULL) )

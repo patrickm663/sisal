@@ -11,7 +11,7 @@
 
 void IsPathInit(PNODE nn)
 {
-  register PNODE g, n;
+  PNODE g, n;
 
   for ( g = nn; !IsGraph(g); g = g->npred );
   for ( n = g->nsucc; n != NULL; n = n->nsucc )

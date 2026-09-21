@@ -18,8 +18,8 @@
 
 PINFO InfoAlloc(int label, int type)
 {
-  register PINFO i;
-  register PBBLOCK b;
+  PINFO i;
+  PBBLOCK b;
 
   /* Update LargestTypeLabelSoFar. */
 

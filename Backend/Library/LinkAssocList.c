@@ -19,8 +19,8 @@
 
 PALIST LinkAssocLists(PALIST lst1, PALIST lst2)
 {
-  register PALIST l;
-  register PALIST prev = NULL;
+  PALIST l;
+  PALIST prev = NULL;
 
   for( l = lst1; l != NULL; l = l->next )
     prev = l;

@@ -19,9 +19,9 @@
 
 int IsEntryPoint(char *nm)
 {
-  register int   i;
-  register char *p;
-  register int   ans;
+  int   i;
+  char *p;
+  int   ans;
 
   p = LowerCase( nm, FALSE, FALSE );
   ans = -1;

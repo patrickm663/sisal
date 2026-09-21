@@ -17,9 +17,9 @@
 /*          NOT FOUND, RETURN NULL.                                       */
 /**************************************************************************/
 
-PEDGE FindImport(PNODE n, register int iport)
+PEDGE FindImport(PNODE n, int iport)
 {
-  register PEDGE i;
+  PEDGE i;
 
   for ( i = n->imp; i != NULL; i = i->isucc )
     if ( i->iport == iport )

@@ -103,8 +103,8 @@ static PNODE root = NULL;                     /* CURRENT BIP ROOT DV NODE */
 
 static int ArePSAllocsIdentical(PNODE a1, PNODE a2)
 {
-  register PEDGE i1;
-  register PEDGE i2;
+  PEDGE i1;
+  PEDGE i2;
 
   if ( a1->usucc->exp->info->A_ELEM->A_ELEM->tname != 
        a2->usucc->exp->info->A_ELEM->A_ELEM->tname )
@@ -148,17 +148,17 @@ static int ArePSAllocsIdentical(PNODE a1, PNODE a2)
 
 static void ShareStorage(PNODE g)
 {
-  register PNODE sg;
-  register PNODE a1;
-  register PNODE a2;
-  register PNODE sa1;
-  register PNODE sa2;
-  register int   c;
-  register PEDGE i;
-  register PEDGE si;
-  register PEDGE e;
-  register PEDGE se;
-  register PNODE f1;
+  PNODE sg;
+  PNODE a1;
+  PNODE a2;
+  PNODE sa1;
+  PNODE sa2;
+  int   c;
+  PEDGE i;
+  PEDGE si;
+  PEDGE e;
+  PEDGE se;
+  PNODE f1;
 
   /* RENUMBER THE NODES FOR DATA FLOW ORDER CHECKS!!! */
   for ( c = 0, a1 = g->G_NODES; a1 != NULL; a1 = a1->nsucc ) {
@@ -282,8 +282,8 @@ MoveOn:
 
 static void FindSourceEdgeAndLink(PNODE dst, int iport, PNODE m, PEDGE e)
 {
-  register PNODE l;
-  register PEDGE ee;
+  PNODE l;
+  PEDGE ee;
 
   /* FIND THE TRUE SOURCE EDGE OF e WHICH IS IMMEDIATELY OUTSIDE OF m */
   /* OR IS A CONSTANT. E WILL BE THAT SOURCE! */
@@ -344,23 +344,23 @@ static void FindSourceEdgeAndLink(PNODE dst, int iport, PNODE m, PEDGE e)
 
 static void WireRegionalSwap(PNODE m, PEDGE b)
 {
-  register PNODE ma;
-  register PNODE psma;
-  register PNODE psmd;
-  register PNODE psmm;
-  register int   idx;
-  register PNODE l;
-  register int   matype = -1;
-  register int   mdtype = -1;
-  register int   mmtype = -1;
-  register int   cport;
-  register int   dport;
-  register PNODE f;
-  register PNODE dst;
-  register PNODE scat;
-  register PEDGE i;
-  register PEDGE e;
-  register int   d;
+  PNODE ma;
+  PNODE psma;
+  PNODE psmd;
+  PNODE psmm;
+  int   idx;
+  PNODE l;
+  int   matype = -1;
+  int   mdtype = -1;
+  int   mmtype = -1;
+  int   cport;
+  int   dport;
+  PNODE f;
+  PNODE dst;
+  PNODE scat;
+  PEDGE i;
+  PEDGE e;
+  int   d;
 
   /* FIND THE MemAllocDVI NODE */
   if ( b == NULL )
@@ -605,7 +605,7 @@ static void WireRegionalSwap(PNODE m, PEDGE b)
 
 static void CountTheArms(PNODE sg, int eport)
 {
-  register PEDGE e;
+  PEDGE e;
 
   if ( (e = FindImport( sg, eport )) == NULL )
     Error2( "CountTheArms", "FindImport FOR SUBGRAPH FAILED" );
@@ -628,12 +628,12 @@ static void CountTheArms(PNODE sg, int eport)
 
 static void RestructureTheBIP(PNODE m, PEDGE i)
 {
-  register PEDGE e;
-  register PNODE n;
-  register PEDGE lii;
-  register PEDGE ii;
-  register PNODE l;
-  register PEDGE b;
+  PEDGE e;
+  PNODE n;
+  PEDGE lii;
+  PEDGE ii;
+  PNODE l;
+  PEDGE b;
 
   if ( IsConst( i ) )
     return;
@@ -832,7 +832,7 @@ void GenNormalizeNode(PNODE n)
 
 static int GenIsEdgeInvariant(PNODE m, PEDGE e)
 {
-  register PNODE c;
+  PNODE c;
 
   if ( IsConst( e ) )
     return( TRUE );
@@ -869,13 +869,13 @@ static int GenIsEdgeInvariant(PNODE m, PEDGE e)
 
 static int IsNextDimWellFormed(int d, PNODE m, PEDGE i)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE b;
-  register PEDGE ae;
-  register PEDGE ce;
-  register PNODE ma;
-  register PNODE rn;
+  PNODE n;
+  PEDGE e;
+  PEDGE b;
+  PEDGE ae;
+  PEDGE ce;
+  PNODE ma;
+  PNODE rn;
 
   n = i->src;
 
@@ -1015,11 +1015,11 @@ DoTheRest:
 
 static int IsBIPWellFormed(int d, PNODE m, PEDGE i)
 {
-  register PEDGE e;
-  register PNODE n;
-  register PEDGE lii;
-  register PEDGE ii;
-  register PNODE l;
+  PEDGE e;
+  PNODE n;
+  PEDGE lii;
+  PEDGE ii;
+  PNODE l;
 
   
   /* ARE WE PROCESS THE INNER DIMENSION? IF SO, WE KNOW IT IS OK! */
@@ -1172,8 +1172,8 @@ static int IsGround(PEDGE e)
 
 static int IsEdgeReadOnly(PEDGE e)
 {
-  register PNODE f;
-  register PNODE n;
+  PNODE f;
+  PNODE n;
 
   if ( e->cm == -1 || e->pm > 0 || e->wmark || e->dmark )
     return( FALSE );
@@ -1278,7 +1278,7 @@ static int IsEdgeReadOnly(PEDGE e)
 
 static int AreAllReadOnly(PNODE n, int eport)
 {
-  register PEDGE e;
+  PEDGE e;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != eport )
@@ -1301,8 +1301,8 @@ static int AreAllReadOnly(PNODE n, int eport)
 
 static PEDGE GetWriteEdge(PNODE n, int eport)
 {
-  register PEDGE e;
-  register PEDGE we;
+  PEDGE e;
+  PEDGE we;
 
   we = NULL;
 
@@ -1341,7 +1341,7 @@ static PEDGE GetWriteEdge(PNODE n, int eport)
 
 static int IsMAllocInvariant(PNODE m, PNODE ma)
 {
-  register PEDGE i;
+  PEDGE i;
 
   /* ABORT IF ma IS RAGGED!!! */
   if ( ma->wmark )
@@ -1448,14 +1448,14 @@ static int IsMAllocInvariant(PNODE m, PNODE ma)
 
 void PointerSwap(PNODE m, PNODE g)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE we;
-  register PEDGE wee;
-  register PEDGE ret;
-  register PEDGE ce;
-  register PEDGE ci;
-  register PEDGE b;
+  PNODE n;
+  PEDGE e;
+  PEDGE we;
+  PEDGE wee;
+  PEDGE ret;
+  PEDGE ce;
+  PEDGE ci;
+  PEDGE b;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     switch ( n->type ) {
@@ -1918,7 +1918,7 @@ DoTheRest:
 
 static int MyIsPMarked(PNODE n, int eport)
 {
-  register int st;
+  int st;
 
   bipats++;
 
@@ -1937,7 +1937,7 @@ static int MyIsPMarked(PNODE n, int eport)
 
 static void DriveXmark(PNODE g)
 {
-  register PNODE n;
+  PNODE n;
 
   /* ALREADY DONE */
   if ( g->xmark )
@@ -1992,13 +1992,13 @@ static void DriveXmark(PNODE g)
 
 static void FixBRecordOperators(PNODE g, int ok)
 {
-  register PNODE n;
-  register PEDGE i;
-  register PEDGE ee;
-  register PEDGE se;
-  register PEDGE si;
-  register PNODE nop;
-  register PNODE sg;
+  PNODE n;
+  PEDGE i;
+  PEDGE ee;
+  PEDGE se;
+  PEDGE si;
+  PNODE nop;
+  PNODE sg;
 
   for ( n = g; n != NULL; n = n->nsucc ) {
     for ( i = n->imp; i != NULL; i = si ) {
@@ -2171,7 +2171,7 @@ void WritePrebuildInfo(void)
 
 static void ZeroRCPragmas(PNODE n, int eport)
 {
-  register PEDGE e;
+  PEDGE e;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != eport )
@@ -2194,9 +2194,9 @@ static void ZeroRCPragmas(PNODE n, int eport)
 
 static void ModifyBIP(PEDGE e)
 {
-  register PNODE src;
-  register PNODE rt;
-  register PEDGE ee;
+  PNODE src;
+  PNODE rt;
+  PEDGE ee;
 
   if ( e == NULL )
     return;
@@ -2315,8 +2315,8 @@ DoIt:
 
 static void ModifyRedAT(PEDGE v)
 {
-  register PEDGE ge;
-  register PEDGE e;
+  PEDGE ge;
+  PEDGE e;
 
   for ( ge = NULL, e = v->src->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != v->eport )
@@ -2348,10 +2348,10 @@ static void ModifyRedAT(PEDGE v)
 
 static int GetRedATType(PEDGE v)
 {
-  register PNODE sg;
-  register PEDGE e2;
-  register PEDGE i;
-  register PEDGE e;
+  PNODE sg;
+  PEDGE e2;
+  PEDGE i;
+  PEDGE e;
 
   sg = v->src;
 
@@ -2413,9 +2413,9 @@ static int GetRedATType(PEDGE v)
 
 static int GetBIPType(PEDGE e)
 {
-  register PNODE src;
-  register int   t1;
-  register PEDGE ee;
+  PNODE src;
+  int   t1;
+  PEDGE ee;
 
   if ( e == NULL ) {
     return( BIP_ONE );
@@ -2547,10 +2547,10 @@ static void ProcessBIP(PNODE n,
                        int DVItype,
                        int DVtype)
 {
-  register int   ok;
-  register int   t1;
-  register int   t2;
-  register PEDGE e;
+  int   ok;
+  int   t1;
+  int   t2;
+  PEDGE e;
 
   if ( n->cmark ) {
     bipreg++;
@@ -2632,8 +2632,8 @@ static void ProcessBIP(PNODE n,
 
 static PNODE FindNearestDecendent(PNODE n, int eport)
 {
-  register PEDGE e;
-  register PEDGE ee;
+  PEDGE e;
+  PEDGE ee;
 
   for ( ee = NULL, e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != eport )
@@ -2667,8 +2667,8 @@ static PNODE FindNearestDecendent(PNODE n, int eport)
 
 static int IsRagged(PEDGE i)
 {
-  register PNODE src;
-  register PEDGE ii;
+  PNODE src;
+  PEDGE ii;
 
   if ( IsConst( i ) )
     return( FALSE );
@@ -2719,12 +2719,12 @@ static int IsRagged(PEDGE i)
 
 static void MoveRaggedInvariants(PNODE g)
 {
-  register PNODE n;
-  register PNODE sn;
-  register PEDGE i;
-  register PEDGE e;
-  register PEDGE ee;
-  register int   port;
+  PNODE n;
+  PNODE sn;
+  PEDGE i;
+  PEDGE e;
+  PEDGE ee;
+  int   port;
 
   for ( n = g->G_NODES; n != NULL; n = sn ) {
     sn = n->nsucc;
@@ -2785,10 +2785,10 @@ static void MoveRaggedInvariants(PNODE g)
 
 static void IdentifyRaggedMemAllocs(PNODE g)
 {
-  register PNODE n;
-  register PNODE raggednode;
-  register PNODE sg;
-  register PEDGE e;
+  PNODE n;
+  PNODE raggednode;
+  PNODE sg;
+  PEDGE e;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -2849,15 +2849,15 @@ static void IdentifyRaggedMemAllocs(PNODE g)
 
 void OptimizeBIPs(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE b;
-  register int   l;
-  register PEDGE v;
-  register PNODE pn;
-  register PNODE nd;
-  register PNODE ln;
-  register PNODE nn;
+  PNODE n;
+  PNODE sg;
+  PEDGE b;
+  int   l;
+  PEDGE v;
+  PNODE pn;
+  PNODE nd;
+  PNODE ln;
+  PNODE nn;
 
   /* RELABEL THE NODES! */
   for ( ln = g, l = 0, n = g; n != NULL; n = n->nsucc ) {
@@ -2987,20 +2987,20 @@ MoveOn:
 
 static void CombineAndHoistMemAllocs(PNODE g)
 {
-  register PNODE n;
-  register PNODE an;
-  register PNODE cn;
-  register PNODE cns;
-  register PNODE sg;
-  register PEDGE i1;
-  register PEDGE i2;
-  register PEDGE e;
-  register int   port;
-  register PEDGE se;
-  register PINFO binfo;
-  register int   sr;
-  register PEDGE e1;
-  register PEDGE e2;
+  PNODE n;
+  PNODE an;
+  PNODE cn;
+  PNODE cns;
+  PNODE sg;
+  PEDGE i1;
+  PEDGE i2;
+  PEDGE e;
+  int   port;
+  PEDGE se;
+  PINFO binfo;
+  int   sr;
+  PEDGE e1;
+  PEDGE e2;
 
   for ( n = g->nsucc; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -3248,11 +3248,11 @@ static void CombineAndHoistMemAllocs(PNODE g)
 
 void If2Prebuild0(void)
 {
-  register PINFO ii;
-  register PINFO i;
-  register int   c;
-  register PNODE f;
-  register int   ok;
+  PINFO ii;
+  PINFO i;
+  int   c;
+  PNODE f;
+  int   ok;
 
   /* if ( max_dims <= 0 ) goto SkipBRecordStuff; */
 
@@ -3307,7 +3307,7 @@ Abort:
 
 void If2Prebuild1(void)
 {
-  register PNODE f;
+  PNODE f;
 
   pmode = PREBUILD1;
 
@@ -3342,7 +3342,7 @@ void If2Prebuild1(void)
 
 void If2Prebuild2(void)
 {
-  register PNODE f;
+  PNODE f;
 
   pmode = PREBUILD2;
 

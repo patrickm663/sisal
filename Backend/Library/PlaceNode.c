@@ -17,9 +17,9 @@
 /*          LABEL ORDER (n->label).                                       */
 /**************************************************************************/
 
-void PlaceNode(register PNODE n)
+void PlaceNode(PNODE n)
 {
-  register PNODE nd;
+  PNODE nd;
 
   if ( nprd != NULL )
     if ( nprd->label < n->label ) {

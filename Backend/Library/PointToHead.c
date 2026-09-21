@@ -20,9 +20,9 @@
 
 void PointToHead(void)
 {
-  register PINFO m;
-  register PINFO r;
-  register int   c;
+  PINFO m;
+  PINFO r;
+  int   c;
 
   for ( c = 0; c <= lclass; c++ )
     if ( htable[c] != NULL ) {

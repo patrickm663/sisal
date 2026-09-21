@@ -16,7 +16,7 @@ PNODE SortedTree;
 
 static PNODE FindNewFunctionGraph(char *nm)
 {
-  register PNODE g;
+  PNODE g;
 
   for ( g = SortedTree; g != NULL; g = g->gsucc ) {
     if ( strcmp( g->G_NAME, nm ) == 0 ) return( g );
@@ -27,7 +27,7 @@ static PNODE FindNewFunctionGraph(char *nm)
 
 static PNODE FindTheFunction(char *nm)
 {
-  register PNODE g;
+  PNODE g;
 
   for ( g = SortedTree; g != NULL; g = g->gsucc ) {
     if ( strcmp( g->G_NAME, nm ) == 0 ) return( g );
@@ -42,8 +42,8 @@ static PNODE FindTheFunction(char *nm)
 
 static int InSortedTree(PNODE f, PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -61,9 +61,9 @@ static int InSortedTree(PNODE f, PNODE g)
 
 static int CallReachable(PNODE f, PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE ff;
+  PNODE n;
+  PNODE sg;
+  PNODE ff;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -106,7 +106,7 @@ static int InRecursiveChain(PNODE F)
 /**************************************************************************/
 void CallReorder(void)
 {
-  register PNODE        f,next,last;
+  PNODE        f,next,last;
 
   SortedTree = NULL;
 

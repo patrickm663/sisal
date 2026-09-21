@@ -73,8 +73,8 @@ PNODE PopAtNode(void)
 
 PNODE ReferencePoint(PNODE rpoint, int min)
 {
-    register PNODE n;
-    register PNODE nn;
+    PNODE n;
+    PNODE nn;
 
     n = rpoint->lstack[ rpoint->level ];
 
@@ -124,7 +124,7 @@ PNODE ReferencePoint(PNODE rpoint, int min)
 
 PNODE MaxNodeInDFO(PNODE rpoint, PNODE n1, PNODE n2)
 {
-    register PNODE n;
+    PNODE n;
 
     if ( n1->level < rpoint->level ) {
         if ( n2->level < rpoint->level )
@@ -193,12 +193,12 @@ PNODE MaxSourceInDFO(PNODE rpoint, PEDGE e1, PEDGE e2)
 
 static void MoveNodesLeft(PNODE g)
 {
-    register PNODE n;
-    register PNODE sn;
-    register PNODE pr;
-    register PEDGE i;
-    register PNODE sg;
-    register int   c;
+    PNODE n;
+    PNODE sn;
+    PNODE pr;
+    PEDGE i;
+    PNODE sg;
+    int   c;
 
     for ( c = 0, n = g; n != NULL; n = n->nsucc ) 
         n->label = c++;
@@ -259,7 +259,7 @@ void WriteAggregateInfo (void)
 
 void If2Mem(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
         cfunct = f;

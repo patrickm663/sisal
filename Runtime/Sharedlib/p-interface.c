@@ -168,13 +168,13 @@ SPCALL_FUNCTION( spcall_ )
 
 #define IDInfo( x, y, z, w ) \
 { \
-  register int   i; \
-  register int   DimInc; \
-  register int   InfoInc; \
-  register int   DSize   = 1; \
-  register int   Major   = z[0]; \
-  register int   Mode    = z[1]; \
-  register int   Mutable = w; \
+  int   i; \
+  int   DimInc; \
+  int   InfoInc; \
+  int   DSize   = 1; \
+  int   Major   = z[0]; \
+  int   Mode    = z[1]; \
+  int   Mutable = w; \
   z += 3; \
   switch ( Major ) { \
     case ROW_MAJOR: \
@@ -228,9 +228,9 @@ void InitDimInfo( int ronly, int Dim, DIMINFOP DimInfo, int *Info )
 
 void IDescriptorCheck(int Dim, int *Info)
 {
-  register int CurrentDim;
-  register int Plo,Phi, Llo,Lhi;
-  register int Major;
+  int CurrentDim;
+  int Plo,Phi, Llo,Lhi;
+  int Major;
 
   Plo = Phi = Llo = Lhi = CurrentDim = 0;
 

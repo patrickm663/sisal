@@ -80,19 +80,19 @@ void WriteVectorInfo(void)
 
 static int IsFirstAbsMin(PNODE l)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register PNODE t1;
-  register PEDGE c;
-  register PEDGE cc;
-  register PEDGE x;
-  register PEDGE xx;
-  register PNODE n;
-  register PNODE inc;
-  register PNODE op;
-  register PNODE abs1;
-  register PNODE abs2;
-  register PEDGE ii;
+  PEDGE i1;
+  PEDGE i2;
+  PNODE t1;
+  PEDGE c;
+  PEDGE cc;
+  PEDGE x;
+  PEDGE xx;
+  PNODE n;
+  PNODE inc;
+  PNODE op;
+  PNODE abs1;
+  PNODE abs2;
+  PEDGE ii;
 
   /* INITIAL CHECK */
   if ( (i1 = l->L_INIT->imp) == NULL ) return( FALSE );
@@ -274,15 +274,15 @@ static int IsFirstAbsMin(PNODE l)
 
 static int IsTri(PNODE l)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register PEDGE c;
-  register PEDGE cc;
-  register PEDGE x;
-  register PEDGE xx;
-  register PNODE n;
-  register PNODE inc;
-  register PNODE op;
+  PEDGE i1;
+  PEDGE i2;
+  PEDGE c;
+  PEDGE cc;
+  PEDGE x;
+  PEDGE xx;
+  PNODE n;
+  PNODE inc;
+  PNODE op;
 
   /* INITIAL CHECK */
   if ( (i1 = l->L_INIT->imp) == NULL ) return( FALSE );
@@ -415,19 +415,19 @@ static int IsTri(PNODE l)
 
 static int IsFirstAbsMax(PNODE l)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register PNODE t1;
-  register PEDGE c;
-  register PEDGE cc;
-  register PEDGE x;
-  register PEDGE xx;
-  register PNODE n;
-  register PNODE inc;
-  register PNODE op;
-  register PNODE abs1;
-  register PNODE abs2;
-  register PEDGE ii;
+  PEDGE i1;
+  PEDGE i2;
+  PNODE t1;
+  PEDGE c;
+  PEDGE cc;
+  PEDGE x;
+  PEDGE xx;
+  PNODE n;
+  PNODE inc;
+  PNODE op;
+  PNODE abs1;
+  PNODE abs2;
+  PEDGE ii;
 
   /* INITIAL CHECK */
   if ( (i1 = l->L_INIT->imp) == NULL ) return( FALSE );
@@ -609,17 +609,17 @@ static int IsFirstAbsMax(PNODE l)
 
 static int IsFirstMax(PNODE l)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register PNODE t1;
-  register PEDGE c;
-  register PEDGE cc;
-  register PEDGE x;
-  register PEDGE xx;
-  register PNODE n;
-  register PNODE inc;
-  register PNODE op;
-  register PEDGE ii;
+  PEDGE i1;
+  PEDGE i2;
+  PNODE t1;
+  PEDGE c;
+  PEDGE cc;
+  PEDGE x;
+  PEDGE xx;
+  PNODE n;
+  PNODE inc;
+  PNODE op;
+  PEDGE ii;
 
   /* INITIAL CHECK */
   if ( (i1 = l->L_INIT->imp) == NULL ) return( FALSE );
@@ -790,15 +790,15 @@ static int IsFirstMax(PNODE l)
 
 static int IsFirstSum(PNODE l)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register PEDGE c;
-  register PEDGE cc;
-  register PEDGE x;
-  register PEDGE xx;
-  register PNODE n;
-  register PNODE inc;
-  register PNODE op;
+  PEDGE i1;
+  PEDGE i2;
+  PEDGE c;
+  PEDGE cc;
+  PEDGE x;
+  PEDGE xx;
+  PNODE n;
+  PNODE inc;
+  PNODE op;
 
   /* INITIAL CHECK */
   if ( (i1 = l->L_INIT->imp) == NULL ) return( FALSE );
@@ -902,17 +902,17 @@ static int IsFirstSum(PNODE l)
 
 static int IsFirstMin(PNODE l)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register PNODE t1;
-  register PEDGE c;
-  register PEDGE cc;
-  register PEDGE x;
-  register PEDGE xx;
-  register PNODE n;
-  register PNODE inc;
-  register PNODE op;
-  register PEDGE ii;
+  PEDGE i1;
+  PEDGE i2;
+  PNODE t1;
+  PEDGE c;
+  PEDGE cc;
+  PEDGE x;
+  PEDGE xx;
+  PNODE n;
+  PNODE inc;
+  PNODE op;
+  PEDGE ii;
 
   /* INITIAL CHECK */
   if ( (i1 = l->L_INIT->imp) == NULL ) return( FALSE );
@@ -1083,8 +1083,8 @@ static int IsFirstMin(PNODE l)
 
 static void Vectorize(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -1138,7 +1138,7 @@ static void Vectorize(PNODE g)
 
 void If2Vectorize(int useF)
 {
-  register PNODE f;
+  PNODE f;
   
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )

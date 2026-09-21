@@ -18,8 +18,8 @@
 
 int IsInnerLoop(PNODE b)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = b->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {

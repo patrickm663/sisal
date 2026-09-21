@@ -20,11 +20,11 @@
 
 void If2Read(void)
 {
-  register int     label, type,  cnt;
-  register int     snode, eport, dnode, iport;
-  register int     ref1,  ref2;
-  register char   *s;
-  register PALIST  l;
+  int     label, type,  cnt;
+  int     snode, eport, dnode, iport;
+  int     ref1,  ref2;
+  char   *s;
+  PALIST  l;
 
   EnterScope();
 

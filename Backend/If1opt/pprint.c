@@ -49,10 +49,10 @@ int glue  = FALSE;
 
 static void ParseCommandLine(int argc, char **argv)
 {
-    register char *c;
-    register int   fmode = 0;
-    register int   idx;
-    register FILE *fd;
+    char *c;
+    int   fmode = 0;
+    int   idx;
+    FILE *fd;
 
     for ( idx = 1; idx < argc; ++idx ) {
         if ( *(c = argv[ idx ]) != '-' ) {

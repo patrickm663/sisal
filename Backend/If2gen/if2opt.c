@@ -44,8 +44,8 @@ int rmdab   = 0;                  /* COUNT OF REMOVED IFDefArrayBuf NODES */
 
 static void FixErrorConstants(PNODE n)
 {
-  register PEDGE i;
-  register PNODE nn;
+  PEDGE i;
+  PNODE nn;
 
   for ( i = n->imp; i != NULL; i = i->isucc )
     if ( IsConst( i ) && i->CoNsT == NULL ) {
@@ -75,7 +75,7 @@ static void FixErrorConstants(PNODE n)
 
 static void FoldLogical(PNODE n)
 {
-  register PEDGE e;
+  PEDGE e;
 
   switch ( n->type ) {
     case IFLessEqual:
@@ -127,9 +127,9 @@ static void FoldLogical(PNODE n)
 
 static void FoldReturnPragmas(PNODE l, PNODE r)
 {
-  register PEDGE i;
-  register PEDGE e;
-  register PEDGE ee;
+  PEDGE i;
+  PEDGE e;
+  PEDGE ee;
 
   for ( i = r->imp; i != NULL; i = i->isucc ) {
     if ( i->iport == 0 )
@@ -207,7 +207,7 @@ static void FoldPragmas(PNODE n)
 
 static void RemoveMultipleTypes(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc )
         if ( IsMultiple( i->info ) )
@@ -224,10 +224,10 @@ static void RemoveMultipleTypes(PNODE n)
 
 static void ApplyVariousIf2Opts(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE s;
-  register PEDGE m;
+  PNODE n;
+  PNODE sg;
+  PEDGE s;
+  PEDGE m;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -303,8 +303,8 @@ static void ApplyVariousIf2Opts(PNODE g)
 
 static void RemoveGrounds(PNODE f)
 {
-  register PEDGE i;
-  register PEDGE si;
+  PEDGE i;
+  PEDGE si;
 
   /* if ( !(f->emark && standalone) ) */ 
   if (  f->mark != 'e' )  /* NEW CANN 2/92 */
@@ -341,7 +341,7 @@ static void RemoveGrounds(PNODE f)
 
 static void AddToFlopCounts(PNODE g, PNODE n)
 {
-  register PNODE f;
+  PNODE f;
 
   switch ( n->type ) {
     case IFPlus:
@@ -498,10 +498,10 @@ static void AddToFlopCounts(PNODE g, PNODE n)
 /*          THE START OF if2gen EXECUTION.                                */
 /**************************************************************************/
 
-void PrepareGraph(register PNODE g)
+void PrepareGraph(PNODE g)
 {
-  register PNODE sg;
-  register PNODE n;
+  PNODE sg;
+  PNODE n;
 
   RemoveMultipleTypes( g );
   FixErrorConstants( g );
@@ -535,7 +535,7 @@ void PrepareGraph(register PNODE g)
 
 void If2Opt(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     ApplyVariousIf2Opts( f );

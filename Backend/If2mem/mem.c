@@ -86,10 +86,10 @@ static char *ofile = NULL;
 
 static void ParseCommandLine(int argc, char **argv)
 {
-    register char *c;
-    register int   fmode = 0;
-    register int   idx;
-    register FILE *fd;
+    char *c;
+    int   fmode = 0;
+    int   idx;
+    FILE *fd;
 
     for ( idx = 1; idx < argc; ++idx ) {
         if ( *(c = argv[ idx ]) != '-' ) {
@@ -220,7 +220,7 @@ static void ParseCommandLine(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-    register FILE *fd;
+    FILE *fd;
     int i2 = I_Info2;
 
     /* fix by dj raymond 25 nov 2000 */

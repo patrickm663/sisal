@@ -30,7 +30,7 @@
 
 static void PropagateGlobalSets(PEDGE e)
 {
-    register PEDGE ee;
+    PEDGE ee;
 
     switch ( e->dst->type ) {
         case IFAElement:
@@ -67,10 +67,10 @@ static void PropagateGlobalSets(PEDGE e)
 
 static void BuildGlobalSets(PNODE n, PNODE scope)
 {
-    register PEDGE e;
-    register PEDGE ee;
-    register PSET  wset;
-    register PSET  rset;
+    PEDGE e;
+    PEDGE ee;
+    PSET  wset;
+    PSET  rset;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( !IsAggregate( e->info ) )
@@ -119,10 +119,10 @@ static void BuildGlobalSets(PNODE n, PNODE scope)
 
 static void BuildLocalSets(PNODE n, PNODE scope)
 {
-    register PEDGE e;
-    register PEDGE ee;
-    register PSET  rset;
-    register PSET  wset;
+    PEDGE e;
+    PEDGE ee;
+    PSET  rset;
+    PSET  wset;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( !IsAggregate( e->info ) )
@@ -166,8 +166,8 @@ static void BuildLocalSets(PNODE n, PNODE scope)
 
 static void BuildReadWriteSets(PNODE g)
 {
-    register PNODE n;
-    register PNODE sg;
+    PNODE n;
+    PNODE sg;
 
     for ( n = g; n != NULL; n = n->nsucc )       /* g AND ITS GRAPH NODES */
         switch ( n->type ) {
@@ -213,7 +213,7 @@ static void BuildReadWriteSets(PNODE g)
 
 void If2ReadWriteSets(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = fhead; f != NULL; f = f->gsucc )
         BuildReadWriteSets( f );

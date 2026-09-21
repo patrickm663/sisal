@@ -19,8 +19,8 @@
 
 int IsReadOnly(PNODE n, int eport)
 {
-  register PEDGE e;
-  register PNODE sg;
+  PEDGE e;
+  PNODE sg;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != eport )

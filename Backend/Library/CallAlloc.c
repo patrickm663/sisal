@@ -16,7 +16,7 @@
 
 PCALL CallAlloc(PNODE n)
 {
-  register PCALL c;
+  PCALL c;
 
   c = GetNewCallNode();
 

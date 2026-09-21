@@ -18,7 +18,7 @@
 
 void PPrintIndentation(int indent, int ln)
 {
-  register int i;
+  int i;
 
   FPRINTF( output, "%4.4d", ln );
 

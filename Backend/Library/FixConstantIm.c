@@ -24,10 +24,10 @@
 
 int FixConstantImports(PNODE n, int lab)
 {
-  register PEDGE  i;
-  register PEDGE  ii;
-  register char  *p;
-  register PNODE  neg;
+  PEDGE  i;
+  PEDGE  ii;
+  char  *p;
+  PNODE  neg;
 
   for ( i = n->imp; i != NULL; i = i->isucc ) {
     if ( !IsConst( i ) ) {

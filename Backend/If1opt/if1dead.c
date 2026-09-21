@@ -54,9 +54,9 @@ int Tagcnt  = 0;          /* COUNT OF DEAD AGather NODES            */
 
 static void FastRemoveUnnecEdges(PNODE n)
 {
-    register PEDGE i;
-    register PEDGE si;
-    register PEDGE ii;
+    PEDGE i;
+    PEDGE si;
+    PEDGE ii;
 
     ASSERT( IsAnyLoop( n ), "Not a loop");
     switch ( n->type ) {
@@ -233,10 +233,10 @@ static void FastRemoveUnnecEdges(PNODE n)
 
 void CombineKports(PNODE c)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PNODE g;
-    register PEDGE si;
+    PEDGE i1;
+    PEDGE i2;
+    PNODE g;
+    PEDGE si;
 
     i1 = (IsTagCase( c ))? c->imp->isucc : c->imp;
 
@@ -268,9 +268,9 @@ void CombineKports(PNODE c)
 
 static void FastRemoveUnusedLTports(PNODE l)
 {
-    register PEDGE i;
-    register PEDGE si;
-    register int   chng = TRUE;
+    PEDGE i;
+    PEDGE si;
+    int   chng = TRUE;
 
     while ( chng ) {
         chng = FALSE;
@@ -319,9 +319,9 @@ static void FastRemoveUnusedLTports(PNODE l)
 
 static void FastRemoveUnusedKports(PNODE c)
 {
-    register PEDGE i;
-    register PEDGE si;
-    register PNODE g;
+    PEDGE i;
+    PEDGE si;
+    PNODE g;
 
     for ( i = (IsTagCase(c))? c->imp->isucc : c->imp; i != NULL; i = si ) {
         si = i->isucc;
@@ -352,8 +352,8 @@ static void FastRemoveUnusedKports(PNODE c)
 
 static void FastRemoveUnusedRports(PNODE g)
 {
-    register PEDGE i;
-    register PEDGE si;
+    PEDGE i;
+    PEDGE si;
 
     for ( i = g->imp; i != NULL; i = si ) {
         si = i->isucc;
@@ -380,8 +380,8 @@ static void FastRemoveUnusedRports(PNODE g)
 
 static void FastRemoveUnusedTports(PNODE f)
 {
-    register PEDGE i;
-    register PEDGE si;
+    PEDGE i;
+    PEDGE si;
 
     for ( i = f->F_BODY->imp; i != NULL; i = si ) {
         si = i->isucc;
@@ -406,11 +406,11 @@ static void FastRemoveUnusedTports(PNODE f)
 
 void FastCleanGraph(PNODE g)
 {
-  register PNODE n;
-  register PEDGE i;
-  register PNODE sn;
-  register PEDGE si;
-  register PNODE sg;
+  PNODE n;
+  PEDGE i;
+  PNODE sn;
+  PEDGE si;
+  PNODE sg;
 
   /* SEE CleanDependentPaths */
   for ( i = g->imp; i != NULL; i = si ) {
@@ -536,8 +536,8 @@ static void RecycleNode(PNODE n)
 
 void OptRemoveDeadNode(PNODE n)
 {
-    register PEDGE i;
-    register PEDGE si;
+    PEDGE i;
+    PEDGE si;
 
     if ( n == NULL )
         return;
@@ -612,7 +612,7 @@ void WriteCleanInfo(void)
 
 void If1Clean(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     FastCleanGraph( cfunct = f );

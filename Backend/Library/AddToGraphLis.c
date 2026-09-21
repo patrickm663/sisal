@@ -16,9 +16,9 @@
 /* PURPOSE: ADD NODE n TO THE END OF THE GLOBAL GRAPH NODE LIST.          */
 /**************************************************************************/
 
-void AddToGraphList(register PNODE n)
+void AddToGraphList(PNODE n)
 {
-  register PNODE f;
+  PNODE f;
   for ( f = glstop->gsucc; f->gsucc != NULL ; f = f->gsucc)
         ;
   f->gsucc = n;

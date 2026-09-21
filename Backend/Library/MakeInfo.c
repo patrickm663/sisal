@@ -22,9 +22,9 @@
 
 void MakeInfo(int label, int type, int ref1, int ref2)
 {
-  register PINFO i;
-  register PINFO i1;
-  register PINFO i2;
+  PINFO i;
+  PINFO i1;
+  PINFO i2;
 
   switch ( type ) {
    case IF_BASIC:

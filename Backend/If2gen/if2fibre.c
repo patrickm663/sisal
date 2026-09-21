@@ -37,7 +37,7 @@ static void PrintReadRoutine(PINFO i)
     FPRINTF( output, "{\n" );
 
     if ( IsBasic( i ) && !IsBRecord( i ) )
-      FPRINTF( output, "  register %s val0;\n", i->tname ); 
+      FPRINTF( output, "  %s val0;\n", i->tname ); 
     else
       FPRINTF( output, "  %s val0;\n", i->tname ); 
 
@@ -78,15 +78,15 @@ static void PrintWriteRoutine(PINFO i)
 
 static void PrintWriteUnion(int indent, char *src, PINFO u)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
            char  buf[100];
 
   PrintIndentation( indent );
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %s *un%d = (%s*) %s;\n", 
+  FPRINTF( output, "%s *un%d = (%s*) %s;\n", 
            u->sname, indent, u->sname, src         );
 
   PrintIndentation( indent+2 );
@@ -135,16 +135,16 @@ static void PrintWriteArray(int indent, char *src, PINFO i)
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent );
-  FPRINTF( output, "  register POINTER Base%d;\n", indent );
+  FPRINTF( output, "  POINTER Base%d;\n", indent );
 
   PrintIndentation( indent );
-  FPRINTF( output, "  register int     HiBound;\n" );
+  FPRINTF( output, "  int     HiBound;\n" );
 
   PrintIndentation( indent );
-  FPRINTF( output, "  register int     Lo%d;\n", indent );
+  FPRINTF( output, "  int     Lo%d;\n", indent );
 
   PrintIndentation( indent );
-  FPRINTF( output, "  register ARRAYP arr = (ARRAYP) %s;\n", src );
+  FPRINTF( output, "  ARRAYP arr = (ARRAYP) %s;\n", src );
 
   PrintIndentation( indent );
   FPRINTF( output, "  PrintIndent;\n" );
@@ -215,8 +215,8 @@ static void PrintWriteArray(int indent, char *src, PINFO i)
 
 static void PrintWriteRecord(int indent, char *src, PINFO r)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
            char  buf[100];
 
   PrintIndentation( indent );
@@ -224,10 +224,10 @@ static void PrintWriteRecord(int indent, char *src, PINFO r)
 
   PrintIndentation( indent+2 );
   if ( IsBRecord( r ) )
-    FPRINTF( output, "register %s *rec%d = (%s*) &(%s);\n", 
+    FPRINTF( output, "%s *rec%d = (%s*) &(%s);\n", 
              r->sname, indent, r->sname, src             );
   else
-    FPRINTF( output, "register %s *rec%d = (%s*) %s;\n", 
+    FPRINTF( output, "%s *rec%d = (%s*) %s;\n", 
              r->sname, indent, r->sname, src          );
 
   for ( c = 1, i = r->R_FIRST; i != NULL; i = i->L_NEXT, c++ ) {
@@ -255,15 +255,15 @@ static void PrintWriteRecord(int indent, char *src, PINFO r)
 
 static void PrintReadUnion(int indent, char *dst, PINFO u)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
            char  buf[100];
 
   PrintIndentation( indent );
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %s un%d;\n", u->tname, indent );
+  FPRINTF( output, "%s un%d;\n", u->tname, indent );
 
   PrintIndentation( indent+2 );
   FPRINTF( output, "UBld( un%d, %s, 1, FibreInt );\n", indent, u->sname );
@@ -314,8 +314,8 @@ static void PrintReadUnion(int indent, char *dst, PINFO u)
 
 static void PrintReadRecord(int indent, char *dst, PINFO r)
 {
-  register PINFO i;
-  register int   c;
+  PINFO i;
+  int   c;
            char  buf[100];
 
   PrintIndentation( indent );
@@ -361,7 +361,7 @@ static void PrintGetArray(int indent, char *dst, char *del, PINFO i)
 
   PrintIndentation( indent );
   if ( IsBasic( i->A_ELEM ) && !IsBRecord( i->A_ELEM ) )
-    FPRINTF( output, "  register %s val%d;\n", i->A_ELEM->tname, indent );
+    FPRINTF( output, "  %s val%d;\n", i->A_ELEM->tname, indent );
   else
     FPRINTF( output, "  %s val%d;\n", i->A_ELEM->tname, indent );
 
@@ -371,7 +371,7 @@ static void PrintGetArray(int indent, char *dst, char *del, PINFO i)
   PrintIndentation( indent );
   FPRINTF( output, "{\n" );
   PrintIndentation( indent );
-  FPRINTF( output, "register int lob;\n" );
+  FPRINTF( output, "int lob;\n" );
   PrintIndentation( indent );
   FPRINTF( output, "lob = FibreInt;\n" );
   PrintIndentation( indent );
@@ -627,9 +627,9 @@ static void PrintReadOp(int indent, char *dst, PINFO i)
 
 void PrintReadFibreInputs(PNODE f)
 {
-  register PINFO i;
-  register PINFO mi;
-  register int   c;
+  PINFO i;
+  PINFO mi;
+  int   c;
            char  buf[100];
 
   FPRINTF( output, "\n#undef GatherCopyInfo\n" );
@@ -664,7 +664,7 @@ void PrintReadFibreInputs(PNODE f)
   FPRINTF( output, "\n%s ReadFibreInputs(void)\n", mi->tname );
   FPRINTF( output, "{\n" );
   FPRINTF( output, "  int previous_io_state = sisal_file_io;\n");
-  FPRINTF( output, "  register %s *args = ", mi->sname );
+  FPRINTF( output, "  %s *args = ", mi->sname );
   FPRINTF( output, "(%s*) Alloc( sizeof( %s ) );\n", mi->sname, mi->sname );
 
   FPRINTF( output, "  /* Set file I/O flag for input... */\n");
@@ -698,8 +698,8 @@ void PrintReadFibreInputs(PNODE f)
 /* ------------------------------------------------------------ */
 void PrintTypeWriters(PNODE f)
 {
-  register PINFO i;
-  register PINFO mi;
+  PINFO i;
+  PINFO mi;
 
   ClearTouchFlags(); /* 1-3 */
 
@@ -789,9 +789,9 @@ void PrintTypeWriters(PNODE f)
 
 void PrintWriteFibreOutputs(PNODE f)
 {
-  register PINFO i;
-  register PINFO mi;
-  register int   c;
+  PINFO i;
+  PINFO mi;
+  int   c;
   char     buf[100];
 
 
@@ -801,7 +801,7 @@ void PrintWriteFibreOutputs(PNODE f)
   FPRINTF( output, "\nvoid WriteFibreOutputs( %s args )\n{\n",
           mi->tname );
   FPRINTF( output, "  int previous_io_state = sisal_file_io;\n");
-  FPRINTF( output, "  register %s *p = (%s*) args;\n", mi->sname, mi->sname );
+  FPRINTF( output, "  %s *p = (%s*) args;\n", mi->sname, mi->sname );
 
   FPRINTF( output, "  /* Set file I/O flag for input... */\n");
   FPRINTF( output, "  sisal_file_io = %d;\n",stream_io);
@@ -829,16 +829,16 @@ void PrintWriteFibreOutputs(PNODE f)
 
 void PrintWriteFibreInputs(PNODE f)
 {
-  register PINFO i;
-  register PINFO mi;
-  register int   c;
+  PINFO i;
+  PINFO mi;
+  int   c;
            char  buf[100];
 
   /* DUMP THE DRIVER */
   mi = f->info;
   FPRINTF( output, "\nvoid Write_%s_FibreInputs( %s args )\n{\n",
           (f->funct == NULL)? f->G_NAME : f->funct, mi->tname );
-  FPRINTF( output, "  register %s *p = (%s*) args;\n", mi->sname, mi->sname );
+  FPRINTF( output, "  %s *p = (%s*) args;\n", mi->sname, mi->sname );
 
   for ( c = 1, i = mi->F_IN; i != NULL; i = i->L_NEXT, c++ ) {
     SPRINTF( buf, "(p->In%d)", c );
@@ -862,7 +862,7 @@ void PrintWriteFibreInputs(PNODE f)
 
 void PrintPeek(int indent, PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   FPRINTF( output, "{\n" );
 

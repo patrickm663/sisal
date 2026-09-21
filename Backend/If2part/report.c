@@ -409,7 +409,7 @@ int UpdatedLoopPragmas(PNODE n,
 /**************************************************************************/
 void PartitionReport(void)
 {
-  register PNODE f;
+  PNODE f;
 
   /* ------------------------------------------------------------ */
   /* Make sure we know where to write it */  

@@ -40,8 +40,8 @@
 
 void WriteImports(PNODE n)
 {
-  register PEDGE  i;
-  register PADE   a;
+  PEDGE  i;
+  PADE   a;
 
   for ( i  = n->imp; i != NULL; i = i->isucc ) {
     if (CheckForBadEdges)

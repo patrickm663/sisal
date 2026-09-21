@@ -19,8 +19,8 @@
 
 void EnterInSet(PSET s, PEDGE e)
 {
-  register PEDGE *p;
-  register int    i;
+  PEDGE *p;
+  int    i;
 
   if ( s == NULL )
     return;

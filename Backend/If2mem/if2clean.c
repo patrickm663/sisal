@@ -46,8 +46,8 @@ static int FastAreValuesEqual(PEDGE v1, PEDGE v2, int fast)
 
 static int MemAreNodesEqual(PNODE n1, PNODE n2, int fast)
 {
-    register PEDGE i1;
-    register PEDGE i2;
+    PEDGE i1;
+    PEDGE i2;
 
     if ( (!IsSimple( n1 )) && (!IsSimple( n2 )) )
       return( FALSE );
@@ -95,7 +95,7 @@ static int MemAreNodesEqual(PNODE n1, PNODE n2, int fast)
 
 static int MemIsUsed(PNODE c, PEDGE i)
 {
-    register PNODE g;
+    PNODE g;
 
     if ( IsTagCase(c) && i->iport == 1 )
         return( TRUE );
@@ -124,8 +124,8 @@ static int MemIsUsed(PNODE c, PEDGE i)
 
 static void HandleUselessNode (PNODE n, char *CoNsT, PEDGE non_const)
 {
-    register PEDGE e;
-    register PEDGE se;
+    PEDGE e;
+    PEDGE se;
 
     for ( e = n->exp ; e != NULL ; e = se ) {
         se = e->esucc;
@@ -158,8 +158,8 @@ static void HandleUselessNode (PNODE n, char *CoNsT, PEDGE non_const)
 
 static void SkipIdentityNode(PEDGE i)
 {
-    register PEDGE e;
-    register PEDGE se;
+    PEDGE e;
+    PEDGE se;
 
     /* MOVE i->dst EXPORT REFERENCES TO i->src                            */
 
@@ -194,9 +194,9 @@ static void SkipIdentityNode(PEDGE i)
 
 static int AddMaxAddChain(int c1, PNODE add1)
 {
-    register PNODE add2;
-    register PNODE max;
-    register int   c3;
+    PNODE add2;
+    PNODE max;
+    int   c3;
 
     if ( (!IsOneExport( add1 )) || (add1->exp->iport != 1) )
         return( FALSE );
@@ -271,8 +271,8 @@ static int AddMaxAddChain(int c1, PNODE add1)
 
 static int ChainPresent(int c1, PNODE n, PEDGE e)
 {
-    register PNODE prevn;
-    register int   op1;
+    PNODE prevn;
+    int   op1;
 
     if ( (!IsOneExport( n )) || (n->exp->iport != 1) )
         return( FALSE );
@@ -340,15 +340,15 @@ static int ChainPresent(int c1, PNODE n, PEDGE e)
 
 static void BasicFold(PNODE g)
 {
-    register PNODE n;
-    register PEDGE i1;
-    register PEDGE i2;
-    register int   const1;
-    register int   const2;
-    register int   op1;
-    register int   op2;
-    register PNODE sn;
-    register PEDGE e, se;
+    PNODE n;
+    PEDGE i1;
+    PEDGE i2;
+    int   const1;
+    int   const2;
+    int   op1;
+    int   op2;
+    PNODE sn;
+    PEDGE e, se;
 
     for ( n = g->G_NODES ; n != NULL ; n = sn ) {
         sn = n->nsucc;
@@ -604,12 +604,12 @@ static void BasicFold(PNODE g)
 
 static void RemoveAndInsertNodes(PNODE aa, PNODE cc, PNODE n)
 {
-  register PNODE nn;
-  register PEDGE i;
-  register PEDGE si;
-  register PEDGE ii;
-  register PEDGE e;
-  register PEDGE se;
+  PNODE nn;
+  PEDGE i;
+  PEDGE si;
+  PEDGE ii;
+  PEDGE e;
+  PEDGE se;
 
   nn = NodeAlloc( ++maxint, aa->type );
   nn->lstack = n->lstack;
@@ -697,7 +697,7 @@ static int MemIsEdgeInvariant(PEDGE i)
 
 static int MemIsInvariant(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( !MemIsEdgeInvariant( i ) )
@@ -718,10 +718,10 @@ static int MemIsInvariant(PNODE n)
 
 static void MemCombineKports(PNODE c)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PNODE g;
-    register PEDGE si;
+    PEDGE i1;
+    PEDGE i2;
+    PNODE g;
+    PEDGE si;
 
     i1 = (IsTagCase( c ))? c->imp->isucc : c->imp;
 
@@ -749,12 +749,12 @@ static void MemCombineKports(PNODE c)
 
 static void MemRemoveSCses(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE aa;
-  register PNODE cc;
-  register PNODE sa;
-  register PEDGE e;
+  PNODE n;
+  PNODE sg;
+  PNODE aa;
+  PNODE cc;
+  PNODE sa;
+  PEDGE e;
 
   /* DEPTH FIRST */
   for ( n = g->G_NODES; n != NULL; n = n->nsucc )
@@ -820,17 +820,17 @@ static void MemRemoveSCses(PNODE g)
 
 static void RemoveCCses(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE aa;
-  register PNODE cc;
-  register PNODE sa;
-  register PEDGE e;
-  register PEDGE se;
-  register PEDGE si;
-  register PEDGE i;
-  register PEDGE ii;
-  register PNODE nn;
+  PNODE n;
+  PNODE sg;
+  PNODE aa;
+  PNODE cc;
+  PNODE sa;
+  PEDGE e;
+  PEDGE se;
+  PEDGE si;
+  PEDGE i;
+  PEDGE ii;
+  PNODE nn;
 
 /* NOTE: */
 /* THIS ROUTINE RELIES ON RemoveGCse TO REMOVE cc AND COMBINE IT WITH aa */
@@ -925,12 +925,12 @@ static void RemoveCCses(PNODE g)
 
 static void BasicGCseRemoval(PNODE g)
 {
-    register PNODE sn;
-    register PNODE n1;
-    register PNODE n2;
-    register PEDGE e;
-    register int   f;
-    register int   lft;
+    PNODE sn;
+    PNODE n1;
+    PNODE n2;
+    PEDGE e;
+    int   f;
+    int   lft;
 
     for ( n1 = g->G_NODES; n1 != NULL; n1 = sn ) {
         sn = n1->nsucc;
@@ -997,10 +997,10 @@ CombineAndThread:
 
 static void BasicCseRemoval(PNODE g)
 {
-    register PNODE n1;
-    register PNODE n2;
-    register PNODE sn;
-    register PEDGE i;
+    PNODE n1;
+    PNODE n2;
+    PNODE sn;
+    PEDGE i;
 
     for ( n1 = g->G_NODES; n1 != NULL; n1 = n1->nsucc ) {
         if ( IsCandidate( n1 ) ) {
@@ -1054,15 +1054,15 @@ static void BasicCseRemoval(PNODE g)
 
 static void BasicInvarRemoval(int lvl, PNODE g)
 {
-    register PNODE n;
-    register PNODE nd;
-    register PEDGE i;
-    register PEDGE e;
-    register PEDGE se;
-    register PEDGE si;
-    register PNODE sn;
-    register PNODE nn;
-    register PEDGE ii;
+    PNODE n;
+    PNODE nd;
+    PEDGE i;
+    PEDGE e;
+    PEDGE se;
+    PEDGE si;
+    PNODE sn;
+    PNODE nn;
+    PEDGE ii;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc )
         if ( IsCompound( n ) ) {
@@ -1143,7 +1143,7 @@ static void BasicInvarRemoval(int lvl, PNODE g)
 
 static void MemRemoveDeadNode(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     if ( IsSGraph( n ) )
         return;
@@ -1175,10 +1175,10 @@ static void MemRemoveDeadNode(PNODE n)
 
 static void MemRemoveDeadNodesFromGraph(PNODE g)
 {
-    register PNODE n;
-    register PNODE sn;
-    register PEDGE i;
-    register PEDGE si;
+    PNODE n;
+    PNODE sn;
+    PEDGE i;
+    PEDGE si;
 
     for ( n = g->G_NODES; n != NULL; n = sn ) {
         sn = n->nsucc;
@@ -1223,13 +1223,13 @@ static void MemRemoveDeadNodesFromGraph(PNODE g)
 
 static void ComputeAndAttachLowerBound(PEDGE i, PNODE dst, int iport)
 {
-  register PNODE lml;
-  register PEDGE e;
-  register PNODE n;
-  register PEDGE lo;
-  register PEDGE ee;
-  register PNODE rt;
-  register PNODE sg;
+  PNODE lml;
+  PEDGE e;
+  PNODE n;
+  PEDGE lo;
+  PEDGE ee;
+  PNODE rt;
+  PNODE sg;
 
   n = i->src;
 
@@ -1309,12 +1309,12 @@ static void ComputeAndAttachLowerBound(PEDGE i, PNODE dst, int iport)
 
 static void FindAndAttachLowerBound(PEDGE e, PNODE dst, int iport)
 {
-  register PNODE n;
-  register PEDGE lo;
-  register PEDGE ee;
-  register PNODE sg;
-  register PNODE rt;
-  register int   port;
+  PNODE n;
+  PEDGE lo;
+  PEDGE ee;
+  PNODE sg;
+  PNODE rt;
+  int   port;
 
   n = e->src;
 
@@ -1420,9 +1420,9 @@ static void FindAndAttachLowerBound(PEDGE e, PNODE dst, int iport)
 
 static void AssignLowerBounds(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE nn;
+  PNODE n;
+  PNODE sg;
+  PNODE nn;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -1482,7 +1482,7 @@ static void AssignLowerBounds(PNODE g)
 
 void If2Clean(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     MemRemoveDeadNodesFromGraph( f );

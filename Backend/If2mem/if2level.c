@@ -33,8 +33,8 @@ static PNODE lstack[SIZE_LEVEL_STACK];             /* LEVEL STACK        */
 
 static PPNODE CopyLevelStack(void)
 {
-    register PPNODE ls;
-    register int    i;
+    PPNODE ls;
+    int    i;
 
     ls = (PPNODE) MyAlloc( (int) ((level+1) * sizeof(PNODE)) );
 
@@ -58,8 +58,8 @@ static PPNODE CopyLevelStack(void)
 
 void AssignLevelNumbers(PNODE g)
 {
-    register PNODE  n;
-    register PPNODE ls;
+    PNODE  n;
+    PPNODE ls;
 
                      /* PUSH A NEW LEVEL */
 

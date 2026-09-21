@@ -29,7 +29,7 @@ static void  ClassifyGraphEdges(PNODE);
 
 static int IsWritten(PNODE n, int eport)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc )
         if ( e->eport == eport )
@@ -49,7 +49,7 @@ static int IsWritten(PNODE n, int eport)
 
 static void AssignWriteMarks(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc )
         if ( IsAggregate( i->info ) )
@@ -72,9 +72,9 @@ static void AssignWriteMarks(PNODE n)
 
 static void ClassifyKImports(PNODE c)
 {
-    register PNODE g;
-    register PEDGE i;
-    register int   s  = FALSE;
+    PNODE g;
+    PEDGE i;
+    int   s  = FALSE;
 
     for ( g = c->C_SUBS; g != NULL; g = g->gsucc )
         ClassifyGraphEdges( g );
@@ -141,9 +141,9 @@ static void ClassifyKImports(PNODE c)
 
 static void ClassifyGraphEdges(PNODE g)
 {
-    register PNODE n;
-    register PEDGE i;
-    register PNODE f;
+    PNODE n;
+    PEDGE i;
+    PNODE f;
 
     AssignWriteMarks( g );
 
@@ -258,7 +258,7 @@ static void ClassifyGraphEdges(PNODE g)
 
 void If2Classify(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = fhead; f != NULL; f = f->gsucc )
         ClassifyGraphEdges( f );

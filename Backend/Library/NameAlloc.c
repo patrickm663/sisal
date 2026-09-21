@@ -18,7 +18,7 @@
 
 PNAME NameAlloc(PNODE n, char *name, PINFO t)
 {
-  register PNAME p;
+  PNAME p;
 
   p = (PNAME) MyAlloc( (int)sizeof(INFO) );
 

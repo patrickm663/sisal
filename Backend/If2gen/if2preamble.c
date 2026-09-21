@@ -36,10 +36,10 @@ int recursive  = FALSE;                 /* GENERATING RECURSIVE CODE      */
 
 static void PrintConstants(PEDGE frst, PEDGE lst)
 {
-  register PEDGE i1;
-  register PEDGE i2;
-  register int   comma1;
-  register int   comma2;
+  PEDGE i1;
+  PEDGE i2;
+  int   comma1;
+  int   comma2;
            char  buf[100];
 
   for ( i1 = frst; i1 != lst; i1 = i1->isucc ) {
@@ -82,9 +82,9 @@ static void PrintConstants(PEDGE frst, PEDGE lst)
 
 static void PrintCopyFunctions(void)
 {
-  register char  *t;
-  register PINFO  i;
-  register int    c;
+  char  *t;
+  PINFO  i;
+  int    c;
            int    printed[BASE_CODE_LAST+1];
 
   /* CLEAR touch1 FIELDS and NO REPEAT FIELDS */
@@ -111,9 +111,9 @@ static void PrintCopyFunctions(void)
 
       t = i->A_ELEM->tname;
   
-      FPRINTF( output, "  register int  i;\n" );
-      FPRINTF( output, "  register %s  *src = (%s*) source;\n", t, t );
-      FPRINTF( output, "  register %s  *dst = (%s*) dest;\n", t, t );
+      FPRINTF( output, "  int  i;\n" );
+      FPRINTF( output, "  %s  *src = (%s*) source;\n", t, t );
+      FPRINTF( output, "  %s  *dst = (%s*) dest;\n", t, t );
 
       if ( IsChar( i->A_ELEM ) )
         FPRINTF( output, "  MyBCopy( src, dst, num );\n" );
@@ -131,8 +131,8 @@ static void PrintCopyFunctions(void)
 
       t = i->A_ELEM->sname;
   
-      FPRINTF( output, "  register %s **src = (%s**) source;\n", t, t );
-      FPRINTF( output, "  register %s **dst = (%s**) dest;\n", t, t );
+      FPRINTF( output, "  %s **src = (%s**) source;\n", t, t );
+      FPRINTF( output, "  %s **dst = (%s**) dest;\n", t, t );
       FPRINTF( output, "  while ( num-- > 0 ) {\n" );
       FPRINTF( output, "    *dst = *src++;\n" );
       FPRINTF( output, "    MY_LOCK( &(*dst)->Mutex );\n" );
@@ -165,11 +165,11 @@ static void PrintCopyFunctions(void)
 
 static void PrintGlobals(void)
 {
-  register PNODE n;
-  register PEDGE i;
-  register PEDGE b;
-  register int   gid = 0;
-  register int   s;
+  PNODE n;
+  PEDGE i;
+  PEDGE b;
+  int   gid = 0;
+  int   s;
 
   gdata = (chead == NULL)? FALSE : TRUE;
 
@@ -245,7 +245,7 @@ static void PrintGlobals(void)
 
 static void GenAssignNames(void)
 {
-  register PINFO i;
+  PINFO i;
 
   for ( i = ihead; i != NULL; i = i->next ) {
     i->LibNames = FALSE;        /* Assume created names */
@@ -350,10 +350,10 @@ static void GenAssignNames(void)
 
 static void PrintStructs(void)
 {
-  register PINFO i;
-  register PINFO ii;
-  register int   c;
-  register int   cc;
+  PINFO i;
+  PINFO ii;
+  int   c;
+  int   cc;
            char  buf[100];
 
   for ( i = ihead; i != NULL; i = i->next ) {
@@ -525,8 +525,8 @@ static void PrintExternFunction(char *t, char *f, char *a, PNODE ff)
 
 static void PrintForwards(void)
 {
-  register PNODE f;
-  register PINFO i;
+  PNODE f;
+  PINFO i;
            char  buf[100];
 
   /* PRINT FORWARD DECLARATIONS */
@@ -616,7 +616,7 @@ static void PrintForwards(void)
 
 void PrintFilePrologue(void)
 {
-  register PNODE f;
+  PNODE f;
 
   FPRINTF( output, "#ifdef CInfo\n" );
   FPRINTF( output, "#define GatherCopyInfo 1\n" );
@@ -625,10 +625,6 @@ void PrintFilePrologue(void)
   FPRINTF( output, "#ifdef FInfo\n" );
   FPRINTF( output, "#define GatherFlopInfo 1\n" );
   FPRINTF( output, "#endif\n\n" );
-
-#ifndef HAVE_REGISTER_KEYWORD
-  FPRINTF( output, "#define register\n\n" );
-#endif
 
   FPRINTF( output, "#define _INTRINSICS_ 1\n\n" );
 
@@ -694,10 +690,10 @@ void PrintFilePrologue(void)
 
 static int DriveRecursiveMarks(PNODE g, int bmark)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE f;
-  register int   change;
+  PNODE n;
+  PNODE sg;
+  PNODE f;
+  int   change;
 
   for ( change = FALSE, n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -734,9 +730,9 @@ static int DriveRecursiveMarks(PNODE g, int bmark)
 
 void MarkRecursiveFunctions(void)
 {
-  register PNODE f;
-  register int   change = TRUE;
-  register int   rsmodule = FALSE;
+  PNODE f;
+  int   change = TRUE;
+  int   rsmodule = FALSE;
 
   /* COULD THIS MODULE BE PART OF A RECURSIVE CYCLE THAT CROSSES MODULES? */
   /* LOOKUP WOULD HELP! */
@@ -780,9 +776,9 @@ void MarkRecursiveFunctions(void)
 
 static void CheckParallelMarks(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE f;
+  PNODE n;
+  PNODE sg;
+  PNODE f;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -808,7 +804,7 @@ static void CheckParallelMarks(PNODE g)
 
 void CheckParallelFunctions(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     switch( f->type ) {
@@ -843,8 +839,8 @@ void CheckParallelFunctions(void)
 
 void PrintFunctPrologue(PNODE f)
 {
-  register PINFO ii;
-  register int   eport;
+  PINFO ii;
+  int   eport;
 
   switch ( f->type ) {
    case IFIGraph:
@@ -918,9 +914,9 @@ void PrintFunctPrologue(PNODE f)
   PrintLocals();
 
   if ( f->flp ) {
-    FPRINTF( output, "register double FCa;\n" );
-    FPRINTF( output, "register double FCl;\n" );
-    FPRINTF( output, "register double FCi;\n" );
+    FPRINTF( output, "double FCa;\n" );
+    FPRINTF( output, "double FCl;\n" );
+    FPRINTF( output, "double FCi;\n" );
   }
 
   if ( sdbx )
@@ -1005,7 +1001,7 @@ void PrintFunctEpilogue(PNODE f)
 
 static void PrintInitGlobalData(void)
 {
-  register PNODE n;
+  PNODE n;
 
   FPRINTF( output, "\nstatic int *GInit = NULL;\n" ); 
 
@@ -1100,7 +1096,7 @@ static void PrintStandAloneEntryPoint(PNODE f)
 
 void PrintFileEpilogue(void)
 {
-  register PNODE f;
+  PNODE f;
 
   /* FORCE SEQUENTIAL MODE OF EXECUTION */
   sequential = TRUE;

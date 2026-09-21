@@ -23,7 +23,7 @@
 
 #define ABld(x,y,z) \
 { \
-  register PHYSP Phys; \
+  PHYSP Phys; \
   Phys = (PHYSP) Alloc( sizeof(PHYS) ); \
   Phys->Size = 0; \
   MY_INIT_LOCK( &Phys->Mutex ); \
@@ -40,8 +40,8 @@
 
 #define OptABld(x,y,z,w,u) \
 { \
-  register PHYSP Phys; \
-  register int  Size; \
+  PHYSP Phys; \
+  int  Size; \
   Size = (w)-(y)+1; \
   Size = (Size < 0)? 0 : Size; \
   x = (POINTER) Alloc(sizeof(ARRAY)); \
@@ -65,7 +65,7 @@
 */
 #define AGather(x,y,z) \
 { \
-  register PHYSP Phys; \
+  PHYSP Phys; \
   Phys = ((ARRAYP)x)->Phys; \
   if ( Phys->Free == 0 ) {\
     IncDataCopies( sizeof(z) * ((ARRAYP)x)->Size ); \

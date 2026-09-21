@@ -23,9 +23,9 @@
 void MakeAde(int snode, int dnode)
 {
   if ( !FullyOrdered ) {
-    register PADE  a;
-    register PNODE src;
-    register PNODE dst;
+    PADE  a;
+    PNODE src;
+    PNODE dst;
 
     dst = FindNode( dnode, IFUndefined );
     src = FindNode( snode, IFUndefined );

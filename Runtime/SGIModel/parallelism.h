@@ -90,7 +90,7 @@ void AcquireSharedMemory(int NumBytes)
 
 void StartWorkers(void)
 {
-  register int NumProcs = NumWorkers;
+  int NumProcs = NumWorkers;
 
   while( --NumProcs > 0 )
     if ( sproc( SgiTransfer, PR_SADDR, NumProcs ) == -1 )
@@ -110,7 +110,7 @@ void AbortParallel(void)
   (void)kill( 0, SIGKILL );
 }
 
-void MyLock(register volatile LOCK_TYPE *plock)
+void MyLock(volatile LOCK_TYPE *plock)
 {
   for (;;) {
     while (*(plock) == 1);
@@ -124,12 +124,12 @@ void MyLock(register volatile LOCK_TYPE *plock)
     }
 }
 
-void MyUnlock(register volatile LOCK_TYPE *plock)
+void MyUnlock(volatile LOCK_TYPE *plock)
 {
   *plock = 0;
 }
 
-void MyInitLock(register volatile LOCK_TYPE *plock)
+void MyInitLock(volatile LOCK_TYPE *plock)
 {
   *plock = 0;
 }

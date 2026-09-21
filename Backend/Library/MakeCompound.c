@@ -23,7 +23,7 @@
 
 void MakeCompound(int label, int type, int cnt, PALIST lst)
 {
-  register PNODE n;
+  PNODE n;
 
   PopNodeList();
 

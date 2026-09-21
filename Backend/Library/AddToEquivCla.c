@@ -18,7 +18,7 @@
 
 void AddToEquivClass(PINFO r, PINFO n)
 {
-  register int c;
+  int c;
 
   c = r->eid;
 

@@ -29,7 +29,7 @@ static int color = WHITE;            /* CURRENT COLOR IN CYCLE DETECTION    */
 
 static PCALL UpFindCallee(char *nm)
 {
-    register PCALL c;
+    PCALL c;
 
     for ( c = cghead; c != NULL; c = c->callee )
         if ( strcmp( nm, c->graph->G_NAME ) == 0 )
@@ -50,9 +50,9 @@ static PCALL UpFindCallee(char *nm)
 
 static void UpAddCalleeReferences(PCALL c, PNODE g)
 {
-    register PNODE n;
-    register PCALL r;
-    register PCALL cee; 
+    PNODE n;
+    PCALL r;
+    PCALL cee; 
 
     if ( IsIGraph( g ) )
         return;
@@ -91,9 +91,9 @@ static void UpAddCalleeReferences(PCALL c, PNODE g)
 
 static void UpMakeCallGraph(void)
 {
-    register PNODE f;
-    register PCALL c;
-    /* register PNODE gmain = NULL; */ /* CANN NEW 2/92 */
+    PNODE f;
+    PCALL c;
+    /* PNODE gmain = NULL; */ /* CANN NEW 2/92 */
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
         /* if ( f->emark ) */ /* CANN NEW 2/92 */
@@ -134,7 +134,7 @@ static void UpMakeCallGraph(void)
 
 static void UpBreakCycles(PCALL caller, PCALL callee)
 {
-    register PCALL r;
+    PCALL r;
 
     if ( callee->checked ) {
         if ( caller != NULL ) 
@@ -174,10 +174,10 @@ static void UpBreakCycles(PCALL caller, PCALL callee)
 
 static void SortFunctionGraphs(void)
 {
-    register PNODE f;
-    register PNODE sf;
-    register PCALL r;
-    register int   m;
+    PNODE f;
+    PNODE sf;
+    PCALL r;
+    int   m;
 
     while ( glstop->gsucc != NULL )
         for ( f = glstop->gsucc; f != NULL; f = sf ) {
@@ -222,7 +222,7 @@ static void SortFunctionGraphs(void)
 
 void If2CallGraph(void)
 {
-    register PCALL c;
+    PCALL c;
 
     UpMakeCallGraph();
 

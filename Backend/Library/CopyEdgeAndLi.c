@@ -19,7 +19,7 @@
 
 void CopyEdgeAndLink(PEDGE e, PNODE dst, int iport)
 {
-  register PEDGE i;
+  PEDGE i;
 
   i = CopyEdge( e, e->src, dst );
   i->iport = iport;

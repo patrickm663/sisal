@@ -36,12 +36,12 @@ static int Trcnt  = 0;                   /* COUNT OF RElement NODES */
 
 static int FindElementSource(PNODE c, int iport, PEDGE e, int idx)
 {
-    register PEDGE i;
-    register PEDGE ii;
-    register PEDGE ni;
-    register PNODE b;
-    register int   p;
-    register int   lo;
+    PEDGE i;
+    PEDGE ii;
+    PEDGE ni;
+    PNODE b;
+    int   p;
+    int   lo;
 
     i = FindImport( c, iport );
 
@@ -101,16 +101,16 @@ static int FindElementSource(PNODE c, int iport, PEDGE e, int idx)
 
 static void ArrayFission(PNODE g)
 {
-    register PEDGE e;
-    register PEDGE se;
-    register PEDGE i;
-    register PEDGE ii;
-    register PNODE n;
-    register PNODE sn;
-    register PNODE b;
-    register int   p;
-    register int   lo;
-    register int   idx;
+    PEDGE e;
+    PEDGE se;
+    PEDGE i;
+    PEDGE ii;
+    PNODE n;
+    PNODE sn;
+    PNODE b;
+    int   p;
+    int   lo;
+    int   idx;
 
     if ( IsIGraph( g ) )
         return;
@@ -213,11 +213,11 @@ static void ArrayFission(PNODE g)
 
 static int FindFieldSource(PNODE c, int iport, PEDGE e)
 {
-    register PEDGE i;
-    register PEDGE ii;
-    register PEDGE ni;
-    register PNODE b;
-    register int   p;
+    PEDGE i;
+    PEDGE ii;
+    PEDGE ni;
+    PNODE b;
+    int   p;
 
     i = FindImport( c, iport );
 
@@ -287,12 +287,12 @@ Start:
 
 static void PushRElements(PNODE re)
 {
-  register PEDGE e;
-  register PNODE s;
-  register int   Fcount;
-  register PINFO f;
-  register PNODE n;
-  register PEDGE se;
+  PEDGE e;
+  PNODE s;
+  int   Fcount;
+  PINFO f;
+  PNODE n;
+  PEDGE se;
 
   if ( re->imp->info->type != IF_RECORD )
     return;
@@ -394,14 +394,14 @@ static void PushRElements(PNODE re)
 
 static void RecordFission(PNODE g)
 {
-    register PEDGE e;
-    register PEDGE se;
-    register PEDGE i;
-    register PEDGE ii;
-    register PNODE n;
-    register PNODE sn;
-    register PNODE b;
-    register int   p;
+    PEDGE e;
+    PEDGE se;
+    PEDGE i;
+    PEDGE ii;
+    PNODE n;
+    PNODE sn;
+    PNODE b;
+    int   p;
 
     if ( IsIGraph( g ) )
         return;
@@ -532,7 +532,7 @@ void WriteFissionInfo(void)
 
 void If1Fission(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
         RecordFission( cfunct = f );

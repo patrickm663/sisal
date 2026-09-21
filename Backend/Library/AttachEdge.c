@@ -24,7 +24,7 @@ void AttachEdge(PNODE src,
                 PINFO edgeinfo,
                 char *c)
 {
-  register PEDGE e;
+  PEDGE e;
 
   e = EdgeAlloc( src, eport, dst, iport );
 

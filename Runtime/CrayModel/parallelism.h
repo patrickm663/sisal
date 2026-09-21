@@ -39,7 +39,7 @@ void AcquireSharedMemory(int NumBytes)
 
 int ProcessorId(void)
 {
-  register int pID;
+  int pID;
   GETPROCID(pID);
   return( pID );
 }
@@ -56,8 +56,8 @@ static void CrayWorker(int ProcId)
 
 void StartWorkers(void)
 {
-  register int NumProcs = NumWorkers;
-  register int i;
+  int NumProcs = NumWorkers;
+  int i;
 
   MY_LOCKASGN;
 
@@ -74,7 +74,7 @@ void StartWorkers(void)
 
 void StopWorkers(void)
 {
-  register int i;
+  int i;
 
   *SisalShutDown = TRUE;
   LeaveWorker();

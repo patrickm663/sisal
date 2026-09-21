@@ -60,8 +60,8 @@
 
 int IsSliceCandidate(PNODE f, char **reasonp)
 {
-    register PNODE n;
-    register int   dots = -1;
+    PNODE n;
+    int   dots = -1;
 
     /* ------------------------------------------------------------ */
     /* IF1OPT: if1split.c DISABLE CONCURRENTIZATION OF THIN COPY */

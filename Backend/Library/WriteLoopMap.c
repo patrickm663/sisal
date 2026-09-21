@@ -17,7 +17,7 @@
 /**************************************************************************/
 void WriteLoopMap(char *msg)
 {
-  register PNODE f;
+  PNODE f;
 
   FPRINTF( infoptr, "\n%s\n\n",msg );
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {

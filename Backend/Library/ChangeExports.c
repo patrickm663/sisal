@@ -19,8 +19,8 @@
 
 void ChangeExportsToConst(PNODE n, int eport, PEDGE c)
 {
-  register PEDGE e;
-  register PEDGE se;
+  PEDGE e;
+  PEDGE se;
 
   for ( e = n->exp; e != NULL; e = se ) {
     se = e->esucc;

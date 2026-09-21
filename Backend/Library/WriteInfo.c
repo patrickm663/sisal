@@ -18,8 +18,8 @@
 
 void WriteInfo(void)
 {
-  register PINFO i;
-  register int   t;
+  PINFO i;
+  int   t;
 
   for ( i = ihead; i != NULL; i = i->next ) {
     if ( IsBasic(i) )

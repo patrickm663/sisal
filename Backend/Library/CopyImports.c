@@ -20,8 +20,8 @@
 
 void CopyImports(PNODE n1, PNODE n2, int atts)
 {
-    register PEDGE i;
-    register PEDGE ii;
+    PEDGE i;
+    PEDGE ii;
 
     for ( i = n1->imp; i != NULL; i = i->isucc ) {
         ii = CopyEdge( i, NULL_NODE, n2 );

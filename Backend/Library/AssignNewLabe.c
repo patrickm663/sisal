@@ -17,10 +17,10 @@
 /*          ARITHMETIC CONSTANTS (GIVEN sgnok IS TRUE).                   */
 /**************************************************************************/
 
-void  AssignNewLabels(register PNODE g)
+void  AssignNewLabels(PNODE g)
 {
-  register int   lab;
-  register PNODE n,nn;
+  int   lab;
+  PNODE n,nn;
 
   if ( FixPortsToo ) {
     /*************************************************************************/
@@ -37,7 +37,7 @@ void  AssignNewLabels(register PNODE g)
     /*                                                                       */
     /*          NOTE: CONSTANT FOLDING SIDE EFFECTS ARE UNDONE.              */
     /*************************************************************************/
-    register int   p;
+    int   p;
 
     FixConstantImports( g, 0 );
 

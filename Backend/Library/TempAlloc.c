@@ -18,8 +18,8 @@
 
 PTEMP TempAlloc(char *name, PINFO tempinfo, int mod, int fld)
 {
-  register PTEMP   t;
-  register PBBLOCK b;
+  PTEMP   t;
+  PBBLOCK b;
   char    buf[100];
 
   /* t = (PTEMP) MyAlloc( sizeof(TEMP) ); */

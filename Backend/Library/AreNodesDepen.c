@@ -28,7 +28,7 @@
 
 int AreNodesDependent(PNODE n1, PNODE n2)
 {
-  register PEDGE e;
+  PEDGE e;
 
   for ( e = n1->exp; e != NULL; e = e->esucc ) {
     if ( e->dst == n2 )

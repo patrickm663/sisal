@@ -18,7 +18,7 @@
 
 int IsCalled(char *who)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     if ( IsCaller( f, who ) )

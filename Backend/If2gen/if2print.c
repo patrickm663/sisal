@@ -55,7 +55,7 @@ static void PrintDivByZeroCheck(PNODE n)
 
 void PrintIndentation(int indent)
 {
-  register int i;
+  int i;
 
   if (indent < 40) {
     for ( i = 1; i <= indent; i++ ) (void)fputc( ' ', output );
@@ -72,7 +72,7 @@ void PrintIndentation(int indent)
 
 void PrintTemp(PEDGE e)
 {
-    register PTEMP t;
+    PTEMP t;
 
     if ( IsConst( e ) ) {
         if ( IsChar( e->info ) )
@@ -200,7 +200,7 @@ void PrintFldAssgn(int indent,
 
 void PrintMacro(int indent, char *macro, PNODE n, char *s)
 {
-    register PEDGE i;
+    PEDGE i;
 
     PrintIndentation( indent );
 
@@ -269,7 +269,7 @@ void PrintFreeCall(int indent, PEDGE i)
 
 void PrintConsumerModifiers(int indent, PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   for ( i = n->imp; i != NULL; i = i->isucc ) {
     if ( i->cm != -1 && (!(i->dmark)) )
@@ -289,8 +289,8 @@ void PrintConsumerModifiers(int indent, PNODE n)
 
 void PrintProducerLastModifiers(int indent, PNODE n)
 {
-    register PEDGE e;
-    register PEDGE ee;
+    PEDGE e;
+    PEDGE ee;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( e->eport < 0 ) {
@@ -321,8 +321,8 @@ void PrintProducerLastModifiers(int indent, PNODE n)
 
 void PrintProducerModifiers(int indent, PNODE n)
 {
-    register PEDGE e;
-    register PEDGE ee;
+    PEDGE e;
+    PEDGE ee;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( e->eport < 0 ) {
@@ -465,7 +465,7 @@ static void ExpandDollarFormula(char *c, PNODE n, char *errorbuf)
 /**************************************************************************/
 static int IsComplex(PNODE g)
 {
-  register PNODE n;
+  PNODE n;
 
   for ( n = g->nsucc; n != NULL; n = n->nsucc ) {
     if ( IsLoop( n ) || IsForall( n ) )
@@ -489,7 +489,7 @@ static int IsComplex(PNODE g)
 /**************************************************************************/
 static void PrintBuildSlices(int indent, PNODE n)
 {
-  register PNODE f;
+  PNODE f;
   char     ebuf[100];
   /* buf holds ebuf plus a " -- Loop <id>" suffix, so it has to be larger. */
   char     buf[sizeof(ebuf) + 32];
@@ -584,8 +584,8 @@ static void PrintBuildSlices(int indent, PNODE n)
 
 static void PrintSaveSliceParam(int indent, PNODE n)
 {
-  register PEDGE i;
-  register PNODE lpe;
+  PEDGE i;
+  PNODE lpe;
 
   i   = n->imp;
   lpe = n->usucc;
@@ -627,7 +627,7 @@ static void PrintSaveSliceParam(int indent, PNODE n)
 
 static void PrintLoopPoolEnq(int indent, PNODE n)
 {
-  register PNODE f;
+  PNODE f;
   char     *Style;
   char     buf[100];
 
@@ -730,9 +730,9 @@ static void PrintIntrinsicFunction(int indent, PNODE n, PNODE f)
 
 static void PrintCall(int indent, PNODE n)
 {
-  register PNODE f;
-  register int   eport;
-  register PINFO ii;
+  PNODE f;
+  int   eport;
+  PINFO ii;
 
   f = FindFunction( n->imp->CoNsT );
 
@@ -794,11 +794,11 @@ SkipCleanUp:
 
 void PrintGraph(int indent, PNODE g)
 {
-    register PNODE n;
-    register PEDGE i;
-    register int   lk;
-    register int   LastLine;
-    register char  *LastFile;
+    PNODE n;
+    PEDGE i;
+    int   lk;
+    int   LastLine;
+    char  *LastFile;
     char           *SourceLine;
              char  buf[100];
     PINFO    info;

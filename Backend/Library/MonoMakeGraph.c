@@ -22,7 +22,7 @@
 
 void MonoMakeGraph(int type, int label, char *name)
 {
-  register PNODE n;
+  PNODE n;
 
   n = NodeAlloc( 0, type );
 

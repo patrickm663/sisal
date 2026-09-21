@@ -18,8 +18,8 @@
 
 int IsCaller(PNODE g, char *who)
 {
-  register PNODE  n;
-  register PNODE  sg;
+  PNODE  n;
+  PNODE  sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )

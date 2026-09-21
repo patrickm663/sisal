@@ -27,9 +27,9 @@ static int   limp[MAX_IMP];
 
 static int MaxPathToSrc(PEDGE i)
 {
-  register PEDGE ii;
-  register int   ml;
-  register int   l;
+  PEDGE ii;
+  int   ml;
+  int   l;
 
   if ( i == NULL ) return( 0 );
 
@@ -59,14 +59,14 @@ static int MaxPathToSrc(PEDGE i)
 
 static void MigrateNodes(PNODE g)
 {
-    register int   l  = 0;
-    register PNODE n  = g->G_NODES;
-    register PEDGE i;
-    register PEDGE e;
-    register PADE  a;
-    register PNODE sg;
-    register PNODE prd;
-    register int   j,k,s,t;
+    int   l  = 0;
+    PNODE n  = g->G_NODES;
+    PEDGE i;
+    PEDGE e;
+    PADE  a;
+    PNODE sg;
+    PNODE prd;
+    int   j,k,s,t;
 
     /* RELABEL ALL NODES AND REMEMBER THE LAST NODE IN THE NODE LIST      */
 
@@ -169,9 +169,9 @@ MoveOn:
 
 static void DoCommute(PNODE f)
 {
-    register PNODE n;
-    register PNODE sg;
-    register PEDGE i1, i2;
+    PNODE n;
+    PNODE sg;
+    PEDGE i1, i2;
 
     for ( n = f->G_NODES; n != NULL; n = n->nsucc ) {
         if ( IsCompound( n ) )
@@ -218,7 +218,7 @@ static void DoCommute(PNODE f)
 
 void If2Migrate(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = fhead; f != NULL; f = f->gsucc ) {
         MigrateNodes( f );

@@ -22,8 +22,8 @@
 
 void AssignTags(PALIST lst, PNODE dad)
 {
-  register PNODE n;
-  register int   tag;
+  PNODE n;
+  int   tag;
 
   for ( n = glstop->gsucc; n !=NULL; n = n->gsucc )
     n->G_DAD = dad;

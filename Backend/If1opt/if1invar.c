@@ -32,7 +32,7 @@ static int  amcnt = 0;                     /* COUNT OF ANTI-MOVEMENTS     */
 
 int OptIsEdgeInvariant(PEDGE i)
 {
-  register PNODE dad;
+  PNODE dad;
 
   if ( IsConst( i ) )
     return( TRUE );
@@ -61,8 +61,8 @@ int OptIsEdgeInvariant(PEDGE i)
 
 void ExposeInvariants(PNODE s, PNODE t)
 {
-  register PEDGE e;
-  register PEDGE ee;
+  PEDGE e;
+  PEDGE ee;
 
   /* HAS THE ENTIRE CHAIN BEEN SEARCHED? */
   if ( s->type != t->type )
@@ -134,11 +134,11 @@ MoveUpTheChain:
 
 static void RemoveInvariants(int lvl, PNODE g)
 {
-    register PNODE n;
-    register PNODE nd;
-    register PNODE sn;
-    register PNODE sg;
-    register PEDGE e;
+    PNODE n;
+    PNODE nd;
+    PNODE sn;
+    PNODE sg;
+    PEDGE e;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc )
       if ( IsCompound( n ) )
@@ -206,8 +206,8 @@ static void RemoveInvariants(int lvl, PNODE g)
 
 static PNODE ExclusiveUse(PNODE s, int iport)
 {
-  register PEDGE e1;
-  register PEDGE e2;
+  PEDGE e1;
+  PEDGE e2;
 
   if ( IsExport( s->S_TEST, iport ) )
     return( NULL );
@@ -238,17 +238,17 @@ static PNODE ExclusiveUse(PNODE s, int iport)
 
 void AntiMovement(PNODE g)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PNODE sg;
-  register PNODE s;
-  register PNODE np;
-  register PEDGE ee;
-  register PEDGE se;
-  register PEDGE see;
-  register PEDGE i;
-  register PEDGE si;
-  register int   port;
+  PNODE n;
+  PEDGE e;
+  PNODE sg;
+  PNODE s;
+  PNODE np;
+  PEDGE ee;
+  PEDGE se;
+  PEDGE see;
+  PEDGE i;
+  PEDGE si;
+  int   port;
 
   if ( DeBuG ) return;
 
@@ -382,7 +382,7 @@ static int adone = FALSE;
 
 void If1Invar(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     /* EXPOSURE CAN ALTER CSE SO GIVE CSE A CHANCE BEFORE EXPOSURE */

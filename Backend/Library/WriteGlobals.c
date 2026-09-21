@@ -18,7 +18,7 @@
 
 void WriteGlobals(void)
 {
-  register PNAME i;
+  PNAME i;
 
   for ( i = inames; i != NULL; i = i->next ) {
     if ( i->mark == '\0' )

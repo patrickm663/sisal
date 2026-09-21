@@ -51,11 +51,11 @@ static int last;   /* HAS OPTIMIZATION COMPLETED?                         */
 
 static void GatherCounts(PNODE g)
 {
-    register PNODE n;
-    register PEDGE e;
-    register PEDGE i;
-    register PADE  a;
-    register PEDGE ee;
+    PNODE n;
+    PEDGE e;
+    PEDGE i;
+    PADE  a;
+    PEDGE ee;
 
 
     for ( n = g; n != NULL; n = n->nsucc ) {
@@ -310,7 +310,7 @@ static void WriteUpCountInfo(void)
 
 void UpIf2Count(int lst, char *msg)
 {
-    register PNODE f;
+    PNODE f;
 
     bades = hades  = lades = srs = cagnodes = 0;
     noops = snoops = pms   = pls = cms    = 0;
@@ -334,10 +334,10 @@ void UpIf2Count(int lst, char *msg)
 
 static void UpWriteGraphWarnings(PNODE g)
 {
-    register PNODE  n;
-    register PNODE  nn;
-    register PNODE  sg;
-    register char  *op;
+    PNODE  n;
+    PNODE  nn;
+    PNODE  sg;
+    char  *op;
 
     for ( n = g; n != NULL; n = n->nsucc ) {
       if ( IsCompound( n ) ) {
@@ -399,7 +399,7 @@ static void UpWriteGraphWarnings(PNODE g)
 
 void WriteIf2upWarnings(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = fhead; f != NULL; f = f->gsucc )
     UpWriteGraphWarnings( f );

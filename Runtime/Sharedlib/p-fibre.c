@@ -69,9 +69,9 @@ void FibreError(char *s)
   SisalError("FIBRE",buf);
 }
 
-static long GetLong(register int Base)
+static long GetLong(int Base)
 {
-  register long Value;
+  long Value;
 
   Value = 0;
 
@@ -160,8 +160,8 @@ static int PackageNumber(void)
 
 static char GetChar(void)
 {
-  register char Value;
-  register long Escape;  
+  char Value;
+  long Escape;  
 
   if ( Buffer == '\\' ) {
     GET_NEXT_TOKEN;

@@ -21,7 +21,7 @@
 
 static void GatherATNodeInfo(PNODE n)
 {
-  register PEDGE e;
+  PEDGE e;
 
   if ( !IsAtNode( n ) )
     return;
@@ -158,8 +158,8 @@ static void PrintATNodeInfo(void)
 
 static void WriteMemCountInfo(char *msg)
 {
-    register struct level *l;
-    register int           i;
+    struct level *l;
+    int           i;
 
     FPRINTF( stderr, "\n   * OCCURRENCE COUNTS %s\n\n", msg );
 
@@ -226,9 +226,9 @@ static void WriteMemCountInfo(char *msg)
 
 void CountNodesAndEdges(char *msg)
 {
-    register struct level *l;
-    register PNODE         f;
-    register int           i;
+    struct level *l;
+    PNODE         f;
+    int           i;
 
     lits = edges  = simples = graphs = comps = ats = 0;
     rsum = rgreat = rleast  = rcat   = rprod = 0;
@@ -292,9 +292,9 @@ static void WriteNotConverted(PNODE n, char *op)
 
 void TraceBuffer(PNODE n, int eport)
 {
-    register PEDGE e;
-    register PEDGE ee;
-    register PNODE a;
+    PEDGE e;
+    PEDGE ee;
+    PNODE a;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( e->eport != eport )
@@ -475,7 +475,7 @@ ReduceFinish:
 
 static void WriteGraphPicture(PNODE g)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
         GatherATNodeInfo( n );
@@ -624,8 +624,8 @@ void WriteIf2memPicture(void)
 
 static void MemWriteGraphWarnings(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {

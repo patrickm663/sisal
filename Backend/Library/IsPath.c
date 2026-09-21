@@ -20,8 +20,8 @@
 int IsPath(PNODE src,
            PNODE dst)  /* FIXED */
 {
-  register PEDGE e;
-  register PADE  a;
+  PEDGE e;
+  PADE  a;
 
   if ( src == dst ) 
     return( TRUE );

@@ -18,9 +18,9 @@
 
 int IsCInterface(char *nm)
 {
-  register char *p;
-  register int   i;
-  register int   ans;
+  char *p;
+  int   i;
+  int   ans;
 
   p = LowerCase( nm, FALSE, FALSE );
   ans = FALSE;

@@ -23,7 +23,7 @@
 
 PNODE FindNode(int label, int type)
 {
-  register PNODE n;
+  PNODE n;
 
   if ( label == 0 )
     return( glstop->gpred );

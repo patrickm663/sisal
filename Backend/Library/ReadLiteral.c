@@ -26,7 +26,7 @@
 
 char *ReadLiteral(int abort)
 {
-  register char *s;
+  char *s;
 
   EatSpaces;
 

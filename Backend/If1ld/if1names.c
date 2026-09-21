@@ -29,9 +29,9 @@ PNAME inames = NULL;                                  /* IMPORT NAME LIST */
 /*          SEE IsInterfaceCandidate BELOW.                               */
 /**************************************************************************/
 
-static int IsInterfaceType(register PINFO i)
+static int IsInterfaceType(PINFO i)
 {
-  register PINFO ii;
+  PINFO ii;
 
   switch ( i->type ) {
     case IF_INTEGER:
@@ -83,9 +83,9 @@ static int IsInterfaceType(register PINFO i)
 
 static int IsInterfaceCandidate(char *name, PINFO t)
 {
-  register PINFO i;
-  register int   ac;
-  register int   c;
+  PINFO i;
+  int   ac;
+  int   c;
 
 /* CANN NEW 3/92 */
   for ( ac = 0, i = t->F_OUT; i != NULL; i = i->L_NEXT ) {
@@ -132,8 +132,8 @@ static int IsInterfaceCandidate(char *name, PINFO t)
 
 void AddToImportList(PNODE n, char *nm, PINFO t)
 {
-  register PNAME i;
-  register PNAME ii;
+  PNAME i;
+  PNAME ii;
 
   ii = NameAlloc( n, nm, t );
 
@@ -159,7 +159,7 @@ void AddToImportList(PNODE n, char *nm, PINFO t)
 
 void AddToNameList(PNODE n)
 {
-  register PNAME x;
+  PNAME x;
 
   for ( x = xnames; x != NULL; x = x->next )
     if ( strcmp( x->name, n->CoNsT ) == 0 )
@@ -181,7 +181,7 @@ void AddToNameList(PNODE n)
 
 static PNAME NameLookup(PNAME l, char *n)
 {
-    register PNAME p;
+    PNAME p;
     
     for ( p = l; p != NULL; p = p->next )
         if ( strcmp( p->name, n ) == 0 )
@@ -200,11 +200,11 @@ static PNAME NameLookup(PNAME l, char *n)
 
 void CheckForUnresolvedNames(void)
 {
-  register PNAME i;
-  register PNAME ii;
-  register PNAME x;
-  register PNODE n;
-  register int   idx;
+  PNAME i;
+  PNAME ii;
+  PNAME x;
+  PNODE n;
+  int   idx;
 
   /* MARK THE ENTRY POINTS */
   for ( x = xnames; x != NULL; x = x->next ) {

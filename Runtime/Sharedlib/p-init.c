@@ -84,7 +84,7 @@ char** sisal_save_argv = 0;
 
 void ParseCommandLine(int argc, char *argv[])
 {
-  register int   idx;
+  int   idx;
   int   Tmp;
   int   FibreFileMode;
   char  *CorrectUsage;
@@ -175,13 +175,13 @@ static void PrintExecutionTimes(void)
 
 void DumpRunTimeInfo(void)
 {
-  register struct WorkerInfo *InfoPtr;
-  register int    Worker;
-  register double CopyInfo, ATAttempts, ATCopies, ANoOpAttempts;
-  register double RBuilds;
-  register double ANoOpCopies, RNoOpAttempts, RNoOpCopies, ADataCopies;
-  register int    StorageUsed, StorageWanted, DsaHelp;
-  register double FlopInfo, FlopCountA, FlopCountL, FlopCountI;
+  struct WorkerInfo *InfoPtr;
+  int    Worker;
+  double CopyInfo, ATAttempts, ATCopies, ANoOpAttempts;
+  double RBuilds;
+  double ANoOpCopies, RNoOpAttempts, RNoOpCopies, ADataCopies;
+  int    StorageUsed, StorageWanted, DsaHelp;
+  double FlopInfo, FlopCountA, FlopCountL, FlopCountI;
 
   FlopInfo = FlopCountA = FlopCountL = FlopCountI = 0.0;
 

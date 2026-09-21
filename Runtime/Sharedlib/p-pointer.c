@@ -15,7 +15,7 @@
 
 void FreePointerSwapFramework(POINTER BPtr, POINTER FramePtr)
 {
-  register PSBUFFERP Buffer;
+  PSBUFFERP Buffer;
 
   Buffer = (PSBUFFERP) BPtr;
 
@@ -29,8 +29,8 @@ void FreePointerSwapFramework(POINTER BPtr, POINTER FramePtr)
 
 static void FreeStorage(int Level, int *Info, POINTER FramePtr)
 {
-  register ARRAYP Array;
-  register int    Index;
+  ARRAYP Array;
+  int    Index;
 
   if ( Level == 1 ) {
     for ( Index = 0; Index < *Info; Index++ ) {
@@ -52,7 +52,7 @@ static void FreeStorage(int Level, int *Info, POINTER FramePtr)
 
 void FreePointerSwapStorage(POINTER BPtr, POINTER FramePtr)
 {
-  register PSBUFFERP Buffer;
+  PSBUFFERP Buffer;
 
   Buffer = (PSBUFFERP) BPtr;
 
@@ -76,9 +76,9 @@ static void InitializeStorage(int Level,
                               POINTER *Base,
                               POINTER **Next)
 {
-  register ARRAYP Array;
-  register PHYSP  Phys;
-  register int    Index;
+  ARRAYP Array;
+  PHYSP  Phys;
+  int    Index;
 
   if ( Level == 1 ) {
     for ( Index = 0; Index < *Info; Index++ ) {
@@ -123,12 +123,12 @@ static void InitializeStorage(int Level,
 
 POINTER AllocPointerSwapStorage(POINTER BPtr, int CompSize)
 {
-  register PSBUFFERP  Buffer;
-  register ARRAYP     Array;
-  register PHYSP      Phys;
-  register int        FrameworkSize;
-  register POINTER   *Base;
-  register int       *Info;
+  PSBUFFERP  Buffer;
+  ARRAYP     Array;
+  PHYSP      Phys;
+  int        FrameworkSize;
+  POINTER   *Base;
+  int       *Info;
            POINTER   *Next;
 
   Buffer = (PSBUFFERP) BPtr;
@@ -184,9 +184,9 @@ static void SkiInitializeStorage(int Nv,
                                  POINTER *Base,
                                  POINTER **Next)
 {
-  register ARRAYP Array;
-  register PHYSP  Phys;
-  register int    Index;
+  ARRAYP Array;
+  PHYSP  Phys;
+  int    Index;
 
   if ( Level == 1 ) {
     for ( Index = 0; Index < *Info; Index++ ) {
@@ -233,12 +233,12 @@ static void SkiInitializeStorage(int Nv,
 
 POINTER SkiAllocPointerSwapStorage(int Nv, POINTER BPtr, int CompSize)
 {
-  register PSBUFFERP  Buffer;
-  register ARRAYP     Array;
-  register PHYSP      Phys;
-  register int        FrameworkSize;
-  register POINTER   *Base;
-  register int       *Info;
+  PSBUFFERP  Buffer;
+  ARRAYP     Array;
+  PHYSP      Phys;
+  int        FrameworkSize;
+  POINTER   *Base;
+  int       *Info;
            POINTER   *Next;
 
   Buffer = (PSBUFFERP) BPtr;

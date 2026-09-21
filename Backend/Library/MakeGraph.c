@@ -24,7 +24,7 @@
 
 void MakeGraph(int type, int label, char *name)
 {
-  register PNODE n;
+  PNODE n;
 
   n          = NodeAlloc( GRAPH_LABEL, type );
   n->if1line = line;

@@ -18,8 +18,8 @@
 
 void ImportSwap(PNODE n)
 {
-  register PEDGE one;
-  register PEDGE two;
+  PEDGE one;
+  PEDGE two;
 
   one = n->imp;
   two = one->isucc;

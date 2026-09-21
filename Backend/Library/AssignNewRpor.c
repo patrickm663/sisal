@@ -20,8 +20,8 @@
 
 void AssignNewRports(PNODE g)
 {
-  register PEDGE i;
-  register int   p = 1;
+  PEDGE i;
+  int   p = 1;
 
   if (g != NULL)
     {

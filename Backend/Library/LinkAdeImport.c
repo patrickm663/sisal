@@ -17,7 +17,7 @@
 /*          PREDECESSOR OF THE FIRST IMPORT IS ALWAYS NULL.               */
 /**************************************************************************/
 
-void LinkAdeImport(register PNODE dst, register PADE a)
+void LinkAdeImport(PNODE dst, PADE a)
 {
   a->dst = dst;
 

@@ -85,7 +85,7 @@ TestCascade(PNODE G)
 void
 If1TestCascade(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     TestCascade( f );

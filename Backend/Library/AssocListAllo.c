@@ -18,7 +18,7 @@
 
 PALIST AssocListAlloc(int datum)
 {
-  register PALIST l;
+  PALIST l;
 
   l = (PALIST) MyAlloc( (int)sizeof(ALIST) );
 

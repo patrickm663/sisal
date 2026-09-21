@@ -19,7 +19,7 @@
 
 void AssignSourceFileName(char *n)
 {
-  register char *p,*nm;
+  char *p,*nm;
   int           len;
 
   len = strlen(n);

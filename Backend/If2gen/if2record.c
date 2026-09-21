@@ -86,7 +86,7 @@ void PrintUBuild(int indent, PNODE n)
 
 void PrintRBuild(int indent, PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     if ( n->cmark ) {
         PrintIndentation( indent );
@@ -116,8 +116,8 @@ void PrintRBuild(int indent, PNODE n)
 
 void PrintRElements(int indent, PNODE n)
 {
-    register PEDGE e;
-    register PEDGE ee;
+    PEDGE e;
+    PEDGE ee;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         if ( e->eport < 0 ) {
@@ -151,7 +151,7 @@ void PrintRElements(int indent, PNODE n)
 
 void PrintRReplace(int indent, PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   if ( n->exp->temp != n->imp->temp )
     PrintAssgn( indent, n->exp, n->imp );
@@ -185,9 +185,9 @@ void PrintRReplace(int indent, PNODE n)
 
 void PrintRecordNoOp(int indent, PNODE n)
 {
-    register char  *opcode;
-    register PINFO  i;
-    register int    c;
+    char  *opcode;
+    PINFO  i;
+    int    c;
 
     if ( n->imp->rmark1 == RMARK ) {
         if ( n->imp->temp != n->exp->temp )
@@ -243,8 +243,8 @@ void PrintRecordNoOp(int indent, PNODE n)
 
 void PrintBRAStore(int indent, PNODE n, PNODE gat)
 {
-  register PNODE l;
-  register PEDGE i;
+  PNODE l;
+  PEDGE i;
 
   l = gat->exp->dst->G_DAD;
 
@@ -285,7 +285,7 @@ void PrintBRAStore(int indent, PNODE n, PNODE gat)
 
 void PrintBRBuild(int indent, PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   if ( n->cmark )
     return;
@@ -309,9 +309,9 @@ void PrintBRBuild(int indent, PNODE n)
 void PrintBROptAElement(int indent,
                         PNODE n)  /* IFBRElement NODE */
 {
-  register PEDGE e;
-  register PEDGE ee;
-  register PNODE ae;
+  PEDGE e;
+  PEDGE ee;
+  PNODE ae;
 
   PEDGE laste = NULL;
 
@@ -404,7 +404,7 @@ void PrintBROptAElement(int indent,
 void PrintBRElements(int indent, PNODE n)
 {
   /*
-  register PEDGE e;
+  PEDGE e;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     PrintIndentation( indent );
@@ -415,8 +415,8 @@ void PrintBRElements(int indent, PNODE n)
     } 
   */
 
-  register PEDGE e;
-  register PEDGE ee;
+  PEDGE e;
+  PEDGE ee;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport < 0 ) {
@@ -445,7 +445,7 @@ void PrintBRElements(int indent, PNODE n)
 
 void PrintBRReplace(int indent, PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   if ( n->exp->temp != n->imp->temp )
     PrintAssgn( indent, n->exp, n->imp );

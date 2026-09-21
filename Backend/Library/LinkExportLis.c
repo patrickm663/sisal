@@ -19,8 +19,8 @@
 
 void LinkExportLists(PNODE n1, PNODE n2)
 {
-  register PEDGE e;
-  register PEDGE se;
+  PEDGE e;
+  PEDGE se;
 
   for ( e = n2->exp; e != NULL; e = se ) {
     se = e->esucc;

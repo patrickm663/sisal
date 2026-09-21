@@ -80,7 +80,7 @@ static int vbc      = 0;
 
 static int PartIsInvariant(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( IsConst( i ) )
@@ -105,14 +105,14 @@ static int PartIsInvariant(PNODE n)
 
 int PartIsVecCandidate(PNODE f, char **ReasonP)
 {
-  register PEDGE e;
-  register PEDGE i;
-  register PNODE n;
-  register PEDGE c;
-  register PEDGE ee;
-  register PNODE nn;
-  register int   cu = 0;
-  register PEDGE ii;
+  PEDGE e;
+  PEDGE i;
+  PNODE n;
+  PEDGE c;
+  PEDGE ee;
+  PNODE nn;
+  int   cu = 0;
+  PEDGE ii;
 
   vnum++;
 

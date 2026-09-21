@@ -18,7 +18,7 @@
 
 void MonoMakeNode(int label, int type)
 {
-  register PNODE n;
+  PNODE n;
 
   n = NodeAlloc( label, type );
 

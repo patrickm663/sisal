@@ -24,8 +24,8 @@ static PNODE gpred = NULL;                 /* GRAPH INSERTION PREDECESSOR */
 
 static int Used(PNODE c, int iport)
 {
-  register PNODE sg;
-  register int   u;
+  PNODE sg;
+  int   u;
 
   for ( u= FALSE, sg = c->C_SUBS; sg != NULL; sg = sg->gsucc )
     if ( IsExport( sg, iport ) )
@@ -44,9 +44,9 @@ static int Used(PNODE c, int iport)
 
 static int WasConvertedToTagTest(PNODE n)
 {
-  register PNODE sg;
-  register int   f;
-  register int   t;
+  PNODE sg;
+  int   f;
+  int   t;
 
   if ( n->imp->isucc != NULL || n->imp->iport != 1 )
     return( FALSE );
@@ -103,7 +103,7 @@ static int WasConvertedToTagTest(PNODE n)
 /* SPECIALIZED FOR SELECT NODES */
 static int YankIsInvariant(PEDGE i)
 {
-  register PNODE l;
+  PNODE l;
 
   if ( i == NULL )
     return( FALSE );
@@ -133,9 +133,9 @@ static int YankIsInvariant(PEDGE i)
 /* ASSUMES n HAS NO EXPORTS! */
 static void MoveInvariant(PNODE c, PNODE n)
 {
-  register PEDGE i;
-  register PEDGE ii;
-  register PEDGE si;
+  PEDGE i;
+  PEDGE ii;
+  PEDGE si;
 
   UnlinkNode( n );
   LinkNode( c->npred, n );
@@ -194,13 +194,13 @@ static void MoveInvariant(PNODE c, PNODE n)
 
 static void CallImprover(PNODE g, int inloop)
 {
-  register PNODE n;
-  register PEDGE i;
-  register PNODE sg;
-  register PNODE f;
-  register PNODE nn;
-  register PEDGE si;
-  register PNODE sn;
+  PNODE n;
+  PEDGE i;
+  PNODE sg;
+  PNODE f;
+  PNODE nn;
+  PEDGE si;
+  PNODE sn;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -266,9 +266,9 @@ static void CallImprover(PNODE g, int inloop)
 
 static int IsSliceParamNeeded(PNODE g, PEDGE i)
 {
-    register PNODE f;
-    register PEDGE e;
-    register int   u;
+    PNODE f;
+    PEDGE e;
+    int   u;
 
     f = g->imp->src;
 
@@ -350,16 +350,16 @@ SkipIt:
 
 static void SliceImprover(PNODE g, int inloop)
 {
-  register PNODE n;
-  register PEDGE i;
-  register PNODE sg;
-  register PNODE f;
-  register PNODE nn;
-  register PEDGE si;
-  register PEDGE lo;
-  register PEDGE hi;
-  register PEDGE size;
-  register PNODE sn;
+  PNODE n;
+  PEDGE i;
+  PNODE sg;
+  PNODE f;
+  PNODE nn;
+  PEDGE si;
+  PEDGE lo;
+  PEDGE hi;
+  PEDGE size;
+  PNODE sn;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -474,10 +474,10 @@ static void SliceImprover(PNODE g, int inloop)
 
 static void PushYankedNode(PNODE n)
 {
-  register PNODE nn;
-  register PNODE s;
-  register PEDGE e1;
-  register PEDGE e2;
+  PNODE nn;
+  PNODE s;
+  PEDGE e1;
+  PEDGE e2;
 
   switch ( n->type ) {
     case IFAStore:
@@ -555,8 +555,8 @@ static void PushYankedNode(PNODE n)
 
 static void PrepareConst(PNODE n)
 {
-    register PEDGE  i;
-    register char  *p;
+    PEDGE  i;
+    char  *p;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( !IsConst( i ) )
@@ -600,12 +600,12 @@ static void PrepareConst(PNODE n)
 
 static void BuildFunctionTypes(PNODE s, PNODE g, char *nm)
 {
-    register PEDGE e;
-    register PEDGE i;
-    register int   mx;
-    register int   port;
-    register int   in  = 0;
-    register int   out = 0;
+    PEDGE e;
+    PEDGE i;
+    int   mx;
+    int   port;
+    int   in  = 0;
+    int   out = 0;
     int            Unique;
 
     /* MAKE INPUT TUPLES: NOTE THERE MIGHT NOT BE ANY! ENTRIES ARE MADE   */
@@ -672,8 +672,8 @@ static void BuildFunctionTypes(PNODE s, PNODE g, char *nm)
 
 static void InsertUGetTagNode(PNODE n)
 {
-  register PNODE nn;
-  register PEDGE e;
+  PNODE nn;
+  PEDGE e;
 
   nn = NodeAlloc( ++maxint, IFUGetTag );
   LinkNode( n->npred, nn );
@@ -710,9 +710,9 @@ static void InsertUGetTagNode(PNODE n)
 
 static void InsertUElementNode(PNODE t, PNODE sg)
 {
-    register PEDGE e;
-    register PEDGE se;
-    register PNODE n;
+    PEDGE e;
+    PEDGE se;
+    PNODE n;
 
     if ( !IsExport( sg, 1 ) )
         return;
@@ -749,11 +749,11 @@ static void InsertUElementNode(PNODE t, PNODE sg)
 
 static void YankSlicedLoop(PNODE s)
 {
-  register PNODE g;
-  register PNODE f;
-  register PEDGE i;
-  register PEDGE e;
-  register PNODE sg;
+  PNODE g;
+  PNODE f;
+  PEDGE i;
+  PEDGE e;
+  PNODE sg;
 
   /* ------------------------------------------------------------ */
   /* Change the opcode of the yanked loop marker left behind      */
@@ -833,9 +833,9 @@ static void YankSlicedLoop(PNODE s)
 
 static void YankNodes(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE i;
+  PNODE n;
+  PNODE sg;
+  PEDGE i;
 
   PrepareConst( g );
 
@@ -918,10 +918,10 @@ static void YankNodes(PNODE g)
 
 static void YankReturnNodes(PNODE g)
 {
-  register PNODE n, r;
-  register PNODE nn, sg;
-  register PEDGE v;
-  register PEDGE e;
+  PNODE n, r;
+  PNODE nn, sg;
+  PEDGE v;
+  PEDGE e;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( alliantfx && n->vmark ) continue;
@@ -1059,7 +1059,7 @@ static void YankReturnNodes(PNODE g)
 
 void If2Yank1(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     YankReturnNodes( f );
@@ -1082,7 +1082,7 @@ void If2Yank1(void)
 
 void If2Yank0(void)
 {
-  register PNODE f;
+  PNODE f;
 
   gpred = glstop;
 

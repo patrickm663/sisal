@@ -87,20 +87,20 @@ void BuildStridedSlices(struct ActRec **Head,
                         int *Count,
                         PCODE ChildCode,
                         POINTER ArgPointer,
-                        register int Low,
+                        int Low,
                         int High,
                         int MinSlice,
                         int LoopSliceCount)
 {
-  register struct ActRec *NewAR;
-  register int            Thickness;
-  register int            SliceWidth;
-  register int            Long;
-  register int            Short;
-  register int           *SliceBounds;
-  register int           Total;
-  register int           SaveLow;
-  register int           SaveLong;
+  struct ActRec *NewAR;
+  int            Thickness;
+  int            SliceWidth;
+  int            Long;
+  int            Short;
+  int           *SliceBounds;
+  int           Total;
+  int           SaveLow;
+  int           SaveLong;
 
   ComputeWidth(Thickness,Total,Long,Short,NewAR);
 
@@ -134,18 +134,18 @@ void BuildBlockSlices(struct ActRec **Head,
                       int *Count,
                       PCODE ChildCode,
                       POINTER ArgPointer,
-                      register int Low,
-                      register int High,
+                      int Low,
+                      int High,
                       int MinSlice,
                       int LoopSliceCount)
 {
-  register struct ActRec *NewAR;
-  register int            Thickness;
-  register int            SliceWidth;
-  register int            Long;
-  register int            Short;
-  register int           *SliceBounds;
-  register int           Total;
+  struct ActRec *NewAR;
+  int            Thickness;
+  int            SliceWidth;
+  int            Long;
+  int            Short;
+  int           *SliceBounds;
+  int           Total;
 
   ComputeWidth(Thickness,Total,Long,Short,NewAR);
 
@@ -182,27 +182,27 @@ void BuildCachedSlices(struct ActRec **Head,
                        int *Count,
                        PCODE ChildCode,
                        POINTER ArgPointer,
-                       register int Low,
-                       register int High,
+                       int Low,
+                       int High,
                        int MinSlice,
                        int LoopSliceCount,
                        int Size,
                        int Norm)
 {
-  register struct ActRec *NewAR;
-  register int           *SliceBounds;
+  struct ActRec *NewAR;
+  int           *SliceBounds;
 
-  register int el;      /* elements per cache line */
-  register int cl;      /* cache lines per worker */
-  register int rem;     /* remainder */
-  register int sl;      /* slices per worker */
-  register int cnt;
-  register int rest;
-  register int big;
-  register int range;
-  register int bigcnt;
-  register int smallcnt;
-  register int i;
+  int el;      /* elements per cache line */
+  int cl;      /* cache lines per worker */
+  int rem;     /* remainder */
+  int sl;      /* slices per worker */
+  int cnt;
+  int rest;
+  int big;
+  int range;
+  int bigcnt;
+  int smallcnt;
+  int i;
   int tlo = Low;
   struct ActRec *ttt;
 
@@ -326,20 +326,20 @@ void BuildTriangleSlices(struct ActRec **Head,
                          int *Count,
                          PCODE ChildCode,
                          POINTER ArgPointer,
-                         register int Low,
-                         register int TrueHigh,
+                         int Low,
+                         int TrueHigh,
                          int MinSlice,
                          int LoopSliceCount)
 {
-  register struct ActRec *NewAR;
-  register int            Thickness;
-  register int            FullThick;
-  register int            High;
-  register int            SliceWidth;
-  register int            Long;
-  register int            Short;
-  register int           *SliceBounds;
-  register int           Total;
+  struct ActRec *NewAR;
+  int            Thickness;
+  int            FullThick;
+  int            High;
+  int            SliceWidth;
+  int            Long;
+  int            Short;
+  int           *SliceBounds;
+  int           Total;
 
   FullThick = TrueHigh-Low+1;
 
@@ -385,10 +385,10 @@ void BuildGssSlices(struct ActRec **Head,
                     int MinSlice,
                     int LoopSliceCount)
 {
-  register struct ActRec *NewAR;
-  register int            ThisHi;
-  register int           *SliceBounds;
-  register int            LowTemp;
+  struct ActRec *NewAR;
+  int            ThisHi;
+  int           *SliceBounds;
+  int            LowTemp;
 
   *Count = 0;
   LowTemp = Low;
@@ -479,7 +479,7 @@ void BuildSlices(int LoopType,
 /* ------------------------------------------------------------ */
 void OptSpawnSlicesFast(struct ActRec *FirstAR, int Count)
 {
-  register struct ActRec *LastAR;
+  struct ActRec *LastAR;
 
   if((Count <= NumWorkers) && BindParallelWork)
         OneLevelParallel = TRUE;
@@ -516,7 +516,7 @@ void OptSpawnSlicesFast(struct ActRec *FirstAR, int Count)
 
 void OptSpawnSlices(struct ActRec *FirstAR, int Count)
 {
-  register struct ActRec *LastAR;
+  struct ActRec *LastAR;
 
   OneLevelParallel = FALSE;
 

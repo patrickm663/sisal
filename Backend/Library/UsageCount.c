@@ -19,8 +19,8 @@
 
 int UsageCount(PNODE n, int eport)
 {
-  register PEDGE e;
-  register int   cnt = 0;
+  PEDGE e;
+  int   cnt = 0;
 
   for ( e = n->exp; e != NULL; e = e->esucc )
     if ( e->eport == eport )

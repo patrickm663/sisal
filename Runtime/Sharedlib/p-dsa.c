@@ -114,9 +114,9 @@ void ShutDownDsa(void)
 
 void InitDsa(int size, int xft)
 {
-   register struct top *cu, *nx;
-   register struct bot *cubot;
-   register int         i, inc, roundsize;
+   struct top *cu, *nx;
+   struct bot *cubot;
+   int         i, inc, roundsize;
 
 #if defined(DEBUG_DSA)
 #if defined(VERBOSE)
@@ -245,9 +245,9 @@ printDSA(void)
 
 /* Allocate storage from the boundary tag-managed pool */
 
-static char *btAlloc(register int size)
+static char *btAlloc(int size)
 {
-   register struct top *cu, *pr, *back;
+   struct top *cu, *pr, *back;
    struct top          *newtop;
    char                *addr;
    struct bot          *cubot, *newbot;
@@ -358,9 +358,9 @@ static char *btAlloc(register int size)
 }
 
 
-static void btDeAlloc(register struct top *ptr)
+static void btDeAlloc(struct top *ptr)
 {
-  register struct top *bl_above, *bl_below, *pr, *cu;
+  struct top *bl_above, *bl_below, *pr, *cu;
   struct bot          *bot_above, *cubot;
   int                  mystart;
   int                  pID;
@@ -530,7 +530,7 @@ static void OldZap(struct top *p)
 
 void DsaHelp(void)
 {
-  register int pID;
+  int pID;
 
   GETPROCID(pID);
 
@@ -543,10 +543,10 @@ void DsaHelp(void)
 }
 
 
-POINTER Alloc(register int size)
+POINTER Alloc(int size)
 {
-  register struct top *cu, *pr;
-  register char       *addr;
+  struct top *cu, *pr;
+  char       *addr;
   int                  pID;
 
   GETPROCID(pID);
@@ -627,9 +627,9 @@ void DeAllocToBt(POINTER x)
 
 void DeAlloc(POINTER x)
 {
-   register struct top *pr, *cu, *ptr;
-   register int size;
-   register int pID;
+   struct top *pr, *cu, *ptr;
+   int size;
+   int pID;
 
 #ifdef DEBUG_DSA
 if ( x == NULL ) SisalError( "DeAlloc", "NULL POINTER ON DeAlloc!!!" );
@@ -747,9 +747,9 @@ InitDsaCaches(int size, int xft)
 
 void InitDsa(int size, int xft)
 {
-   register struct top *cu, *nx;
-   register struct bot *cubot;
-   register int         i, inc, roundsize;
+   struct top *cu, *nx;
+   struct bot *cubot;
+   int         i, inc, roundsize;
 
 
    roundsize = ALIGN(int,size);
@@ -835,9 +835,9 @@ FLUSHALL;
 
 /* Allocate storage from the boundary tag-managed pool */
 
-static char *btAlloc(register int size)
+static char *btAlloc(int size)
 {
-   register struct top *cu, *pr, *back;
+   struct top *cu, *pr, *back;
    struct top          *newtop;
    char                *addr;
    struct bot          *cubot, *newbot;
@@ -925,9 +925,9 @@ static char *btAlloc(register int size)
 }
 
 
-static int btDeAlloc(register struct top *ptr)
+static int btDeAlloc(struct top *ptr)
 {
-  register struct top *bl_above, *bl_below, *pr, *cu;
+  struct top *bl_above, *bl_below, *pr, *cu;
   struct bot          *bot_above, *cubot;
   int                  pID;
 
@@ -1056,10 +1056,10 @@ static int OldZap(struct top *p)
 }
 
 
-POINTER Alloc(register int size)
+POINTER Alloc(int size)
 {
-  register struct top *cu, *pr;
-  register char       *addr;
+  struct top *cu, *pr;
+  char       *addr;
   int                  pID;
 
   GETPROCID(pID);
@@ -1137,7 +1137,7 @@ POINTER Alloc(register int size)
 
 int DsaHelp(void)
 {
-  register int pID;
+  int pID;
 
   GETPROCID(pID);
 
@@ -1158,9 +1158,9 @@ void DeAllocToBt(POINTER x)
 
 void DeAlloc(POINTER x)
 {
-   register struct top *pr, *cu, *ptr;
-   register int size;
-   register int pID;
+   struct top *pr, *cu, *ptr;
+   int size;
+   int pID;
 
 #ifdef DEBUG_DSA
 if ( x == NULL ) SisalError( "DeAlloc", "NULL POINTER ON DeAlloc!!!" );

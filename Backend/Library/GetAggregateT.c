@@ -18,7 +18,7 @@
 PINFO
 GetAggregate(int AggregateType, PINFO T, char *name)
 {
-  register PINFO i;
+  PINFO i;
 
   /* ------------------------------------------------------------ */
   /* See if one already exists with the proper structure          */

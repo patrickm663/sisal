@@ -19,7 +19,7 @@
 
 void ThreadToUse(PNODE src, int eport, PNODE dst, int iport, PINFO edgeinfo)
 {
-  register PNODE sg;
+  PNODE sg;
 
   while ( src->level != dst->level ) {
     sg = dst->lstack[src->level + 1];

@@ -37,7 +37,7 @@ static int fnvisited = 0;   /* COUNT OF UNVISITED FUNCTIONS               */
 
 static int CatAtBugFix(PEDGE e, int omark)
 {
-    register PEDGE p;
+    PEDGE p;
 
     for ( p = e->src->exp; p != NULL; p = p->esucc )
         if ( p->eport == e->eport )
@@ -79,9 +79,9 @@ static int CatAtBugFix(PEDGE e, int omark)
 
 void If2RefineGrounds(void)
 {
-    register PEDGE e;
-    register PEDGE ee;
-    register PEDGE ii;
+    PEDGE e;
+    PEDGE ee;
+    PEDGE ii;
 
     for ( e = dghead; e != NULL; e = e->usucc ) {
         if ( e->rmark1 == RMARK ) {
@@ -151,8 +151,8 @@ MoveOn:
 
 static void BindRMark(PSET s, int rmark)
 {
-    register PEDGE e;
-    register int   m;
+    PEDGE e;
+    int   m;
 
     for ( m = 0; m <= s->last; m++ ) {
         e = s->set[m];
@@ -170,8 +170,8 @@ static void BindRMark(PSET s, int rmark)
 
 static void ConditionallyBindOMark(PSET s, int omark)
 {
-    register PEDGE e;
-    register int   m;
+    PEDGE e;
+    int   m;
 
     for ( m = 0; m <= s->last; m++ ) {
         e = s->set[m];
@@ -221,8 +221,8 @@ static void ConditionallyBindOMark(PSET s, int omark)
 
 static void AssignMarks(PEDGE e, int rmark, int omark)
 {
-    register PEDGE w;
-    register int   wc;
+    PEDGE w;
+    int   wc;
 
     if ( e == NULL )
         return;
@@ -283,11 +283,11 @@ static void AssignMarks(PEDGE e, int rmark, int omark)
 
 static void PropagateCallMarks(PNODE c)
 {
-    register PNODE f;
-    register PEDGE e;
-    register PEDGE i;
-    register int   s;
-    register int   ss;
+    PNODE f;
+    PEDGE e;
+    PEDGE i;
+    int   s;
+    int   ss;
 
     f = FindFunction( c->imp->CoNsT );
 
@@ -379,13 +379,13 @@ static void PropagateCallMarks(PNODE c)
 
 static void PropagateSelectMarks(PNODE s)
 {
-    register PNODE g;
-    register PEDGE i;
-    register PEDGE e;
-    register int   sr;
-    register int   so;
-    register PEDGE ii;
-    register PNODE sg;
+    PNODE g;
+    PEDGE i;
+    PEDGE e;
+    int   sr;
+    int   so;
+    PEDGE ii;
+    PNODE sg;
 
     /* ASSIGN s IMPORT MARKS TO ALL CORRESPONDING SUBGRAPH EXPORTS AND */
     /* AND PROPAGATE THEM THROUGH THE SUBGRAPHS.                       */
@@ -452,8 +452,8 @@ static void PropagateSelectMarks(PNODE s)
 
 static void PropagateForallMarks(PNODE f)
 {
-    register PEDGE i;
-    register PEDGE e;
+    PEDGE i;
+    PEDGE e;
 
     /* IF AN f IMPORT IS ONLY REFERENCED IN ITS GENERATE SUBGRAPH THEN    */
     /* PROPAGATE THE IMPORT'S MARKS THROUGH THE SUBGRAPH.                 */
@@ -516,13 +516,13 @@ static void PropagateForallMarks(PNODE f)
 
 static void PropagateLoopMarks(PNODE l)
 {
-    register PEDGE e;
-    register PEDGE i;
-    register PEDGE ee;
-    register PEDGE ii;
-    register int   ocnt;
-    register int   d;
-    register int   dd;
+    PEDGE e;
+    PEDGE i;
+    PEDGE ee;
+    PEDGE ii;
+    int   ocnt;
+    int   d;
+    int   dd;
 
     /* CLEAN UP MARKS FROM PREVIOUS LOOP EXAMINATION                      */
 
@@ -647,8 +647,8 @@ static void PropagateLoopMarks(PNODE l)
 
 static void PropagateMarks(PNODE g)
 {
-    register PNODE n;
-    register PEDGE e;
+    PNODE n;
+    PEDGE e;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc )
         switch( n->type ) {
@@ -829,12 +829,12 @@ static void PropagateMarks(PNODE g)
 
 void If2PropagateMarks(void)
 {
-    register PEDGE e;
-    register PNODE f;
-    register int   s;
-    register int   ss;
-    register int   trmark;
-    register int   tomark;
+    PEDGE e;
+    PNODE f;
+    int   s;
+    int   ss;
+    int   trmark;
+    int   tomark;
 
     /* INITIALIZE THE FIBRE ARGUMENTS TO THE MAIN FUNCTION                */
 

@@ -18,8 +18,8 @@
 
 PEDGE EdgeAlloc(PNODE src, int eport, PNODE dst, int iport)
 {
-  register PEDGE   e;
-  register PBBLOCK b;
+  PEDGE   e;
+  PBBLOCK b;
 
   b = MyBBlockAlloc();
   e = &(b->e);

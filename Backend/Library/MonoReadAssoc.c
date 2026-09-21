@@ -20,7 +20,7 @@
 
 char *MonoReadAssocList(void)
 {
-  register int idx = 0;
+  int idx = 0;
 
   for (;;) {
     if ( token == '%' || IsEoln( token ) )

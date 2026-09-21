@@ -180,7 +180,7 @@ static void RealDump(double Value, char *Name)
 
 static void ArrayDump(POINTER Ptr, char *Name)
 {
-  register ARRAYP Array = (ARRAYP) Ptr;
+  ARRAYP Array = (ARRAYP) Ptr;
 
   /* This header is included by every compiled SISAL program, so its
      warnings land in front of every user.  Pointers went through %x and
@@ -457,7 +457,7 @@ static int DivByZero(void) { return( 0 ); }
 
 #define AAdj(x,y,z,w,q) \
 { \
-  register int size; \
+  int size; \
   ((ARRAYP)y)->LoBound = w; \
   if ( (size = q - w + 1) < 0 ) \
     ((ARRAYP)y)->Size = 0; \
@@ -495,7 +495,7 @@ static int DivByZero(void) { return( 0 ); }
 */
 #define ARemH(x,y,z) \
 { \
-  register PHYSP Phys = ((ARRAYP)y)->Phys; \
+  PHYSP Phys = ((ARRAYP)y)->Phys; \
   ((ARRAYP)y)->Size--; \
   if ( Phys->RefCount == 1 ) \
     Phys->Free++; \
@@ -566,8 +566,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define ABElmCpyN(x,y,z,w,rs) \
 { \
-  register int sz1; \
-  register int sz2; \
+  int sz1; \
+  int sz2; \
   sz2 = ((ARRAYP)w)->Size; \
   sz1 = rs - sz2; \
   IncDataCopies( sz2 * sizeof( z ) ); \
@@ -764,8 +764,8 @@ static int DivByZero(void) { return( 0 ); }
 */
 #define AAddH(x,y,z,q,v,u) \
 { \
-  register PHYSP Phys = ((ARRAYP)y)->Phys; \
-  register v *vaddr; \
+  PHYSP Phys = ((ARRAYP)y)->Phys; \
+  v *vaddr; \
   IncATAttempts; \
   if ( ((ARRAYP)y)->RefCount == 1 && Phys->RefCount == 1 && Phys->Free > 0 ) \
     x = y; \
@@ -786,8 +786,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define AAddHX(x,y,z,q,v,u,w) \
 { \
-  register PHYSP Phys = ((ARRAYP)y)->Phys; \
-  register v *vaddr; \
+  PHYSP Phys = ((ARRAYP)y)->Phys; \
+  v *vaddr; \
   IncATAttempts; \
   if ( ((ARRAYP)y)->RefCount == 1 && Phys->RefCount == 1 && Phys->Free > 0 ) \
     x = y; \
@@ -1049,7 +1049,7 @@ static int DivByZero(void) { return( 0 ); }
 
 #define SkiMAlloc(vvv,x,y,z) \
 { \
-  register PHYSP Phys; \
+  PHYSP Phys; \
   x->Phys = Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(z)*(y+vvv))); \
   MY_INIT_LOCK( &Phys->Mutex ); \
   Phys->Size = y; \
@@ -1061,8 +1061,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define SkiMAllocDVI(vvv,x,y,z,lb,rc) \
 { \
-  register PHYSP Phys; \
-  register POINTER Dv; \
+  PHYSP Phys; \
+  POINTER Dv; \
   Dv = (POINTER) Alloc(sizeof(ARRAY)); \
   MY_INIT_LOCK( &(((ARRAYP)Dv)->Mutex) ); \
   ((ARRAYP)Dv)->RefCount = rc; \
@@ -1079,8 +1079,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define SkiMAllocDV(vvv,x,y,z) \
 { \
-  register PHYSP Phys; \
-  register POINTER Dv; \
+  PHYSP Phys; \
+  POINTER Dv; \
   Dv = (POINTER) Alloc(sizeof(ARRAY)); \
   MY_INIT_LOCK( &(((ARRAYP)Dv)->Mutex) ); \
   x->Phys = Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(z)*(y+vvv))); \
@@ -1118,7 +1118,7 @@ static int DivByZero(void) { return( 0 ); }
 
 #define MAlloc(x,y,z) \
 { \
-  register PHYSP Phys; \
+  PHYSP Phys; \
   x->Phys = Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(z)*y)); \
   MY_INIT_LOCK( &Phys->Mutex ); \
   Phys->Size = y; \
@@ -1129,8 +1129,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define MAllocDVI(x,y,z,lb,rc) \
 { \
-  register PHYSP Phys; \
-  register POINTER Dv; \
+  PHYSP Phys; \
+  POINTER Dv; \
   Dv = (POINTER) Alloc(sizeof(ARRAY)); \
   MY_INIT_LOCK( &(((ARRAYP)Dv)->Mutex) ); \
   ((ARRAYP)Dv)->RefCount = rc; \
@@ -1146,8 +1146,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define MAllocDV(x,y,z) \
 { \
-  register PHYSP Phys; \
-  register POINTER Dv; \
+  PHYSP Phys; \
+  POINTER Dv; \
   Dv = (POINTER) Alloc(sizeof(ARRAY)); \
   MY_INIT_LOCK( &(((ARRAYP)Dv)->Mutex) ); \
   x->Phys = Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(z)*y)); \
@@ -1162,7 +1162,7 @@ static int DivByZero(void) { return( 0 ); }
 
 #define RaggedMAlloc(x,y,z,as) \
 { \
-  register PHYSP Phys; \
+  PHYSP Phys; \
   x->Phys = Phys = (PHYSP) Alloc( SIZE_OF(PHYS)+(sizeof(z)*(as)) ); \
   MY_INIT_LOCK( &Phys->Mutex ); \
   Phys->Size = y; \
@@ -1173,8 +1173,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define RaggedMAllocDVI(x,y,z,lb,rc,as) \
 { \
-  register PHYSP Phys; \
-  register POINTER Dv; \
+  PHYSP Phys; \
+  POINTER Dv; \
   Dv = (POINTER) Alloc(sizeof(ARRAY)); \
   MY_INIT_LOCK( &(((ARRAYP)Dv)->Mutex) ); \
   ((ARRAYP)Dv)->RefCount = rc; \
@@ -1190,8 +1190,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define RaggedMAllocDV(x,y,z,as) \
 { \
-  register PHYSP Phys; \
-  register POINTER Dv; \
+  PHYSP Phys; \
+  POINTER Dv; \
   Dv = (POINTER) Alloc(sizeof(ARRAY)); \
   MY_INIT_LOCK( &(((ARRAYP)Dv)->Mutex) ); \
   x->Phys = Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(z)*(as))); \
@@ -1329,8 +1329,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define RCat(x,y,z,q) \
 { \
-  register x   *Src; \
-  register int  Num = ((ARRAYP)z)->Size; \
+  x   *Src; \
+  int  Num = ((ARRAYP)z)->Size; \
   if ( Num > 0 ) { \
     Src = &(((x*)(((ARRAYP)z)->Base))[((ARRAYP)z)->LoBound]); \
     while ( Num-- > 0 ) { \
@@ -1342,8 +1342,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define BRCat(x,y,z,w,q) \
 { \
-  register x   *Src; \
-  register int  Num; \
+  x   *Src; \
+  int  Num; \
   if ( w ) { \
     Num = ((ARRAYP)z)->Size; \
     if ( Num > 0 ) { \
@@ -1358,8 +1358,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define RCatX(x,y,z,q) \
 { \
-  register x   *Src; \
-  register int  Num = ((ARRAYP)z)->Size; \
+  x   *Src; \
+  int  Num = ((ARRAYP)z)->Size; \
   if ( Num > 0 ) { \
     Src = &(((x*)(((ARRAYP)z)->Base))[((ARRAYP)z)->LoBound]); \
     while ( Num-- > 0 ) { \
@@ -1372,8 +1372,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define BRCatX(x,y,z,w,q) \
 { \
-  register x   *Src; \
-  register int  Num; \
+  x   *Src; \
+  int  Num; \
   if ( w ) { \
     Num = ((ARRAYP)z)->Size; \
     if ( Num > 0 ) { \
@@ -1423,7 +1423,7 @@ static int DivByZero(void) { return( 0 ); }
 */
 #define RCatAT(x,y,z,q,rs) \
 { \
-  register int sz; \
+  int sz; \
   sz = ((ARRAYP)z)->Size; \
   q( (x*)y, (((x*)(((ARRAYP)z)->Base)) + ((ARRAYP)z)->LoBound), sz ); \
   y = (POINTER) (((x*)y) + sz); \
@@ -1462,8 +1462,8 @@ static int DivByZero(void) { return( 0 ); }
 */
 #define InitIArr(x,y,z,w,v) \
 { \
-  register PHYSP Phys; \
-  register ARRAYP Array; \
+  PHYSP Phys; \
+  ARRAYP Array; \
   Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(v)*z)); \
   MY_INIT_LOCK( &Phys->Mutex ); \
   Phys->Size = z; \
@@ -1483,8 +1483,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define OptInitIArr(x,y,z,w,v,q) \
 { \
-  register PHYSP Phys; \
-  register ARRAYP Array; \
+  PHYSP Phys; \
+  ARRAYP Array; \
   Phys = (PHYSP) Alloc(SIZE_OF(PHYS)); \
   MY_INIT_LOCK( &Phys->Mutex ); \
   Phys->Size = z; \
@@ -1506,7 +1506,7 @@ static int DivByZero(void) { return( 0 ); }
 */
 #define SFreeArr(x) \
 { \
-  register PHYSP Phys; \
+  PHYSP Phys; \
   if ( (--(((ARRAYP)x)->RefCount)) < 1 )  { \
     Phys = ((ARRAYP)x)->Phys; \
     if ( (--(Phys->RefCount)) < 1 ) \
@@ -1565,8 +1565,8 @@ static int DivByZero(void) { return( 0 ); }
 
 #define PrepRetArr1(z,w,x,y,u) \
 { \
-  register PHYSP Phys; \
-  register ARRAYP Array; \
+  PHYSP Phys; \
+  ARRAYP Array; \
   Phys = (PHYSP) Alloc(SIZE_OF(PHYS)+(sizeof(x)*y)); \
   MY_INIT_LOCK( &Phys->Mutex ); \
   Phys->Size = y; \

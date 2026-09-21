@@ -18,7 +18,7 @@
 
 void MonoMakeCompound(int type, char *alst)
 {
-  register PNODE n;
+  PNODE n;
 
   n = NodeAlloc( 0, type );
 

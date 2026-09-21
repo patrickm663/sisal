@@ -19,7 +19,7 @@
 
 void LinkExportToEnd(PNODE src, PEDGE e)
 {
-  register PEDGE ee;
+  PEDGE ee;
 
   for ( ee = src->exp; ee != NULL; ee = ee->esucc )
     if ( ee->esucc == NULL )

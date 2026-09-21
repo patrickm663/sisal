@@ -29,7 +29,7 @@
 
 static PNODE FindLGenerator(PNODE g, int SearchColor)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = g->imp; i != NULL; i = i->isucc ) {
         if ( IsConst( i ) )
@@ -67,11 +67,11 @@ static PNODE FindLGenerator(PNODE g, int SearchColor)
 
 static void OrderLPortGenerators(void)
 {
-    register PNODE c;
-    register PNODE n;
-    register PEDGE i;
-    register PEDGE e;
-    register int   NodeColor;
+    PNODE c;
+    PNODE n;
+    PEDGE i;
+    PEDGE e;
+    int   NodeColor;
 
     for ( c = chead; c != NULL; c = c->usucc ) {
         if ( !IsLoop( c ) )
@@ -133,8 +133,8 @@ static void OrderLPortGenerators(void)
 
 static int CanExecute(PNODE n)
 {
-    register PADE  a;
-    register PEDGE i;
+    PADE  a;
+    PEDGE i;
 
     for ( a = n->aimp; a != NULL; a = a->isucc )
         if ( !(a->src->executed) )
@@ -167,12 +167,12 @@ static int CanExecute(PNODE n)
 
 static void SortNodes(PNODE g)
 {
-    register int   m;
-    register PNODE ehead = NULL;                /* HAS EXECUTED LIST HEAD */
-    register PNODE etail = NULL;                /* HAS EXECUTED LIST TAIL */
-    register PNODE n;
-    register PNODE sn;
-    register PNODE sg;
+    int   m;
+    PNODE ehead = NULL;                /* HAS EXECUTED LIST HEAD */
+    PNODE etail = NULL;                /* HAS EXECUTED LIST TAIL */
+    PNODE n;
+    PNODE sn;
+    PNODE sg;
 
     while ( g->G_NODES != NULL ) {
         m = FALSE;
@@ -222,12 +222,12 @@ static void SortNodes(PNODE g)
 
 void If2Ade(void)
 {
-    register PSET  s;
-    register PEDGE r;
-    register PEDGE w;
-    register PNODE f;
-    register int   ri;
-    register int   wi;
+    PSET  s;
+    PEDGE r;
+    PEDGE w;
+    PNODE f;
+    int   ri;
+    int   wi;
 
     /* BASED ON GLOBAL READ/WRITE SET INFORMATION, ORDER AGGREGATE NODES  */
     /* TO ELIMINATE UNNEEDED COPYING; CYCLE AVOIDANCE IS NOT PERFORMED.   */

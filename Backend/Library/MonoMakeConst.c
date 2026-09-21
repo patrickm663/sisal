@@ -18,7 +18,7 @@
 
 void MonoMakeConst(int dnode, int iport, int label, char *CoNsT)
 {
-  register PNODE n;
+  PNODE n;
 
   n = NodeAlloc( 0, IFLiteral );
 

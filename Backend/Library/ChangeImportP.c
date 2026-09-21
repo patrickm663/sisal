@@ -19,7 +19,7 @@
 
 void ChangeImportPorts(PNODE n, int oport, int nport)
 {
-  register PEDGE i;
+  PEDGE i;
 
   for ( i = n->imp; i != NULL; i = i->isucc )
     if ( i->iport == oport )

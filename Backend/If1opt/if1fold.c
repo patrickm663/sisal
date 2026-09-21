@@ -41,9 +41,9 @@ static PNODE    FoldNode;
 
 static PEDGE FindLowerBound(PEDGE e)
 {
-  register PNODE src;
-  register PNODE n;
-  register PEDGE ee;
+  PNODE src;
+  PNODE n;
+  PEDGE ee;
 
   if ( e == NULL )
     return( NULL );
@@ -114,15 +114,15 @@ MoveOn:
 
 static int WasReduced(PNODE n)
 {
-  register PNODE dst;
-  register PEDGE e;
-  register PEDGE i;
-  register PNODE l;
-  register PEDGE ee;
-  register PEDGE lo1;
-  register PEDGE lo2;
-  register int   port;
-  register PEDGE se;
+  PNODE dst;
+  PEDGE e;
+  PEDGE i;
+  PNODE l;
+  PEDGE ee;
+  PEDGE lo1;
+  PEDGE lo2;
+  int   port;
+  PEDGE se;
 
   switch ( n->type ) {
     case IFNeg:
@@ -234,9 +234,9 @@ static int WasReduced(PNODE n)
 
 static int IsLogicalShortCircuit(PNODE n)
 {
-  register int  tv;
-  register int  v;
-  register int  itv;
+  int  tv;
+  int  v;
+  int  itv;
            EDGE c;
 
   switch ( n->type ) {
@@ -345,10 +345,10 @@ void OptNormalizeNode(PNODE n)
 
 static void NormalizeIndexing(PEDGE e)
 {
-  register int   v0;
-  register int   v1;
-  register PNODE n;
-  register PNODE nn;
+  int   v0;
+  int   v1;
+  PNODE n;
+  PNODE nn;
            char  buf[100];
 
   if ( !normidx )
@@ -415,8 +415,8 @@ static void NormalizeIndexing(PEDGE e)
 
 static long AsciiToLong(char *c, int b)
 {
-    register long v = 0;
-    register long s = 1;
+    long v = 0;
+    long s = 1;
 
     if ( ( *c == '-' ) || ( *c == '+' ) ) {
         if ( *c == '-' )
@@ -440,18 +440,18 @@ static long AsciiToLong(char *c, int b)
 
 static void FoldExp(PNODE n)
 {
-  register PEDGE  i2;
-  register PEDGE  i1;
-  register PNODE  pr;
-  register PNODE  m;
-  register PEDGE  ExpNode;
-  register PEDGE  e;
-  register PNODE  n0;
-  register PNODE  n1;
-  register PNODE  n2;
-  register PNODE  n3;
-  register int    v;
-  register double vf;
+  PEDGE  i2;
+  PEDGE  i1;
+  PNODE  pr;
+  PNODE  m;
+  PEDGE  ExpNode;
+  PEDGE  e;
+  PNODE  n0;
+  PNODE  n1;
+  PNODE  n2;
+  PNODE  n3;
+  int    v;
+  double vf;
 
   i1 = n->imp;
 
@@ -626,9 +626,9 @@ MoveOn:
 
 static void FoldDiv(PNODE n)
 {
-  register PEDGE  i2;
-  register PEDGE  i1;
-  register double vf;
+  PEDGE  i2;
+  PEDGE  i1;
+  double vf;
 
   i1 = n->imp;
 
@@ -672,7 +672,7 @@ static void FoldDiv(PNODE n)
 
 static double GetSpecialOperand(PEDGE e)
 {
-  register double val;
+  double val;
 
   switch ( e->info->type ) {
     case IF_INTEGER:
@@ -746,8 +746,8 @@ static int IsSpecialCandidate(PNODE n)
 
 static void HandleUselessNode (PNODE n, double val)
 {
-    register PEDGE e;
-    register PEDGE se;
+    PEDGE e;
+    PEDGE se;
 
     for ( e = n->exp ; e != NULL ; e = se ) {
         se = e->esucc;
@@ -775,8 +775,8 @@ static void HandleUselessNode (PNODE n, double val)
 
 static void OptSkipIdentityNode(PEDGE i)
 {
-    register PEDGE e;
-    register PEDGE se;
+    PEDGE e;
+    PEDGE se;
 
     /* MOVE i->dst EXPORT REFERENCES TO i->src                            */
 
@@ -809,8 +809,8 @@ static void OptSkipIdentityNode(PEDGE i)
 
 static int IsSpecialChain(double c1, PNODE n, PEDGE e)
 {
-    register PNODE  prevn;
-    register double op1;
+    PNODE  prevn;
+    double op1;
 
     if ( (!IsOneExport( n )) || (n->exp->iport != 1) )
         return( FALSE );
@@ -874,15 +874,15 @@ static int IsSpecialChain(double c1, PNODE n, PEDGE e)
 
 static void FoldSpecialNodes(PNODE g)
 {
-    register PNODE  n;
-    register PEDGE  i1;
-    register PEDGE  i2;
-    register int    const1;
-    register int    const2;
-    register double op1;
-    register double op2;
-    register PNODE  sn;
-    register PNODE  sg;
+    PNODE  n;
+    PEDGE  i1;
+    PEDGE  i2;
+    int    const1;
+    int    const2;
+    double op1;
+    double op2;
+    PNODE  sn;
+    PNODE  sg;
 
     for ( n = g->G_NODES ; n != NULL ; n = sn ) {
         sn = n->nsucc;
@@ -1089,13 +1089,13 @@ static void FoldExceptionHandler(int sig)
 
 static PNODE RemoveBranch(PNODE s)
 {
-    register PNODE sg;
-    register PEDGE e;
-    register PEDGE i;
-    register PEDGE se;
-    register PEDGE si;
-    register PNODE ln;
-    register PNODE sn;
+    PNODE sg;
+    PEDGE e;
+    PEDGE i;
+    PEDGE se;
+    PEDGE si;
+    PNODE ln;
+    PNODE sn;
 
     if ( !native )
         return( s->nsucc );
@@ -1181,7 +1181,7 @@ static PNODE RemoveBranch(PNODE s)
 
 static long CharToInteger(char *c)
 {
-    register int v;
+    int v;
 
     if ( *c == '\\' ) {
         c++;
@@ -1214,7 +1214,7 @@ static long CharToInteger(char *c)
 
 char *DoubleToReal(char *d)
 {
-    register char *p;
+    char *p;
 
     for ( p = d; *p != '\0'; p++ )
         if ( (*p == 'D') || (*p == 'd') )
@@ -1297,12 +1297,12 @@ static int GetOperands(PNODE n)
 
 static void Fold(PNODE n)
 {
-    register PEDGE  i;
-    register PEDGE  e;
-    register PEDGE  se;
-    register char  *r;
-    register int    cnt;
-    register int    b;
+    PEDGE  i;
+    PEDGE  e;
+    PEDGE  se;
+    char  *r;
+    int    cnt;
+    int    b;
              char   a[ANSWER_SIZE];
 
     FoldNode = n;               /* In case we trap! */
@@ -1680,12 +1680,12 @@ static void Fold(PNODE n)
 
 static void FoldNodes(PNODE g)
 {
-    register PNODE n;
-    register PNODE sn;
-    register PEDGE i;
-    register PEDGE ii;
-    register PEDGE e;
-    register PEDGE se;
+    PNODE n;
+    PNODE sn;
+    PEDGE i;
+    PEDGE ii;
+    PEDGE e;
+    PEDGE se;
 
     if ( IsIGraph( g ) )
         return;
@@ -1819,7 +1819,7 @@ void WriteFoldInfo(void)
 
 void If1Fold(void)
 {
-  register PNODE f;
+  PNODE f;
 
   signal( SIGFPE, FoldExceptionHandler );
 

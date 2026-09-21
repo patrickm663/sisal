@@ -28,7 +28,7 @@
 
 static void ChangeSourceNode(PNODE osrc, PEDGE e, PNODE rpl)
 {
-    register PEDGE ee;
+    PEDGE ee;
 
     for ( ee = osrc->exp; ee != NULL; ee = ee->esucc ) {
         if ( ee->eport != e->eport )
@@ -73,13 +73,13 @@ static void ChangeSourceNode(PNODE osrc, PEDGE e, PNODE rpl)
 
 static void FlushCompoundNodes(PNODE rpl, PEDGE i)
 {
-    register PEDGE e;
-    register PEDGE ii;
-    register PEDGE si;
-    register int   m;
-    register int   ok;
-    register int   eport;
-    register PNODE src;
+    PEDGE e;
+    PEDGE ii;
+    PEDGE si;
+    int   m;
+    int   ok;
+    int   eport;
+    PNODE src;
 
     m = TRUE;
 
@@ -180,14 +180,14 @@ static void FlushCompoundNodes(PNODE rpl, PEDGE i)
 
 void If2Replace(void)
 {
-    register PNODE n;
-    register PNODE rpl;
-    register PEDGE e;
-    register PEDGE ee;
-    register PEDGE i;
-    register PNODE elm;
-    register int   agg;
-    register int   ok;
+    PNODE n;
+    PNODE rpl;
+    PEDGE e;
+    PEDGE ee;
+    PEDGE i;
+    PNODE elm;
+    int   agg;
+    int   ok;
 
     for ( n = nohead; n != NULL; n = n->usucc ) {
         elm = NULL;

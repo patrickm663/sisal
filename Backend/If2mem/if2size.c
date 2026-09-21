@@ -33,7 +33,7 @@ int paddh = 0;                              /* COUNT OF AAddH PREFERENCES */
 
 static int PreferAAddH(PNODE n)
 {
-  register PEDGE e;
+  PEDGE e;
 
   if ( IsConst( n->imp ) )
     return( FALSE );
@@ -82,7 +82,7 @@ static int PreferAAddH(PNODE n)
 
 static void BindExportSizes(PNODE n, int lsize, int csize, PNODE esize)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc ) {
         e->lsize = lsize;
@@ -104,8 +104,8 @@ static void BindExportSizes(PNODE n, int lsize, int csize, PNODE esize)
 
 static void PropagateImportSizes(PNODE n1, PNODE n2)
 {
-    register PEDGE  i;
-    register PEDGE  e;
+    PEDGE  i;
+    PEDGE  e;
 
     for ( i = n1->imp ; i != NULL ; i = i->isucc ) {
         if ( !IsConst( i ) )
@@ -137,8 +137,8 @@ static void PropagateImportSizes(PNODE n1, PNODE n2)
 /* NEW CANN 2/92 */
 static int FirstIterationSkipped(PNODE l, PNODE n, PEDGE mult)
 {
-  register PEDGE i;
-  register PEDGE ii;
+  PEDGE i;
+  PEDGE ii;
 
   if ( IsConst( mult->isucc ) )
     return( FALSE );
@@ -251,9 +251,9 @@ static int IsGatherFinalOrReduceOk(PNODE l, PNODE n, PEDGE mult)
 
 static PNODE HighMinusLowPlusOne(PNODE rpoint, PEDGE lo, PEDGE hi)
 {
-    register PNODE pr;
-    register PNODE n;
-    register PEDGE e;
+    PNODE pr;
+    PNODE n;
+    PEDGE e;
 
     lo = FindSource( lo );
     hi = FindSource( hi );
@@ -360,17 +360,17 @@ static PNODE HighMinusLowPlusOne(PNODE rpoint, PEDGE lo, PEDGE hi)
 
 static void BuildLoopIterExpr(PNODE l)
 {
-    register PNODE  n;
-    register PNODE  adj;
-    register PNODE  pr;
-    register PEDGE  lvalue;
-    register PNODE  upd;
-    register PEDGE  fve;
-    register PEDGE  ive;
-    register PEDGE  c;
-    register int    bop;
-    register int    cnt;
-    register char  *ide;
+    PNODE  n;
+    PNODE  adj;
+    PNODE  pr;
+    PEDGE  lvalue;
+    PNODE  upd;
+    PEDGE  fve;
+    PEDGE  ive;
+    PEDGE  c;
+    int    bop;
+    int    cnt;
+    char  *ide;
              char   buf[100];
 
     /* CHECK LOOP TEST STRUCTURE, INITIALIZING fve and bop */
@@ -613,8 +613,8 @@ static void BuildLoopIterExpr(PNODE l)
 
 static void BuildForallIterExpr(PNODE n)
 {
-    register PNODE c ;
-    register PEDGE lo, hi ;
+    PNODE c ;
+    PEDGE lo, hi ;
 
     /* FIND THE FORALL GENERATE NODE CONTROLLING THE LOOP */
     c = n->F_GEN->imp->src;
@@ -684,11 +684,11 @@ static void BuildForallIterExpr(PNODE n)
 
 static int IsMonotonicConstruction(PNODE l, PNODE n)
 {
-    register PEDGE lb;
-    register PEDGE i1;
-    register PEDGE i2;
-    register PEDGE lsrc;
-    register int   cnt;
+    PEDGE lb;
+    PEDGE i1;
+    PEDGE i2;
+    PEDGE lsrc;
+    int   cnt;
 
     if ( IsConst( n->imp ) ) 
         return( FALSE );
@@ -800,9 +800,9 @@ static int IsMonotonicConstruction(PNODE l, PNODE n)
 
 static void BuildAddLHSize(PNODE n)
 {
-    register PNODE plus;
-    register PEDGE one;
-    register PNODE pr;
+    PNODE plus;
+    PEDGE one;
+    PNODE pr;
 
     if ( IsConstSize( n->imp ) ) {
         BindExportSizes( n, n->imp->lsize, n->imp->csize + 1, NULL_NODE );
@@ -843,13 +843,13 @@ static void BuildAddLHSize(PNODE n)
 
 static void BuildACatSize(PNODE n)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PNODE plus;
-    register PEDGE CoNsT;
-    register PNODE pr;
-    register char *cptr;
-    register PNODE non_CoNsT;
+    PEDGE i1;
+    PEDGE i2;
+    PNODE plus;
+    PEDGE CoNsT;
+    PNODE pr;
+    char *cptr;
+    PNODE non_CoNsT;
 
     i1 = n->imp ;
     i2 = n->imp->isucc ;
@@ -922,8 +922,8 @@ static void BuildACatSize(PNODE n)
 
 static void BuildABuildSize(PNODE n)
 {
-    register PEDGE i;
-    register int   numb;
+    PEDGE i;
+    int   numb;
 
     /* COUNT NUMBER OF INPUTS TO n IGNORING THE THE LOWER BOUND.         */
 
@@ -946,9 +946,9 @@ static void BuildABuildSize(PNODE n)
 
 static void BuildAGatherSize(PNODE l, PNODE n)
 {
-    register PNODE plus;
-    register PEDGE one;
-    register PNODE pr;
+    PNODE plus;
+    PEDGE one;
+    PNODE pr;
 
     if ( IsForall( l ) ) {
         BindExportSizes( n, l->lsize, l->csize, l->esize );
@@ -1010,9 +1010,9 @@ static void BuildAGatherSize(PNODE l, PNODE n)
 
 static void BuildFinalValueSize(PNODE l, PNODE n)
 {
-    register PNODE pr;
-    register PNODE times, plus ;
-    register PEDGE ce ;
+    PNODE pr;
+    PNODE times, plus ;
+    PEDGE ce ;
 
     if ( lxpnd == NULL ) {
         pr = l->esize;
@@ -1079,9 +1079,9 @@ static void BuildFinalValueSize(PNODE l, PNODE n)
 
 static PNODE ExprTimesConst(PNODE rpoint, PNODE expr, int CoNsT)
 {
-    register PNODE times;
-    register PEDGE ce;
-    register PNODE pr;
+    PNODE times;
+    PEDGE ce;
+    PNODE pr;
 
     pr = expr;
 
@@ -1118,8 +1118,8 @@ static PNODE ExprTimesConst(PNODE rpoint, PNODE expr, int CoNsT)
 
 static void BuildRedCatSize(PNODE l, PEDGE mult, PNODE n)
 {
-    register PNODE times;
-    register PNODE pr;
+    PNODE times;
+    PNODE pr;
 
     if ( IsConstSize( mult ) ) {
         if ( IsConstSize( l ) ) {
@@ -1161,9 +1161,9 @@ static void BuildRedCatSize(PNODE l, PEDGE mult, PNODE n)
 
 static void AssignExportSizes(PNODE n)
 {
-    register PEDGE e;
-    register PEDGE ee;
-    register PNODE asize;
+    PEDGE e;
+    PEDGE ee;
+    PNODE asize;
 
     for ( e = n->exp ; e != NULL ; e = e->esucc )
          if ( IsSizeUnknown(e) &&  IsArray(e->info) ) {
@@ -1202,9 +1202,9 @@ static void AssignExportSizes(PNODE n)
 
 void AssignSizes(PNODE g)
 {
-    register PNODE nd;
-    register PNODE sg;
-    register PEDGE mult;
+    PNODE nd;
+    PNODE sg;
+    PEDGE mult;
              PNODE expr;
              PNODE l;
 

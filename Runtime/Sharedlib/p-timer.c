@@ -40,7 +40,7 @@ extern double TSECND();
 
 static double TSECND(void)
 {
-  register double CurrentCpuTime;
+  double CurrentCpuTime;
 
 #ifdef HAVE_RUSAGE
   struct rusage StartTimerInfo;
@@ -82,7 +82,7 @@ void StartTimer(void)
 void StopTimer(void)  
 { 
   struct timeval StopWallTime;
-  register double StopCpuTime;
+  double StopCpuTime;
 
   StopCpuTime = TSECND(); 
   (void)gettimeofday( &StopWallTime, (struct timezone *) NULL );

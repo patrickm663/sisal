@@ -18,7 +18,7 @@
 
 PNODE FindGraph(int n)
 {
-  register PNODE g;
+  PNODE g;
 
   for ( g = glstop->gsucc; g != NULL; g = g->gsucc, n-- )
     if ( n == 0 )

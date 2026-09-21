@@ -45,8 +45,8 @@ void OptNormalizeNode(PNODE n)
 
 static void WriteOptCountInfo(char *msg)
 {
-    register struct level *l;
-    register int           i;
+    struct level *l;
+    int           i;
 
     FPRINTF( stderr, "\n   * OCCURRENCE COUNTS %s\n\n", msg );
 
@@ -104,9 +104,9 @@ static void WriteOptCountInfo(char *msg)
 
 void If1Count(char *msg)
 {
-    register struct level *l;
-    register PNODE         f;
-    register int           i;
+    struct level *l;
+    PNODE         f;
+    int           i;
 
     lits = edges  = simples = graphs = comps = 0;
     rsum = rgreat = rleast  = rcat   = rprod = 0;

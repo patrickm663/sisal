@@ -18,7 +18,7 @@
 
 int IsIntrinsic(char *nm, PINFO i)
 {
-  register char *p;
+  char *p;
 
   p = LowerCase( nm, FALSE, FALSE );
 

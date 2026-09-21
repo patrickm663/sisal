@@ -45,10 +45,10 @@ static PNODE scope[MAX_SCOPE];         /* SCOPE STACK FOR THREADING EDGES */
 
 static void AddAElement(PEDGE i, int c, PNODE b, PEDGE a)
 {
-  register PNODE plus;
-  register PNODE aelm;
-  register PEDGE e;
-  register PINFO iinfo;
+  PNODE plus;
+  PNODE aelm;
+  PEDGE e;
+  PINFO iinfo;
            char  buf[100];
 
   iinfo = (IsMultiple(i->info))? i->info->A_ELEM : i->info;
@@ -110,10 +110,10 @@ static void AddAElement(PEDGE i, int c, PNODE b, PEDGE a)
 
 static int AreDopesEqual(PEDGE e1, PEDGE e2)
 {
-  register PDOPE d1;
-  register PDOPE d2;
-  register PNODE LimLNode;
-  register PNODE LimHNode;
+  PDOPE d1;
+  PDOPE d2;
+  PNODE LimLNode;
+  PNODE LimHNode;
 
   if ( e1->dope == NULL || e2->dope == NULL )
     return( 0 );
@@ -223,7 +223,7 @@ MoveOn:
 
 static PDOPE DopeAlloc(void)
 {
-  register PDOPE d;
+  PDOPE d;
 
   d = (PDOPE) MyAlloc( (int) sizeof(DOPE) );
 
@@ -246,7 +246,7 @@ static PDOPE DopeAlloc(void)
 
 static void BindDopeInfo(PNODE n, int eport, PDOPE d)
 {
-  register PEDGE e;
+  PEDGE e;
 
   for ( e = n->exp; e != NULL; e = e->esucc )
     if ( e->eport == eport )
@@ -263,9 +263,9 @@ static void BindDopeInfo(PNODE n, int eport, PDOPE d)
 
 static void PropagateDopeInfo(PNODE c, PNODE sg)
 {
-  register PEDGE i;
-  register PEDGE e;
-  register PDOPE d;
+  PEDGE i;
+  PEDGE e;
+  PDOPE d;
 
   for ( i = c->imp; i != NULL; i = i->isucc ) {
     if ( i->dope == NULL )
@@ -299,15 +299,15 @@ static void PropagateDopeInfo(PNODE c, PNODE sg)
 
 static int ObviateNode(PNODE n, int lvl, PEDGE i, int v)
 {
-  register PEDGE e;
-  register PEDGE se;
+  PEDGE e;
+  PEDGE se;
            char  buf[100];
-  register int   eport;
-  register PNODE src;
-  register PEDGE ee;
-  register PEDGE newee;
-  register PNODE newsrc;
-  register int   l;
+  int   eport;
+  PNODE src;
+  PEDGE ee;
+  PEDGE newee;
+  PNODE newsrc;
+  int   l;
 
   if ( i == NULL )
     Error2( "ObviateNode", "i IS NULL" );
@@ -373,18 +373,18 @@ static int ObviateNode(PNODE n, int lvl, PEDGE i, int v)
 
 static void ProcessDopeInfo(PNODE g, int lvl)
 {
-  register PNODE n;
-  register PNODE sn;
-  register PNODE sg;
-  register PDOPE d;
-  register PDOPE dd;
-  register PEDGE i;
-  register PEDGE ii;
-  register PEDGE e;
-  register int   c;
-  register int   dlow;
-  register int   dhigh;
-  register PNODE l;
+  PNODE n;
+  PNODE sn;
+  PNODE sg;
+  PDOPE d;
+  PDOPE dd;
+  PEDGE i;
+  PEDGE ii;
+  PEDGE e;
+  int   c;
+  int   dlow;
+  int   dhigh;
+  PNODE l;
            char  buf[100];
 
   if ( lvl >= MAX_SCOPE )
@@ -772,7 +772,7 @@ static void ProcessDopeInfo(PNODE g, int lvl)
 
 void If1Dope(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     if ( IsIGraph( f ) )

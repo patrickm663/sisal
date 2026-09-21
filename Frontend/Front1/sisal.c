@@ -153,7 +153,7 @@ static void ReadTableInt( FILE*, int* );
 
 # define Inline
 
-#define Register    register  /* Register variables */
+#define Register    /* Register variables */
 #define Char        char      /* Characters (not bytes) */
 
 /* p2c emitted a "Static" storage-class shim here; sisalInfo.h defined it as
@@ -2901,7 +2901,7 @@ static int P_peek(FILE *f)
 
 static int P_eof(FILE *f)
 {
-    register int ch;
+    int ch;
 
     if (feof(f))
         return 1;
@@ -2919,7 +2919,7 @@ static int P_eof(FILE *f)
 
 static int P_eoln(FILE *f)
 {
-    register int ch;
+    int ch;
 
     ch = getc(f);
     if (ch == EOF)
@@ -2971,9 +2971,9 @@ static int P_eoln(FILE *f)
    zero-extended into the `long` array, leaving bits 32-63 untouched as the
    comment above always said they should be. */
 
-static int P_inset(register unsigned val, register long *s)  /* val IN s */
+static int P_inset(unsigned val, long *s)  /* val IN s */
 {
-    register int bit;
+    int bit;
     bit = val % SETBITS;
     val /= SETBITS;
     if (val < (unsigned long)*s++ && ((1UL<<bit) & (unsigned long)s[val]))
@@ -2981,10 +2981,10 @@ static int P_inset(register unsigned val, register long *s)  /* val IN s */
     return 0;
 }
 
-static long *P_addset(register long *s, register unsigned val)  /* s := s + [val] */
+static long *P_addset(long *s, unsigned val)  /* s := s + [val] */
 {
-    register long *sbase = s;
-    register int bit, size;
+    long *sbase = s;
+    int bit, size;
     bit = val % SETBITS;
     val /= SETBITS;
     size = *s;
@@ -3000,12 +3000,12 @@ static long *P_addset(register long *s, register unsigned val)  /* s := s + [val
 }
 
 
-static long *P_addsetr(register long *s,
-                       register unsigned v1,
-                       register unsigned v2)  /* s := s + [v1..v2] */
+static long *P_addsetr(long *s,
+                       unsigned v1,
+                       unsigned v2)  /* s := s + [v1..v2] */
 {
-    register long *sbase = s;
-    register int b1, b2, size;
+    long *sbase = s;
+    int b1, b2, size;
     if ((int)v1 > (int)v2)
         return sbase;
     b1 = v1 % SETBITS;
@@ -3036,9 +3036,9 @@ static long *P_addsetr(register long *s,
 }
 
 
-static long *P_remset(register long *s, register unsigned val)  /* s := s - [val] */
+static long *P_remset(long *s, unsigned val)  /* s := s - [val] */
 {
-    register int bit;
+    int bit;
     bit = val % SETBITS;
     val /= SETBITS;
     if (++val <= (unsigned long)*s) {
@@ -3058,7 +3058,7 @@ static long *P_remset(register long *s, register unsigned val)  /* s := s - [val
 /* s is a "smallset", i.e., a 32-bit or less set stored
    directly in a long. */
 
-static long *P_expset(register long *d, register long s)  /* d := s */
+static long *P_expset(long *d, long s)  /* d := s */
 {
     if (s) {
         d[1] = s;
@@ -3100,9 +3100,9 @@ void TimeStamp(int *Day, int *Month, int *Year, int *Hour, int *Min, int *Sec)
 
 /* SUN Berkeley Pascal extensions */
 
-static void P_sun_argv(register char *s, register int len, register int n)
+static void P_sun_argv(char *s, int len, int n)
 {
-    register char *cp;
+    char *cp;
 
     if ((unsigned)n < P_argc)
         cp = P_argv[n];
@@ -25700,9 +25700,9 @@ int CNum = 0;
 
 static char *CANN_StringCopy(int length, char *buf)
 {
-  register char *s;
-  register char *r;
-  register int   i;
+  char *s;
+  char *r;
+  int   i;
 
   r = Malloc( length+1 * sizeof(char) );
   s = r;
@@ -25716,8 +25716,8 @@ static char *CANN_StringCopy(int length, char *buf)
 
 static int CANN_PreparePragmaName(char *s)
 {
-  register int   e;
-  register char *p;
+  int   e;
+  char *p;
 
   for ( e = 0, p = s; *p != '\0'; p++, e++ ) {
     if ( *p == '=' )
@@ -25732,7 +25732,7 @@ static int CANN_PreparePragmaName(char *s)
 
 static int CANN_IsEntryPragma(char *b)
 {
-  register int e;
+  int e;
 
   e = CANN_PreparePragmaName( b );
 
@@ -25749,7 +25749,7 @@ static int CANN_IsEntryPragma(char *b)
 
 static int CANN_IsFortranPragma(char *b)
 {
-  register int e;
+  int e;
 
   e = CANN_PreparePragmaName( b );
 
@@ -25768,7 +25768,7 @@ static int CANN_IsFortranPragma(char *b)
 
 static int CANN_IsCPragma(char *b)
 {
-  register int e;
+  int e;
 
   e = CANN_PreparePragmaName( b );
 
@@ -25781,9 +25781,9 @@ static int CANN_IsCPragma(char *b)
 
 static void CANN_ProcessPragmaFields(int e, char *b, char **dbase, int *num)
 {
-  register char *r;
-  register char *p;
-  register char *f;
+  char *r;
+  char *p;
+  char *f;
 
   p = r = &(b[e+1]);
 
@@ -25816,9 +25816,9 @@ static void CANN_ProcessPragmaFields(int e, char *b, char **dbase, int *num)
 
 static int CANN_DissectSpecialPragmas(int pointer, int length, char *buf)
 {
-  register char *b;
-  register char *s;
-  register int   e;
+  char *b;
+  char *s;
+  int   e;
 
   b = &buf[pointer];
   s = CANN_StringCopy(length-2,b);
@@ -25839,7 +25839,7 @@ static int CANN_DissectSpecialPragmas(int pointer, int length, char *buf)
 
 char *CANN_StripWhites(char *s)
 {
-  register char *b;
+  char *b;
 
   while ( *s == ' ' || *s == '\t' ) s++;
 
@@ -25857,8 +25857,8 @@ char *CANN_StripWhites(char *s)
 
 static void CANN_DumpSpecialPragmas(FILE *fd)
 {
-  register int i;
-  register char *s;
+  int i;
+  char *s;
 
   for ( i = 0; i < ENum; i++ )
     if ( EnTrY[i][0] != '\0' ) {
@@ -27664,7 +27664,7 @@ extern int main(int,char**);
 int
 main(int argc, Char *argv[])
 {
-  register int i;                                /* NEW CANN */
+  int i;                                /* NEW CANN */
   stryng txt;
   for ( i = 0; i < argc; i++ ) {                 /* NEW CANN */
     if ( strcmp( argv[i], "-SISglue" ) == 0 )   /* NEW CANN */

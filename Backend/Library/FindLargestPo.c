@@ -18,7 +18,7 @@
 
 int FindLargestPort(PNODE node)
 {
-  register PEDGE edge;
+  PEDGE edge;
   int largest_port = 0;
 
   /*** Check the boundaries. ***/

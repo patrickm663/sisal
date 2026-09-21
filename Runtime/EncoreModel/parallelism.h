@@ -41,7 +41,7 @@ void AcquireSharedMemory(int NumBytes)
 
 void StartWorkers(void)
 {
-  register int NumProcs = NumWorkers;
+  int NumProcs = NumWorkers;
 
   while( --NumProcs > 0 )
     if ( fork() == 0 )

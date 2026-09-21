@@ -51,9 +51,9 @@ static SCOPE scopes[MAX_SCOPE];                            /* SCOPE STACK */
 
 static PEDGE CopyExportsForThreading(PNODE n1)
 {
-    register PEDGE e1;
-    register PEDGE e2;
-    register int   eport;
+    PEDGE e1;
+    PEDGE e2;
+    int   eport;
              NODE  n2;
 
     n2.exp = NULL;
@@ -98,10 +98,10 @@ static PEDGE CopyExportsForThreading(PNODE n1)
 
 static void CombineGNodes(PNODE g1, PNODE n1)
 {
-    register PNODE n2;
-    register PEDGE e;
-    register int   t, f, l;
-    register PEDGE nexp;
+    PNODE n2;
+    PEDGE e;
+    int   t, f, l;
+    PEDGE nexp;
 
     for ( f = top; f >= 0; f-- ) {
         l = TRUE;
@@ -165,7 +165,7 @@ DoThreading:
 
 static int IsGCSECandidate(PNODE n)
 {
-    register PEDGE e;
+    PEDGE e;
 
     if ( IsAElement( n ) ) {
         if ( IsBasic( n->exp->info ) )
@@ -197,9 +197,9 @@ static int IsGCSECandidate(PNODE n)
 
 static void RemoveGCses(PNODE g)
 {
-    register PNODE n;
-    register PNODE sn;
-    register PNODE sg;
+    PNODE n;
+    PNODE sn;
+    PNODE sg;
 
     if ( IsIGraph( g ) )
         return;
@@ -259,24 +259,24 @@ void WriteGCseInfo(void)
 
 static void DoAntiGCse(PNODE g)
 {
-  register PNODE sg;
-  register PNODE n;
-  register PNODE sn;
-  register PNODE sg1;
-  register PNODE sg2;
-  register PEDGE e;
-  register PEDGE ee;
-  register PEDGE se;
-  register PEDGE i1;
-  register PEDGE i2;
-  register int   c;
-  register int   p1;
-  register int   p2;
-  register PNODE n1;
-  register PNODE n2;
-  register PEDGE see;
-  register PEDGE ii1;
-  register PEDGE ii2;
+  PNODE sg;
+  PNODE n;
+  PNODE sn;
+  PNODE sg1;
+  PNODE sg2;
+  PEDGE e;
+  PEDGE ee;
+  PEDGE se;
+  PEDGE i1;
+  PEDGE i2;
+  int   c;
+  int   p1;
+  int   p2;
+  PNODE n1;
+  PNODE n2;
+  PEDGE see;
+  PEDGE ii1;
+  PEDGE ii2;
 
   for ( n = g->G_NODES; n != NULL; n = sn ) {
     sn = n->nsucc;
@@ -483,15 +483,15 @@ static void DoAntiGCse(PNODE g)
 
 void OptRemoveSCses(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE aa;
-  register PNODE cc;
-  register PNODE sa;
-  register PEDGE e;
-  register PNODE sn;
-  register PEDGE ee;
-  register PEDGE se;
+  PNODE n;
+  PNODE sg;
+  PNODE aa;
+  PNODE cc;
+  PNODE sa;
+  PEDGE e;
+  PNODE sn;
+  PEDGE ee;
+  PEDGE se;
 
   if ( DeBuG ) return;
 
@@ -590,7 +590,7 @@ void OptRemoveSCses(PNODE g)
 
 void If1GCse(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     top = -1;

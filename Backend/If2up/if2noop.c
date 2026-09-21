@@ -31,8 +31,8 @@
 
 static void InsertNoOp(PEDGE e, int omark)
 {
-    register PNODE n;
-    register PEDGE ee;
+    PNODE n;
+    PEDGE ee;
 
     n  = NodeAlloc( ++maxint, IFNoOp );
     ee = EdgeAlloc( n, 1, e->dst, e->iport );
@@ -73,8 +73,8 @@ static void InsertNoOp(PEDGE e, int omark)
 
 static void AddNoOpsToGraph(PNODE g)
 {
-    register PNODE n;
-    register PEDGE e;
+    PNODE n;
+    PEDGE e;
 
     AppendToUtilityList( chead, ctail, g );
 
@@ -195,7 +195,7 @@ static void AddNoOpsToGraph(PNODE g)
 
 void If2NoOp(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = fhead; f != NULL; f = f->gsucc )
         AddNoOpsToGraph( f );

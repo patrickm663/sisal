@@ -15,8 +15,8 @@
 
 static void DoDependentWork(void)
 {
-  register struct ActRec *NewAR;
-  register int local_flush;
+  struct ActRec *NewAR;
+  int local_flush;
 
   if ( (NewAR = RListDeQ()) != (struct ActRec *) NULL ) {
     (*(NewAR->ChildCode))( NewAR->ArgPointer, 
@@ -74,7 +74,7 @@ void Wait(int Event)
     }
 }
 
-void Sync(register struct ActRec *First, register struct ActRec *LastPlusOne)
+void Sync(struct ActRec *First, struct ActRec *LastPlusOne)
 {
   if ( First == LastPlusOne )
     return;

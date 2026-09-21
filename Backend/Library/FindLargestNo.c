@@ -17,9 +17,9 @@
 /*          has the largest label.                                        */
 /**************************************************************************/
 
-PNODE FindLargestNode(register PNODE n)
+PNODE FindLargestNode(PNODE n)
 {
-  register PNODE m;
+  PNODE m;
 
   if ( n == NULL )
     return( NULL );

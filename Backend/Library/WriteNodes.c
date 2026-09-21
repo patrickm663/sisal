@@ -20,9 +20,9 @@
 
 void WriteNodes(PNODE g)
 {
-  register PNODE  n;
-  register PNODE  sg;
-  register PALIST l;
+  PNODE  n;
+  PNODE  sg;
+  PALIST l;
 
   switch ( g->type ) {
    case IFLGraph:

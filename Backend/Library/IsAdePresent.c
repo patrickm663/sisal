@@ -19,7 +19,7 @@
 
 int IsAdePresent(PNODE src, PNODE dst)
 {
-  register PADE a;
+  PADE a;
 
   for ( a = src->aexp; a != NULL; a = a->esucc )
     if ( a->dst == dst )

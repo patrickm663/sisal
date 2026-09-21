@@ -75,13 +75,13 @@
 
 static void TryAndHoistNoOp(PNODE n)
 {
-  register PEDGE li;
-  register PEDGE ii;
-  register PEDGE bi;
-  register PEDGE ri;
-  register PEDGE e;
-  register PNODE l;
-  register PNODE nn;
+  PEDGE li;
+  PEDGE ii;
+  PEDGE bi;
+  PEDGE ri;
+  PEDGE e;
+  PNODE l;
+  PNODE nn;
 
   /* CHECK IF n IS A CANDIDATE FOR HOISTING */
   if ( !(n->imp->rmark1 == rMARK && n->imp->omark1) ) /* rO? */
@@ -200,7 +200,7 @@ static void TryAndHoistNoOp(PNODE n)
 
 void CleanNoOpImports(void)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = nohead; n != NULL; n = n->usucc ) {
      if ( n->imp->rmark1 == RMARK )
@@ -220,7 +220,7 @@ void CleanNoOpImports(void)
 
 static void BindProducerPragmas(PEDGE ee, int pm, int sr)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = ee->src->exp; e != NULL; e = e->esucc )
         if ( e->eport == ee->eport ) {
@@ -240,8 +240,8 @@ static void BindProducerPragmas(PEDGE ee, int pm, int sr)
 
 static int BeforeAWrite(PEDGE e, PSET wset)
 {
-    register PEDGE ee;
-    register int   w;
+    PEDGE ee;
+    int   w;
 
     for ( w = 0; w <= wset->last; w++ ) {
         ee = wset->set[w];
@@ -267,8 +267,8 @@ static int BeforeAWrite(PEDGE e, PSET wset)
 
 static int BeforeAllWrites(PEDGE e, PSET wset)
 {
-    register PEDGE ee;
-    register int   w;
+    PEDGE ee;
+    int   w;
 
     for ( w = 0; w <= wset->last; w++ ) {
         ee = wset->set[w];
@@ -294,7 +294,7 @@ static int BeforeAllWrites(PEDGE e, PSET wset)
 
 static void NeutralizeEdge(PEDGE e)
 {
-    register PEDGE ee;
+    PEDGE ee;
 
     if ( e->cm != -1 )
         return;
@@ -337,8 +337,8 @@ static void NeutralizeEdge(PEDGE e)
 
 static int ChangeToGenerator(PNODE g, int eport)
 {
-    register PEDGE e;
-    register int   chg = FALSE;
+    PEDGE e;
+    int   chg = FALSE;
 
     for ( e = g->exp; e != NULL; e = e->esucc )
         if ( e->eport == eport ) {
@@ -371,7 +371,7 @@ static PEDGE AddGround(PNODE src,
                        int pm,
                        int sr)
 {
-    register PEDGE e;
+    PEDGE e;
 
     e = EdgeAlloc( src, eport, dst, 0 );
 
@@ -400,7 +400,7 @@ static PEDGE AddGround(PNODE src,
 
 static void DecrementPmValues(PNODE n, int eport)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp;  e != NULL; e = e->esucc )
         if ( e->eport == eport )
@@ -432,7 +432,7 @@ static void NotRef(PNODE c, PEDGE i)
 
 static void RefBodyOnly(PNODE c, PEDGE i)
 {
-    register PEDGE ii;
+    PEDGE ii;
 
     ChangeToGenerator( c->L_BODY, i->iport );
 
@@ -457,9 +457,9 @@ static void RefBodyOnly(PNODE c, PEDGE i)
 
 static void RefBodyAndRet(PNODE c, PEDGE i)
 {
-    register PEDGE e;
-    register PNODE n;
-    register int   cnt;
+    PEDGE e;
+    PNODE n;
+    int   cnt;
              PEDGE ii;
 
     ii = FindImport( c->L_BODY, i->iport );
@@ -579,10 +579,10 @@ static void RefRetOnly(PNODE c, PEDGE i)
 
 static void OptBoundaryReferenceCounts(void)
 {
-    register PNODE c;
-    register PEDGE i;
-    register PEDGE e;
-    register PNODE g;
+    PNODE c;
+    PEDGE i;
+    PEDGE e;
+    PNODE g;
 
     for ( c = chead; c != NULL; c = c->usucc ) {
         if ( IsCompound( c ) ) {
@@ -787,11 +787,11 @@ static void OptBoundaryReferenceCounts(void)
 
 static void OptNodeReferenceCounts(void)
 {
-    register PSET  grset;
-    register PSET  gwset;
-    register PEDGE e;
-    register int   r;
-    register PEDGE ee;
+    PSET  grset;
+    PSET  gwset;
+    PEDGE e;
+    int   r;
+    PEDGE ee;
 
     for ( grset = gshead; grset != NULL; grset = gwset->ssucc ) {
         gwset = grset->ssucc;

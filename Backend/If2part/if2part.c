@@ -40,9 +40,9 @@ static int total;             /* TOTAL DISTANCE OF COUNTED EDGES          */
 
 static void AverageDistance(PNODE g)
 {
-    register PNODE n;
-    register PEDGE e;
-    register int   i;
+    PNODE n;
+    PEDGE e;
+    int   i;
 
     for ( i = 1, n = g->G_NODES; n != NULL; n = n->nsucc, i++ )
         n->label = i;
@@ -65,7 +65,7 @@ static void AverageDistance(PNODE g)
 
 static int IsTaskFinished(PNODE n)
 {
-    register PEDGE e;
+    PEDGE e;
 
     for ( e = n->exp; e != NULL; e = e->esucc )
         if ( e->dst->wmark )
@@ -85,8 +85,8 @@ static int IsTaskFinished(PNODE n)
 
 static void SetSyncMarks(PNODE g)
 {
-    register PEDGE i;
-    register PNODE n;
+    PEDGE i;
+    PNODE n;
 
     /* BUG FIX 10/16 NOTE STILL DOESN't WORK */
     if ( g->G_NODES == NULL )
@@ -117,7 +117,7 @@ static void SetSyncMarks(PNODE g)
 /**************************************************************************/
 static int GetNewActiveProcCount(PNODE f, int active)
 {
-  register int i;
+  int i;
 
   i = (int) NumberOfIterations( f );
 
@@ -143,10 +143,10 @@ static void PartitionGraph(PNODE g,
                            int plvl,
                            int pbusy)  /* BUSY PROCESSORS */
 {
-  register PNODE        n;
-  register PNODE        gg;
-  register PNODE        phead = NULL;
-  register PNODE        ptail = NULL;
+  PNODE        n;
+  PNODE        gg;
+  PNODE        phead = NULL;
+  PNODE        ptail = NULL;
   char                  *reason;
   int                   active;
   double                PerIterationCost;
@@ -340,7 +340,7 @@ static void PartitionGraph(PNODE g,
 
 void If2Part(void)
 {
-    register PNODE f;
+    PNODE f;
 
     if ( RequestInfo(I_Info4,info)) {
       FPRINTF( infoptr, "\n **** LOCALITY MAP\n\n" );

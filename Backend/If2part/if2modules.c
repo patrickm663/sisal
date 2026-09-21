@@ -44,10 +44,10 @@ static int cetop = -1;
 
 static int DriveParallelMarks(PNODE g, int Pmark)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE f;
-  register int   change;
+  PNODE n;
+  PNODE sg;
+  PNODE f;
+  int   change;
 
   for ( change = FALSE, n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -82,8 +82,8 @@ static int DriveParallelMarks(PNODE g, int Pmark)
 
 void MarkParallelFunctions(void)
 {
-  register PNODE f;
-  register int   change = TRUE;
+  PNODE f;
+  int   change = TRUE;
 
   while ( change ) {
     change = FALSE;
@@ -113,7 +113,7 @@ void MarkParallelFunctions(void)
 
 static PMDATA MDataAlloc(void)
 {
-  register PMDATA m;
+  PMDATA m;
 
   m = (PMDATA) MyAlloc( (int)sizeof(MDATA) );
 
@@ -138,8 +138,8 @@ static PMDATA MDataAlloc(void)
 
 PMDATA LookupCallee(char *name)
 {
-  register int    i;
-  register PMDATA ce;
+  int    i;
+  PMDATA ce;
 
   for ( i = 0; i <= cetop; i++ ) {
     ce = cetable[i];
@@ -164,8 +164,8 @@ static char kind;
 
 void ReadModuleDataBase(void)
 {
-  register PNODE  f;
-  register PMDATA ce;
+  PNODE  f;
+  PMDATA ce;
   int      cnum, pbusy, dblevel;
 
   /* DETERMINE COMPILATION TYPE */ 
@@ -263,9 +263,9 @@ void ReadModuleDataBase(void)
 
 void WriteModuleDataBase(void)
 {
-  register int     i;
-  register PMDATA  ce;
-  register PNODE   f;
+  int     i;
+  PMDATA  ce;
+  PNODE   f;
 
   MarkParallelFunctions();
 

@@ -130,7 +130,7 @@ static char *flop[200];                       /* FLOP FUNCTION LIST       */
 /*              -i<num> -> Print more information                         */
 /*              -p<num> -> Apply dynamic patch <num>                      */
 /*              -m      -> Turn off minslice throttle                     */
-/*              -r      -> DON"T ASSIGN register PREFIXES                 */
+/*              -r      -> DON"T ASSIGN PREFIXES                 */
 /*              -t      -> Produce IF3 variable temporary file            */
 /*              -u      -> DON'T OPTIMIZE GatherAT NODES                  */
 /*              -w      -> Suppress warning messages                      */
@@ -174,10 +174,10 @@ static char *flop[200];                       /* FLOP FUNCTION LIST       */
 
 static void ParseCommandLine(int argc, char **argv)
 {
-    register char *c;
-    register int   fmode = 0;
-    register int   idx;
-    register FILE *fd;
+    char *c;
+    int   fmode = 0;
+    int   idx;
+    FILE *fd;
              char  buf[200];
 
     for ( idx = 1; idx < argc; ++idx ) {
@@ -433,14 +433,14 @@ static void ParseCommandLine(int argc, char **argv)
 
 static void CheckRefCountOps(PNODE g)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE ee;
-  register PNODE sg;
-  register int   eport;
-  register int   sr;
-  register int   pm;
-  register PEDGE i;
+  PNODE n;
+  PEDGE e;
+  PEDGE ee;
+  PNODE sg;
+  int   eport;
+  int   sr;
+  int   pm;
+  PEDGE i;
 
   for ( n = g; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) ) {
@@ -505,11 +505,11 @@ static void CheckRefCountOps(PNODE g)
 
 static void BindCallNames(PNODE g)
 {
-  register PNODE  n;
-  register PNODE  sg;
-  register PNODE  f;
-  register char  *s;
-  register int    i;
+  PNODE  n;
+  PNODE  sg;
+  PNODE  f;
+  char  *s;
+  int    i;
 
   /* MARK FUNCTIONS THAT REQUIRE FLOP DUMP CODE */
   if ( !IsSGraph( g ) && g->G_NAME != NULL && flopcnt > -1 ) {
@@ -589,9 +589,9 @@ static void BindCallNames(PNODE g)
 
 int main(int argc, char **argv)
 {
-  register FILE  *fd;
-  register PNODE  f;
-  register char  *s;
+  FILE  *fd;
+  PNODE  f;
+  char  *s;
 
   /* fix by dj raymond 25 nov 2000 */
   input = stdin;

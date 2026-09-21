@@ -42,7 +42,7 @@ void StartWorkersWithEntry(void (*entry)(void))
 
 POINTER SharedMalloc(int NumBytes)
 {
-  register POINTER ReturnPtr;
+  POINTER ReturnPtr;
 
   NumBytes = ALIGN( int, NumBytes );
 

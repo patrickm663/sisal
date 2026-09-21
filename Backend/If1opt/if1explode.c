@@ -39,7 +39,7 @@ static PINFO aihash[MAX_HASH];
 
 static int IsExplodeCandidate(PNODE n, char **ReasonP)
 {
-  register PEDGE i;
+  PEDGE i;
 
   switch ( n->type ) {
     case IFAElementN:
@@ -90,20 +90,20 @@ static int IsExplodeCandidate(PNODE n, char **ReasonP)
 
 static PNODE BuildFragement(PNODE f1, PNODE n)
 {
-  register PNODE gen;
-  register PNODE body;
-  register PNODE ret;
-  register PNODE f2;
-  register PNODE nn;
-  register PNODE nnn;
-  register PEDGE i;
-  register PEDGE e;
-  register PEDGE ee;
-  register PEDGE se;
-  register PNODE aelm;
-  register PNODE gat;
-  register int   port;
-  register PINFO TypeInfo;
+  PNODE gen;
+  PNODE body;
+  PNODE ret;
+  PNODE f2;
+  PNODE nn;
+  PNODE nnn;
+  PEDGE i;
+  PEDGE e;
+  PEDGE ee;
+  PEDGE se;
+  PNODE aelm;
+  PNODE gat;
+  int   port;
+  PINFO TypeInfo;
 
   f2 = NodeAlloc( ++maxint, IFForall );
 
@@ -267,14 +267,14 @@ static PNODE BuildFragement(PNODE f1, PNODE n)
 
 static int ExplodeForalls(PNODE g, int explodeI)
 {
-  register PNODE sg;
-  register PNODE n;
-  register PNODE nn;
-  register PNODE sn;
-  register PNODE snn;
-  register PNODE f;
-  register int   in1;
-  register int   nin;
+  PNODE sg;
+  PNODE n;
+  PNODE nn;
+  PNODE sn;
+  PNODE snn;
+  PNODE f;
+  int   in1;
+  int   nin;
   char *Reason;
 
 
@@ -360,8 +360,8 @@ void WriteExplodeInfo(void)
 
 void If1Explode(int explodeI)
 {
-  register PNODE f;
-  register int   i;
+  PNODE f;
+  int   i;
 
   if ( noassoc ) return;
 

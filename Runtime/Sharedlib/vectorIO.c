@@ -18,8 +18,8 @@ int     sisal_file_io = 0;
 #define GenericReadArray(scalartype,reader,term)\
 { \
   POINTER       val0; \
-  register scalartype val6; \
-  register int lob; \
+  scalartype val6; \
+  int lob; \
  \
   FibreParse( INT_ ); \
   lob = FibreInt; \
@@ -68,10 +68,10 @@ POINTER ReadBoolVector(void)
 }
 void WriteBoolVector(POINTER val)
 {
-  register POINTER Base2;
-  register int     HiBound;
-  register int     Lo2;
-  register ARRAYP arr = (ARRAYP) val;
+  POINTER Base2;
+  int     HiBound;
+  int     Lo2;
+  ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
   PrintIndent;
@@ -139,10 +139,10 @@ POINTER ReadCharVector(void)
 
 void WriteCharVector(POINTER val)
 {
-  register POINTER Base2;
-  register int     HiBound;
-  register int     Lo2;
-  register ARRAYP  arr = (ARRAYP) val;
+  POINTER Base2;
+  int     HiBound;
+  int     Lo2;
+  ARRAYP  arr = (ARRAYP) val;
   int              c;
 
   Lo2 = arr->LoBound;
@@ -228,10 +228,10 @@ POINTER ReadDoubleVector(void)
 
 void WriteDoubleVector(POINTER val)
 {
-  register POINTER Base2;
-  register int     HiBound;
-  register int     Lo2;
-  register ARRAYP arr = (ARRAYP) val;
+  POINTER Base2;
+  int     HiBound;
+  int     Lo2;
+  ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
   PrintIndent;
@@ -284,10 +284,10 @@ POINTER ReadIntegerVector(void)
 
 void WriteIntegerVector(POINTER val)
 {
-    register POINTER Base2;
-    register int     HiBound;
-    register int     Lo2;
-    register ARRAYP arr = (ARRAYP) val;
+    POINTER Base2;
+    int     HiBound;
+    int     Lo2;
+    ARRAYP arr = (ARRAYP) val;
     int saveIndent;
 
     PrintIndent;
@@ -339,10 +339,10 @@ POINTER ReadNullVector(void)
 
 void WriteNullVector(POINTER val)
 {
-  register POINTER Base2;
-  register int     HiBound;
-  register int     Lo2;
-  register ARRAYP arr = (ARRAYP) val;
+  POINTER Base2;
+  int     HiBound;
+  int     Lo2;
+  ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
   PrintIndent;
@@ -395,10 +395,10 @@ POINTER ReadRealVector(void)
 
 void WriteRealVector(POINTER val)
 {
-  register POINTER Base2;
-  register int     HiBound;
-  register int     Lo2;
-  register ARRAYP arr = (ARRAYP) val;
+  POINTER Base2;
+  int     HiBound;
+  int     Lo2;
+  ARRAYP arr = (ARRAYP) val;
   int saveIndent;
 
   PrintIndent;

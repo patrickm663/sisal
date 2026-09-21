@@ -18,7 +18,7 @@
 
 PEDGE FindLastImport(PNODE n)
 {
-  register PEDGE i;
+  PEDGE i;
 
   for ( i = n->imp; i != NULL; i = i->isucc )
     if ( i->isucc == NULL )

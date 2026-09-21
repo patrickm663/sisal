@@ -20,7 +20,7 @@
 
 int AssignNewLoopTports(int p, PNODE l)
 {
-  register PEDGE i;
+  PEDGE i;
  if (l->L_BODY != NULL)
     {
       for ( i = l->L_BODY->imp; i != NULL; i = i->isucc )

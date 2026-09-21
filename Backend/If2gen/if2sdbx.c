@@ -35,9 +35,9 @@ static char *cfn = NULL;
 
 void PrintSdbxFunctionList(void)
 {
-  register PNODE  f;
-  register int    c;
-  register char  *nm;
+  PNODE  f;
+  int    c;
+  char  *nm;
 
   for ( c = 0, f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     if ( IsIGraph( f ) )
@@ -71,8 +71,8 @@ void PrintSdbxFunctionList(void)
 
 static void AssignSdbxOffset(PEDGE e)
 {
-  register int   i;
-  register char *nm;
+  int   i;
+  char *nm;
 
   nm = LowerCase( e->name, FALSE, FALSE );
 
@@ -100,13 +100,13 @@ static void AssignSdbxOffset(PEDGE e)
 
 static void AssignScopePositions(PNODE g)
 {
-  register PNODE  n;
-  register PNODE  sg;
-  register PEDGE  e;
-  register PEDGE  ee;
-  register PEDGE  ii;
-  register int    c;
-  register int    l;
+  PNODE  n;
+  PNODE  sg;
+  PEDGE  e;
+  PEDGE  ee;
+  PEDGE  ii;
+  int    c;
+  int    l;
            char   buf[100];
 
   l = -9999;
@@ -207,7 +207,7 @@ static void AssignScopePositions(PNODE g)
 
 void BuildAndPrintSdbxScope(PNODE f)
 {
-  register int i;
+  int i;
 
   if ( !sdbx )
     return;
@@ -245,12 +245,12 @@ void BuildAndPrintSdbxScope(PNODE f)
 
 void UpdateSdbxScopeNames(PNODE n)
 {
-  register PEDGE  e;
-  register PEDGE  ii;
-  register PEDGE  i;
-  register char  *ks;
-  register char  *p;
-  register int    arr;
+  PEDGE  e;
+  PEDGE  ii;
+  PEDGE  i;
+  char  *ks;
+  char  *p;
+  int    arr;
 
   if ( !sdbx ) /* GUT CHECK!!! */
     return;
@@ -410,7 +410,7 @@ void SaveSdbxState(PNODE n)
     FPRINTF( output, "struct SdbxInfo SdbxStateBackup;\n" );
 
   if ( IsGraph( n ) && n->mark == 's' && !IsSGraph(n) ) {
-    FPRINTF( output, "register int ClearSdbx;\n" );
+    FPRINTF( output, "int ClearSdbx;\n" );
     FPRINTF( output, "SdbxCurrentFunctionList = MyFunctionList;\n" );
     FPRINTF( output, "if ( !UsingSdbx ) {\n" );
     FPRINTF( output, "  ClearSdbx = TRUE;\n" );

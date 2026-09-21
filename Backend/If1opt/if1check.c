@@ -46,7 +46,7 @@ void OptNormalizeNode(PNODE n)
 
 static int CheckIsRetNormalized(PNODE l)
 {
-    register PNODE n;
+    PNODE n;
 
     if ( IsForall( l ) )
         n = l->F_RET->G_NODES;
@@ -98,7 +98,7 @@ static int CheckIsRetNormalized(PNODE l)
 
 static int IsGenNormalized(PNODE f)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = f->F_GEN->G_NODES; n != NULL; n = n->nsucc )
         if ( !IsGenerate( n ) )
@@ -117,7 +117,7 @@ static int IsGenNormalized(PNODE f)
 
 static int IsTestNormalized(PNODE l)
 {
-    register PNODE n;
+    PNODE n;
 
     for ( n = l->L_TEST->G_NODES; n != NULL; n = n->nsucc )
         switch ( n->type ) {
@@ -148,7 +148,7 @@ static int IsTestNormalized(PNODE l)
 /*          'e' FOR REALS, AND ' ' FOR UNKNOWNS.                          */
 /**************************************************************************/
 
-static char FloatType(register char *c)
+static char FloatType(char *c)
 {
     while ( *c != '\0' ) {
         if ( (*c == 'd') || (*c == 'D') )
@@ -174,7 +174,7 @@ static char FloatType(register char *c)
 
 static void CheckConstantImports(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {
         if ( !IsConst( i ) || i->CoNsT == NULL )
@@ -232,8 +232,8 @@ static void CheckConstantImports(PNODE n)
 
 static int AreKportsCombined(PNODE c)
 {
-    register PEDGE i1;
-    register PEDGE i2;
+    PEDGE i1;
+    PEDGE i2;
 
     for ( i1 = c->imp; i1 != NULL; i1 = i1->isucc ) 
         for ( i2 = i1->isucc; i2 != NULL; i2 = i2->isucc ) 
@@ -274,8 +274,8 @@ static int AreSameType(PINFO i1, PINFO i2)
 
 static void CheckIfDFOrdered(PNODE g)
 {
-    register PNODE n;
-    register PEDGE i;
+    PNODE n;
+    PEDGE i;
 
     for ( n = g->G_NODES; n != NULL; n = n->nsucc )
         if ( n->nsucc != NULL )
@@ -302,7 +302,7 @@ static void CheckIfDFOrdered(PNODE g)
 
 static int CheckPortNumbers(int p, PNODE g, PNODE gg)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = g->imp; i != NULL; i = i->isucc ) {
         if ( gg != NULL )
@@ -326,8 +326,8 @@ static int CheckPortNumbers(int p, PNODE g, PNODE gg)
 
 static int IsUsed(PNODE g, PEDGE i)
 {
-    register PEDGE e;
-    register int   u = FALSE;
+    PEDGE e;
+    int   u = FALSE;
 
     for ( e = g->exp; e != NULL; e = e->esucc )
         if ( e->eport == i->iport ) {
@@ -351,9 +351,9 @@ static int IsUsed(PNODE g, PEDGE i)
 
 static void CheckForUnusedKports(PNODE c)
 {
-    register PEDGE i;
-    register int   u;
-    register PNODE g;
+    PEDGE i;
+    int   u;
+    PNODE g;
 
     for ( i = (IsTagCase(c))? c->imp->isucc : c->imp; i != NULL; i = i->isucc) {
         for ( u = FALSE, g = c->C_SUBS; g != NULL; g = g->gsucc )
@@ -374,7 +374,7 @@ static void CheckForUnusedKports(PNODE c)
 
 static void CheckForUnusedRports(PNODE g)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = g->imp; i != NULL; i = i->isucc )
         if ( !IsUsed( g->G_DAD, i ) )
@@ -390,7 +390,7 @@ static void CheckForUnusedRports(PNODE g)
 
 static void CheckForUnusedTports(PNODE f)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = f->F_BODY->imp; i != NULL; i = i->isucc )
         if ( !IsUsed( f->F_RET, i ) )
@@ -407,7 +407,7 @@ static void CheckForUnusedTports(PNODE f)
 
 static void CheckForUnusedLTports(PNODE l)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = l->L_BODY->imp; i != NULL; i = i->isucc ) {
         if ( IsUsed( l->L_TEST, i ) || 
@@ -444,8 +444,8 @@ static void CheckForUnusedLTports(PNODE l)
 
 static void CheckForUnnecEdges(PNODE l)
 {
-    register PEDGE i;
-    register PEDGE ii;
+    PEDGE i;
+    PEDGE ii;
 
     switch ( l->type ) {
         case IFForall:
@@ -541,10 +541,10 @@ static void CheckForUnnecEdges(PNODE l)
 
 static void CheckCompoundNode(PNODE c)
 {
-    register PNODE g;
-    register int   p;
-    register PEDGE e;
-    register PNODE n;
+    PNODE g;
+    int   p;
+    PEDGE e;
+    PNODE n;
 
     CheckForUnnecEdges( c );
 
@@ -688,11 +688,11 @@ static void CheckCompoundNode(PNODE c)
 /*          IS CHECKED; AND STREAM LIMIT LOW NODES ARE IDENTIFIED.        */
 /**************************************************************************/
 
-static void CheckNode(register PNODE g)
+static void CheckNode(PNODE g)
 {
-    register PEDGE i;
-    register PEDGE e;
-    register PNODE n;
+    PEDGE i;
+    PEDGE e;
+    PNODE n;
 
     if ( IsIGraph( g ) )
         return;
@@ -750,7 +750,7 @@ static void CheckNode(register PNODE g)
 
 void If1Check(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
         CheckNode( cfunct = f );

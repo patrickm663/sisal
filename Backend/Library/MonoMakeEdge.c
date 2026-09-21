@@ -18,7 +18,7 @@
 
 void MonoMakeEdge(int snode, int eport, int dnode, int iport, int label)
 {
-  register PNODE n;
+  PNODE n;
 
   n = NodeAlloc( 0, IFEdge );
 

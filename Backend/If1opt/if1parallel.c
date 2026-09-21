@@ -39,10 +39,10 @@ static char printinfo[2000];
 
 static void MoveTheNegNodes(PNODE src, PNODE dst)
 {
-  register PNODE n;
-  register PNODE pn;
-  register PNODE sn;
-  register PEDGE i;
+  PNODE n;
+  PNODE pn;
+  PNODE sn;
+  PEDGE i;
 
   pn = dst;
 
@@ -80,17 +80,17 @@ static void MoveTheNegNodes(PNODE src, PNODE dst)
 
 static void WireNegExports(PNODE f2, PNODE src, PEDGE crod)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE ee;
-  register PEDGE se;
-  register PNODE aelm;
-  register PNODE gat;
-  register int   port;
-  register int   eport;
-  register PINFO minfo;
-  register PINFO ainfo;
-  register PINFO TheInfo;
+  PNODE n;
+  PEDGE e;
+  PEDGE ee;
+  PEDGE se;
+  PNODE aelm;
+  PNODE gat;
+  int   port;
+  int   eport;
+  PINFO minfo;
+  PINFO ainfo;
+  PINFO TheInfo;
 
   f2->F_BODY->label = -1;
 
@@ -194,8 +194,8 @@ StartOver:
 
 int OptIsVecCandidate(PNODE f)
 {
-  register PNODE n;
-  register PEDGE i;
+  PNODE n;
+  PEDGE i;
 
   if ( alliantfx ) {
     /* f MUST HAVE UNFILTERED AGathers ONLY */
@@ -321,9 +321,9 @@ void WriteConcurInfo(void)
 
 static int IsFractureCandidate(PNODE b, int cport)
 {
-  register PNODE n;
-  register PEDGE i;
-  register int   c;
+  PNODE n;
+  PEDGE i;
+  int   c;
 
   for ( c = 0, n = b->G_NODES; n != NULL; n = n->nsucc ) {
     ++Tmcnt;
@@ -416,21 +416,21 @@ static void DoTheConcurrentization(PNODE f1,
                                    PEDGE low,
                                    PEDGE high)
 {
-  register PNODE n;
-  register PEDGE e;
-  register PEDGE i;
-  register int   neg;
-  register int   pos;
-  register PNODE nn;
-  register PEDGE se;
-  register PNODE gen;
-  register PNODE body;
-  register PNODE ret;
-  register PNODE f2;
-  register PEDGE ee;
-  register PNODE rg;
-  register int   port;
-  register PALIST l;
+  PNODE n;
+  PEDGE e;
+  PEDGE i;
+  int   neg;
+  int   pos;
+  PNODE nn;
+  PEDGE se;
+  PNODE gen;
+  PNODE body;
+  PNODE ret;
+  PNODE f2;
+  PEDGE ee;
+  PNODE rg;
+  int   port;
+  PALIST l;
 
   /* UNTANGLE AElement[NPM] FANOUT */
 
@@ -579,8 +579,8 @@ static void DoTheConcurrentization(PNODE f1,
 
 static void VectorizeForalls(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( !IsCompound( n ) )
@@ -632,7 +632,7 @@ static void VectorizeForalls(PNODE g)
 
 void If1Vec(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     VectorizeForalls( f );
@@ -648,11 +648,11 @@ void If1Vec(void)
 
 static void ParallelizeLoops(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PEDGE crod;
-  register PNODE nn;
-  register PEDGE ee;
+  PNODE n;
+  PNODE sg;
+  PEDGE crod;
+  PNODE nn;
+  PEDGE ee;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( !IsCompound( n ) )
@@ -744,7 +744,7 @@ static void ParallelizeLoops(PNODE g)
 
 void If1Par(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     ParallelizeLoops( f );

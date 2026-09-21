@@ -44,7 +44,7 @@ void WriteInterfaceInfo(void)
 
 static PINFO GetComponentType(PINFO i)
 {
-  register PINFO ii;
+  PINFO ii;
 
   for ( ii = i->A_ELEM; ii != NULL; ii = ii->A_ELEM )
     switch ( ii->type ) {
@@ -75,8 +75,8 @@ static PINFO GetComponentType(PINFO i)
 
 static int GetDim(PINFO i)
 {
-  register PINFO ii;
-  register int   c;
+  PINFO ii;
+  int   c;
 
   for ( c = 0, ii = i->A_ELEM; ii != NULL; ii = ii->A_ELEM ) {
     c++;
@@ -136,7 +136,7 @@ int GetLanguage(PNODE f)
 
 char *BindInterfaceName(char *nm, int lang, int mark)
 {
-  register char *p;
+  char *p;
            char buf[100];
 
   if ( lang == FOR_C )
@@ -165,11 +165,11 @@ char *BindInterfaceName(char *nm, int lang, int mark)
 
 static PEDGE FindDescriptor(PNODE n, PNODE f, int me)
 {
-  register PEDGE i;
-  register PINFO out;
-  register int   ac;
-  register int   c;
-  register int   wanted;
+  PEDGE i;
+  PINFO out;
+  int   ac;
+  int   c;
+  int   wanted;
 
   for ( i = n->imp; i != NULL; i = i->isucc )
     if ( i->isucc == NULL )
@@ -212,20 +212,20 @@ static PEDGE FindDescriptor(PNODE n, PNODE f, int me)
 
 void PrintInterfaceCall(int indent, PNODE n, PNODE f)
 {
-  register PEDGE i;
-  register int   c;
-  register int   lang;
-  register PEDGE dv;
-  register PINFO CompType;
-  register PINFO tct;
-  register int   td;
-  register int   d;
-  register PINFO rt;
-  register int   r;
-  register int   ac;
-  register int   cmp;
-  register PEDGE e;
-  register int   arr;
+  PEDGE i;
+  int   c;
+  int   lang;
+  PEDGE dv;
+  PINFO CompType;
+  PINFO tct;
+  int   td;
+  int   d;
+  PINFO rt;
+  int   r;
+  int   ac;
+  int   cmp;
+  PEDGE e;
+  int   arr;
 
   FPRINTF( output, "/* INTERFACE MODULE CALL */\n" );
 
@@ -480,19 +480,19 @@ static void PrintWriteArrayOp(int indent,
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s *dbase%d;\n", CompType->tname, dd );
+  FPRINTF( output, "%-7s *dbase%d;\n", CompType->tname, dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s  i%d;\n", "int", dd );
+  FPRINTF( output, "%-7s  i%d;\n", "int", dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s  dsize%d;\n", "int", dd );
+  FPRINTF( output, "%-7s  dsize%d;\n", "int", dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s  lsize%d;\n", "int", dd );
+  FPRINTF( output, "%-7s  lsize%d;\n", "int", dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s *p%d;\n", i->A_ELEM->tname, dd );
+  FPRINTF( output, "%-7s *p%d;\n", i->A_ELEM->tname, dd );
 
 
   PrintIndentation( indent+2 );
@@ -568,10 +568,10 @@ static void PrintWriteArrayOp(int indent,
 /* PURPOSE: PRINT INTERFACE ARRAY WRITE ROUTINES FOR FUNCTION f TO output.*/
 /**************************************************************************/
 
-static void PrintIntWriteRoutine(register PINFO i)
+static void PrintIntWriteRoutine(PINFO i)
 {
-  register PINFO CompType;
-  register int   d;
+  PINFO CompType;
+  int   d;
 
   CompType = GetComponentType( i );
   d  = GetDim( i );
@@ -621,20 +621,20 @@ static void PrintReadArray(int indent,
   FPRINTF( output, "{\n" );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s *sbase%d;\n", CompType->tname, dd );
+  FPRINTF( output, "%-7s *sbase%d;\n", CompType->tname, dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s  i%d;\n", "int", dd );
+  FPRINTF( output, "%-7s  i%d;\n", "int", dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s *p%d;\n", i->A_ELEM->tname, dd );
+  FPRINTF( output, "%-7s *p%d;\n", i->A_ELEM->tname, dd );
 
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s  dsize%d;\n", "int", dd );
+  FPRINTF( output, "%-7s  dsize%d;\n", "int", dd );
 
   PrintIndentation( indent+2 );
-  FPRINTF( output, "register %-7s  lsize%d;\n", "int", dd );
+  FPRINTF( output, "%-7s  lsize%d;\n", "int", dd );
 
 
   PrintIndentation( indent+2 );
@@ -719,10 +719,10 @@ static void PrintReadArray(int indent,
 /* PURPOSE: PRINT INTERFACE ARRAY READ ROUTINE TO output.                 */
 /**************************************************************************/
 
-static void PrintReadRoutine(register PINFO i)
+static void PrintReadRoutine(PINFO i)
 {
-  register PINFO CompType;
-  register int   d;
+  PINFO CompType;
+  int   d;
 
   CompType = GetComponentType( i );
   d  = GetDim( i );
@@ -755,8 +755,8 @@ static void PrintReadRoutine(register PINFO i)
 
 int GenIsReadOnly(PNODE n, int eport)
 {
-  register PEDGE e;
-  register PNODE f;
+  PEDGE e;
+  PNODE f;
 
   for ( e = n->exp; e != NULL; e = e->esucc ) {
     if ( e->eport != eport )
@@ -869,9 +869,9 @@ int GenIsReadOnly(PNODE n, int eport)
 
 static void PrintIntReadOp(char *nm, PNODE f, int lang)
 {
-  register PINFO  i;
-  register int    c;
-  register int    ronly;
+  PINFO  i;
+  int    c;
+  int    ronly;
            char   buf[100];
 
   for ( c = 1, i = f->info->F_IN; i != NULL; i = i->L_NEXT, c++ ) {
@@ -919,8 +919,8 @@ static void PrintIntReadOp(char *nm, PNODE f, int lang)
 
 static void PrintIntWriteOp(PNODE f, int lang)
 {
-  register PINFO  i;
-  register int    c;
+  PINFO  i;
+  int    c;
            char   buf[100];
 
   for ( c = 1, i = f->info->F_OUT; i != NULL; i = i->L_NEXT, c++ ) {
@@ -953,9 +953,9 @@ static void PrintIntWriteOp(PNODE f, int lang)
 
 static void PrintInterfaceHeader(char *nm, PNODE f, int lang)
 {
-  register PINFO  i;
-  register int    c;
-  register PINFO  ii;
+  PINFO  i;
+  int    c;
+  PINFO  ii;
 
   FPRINTF( output, "\nstatic %s *_a_%s;\n", f->info->sname, nm );
   FPRINTF( output, "static int _f_%s = TRUE;\n", nm );
@@ -1064,7 +1064,7 @@ static void PrintInterfaceHeader(char *nm, PNODE f, int lang)
 
 void PrintInterfaceUtilities(void)
 {
-  register PINFO i;
+  PINFO i;
 
   for ( i = ihead; i != NULL; i = i->next ) {
     if ( i->touch4 ) {
@@ -1088,10 +1088,10 @@ void PrintInterfaceUtilities(void)
 
 void PrintInterface(PNODE f)
 {
-  register PINFO i;
-  register int   c;
-  register int   lang;
-  register char *nm;
+  PINFO i;
+  int   c;
+  int   lang;
+  char *nm;
 
   lang = (f->mark == 'c')? FOR_C : FOR_FORTRAN;
 
@@ -1118,7 +1118,7 @@ void PrintInterface(PNODE f)
   PrintInterfaceHeader( nm, f, lang );
 
   FPRINTF( output, "{\n" );
-  FPRINTF( output, "  register %s *args;\n\n", f->info->sname );
+  FPRINTF( output, "  %s *args;\n\n", f->info->sname );
 
   FPRINTF( output, "#ifdef CInfo\n" );
   FPRINTF( output, "  SaveCopyInfo;\n" );

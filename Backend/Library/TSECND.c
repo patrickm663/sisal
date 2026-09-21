@@ -20,7 +20,7 @@
 
 double TSECND(void)
 {
-  register double CurrentCpuTime;
+  double CurrentCpuTime;
 
 #ifdef HAVE_RUSAGE
   struct rusage StartTimerInfo;

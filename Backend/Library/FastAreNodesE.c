@@ -20,8 +20,8 @@
 
 int FastAreNodesEqual(PNODE n1, PNODE n2)
 {
-  register PEDGE i1;
-  register PEDGE i2;
+  PEDGE i1;
+  PEDGE i2;
 
   if ( !IsSimple( n1 ) )
     return( FALSE );

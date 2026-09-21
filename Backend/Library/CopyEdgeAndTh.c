@@ -19,8 +19,8 @@
 
 void CopyEdgeAndThreadToUse(PEDGE e, PNODE dst, int iport)
 {
-  register PEDGE ee;
-  register PNODE sg;
+  PEDGE ee;
+  PNODE sg;
 
   ee = CopyEdge( e, e->src, dst );
 

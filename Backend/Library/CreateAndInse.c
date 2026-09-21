@@ -21,7 +21,7 @@
 
 void CreateAndInsertAde(PNODE src, PNODE dst, int p)
 {
-  register PADE a;
+  PADE a;
 
   if ( p != BOUND ) {
     IsPathInit( src );

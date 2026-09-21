@@ -28,9 +28,9 @@
 
 static void AdjustInfoReferences(PNODE g)
 {
-  register PNODE sg;
-  register PNODE n;
-  register PEDGE i;
+  PNODE sg;
+  PNODE n;
+  PEDGE i;
 
   for ( n = g; n != NULL; n = n->nsucc ) {
     if ( n->info != NULL )
@@ -63,14 +63,14 @@ static void AdjustInfoReferences(PNODE g)
 
 void GenSmashTypes(void)
 {
-    register int   chgd = TRUE;
-    register int   c;
-    register PINFO p;
-    register PINFO m;
-    register PINFO r;
-    register PINFO ppred;
-    register PINFO ps;
-    register PNODE f;
+    int   chgd = TRUE;
+    int   c;
+    PINFO p;
+    PINFO m;
+    PINFO r;
+    PINFO ppred;
+    PINFO ps;
+    PNODE f;
 
     InitEquivClasses();
 

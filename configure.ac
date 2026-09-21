@@ -1,5 +1,9 @@
 AC_INIT([sisal], [14.1.0], [])
-AC_PREREQ([2.62])
+dnl 2.70 is required, not just preferred: that's the release where AC_PROG_CC
+dnl started requesting C11 (falling back gracefully on older compilers) on
+dnl its own, which is what this tree now relies on rather than probing for
+dnl a standard itself.
+AC_PREREQ([2.70])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_AUX_DIR(config)
 AC_CANONICAL_HOST
@@ -315,22 +319,12 @@ int main() {
 ])
 
 dnl -----------------------------------------------
-dnl We have some keywords to check for
+dnl register and volatile were K&R-compiler probes: both are guaranteed by
+dnl any C89-or-later compiler, which this tree now requires, so neither the
+dnl checks nor the keywords themselves (register has been stripped from the
+dnl source and from the C this compiler generates) are needed any more.
+dnl "shared" is a genuine non-standard extension, so it's still probed for.
 dnl -----------------------------------------------
-AC_MSG_CHECKING(register keyword)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[register int x;]])],[
-  AC_MSG_RESULT(yes)
-  AC_DEFINE([HAVE_REGISTER_KEYWORD],[],[Define if the register keyword works])
-],[
-  AC_MSG_RESULT(no)
-])
-AC_MSG_CHECKING(volatile keyword)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[volatile int x;]])],[
-  AC_MSG_RESULT(yes)
-  AC_DEFINE([HAVE_VOLATILE_KEYWORD],[],[Define if the volatile keyword works])
-],[
-  AC_MSG_RESULT(no)
-])
 AC_MSG_CHECKING(shared keyword)
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[static shared int x]], [[int y=x;]])],[
   AC_MSG_RESULT(yes)

@@ -20,9 +20,9 @@
 
 int AssignNewKports(PNODE c)
 {
-  register PNODE g;
-  register PEDGE i;
-  register int   p = 1;
+  PNODE g;
+  PEDGE i;
+  int   p = 1;
 
   for ( i = c->imp; i != NULL; i = i->isucc, p++ )
     if ( i->iport != p ) {

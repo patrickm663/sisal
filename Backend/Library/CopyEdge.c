@@ -19,7 +19,7 @@
 
 PEDGE CopyEdge(PEDGE e, PNODE src, PNODE dst)
 {
-  register PEDGE ee;
+  PEDGE ee;
 
   ee = EdgeAlloc( src, e->eport, dst, e->iport );  
 

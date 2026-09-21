@@ -11,9 +11,9 @@
 #include "world.h"
 
 int
-IntegerPower(int a, register int b)
+IntegerPower(int a, int b)
 {
-  register int  r,p;
+  int  r,p;
 
   if ( b < 0 ) {
     if ( a == 1 ) return 1;

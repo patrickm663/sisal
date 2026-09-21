@@ -20,7 +20,7 @@
 
 PNODE UnlinkGraph(PNODE g)
 {
-  register PNODE pred = g->gpred;
+  PNODE pred = g->gpred;
 
   if ( pred != NULL )
     pred->gsucc = g->gsucc;

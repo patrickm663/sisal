@@ -20,7 +20,7 @@ static struct ActRecCache *ARList;
 
 void InitReadyList(void)
 {
-  register int Index;
+  int Index;
 
   ARList = (struct ActRecCache *) 
            SharedMalloc( SIZEOF(struct ActRecCache) * NumWorkers );
@@ -34,7 +34,7 @@ void InitReadyList(void)
 
 #define DoTheEnQ( ThisAR, LastAR, Where ) \
 { \
-  register struct ActRecCache *arc; \
+  struct ActRecCache *arc; \
   arc = Where; \
   LastAR->NextAR = (struct ActRec *) NULL; \
   MY_LOCK( &(arc->Mutex) ); \
@@ -56,7 +56,7 @@ void InitReadyList(void)
 
 #define DoTheEnQFast( ThisAR, LastAR, Where ) \
 { \
-  register struct ActRecCache *arc; \
+  struct ActRecCache *arc; \
   arc = Where; \
   LastAR->NextAR = (struct ActRec *) NULL; \
   arc->Head = ThisAR; \
@@ -67,11 +67,11 @@ void InitReadyList(void)
 }
 
 
-void RListEnQ(register struct ActRec *FirstAR, register struct ActRec *LastAR)
+void RListEnQ(struct ActRec *FirstAR, struct ActRec *LastAR)
 {
-  register unsigned  int  NextPid;
-  register struct ActRec *CurrAR;
-  register struct ActRec *EndAR;
+  unsigned  int  NextPid;
+  struct ActRec *CurrAR;
+  struct ActRec *EndAR;
 
   FLUSH(FirstAR,LastAR+sizeof(*LastAR));
 
@@ -113,9 +113,9 @@ void RListEnQ(register struct ActRec *FirstAR, register struct ActRec *LastAR)
 
 struct ActRec *RListDeQ(void)
 {
-  register struct ActRec      *ThisAR;
-  register struct ActRecCache *arc;
-  register int                 pID;
+  struct ActRec      *ThisAR;
+  struct ActRecCache *arc;
+  int                 pID;
 
   if ( BindParallelWork ) {
     GETPROCID(pID);

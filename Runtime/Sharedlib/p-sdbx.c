@@ -82,8 +82,8 @@ static char *CopyString(char *String)
 
 static char *LowerCase(char *String)
 {
-  register char *Base;
-  register char *Ptr;
+  char *Base;
+  char *Ptr;
 
   for ( Ptr = Base = String; *Ptr != '\0'; Ptr++ )
     if ( (*Ptr >= 'A') && (*Ptr <= 'Z') )
@@ -131,8 +131,8 @@ static int OpenFile(char *FileName)
 
 static int ReadLine(void)
 {
-  register int  Ch;
-  register int  Idx;
+  int  Ch;
+  int  Idx;
 
   for ( Idx = 0; Idx < MAX_LINE-2 ; /* NOTHING */ ) {
     Ch = getc( CurrentOpenFile );
@@ -163,7 +163,7 @@ static int ReadLine(void)
 
 static void GetLine(int LineNumber)
 {
-  register int Idx;
+  int Idx;
 
   if ( LineNumber == CurrentLineNumber )
     return;
@@ -233,8 +233,8 @@ static void PrintSdbxHelp(void)
 
 static void GetWord(char *Word)
 {
-  register int  Ch;
-  register int  Count;
+  int  Ch;
+  int  Count;
 
   for (;;) {
     Ch = getc(stdin);
@@ -282,7 +282,7 @@ static void GetWord(char *Word)
 
 static void GetCommand(void)
 {
-  register int Ch;
+  int Ch;
 
   Command[0] = '\0';
   Arg1[0] = '\0';
@@ -440,8 +440,8 @@ DoItAgain:
 
 static void DisplayFunctions(void)
 {
-  register char **Ptr;
-  register int    Count;
+  char **Ptr;
+  int    Count;
 
   Ptr = SdbxCurrentFunctionList;
 
@@ -461,8 +461,8 @@ static void DisplayFunctions(void)
 
 static void DisplayText(void)
 {
-  register int Lo;
-  register int Hi;
+  int Lo;
+  int Hi;
 
   if ( OpenFile( SdbxState.File ) == ERROR )
     return;
@@ -486,11 +486,11 @@ static void DisplayText(void)
 
 static void ProcessCommands(void)
 {
-  register int      Count;
-  register int      Idx;
-  register struct   SdbxValue *Scope;
-  register FILE    *BackupFd;
-  register FILE    *TmpFd;
+  int      Count;
+  int      Idx;
+  struct   SdbxValue *Scope;
+  FILE    *BackupFd;
+  FILE    *TmpFd;
 
   for ( ;; ) {
     GetCommand();
@@ -708,7 +708,7 @@ static void ProcessCommands(void)
 
 void SdbxHandler(int AtLine)
 {
-  register char *Name;
+  char *Name;
 
   switch ( SdbxAction.Action ) {
     case A_NONE:
@@ -801,11 +801,11 @@ void SdbxHandler(int AtLine)
 
 void SdbxMonitor(int SdbxCode)
 {
-  register struct SdbxValue **ScopeStack;
-  register struct SdbxValue *Scope;
-  register int    ScopeStackTop;
-  register int    ScopeSize;
-  register int    Idx;
+  struct SdbxValue **ScopeStack;
+  struct SdbxValue *Scope;
+  int    ScopeStackTop;
+  int    ScopeSize;
+  int    Idx;
 
   SdbxMonitorCode = SdbxCode;
 

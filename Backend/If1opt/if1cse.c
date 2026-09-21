@@ -43,19 +43,19 @@ static PNODE ntails[IF1SimpleNodes];    /* SIMPLE-NODE LIST TAIL POINTERS */
 
 static void StripReturnNodes(PNODE g)
 {
-  register PNODE f1;
-  register PNODE f2;
-  register PEDGE e;
-  register PEDGE ee;
-  register PEDGE eee;
-  register PEDGE se;
-  register PNODE aelm;
-  register PNODE f1s;
-  register PEDGE i;
-  register PEDGE see;
-  register PNODE r1;
-  register PNODE r2;
-  register PNODE sg;
+  PNODE f1;
+  PNODE f2;
+  PEDGE e;
+  PEDGE ee;
+  PEDGE eee;
+  PEDGE se;
+  PNODE aelm;
+  PNODE f1s;
+  PEDGE i;
+  PEDGE see;
+  PNODE r1;
+  PNODE r2;
+  PNODE sg;
 
   if ( DeBuG ) return;
 
@@ -255,12 +255,12 @@ MoveOn:;
 
 static void MergeSelectExports(PNODE s)
 {
-  register PEDGE ii1;
-  register PEDGE ii2;
-  register PEDGE i1;
-  register PEDGE i2;
-  register PEDGE si1;
-  register PEDGE si2;
+  PEDGE ii1;
+  PEDGE ii2;
+  PEDGE i1;
+  PEDGE i2;
+  PEDGE si1;
+  PEDGE si2;
 
   i1 = s->S_ALT->imp;
   i2 = s->S_CONS->imp; 
@@ -307,9 +307,9 @@ static void MergeSelectExports(PNODE s)
 
 static int IsDisjoint(PEDGE e2, PNODE n, int v0)
 {
-  register int   v1;
-  register int   v2;
-  register PNODE nn;
+  int   v1;
+  int   v2;
+  PNODE nn;
 
   if ( !(IsPlus( n ) || IsMinus( n )) )
     return( FALSE );
@@ -372,15 +372,15 @@ static int IsDisjoint(PEDGE e2, PNODE n, int v0)
 
 static void OpenArrayReferences(PNODE g)
 {
-  register PNODE n;
-  register PNODE nn;
-  register PEDGE e1;
-  register PEDGE e2;
-  register int   v1;
-  register int   v2;
-  register PNODE n1;
-  register PNODE n2;
-  register PNODE pn;
+  PNODE n;
+  PNODE nn;
+  PEDGE e1;
+  PEDGE e2;
+  int   v1;
+  int   v2;
+  PNODE n1;
+  PNODE n2;
+  PNODE pn;
 
   for ( n = FindLastNode( g->G_NODES ); n != g->G_NODES; n = pn ) {
     pn = n->npred;
@@ -493,9 +493,9 @@ DoIt:
 
 static void CombineRports(PNODE g)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PEDGE si;
+    PEDGE i1;
+    PEDGE i2;
+    PEDGE si;
 
     for ( i1 = g->imp; i1 != NULL; i1 = i1->isucc ) 
         for ( i2 = i1->isucc; i2 != NULL; i2 = si ) {
@@ -518,9 +518,9 @@ static void CombineRports(PNODE g)
 
 static void CombineMports(PNODE f)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PEDGE si;
+    PEDGE i1;
+    PEDGE i2;
+    PEDGE si;
 
     for ( i1 = f->F_GEN->imp; i1 != NULL; i1 = i1->isucc ) 
         for ( i2 = i1->isucc; i2 != NULL; i2 = si ) {
@@ -545,9 +545,9 @@ static void CombineMports(PNODE f)
 
 static void CombineTports(PNODE f)
 {
-    register PEDGE i1;
-    register PEDGE i2;
-    register PEDGE si;
+    PEDGE i1;
+    PEDGE i2;
+    PEDGE si;
 
     for ( i1 = f->F_BODY->imp; i1 != NULL; i1 = i1->isucc ) 
         for ( i2 = i1->isucc; i2 != NULL; i2 = si ) {
@@ -601,9 +601,9 @@ static int WillIntroduceCopying(PNODE n)
 
 static void InitializeNodeTails(PNODE g)
 {
-  register int i,j;
-  register PNODE n;
-  register PNODE nt;
+  int i,j;
+  PNODE n;
+  PNODE nt;
 
   for ( i = 0; i < IF1SimpleNodes; i++ )
     ntails[i] = NULL;
@@ -639,10 +639,10 @@ static void InitializeNodeTails(PNODE g)
 
 static void CombineNodes(PNODE n1)
 {
-    register PNODE n2;
-    register PNODE sn;
-    register PNODE pn;
-    register PEDGE i;
+    PNODE n2;
+    PNODE sn;
+    PNODE pn;
+    PEDGE i;
 
     for ( pn = n1, n2 = n1->usucc; n2 != NULL; n2 = sn ) {
       sn = n2->usucc;
@@ -695,8 +695,8 @@ static void CombineNodes(PNODE n1)
 
 static void RemoveCses(PNODE g)
 {
-  register PNODE n;
-  register PEDGE i;
+  PNODE n;
+  PEDGE i;
 
   if ( !DeBuG ) OpenArrayReferences( g );
 
@@ -803,7 +803,7 @@ void WriteCseInfo(void)
 
 void If1Cse(int cse, int strip)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
 

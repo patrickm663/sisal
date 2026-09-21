@@ -19,7 +19,7 @@
 
 static int AlliantTransfer(int ProcId, struct ActRec *ARs)
 {
-  register struct ActRec *MyAR;
+  struct ActRec *MyAR;
 
   MyAR = &ARs[ProcId];
 
@@ -32,7 +32,7 @@ static int InParallel = FALSE; /* Used by Alliant model */
 
 #define AlternateModelSpawn(FirstAR,Count) {\
     if ( InParallel ) { \
-      register int Id; \
+      int Id; \
       for ( Id = 0; Id < Count; Id++ ) \
         Transfer( Id, FirstAR ); \
     } else { \

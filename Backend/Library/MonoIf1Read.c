@@ -19,10 +19,10 @@
 
 void MonoIf1Read(void)
 {
-  register int     label, type;
-  register int     snode, eport, dnode, iport;
-  register int     ref1,  ref2;
-  register char   *s;
+  int     label, type;
+  int     snode, eport, dnode, iport;
+  int     ref1,  ref2;
+  char   *s;
 
   token = ' ';
   line  = 1;

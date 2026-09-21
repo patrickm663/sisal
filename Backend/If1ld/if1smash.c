@@ -30,11 +30,11 @@
 
 void LoadSmashTypes(void)
 {
-    register int   chgd = TRUE;
-    register int   c;
-    register PINFO p;
-    register PINFO m;
-    register PINFO r;
+    int   chgd = TRUE;
+    int   c;
+    PINFO p;
+    PINFO m;
+    PINFO r;
 
     InitEquivClasses();
 

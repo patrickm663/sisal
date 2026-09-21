@@ -45,9 +45,9 @@
 
 void ReadPragmas(void)
 {
-  register char *name;
-  register int   ThisLine;
-  register int   oldmaxint;
+  char *name;
+  int   ThisLine;
+  int   oldmaxint;
   int           FirstLetter;    /* First char in pragma name */
   int           SecondLetter;   /* Second char in pragma name */
   int           HaveArgument;   /* TRUE iff pragma of form %xx=arg */

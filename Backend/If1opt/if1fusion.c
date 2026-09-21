@@ -37,17 +37,17 @@ DYNDECLARE(fuseinfo, fusebuf, fuselen, fusecount, char, 2000);
 
 static void SummarizeForall(PNODE f, int lvl)
 {
-  register int   fi = 0;
-  register int   fe = 0;
-  register int   bi = 0;
-  register int   be = 0;
-  register int   ri = 0;
-  register int   re = 0;
-  register int   bn = 0;
-  register int   rn = 0;
-  register PEDGE e;
-  register PEDGE i;
-  register PNODE n;
+  int   fi = 0;
+  int   fe = 0;
+  int   bi = 0;
+  int   be = 0;
+  int   ri = 0;
+  int   re = 0;
+  int   bn = 0;
+  int   rn = 0;
+  PEDGE e;
+  PEDGE i;
+  PNODE n;
 
   for ( e = f->exp; e != NULL; e = e->esucc ) fe++;
   for ( e = f->F_BODY->exp; e != NULL; e = e->esucc ) be++;
@@ -67,8 +67,8 @@ static void SummarizeForall(PNODE f, int lvl)
 
 static void DumpThem(PNODE g, int lvl)
 {
-  register PNODE n;
-  register PNODE sg;
+  PNODE n;
+  PNODE sg;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc )
     if ( IsCompound( n ) ) {
@@ -90,7 +90,7 @@ static void DumpThem(PNODE g, int lvl)
 
 static void RenumberForallPorts(PNODE n)
 {
-    register PEDGE i;
+    PEDGE i;
 
     for ( i = n->imp; i != NULL; i = i->isucc ) {              /* K PORTS */
         ChangeExportPorts( n->F_GEN,  i->iport, ++maxint );
@@ -128,9 +128,9 @@ static void RenumberForallPorts(PNODE n)
 
 static int AreForallsEqual(PNODE f1, PNODE f2, int indep)
 {
-    register PNODE n1;
-    register PNODE n2;
-    register int   s;
+    PNODE n1;
+    PNODE n2;
+    int   s;
 
     /* A VECTOR CANDIDATE AND A NON-VECTOR CANDIDATE ARE NOT EQUAL */
     /* SUCH FUSION MAY HURT VECTORIZATION */
@@ -183,8 +183,8 @@ static int AreForallsEqual(PNODE f1, PNODE f2, int indep)
 
 static void RenumberSelectPorts(PNODE n)
 {
-  register PEDGE i;
-  register int   iport;
+  PEDGE i;
+  int   iport;
 
   for ( i = n->imp; i != NULL; i = i->isucc ) {              /* K PORTS */
     ChangeExportPorts( n->S_ALT,  i->iport, ++maxint );
@@ -213,10 +213,10 @@ static void RenumberSelectPorts(PNODE n)
 
 static void LinkSelectDependencies(PNODE s1, PNODE s2)
 {
-  register PEDGE e;
-  register PEDGE se;
-  register PEDGE i;
-  register PEDGE si;
+  PEDGE e;
+  PEDGE se;
+  PEDGE i;
+  PEDGE si;
 
   /* REWIRE THE s2 TO s1 ALTERNATE DEPENDENCIES */
   for ( e = s2->S_ALT->exp; e != NULL; e = se ) {
@@ -332,9 +332,9 @@ static int TryAndFuseSelects(PNODE g, PNODE s1, PNODE s2)
 
 static void AssignSelectAttributes(PNODE n)
 {
-  register PEDGE e;
-  register int   c;
-  register PNODE dst;
+  PEDGE e;
+  int   c;
+  PNODE dst;
 
   c = n->label;
 
@@ -375,11 +375,11 @@ static void AssignSelectAttributes(PNODE n)
 /*          IMPORT PORT 0.                                                */
 /**************************************************************************/
 
-static void CleanDependentPaths(register PNODE g, register PNODE f2)
+static void CleanDependentPaths(PNODE g, PNODE f2)
 {
-  register PEDGE si;
-  register PEDGE i;
-  register PNODE ag;
+  PEDGE si;
+  PEDGE i;
+  PNODE ag;
 
   for ( i = f2->imp; i != NULL; i = si ){
     si = i->isucc;
@@ -419,12 +419,12 @@ static void CleanDependentPaths(register PNODE g, register PNODE f2)
 
 static void ChangeDstPath(PNODE g, PEDGE i)
 {
-  register PEDGE e;
-  register PEDGE ee;
-  register PNODE n;
-  register PEDGE se;
-  register PEDGE see;
-  register PNODE sg;
+  PEDGE e;
+  PEDGE ee;
+  PNODE n;
+  PEDGE se;
+  PEDGE see;
+  PNODE sg;
 
   for ( e = g->exp; e != NULL; e = se ) {
     se = e->esucc;
@@ -481,11 +481,11 @@ static void  DoTheForallMerge(PNODE g,
                               PNODE f2,
                               int indep)  /* INDEPENDENT OR DEPENDENT FUSION */
 {
-  register PEDGE i;
-  register PEDGE ii;
-  register PEDGE e;
-  register PEDGE se;
-  register PEDGE idx1;
+  PEDGE i;
+  PEDGE ii;
+  PEDGE e;
+  PEDGE se;
+  PEDGE idx1;
 
   RenumberForallPorts( f2 );
 
@@ -605,8 +605,8 @@ static int IsIndexingOk(PEDGE e, PEDGE idx)
 
 static int IsAReadOnly(PNODE b, PEDGE a, PEDGE idx)
 {
-  register PEDGE e;
-  register PNODE sg;
+  PEDGE e;
+  PNODE sg;
 
   if ( a == NULL )
     return( TRUE );
@@ -643,11 +643,11 @@ static int TryAndFuseForalls(PNODE g,
                              int indep,  /* INDEPENDENT OR DEPENDENT FUSION */
                              char **ReasonP)
 {
-  register PEDGE i;
-  register PEDGE ii;
-  register PEDGE j;
-  register PEDGE idx2;
-  register PEDGE a;
+  PEDGE i;
+  PEDGE ii;
+  PEDGE j;
+  PEDGE idx2;
+  PEDGE a;
 
   /* ------------------------------------------------------------ */
   /* SEE IF ISOMORPHIC, 1 GENERATOR NODE (A RANGE GENERATOR) */
@@ -760,9 +760,9 @@ static int TryAndFuseForalls(PNODE g,
 
 static void AssignForallAttributes(PNODE n)
 {
-  register PEDGE e;
-  register int   c;
-  register PNODE dst;
+  PEDGE e;
+  int   c;
+  PNODE dst;
 
   c = n->label;
 
@@ -814,13 +814,13 @@ static void AssignForallAttributes(PNODE n)
 /**************************************************************************/
 static void DependentFusion(PNODE g)
 {
-  register PNODE f1;
-  register PNODE f2;
-  register PEDGE e;
-  register PNODE f2s;
-  register PNODE f1s;
-  register PNODE dst;
-  register PNODE sg;
+  PNODE f1;
+  PNODE f2;
+  PEDGE e;
+  PNODE f2s;
+  PNODE f1s;
+  PNODE dst;
+  PNODE sg;
   char           *Reason;
 
   for ( f1 = g->G_NODES; f1 != NULL; /* DONE IN THE BODY */ ) {
@@ -998,7 +998,7 @@ ContinueTheFusion:
 
 void If1DFusion(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     /* DumpThem( f, 1 ); */
@@ -1016,8 +1016,8 @@ void If1DFusion(void)
 
 static void AssignAttributes(PNODE n)
 {
-  register PEDGE e;
-  register int   c;
+  PEDGE e;
+  int   c;
 
   c = n->label;
 
@@ -1039,11 +1039,11 @@ static void AssignAttributes(PNODE n)
 
 static void IndependentFusion(PNODE g)
 {
-  register PNODE f1;
-  register PNODE f2;
-  register PNODE f2s;
-  register PNODE f1s;
-  register PNODE sg;
+  PNODE f1;
+  PNODE f2;
+  PNODE f2s;
+  PNODE f1s;
+  PNODE sg;
   char           *Reason;
 
   for ( f1 = g->G_NODES; f1 != NULL; /* DONE IN THE BODY */ ) {
@@ -1200,7 +1200,7 @@ void WriteFusionInfo(void)
 
 void If1IFusion(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
     IndependentFusion( f );

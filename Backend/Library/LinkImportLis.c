@@ -19,8 +19,8 @@
 
 void LinkImportLists(PNODE n1, PNODE n2)
 {
-  register PEDGE i;
-  register PEDGE si;
+  PEDGE i;
+  PEDGE si;
 
   for ( i = n2->imp; i != NULL; i = si ) {
     si = i->isucc;

@@ -46,8 +46,8 @@ void WriteInvertInfo(void)
 
 static void WireSelectSubgraph(PNODE s, PNODE sg, PNODE f)
 {
-  register PEDGE i;
-  register PEDGE e;
+  PEDGE i;
+  PEDGE e;
 
   for ( i = s->imp; i != NULL; i = i->isucc ) {
     e = CopyEdge( i, sg, f );
@@ -76,12 +76,12 @@ static void WireSelectSubgraph(PNODE s, PNODE sg, PNODE f)
 
 static void FixForallBody(PNODE s, PNODE f, PNODE sg)
 {
-  register PEDGE e;
-  register PEDGE i;
-  register PEDGE se;
-  register PEDGE si;
-  register PNODE n;
-  register PNODE sn;
+  PEDGE e;
+  PEDGE i;
+  PEDGE se;
+  PEDGE si;
+  PNODE n;
+  PNODE sn;
 
   for ( e = s->exp; e != NULL; e = se ) {
     se = e->esucc;
@@ -154,7 +154,7 @@ static void FixForallBody(PNODE s, PNODE f, PNODE sg)
 
 static PNODE GetFirstNoOp(PNODE g)
 {
-  register PNODE n;
+  PNODE n;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc )
     if ( n->type == IFNoOp )
@@ -173,11 +173,11 @@ static PNODE GetFirstNoOp(PNODE g)
 
 static void DoTheInversion(PNODE f, PNODE s)
 {
-  register PNODE fa;
-  register PNODE fc;
-  register PNODE a;
-  register PNODE c;
-  register PEDGE i;
+  PNODE fa;
+  PNODE fc;
+  PNODE a;
+  PNODE c;
+  PEDGE i;
 
   /* CHANGE THE SELECT TYPE TO AVOID COPYING s WHEN COPYING f */
   s->type = IFNoOp;
@@ -237,11 +237,11 @@ static void DoTheInversion(PNODE f, PNODE s)
 
 static void InvertLoops(PNODE g)
 {
-  register PNODE n;
-  register PNODE sg;
-  register PNODE nn;
-  register PEDGE i;
-  register PEDGE e;
+  PNODE n;
+  PNODE sg;
+  PNODE nn;
+  PEDGE i;
+  PEDGE e;
 
   for ( n = g->G_NODES; n != NULL; n = n->nsucc ) {
     if ( IsCompound( n ) )
@@ -363,7 +363,7 @@ MoveOn:
 
 void If1Invert(void)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = glstop->gsucc; f != NULL; f = f->gsucc )
     InvertLoops( f );

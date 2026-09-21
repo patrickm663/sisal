@@ -26,7 +26,7 @@
 
 void If2Write(void)
 {
-  register PNODE f;
+  PNODE f;
 
   AddTimeStamp();
 

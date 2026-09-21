@@ -53,11 +53,11 @@
 
 int IsStreamTask(PNODE n)
 {
-    register PEDGE i;
-    register PEDGE e;
-    register PNODE init;
-    register PNODE ret;
-    register int   yes;
+    PEDGE i;
+    PEDGE e;
+    PNODE init;
+    PNODE ret;
+    int   yes;
 
     if ( IsForall( n ) ) {
         init = n->F_GEN; 

@@ -32,7 +32,7 @@
 
 void FindAndLinkToSource(PNODE n, PEDGE d, PNODE alt)
 {
-    register PEDGE i;
+    PEDGE i;
 
     if ( IsConst( d ) )
         return;
@@ -75,12 +75,12 @@ void FindAndLinkToSource(PNODE n, PEDGE d, PNODE alt)
 void RemoveNode(PNODE n, PNODE g)
 {
              PEDGE export;
-    register PEDGE e;
-    register PEDGE se;
-    register PEDGE ee;
-    register PEDGE d;
-    register PEDGE i;
-    register int   eport;
+    PEDGE e;
+    PEDGE se;
+    PEDGE ee;
+    PEDGE d;
+    PEDGE i;
+    int   eport;
 
     export      = n->exp;
     n->exp   = NULL;
@@ -136,9 +136,9 @@ void RemoveNode(PNODE n, PNODE g)
 
 void InsertNode(PNODE n1, PNODE n2)
 {
-    register PEDGE i;
-    register PEDGE si;
-    register PEDGE e;
+    PEDGE i;
+    PEDGE si;
+    PEDGE e;
 
     for ( i = n2->imp; i != NULL; i = si ) {
         si = i->isucc;

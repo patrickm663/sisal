@@ -18,8 +18,8 @@
 
 PNODE NodeAlloc(int label, int type)
 {
-  register PNODE n;
-  register PBBLOCK b;
+  PNODE n;
+  PBBLOCK b;
 
   b = MyBBlockAlloc();
   n = &(b->n);

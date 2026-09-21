@@ -62,7 +62,7 @@ static int PID;                         /* Unique ID for creating tmpfiles */
 
 void PlaceInEntryTable(char *nm)
 {
-  register int idx;
+  int idx;
 
   /* CHECK IF ALREADY IN THE OTHER TABLES */
   for ( idx = 0; idx <= ftop; idx++ )
@@ -93,7 +93,7 @@ void PlaceInEntryTable(char *nm)
 
 void   PlaceInCTable(char *nm)
 {
-  register int idx;
+  int idx;
 
   /* CHECK IF ALREADY IN THE OTHER TABLES */
   for ( idx = 0; idx <= ftop; idx++ )
@@ -123,7 +123,7 @@ void   PlaceInCTable(char *nm)
 
 void PlaceInFortranTable(char *nm)
 {
-  register int idx;
+  int idx;
 
   /* CHECK IF ALREADY IN THE OTHER TABLES */
   for ( idx = 0; idx <= ctop; idx++ )
@@ -153,7 +153,7 @@ void PlaceInFortranTable(char *nm)
 
 void PlaceInReductionTable(char *nm)
 {
-  register int idx;
+  int idx;
 
   /* CHECK IF ALREADY IN THE OTHER TABLES */
   for ( idx = 0; idx <= ftop; idx++ )
@@ -207,8 +207,8 @@ void PlaceInReductionTable(char *nm)
 
 static void ParseCommandLine(int argc, char **argv)
 {
-    register char *c;
-    register int   idx;
+    char *c;
+    int   idx;
 
     for ( idx = 1; idx < argc; ++idx ) {
       if ( *(c = argv[ idx ]) == '-' )
@@ -522,7 +522,7 @@ static int ReadLibrary(char *lib, namelink *Need)
 /**************************************************************************/
 static void ReadTheIf1Files(int argc, char **argv)
 {
-  register int   idx;
+  int   idx;
   char     *dotp;
 
   for ( idx = 1; idx < argc; idx++ ) {
@@ -587,7 +587,7 @@ static void BuildNeedList(namelink **NeedP)
 
 int main(int argc, char **argv)
 {
-    register FILE *fd;
+    FILE *fd;
     namelink      *Need;
     int           i;
     int           MadeLoad;

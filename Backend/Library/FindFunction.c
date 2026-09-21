@@ -23,7 +23,7 @@
 
 PNODE FindFunction(char *nm)
 {
-  register PNODE f;
+  PNODE f;
 
   for ( f = (fhead)?(fhead):(glstop->gsucc); f != NULL; f = f->gsucc ) {
     if ( strcmp( f->G_NAME, nm ) == 0 ) return( f );

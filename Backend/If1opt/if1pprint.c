@@ -62,8 +62,8 @@ static char *PrefixNameAlloc(char *pre)
 
 static void AssignExportNames(PNODE n, char *pre)
 {
-    register PEDGE e1;
-    register PEDGE e2;
+    PEDGE e1;
+    PEDGE e2;
 
     for ( e1 = n->exp; e1 != NULL; e1 = e1->esucc ) {
         if ( e1->dname != NULL )
@@ -84,9 +84,9 @@ static void AssignExportNames(PNODE n, char *pre)
 /* PURPOSE: ASSIGN NAMES TO THE UNIQUE EXPORTS OF ALL NODES IN GRAPH g.   */
 /**************************************************************************/
 
-static void OptAssignNames(register PNODE g)
+static void OptAssignNames(PNODE g)
 {
-    register PNODE n;
+    PNODE n;
 
     if ( IsIGraph( g ) ) 
         return;
@@ -116,9 +116,9 @@ static void OptAssignNames(register PNODE g)
 
 static void PPrintGraphParameters(PNODE g)
 {
-    register PEDGE e1;
-    register PEDGE e2;
-    register PEDGE i;
+    PEDGE e1;
+    PEDGE e2;
+    PEDGE i;
 
     FPRINTF( output, "(" );
 
@@ -174,9 +174,9 @@ static void PPrintGraphParameters(PNODE g)
 
 static void If1PPrintNodeParameters(PNODE n)
 {
-    register PEDGE e1;
-    register PEDGE e2;
-    register PEDGE i;
+    PEDGE e1;
+    PEDGE e2;
+    PEDGE i;
 
     FPRINTF( output, "(" );
 
@@ -224,7 +224,7 @@ static void If1PPrintNodeParameters(PNODE n)
 
 static void If1PPrintNode(PNODE g, int indent)
 {
-    register PNODE n;
+    PNODE n;
 
     PPrintIndentation( indent, g->if1line );
 
@@ -272,7 +272,7 @@ static void If1PPrintNode(PNODE g, int indent)
 
 void If1PPrint(void)
 {
-    register PNODE f;
+    PNODE f;
 
     for ( f = glstop->gsucc; f != NULL; f = f->gsucc ) {
         FPRINTF( output, "\n" );
