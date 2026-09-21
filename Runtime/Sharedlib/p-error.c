@@ -35,7 +35,7 @@ int SisalError(char *Message1, char *Message2)
 
   AbortParallel();
 
-  /* SisalError is declared noreturn (PROTO_NORET), but AbortParallel is not
+  /* SisalError is declared noreturn (SISAL_NORETURN), but AbortParallel is not
      guaranteed to end the process on every model -- several of them raise a
      signal with kill(), which returns.  Make good on the declaration rather
      than falling off the end of a noreturn function. */

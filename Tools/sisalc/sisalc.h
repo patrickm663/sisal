@@ -15,16 +15,16 @@
 #include "sisalInfo.h"
 #include "charStarQueue.h"
 
-extern void compilerError PROTO((char* msg));
-extern int Submit PROTO((charStarQueue** queueP));
+extern void compilerError(char* msg);
+extern int Submit(charStarQueue** queueP);
 
-extern void sisal PROTO((char* sis,
+extern void sisal(char* sis,
                          char* if1,
                          char* bindir,
                          char* datadir
-                         ));
+                         );
 
-extern void if1ld PROTO((charStarQueue** if1Files,
+extern void if1ld(charStarQueue** if1Files,
                          char* mono,
                          char* bindir,
                          int warning,
@@ -40,9 +40,9 @@ extern void if1ld PROTO((charStarQueue** if1Files,
                          charStarQueue** reductionFunctions,
 
                          char* QStamps
-                         ));
+                         );
 
-extern void if1opt PROTO((char* file,
+extern void if1opt(char* file,
                           char* result,
                           char* bindir,
                           int suppressWarnings, /* suppress warnings? */
@@ -61,16 +61,16 @@ extern void if1opt PROTO((char* file,
                           int crayStyleVectors, /* Use Cray styled vectors? */
                           int FORTRANIntrinsicBitFunctions,
                           int optimize /* Perform aggressive optimization */
-                          ));
+                          );
 
-extern void if2up PROTO((char* file,
+extern void if2up(char* file,
                          char* result,
                          char* bindir,
                          int suppressWarnings, /* suppress warnings? */
                          int profiling /* profiling */
-                         ));
+                         );
 
-extern void if2mem PROTO((char* file,
+extern void if2mem(char* file,
                           char* result,
                           char* bindir,
                           int suppressWarnings, /* suppress warnings? */
@@ -78,9 +78,9 @@ extern void if2mem PROTO((char* file,
                           
                           int optimize, /* Perform aggressive optimization */
                           int optimizeInlined /* optimize inlined calls */
-                          ));
+                          );
 
-extern void if2part PROTO((char* file,
+extern void if2part(char* file,
                            char* result,
                            char* bindir,
                            char* datadir,
@@ -94,9 +94,9 @@ extern void if2part PROTO((char* file,
                            int crayStyleVectors,
                            int minimumParallelLoopCost,
                            int assumedIterationCount
-                           ));
+                           );
                    
-extern void if2gen PROTO((char* file,
+extern void if2gen(char* file,
                           char* result,
                           char* bindir,
                           int suppressWarnings, /* suppress warnings? */
@@ -110,17 +110,17 @@ extern void if2gen PROTO((char* file,
                           int vector,
                           int bounds,
                           int fileio
-                          ));
+                          );
 
-extern void compile PROTO((char* file,
+extern void compile(char* file,
                            char* result,
                            char* includedir,
 			   int profiling,
                            char* compiler,
                            char* flags
-                           ));
+                           );
 
-extern void linker PROTO((char* loader,
+extern void linker(char* loader,
                           char* target,
                           char* libdir,
                           charStarQueue** objectFiles,
@@ -129,6 +129,6 @@ extern void linker PROTO((char* loader,
                           char* linkWithF77,
                           int forFORTRAN,
                           int forC
-                          ));
+                          );
 
 #endif

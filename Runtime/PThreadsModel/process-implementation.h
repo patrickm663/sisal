@@ -15,10 +15,10 @@
 
 /* PThreadsModel */
 
-extern int sisalGetID PROTO((void));
+extern int sisalGetID(void);
 #define GetProcId  sisalGetID()
 #define GETPROCID(x) x = GetProcId
-extern BARRIER_TYPE *MyInitBarrier PROTO((int));
-extern void sisalYield PROTO((void));
+extern BARRIER_TYPE *MyInitBarrier(int);
+extern void sisalYield(void);
 #define YIELD_IF_REQUIRED() sisalYield()
 #endif

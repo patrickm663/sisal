@@ -17,7 +17,7 @@
  * Sequent
 \************************************************************************/
 
-extern char *shmalloc PROTO((int));
+extern char *shmalloc(int);
 
 void AcquireSharedMemory(int NumBytes)
 {

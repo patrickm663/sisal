@@ -92,53 +92,53 @@ extern int    hnoops;           /* COUNT OF HOISTED NoOp NODES */
 
 /* ------------------------------------------------------------ */
 /* if2up.c */
-extern void     If2Up PROTO((int));
+extern void     If2Up(int);
 
 /* if2call.c */
-extern void     If2CallGraph PROTO((void));
+extern void     If2CallGraph(void);
 
 /* if2noop.c */
-extern void     If2NoOp PROTO((void));
+extern void     If2NoOp(void);
 
 /* if2refcnt.c */
-extern void     AssignCMPragmas PROTO((PNODE,int));
-extern void     If2ReferenceCount PROTO((void));
+extern void     AssignCMPragmas(PNODE,int);
+extern void     If2ReferenceCount(void);
 
 /* if2class.c */
-extern void     If2Classify PROTO((void));
+extern void     If2Classify(void);
 
 /* if2rwset.c */
-extern void     If2ReadWriteSets PROTO((void));
+extern void     If2ReadWriteSets(void);
 
 /* if2ade.c */
-extern void     If2Ade PROTO((void));
+extern void     If2Ade(void);
 
 /* if2replace.c */
-extern void     If2Replace PROTO((void));
+extern void     If2Replace(void);
 
 /* if2count.c */
-extern void     UpIf2Count PROTO((int,char*));
-extern void     WriteIf2upWarnings PROTO((void));
+extern void     UpIf2Count(int,char*);
+extern void     WriteIf2upWarnings(void);
 
 /* if2const.c */
-extern void     If2ConstGenerators PROTO((void));
+extern void     If2ConstGenerators(void);
 
 /* if2owner.c */
-extern void     If2Ownership PROTO((void));
-extern void     OptimizeSwaps PROTO((void));
+extern void     If2Ownership(void);
+extern void     OptimizeSwaps(void);
 
 /* if2refcntopt.c */
-extern void     CleanNoOpImports PROTO((void));
-extern void     If2ReferenceCountOpt PROTO((void));
+extern void     CleanNoOpImports(void);
+extern void     If2ReferenceCountOpt(void);
 
 /* if2marks.c */
-extern void     If2RefineGrounds PROTO((void));
-extern void     If2PropagateMarks PROTO((void));
+extern void     If2RefineGrounds(void);
+extern void     If2PropagateMarks(void);
 
 /* if2migrate.c */
-extern void     If2Migrate PROTO((void));
+extern void     If2Migrate(void);
 
 /* if2pprint.c */
-extern void     If2PPrint PROTO((void));
+extern void     If2PPrint(void);
 
 #endif

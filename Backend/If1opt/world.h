@@ -71,110 +71,110 @@ extern FILE *infoptr;
 /* ------------------------------------------------------------ */
 
 /* callreorder.c */
-extern void     CallReorder PROTO((void));
+extern void     CallReorder(void);
 
 /* cascade.c */
-extern void     If1TestCascade PROTO((void));
+extern void     If1TestCascade(void);
 
 /* if1check.c */
-extern void     If1Check PROTO((void));
+extern void     If1Check(void);
 
 /* if1count.c */
-extern void     If1Count PROTO((char*));
+extern void     If1Count(char*);
 
 /* if1cse.c */
-extern void     WriteCseInfo PROTO((void));
-extern void     If1Cse PROTO((int,int));
+extern void     WriteCseInfo(void);
+extern void     If1Cse(int,int);
 
 /* if1dead.c */
-extern void     CombineKports PROTO((PNODE));
-extern void     FastCleanGraph PROTO((PNODE));
-extern void     OptRemoveDeadNode PROTO((PNODE));
-extern void     RemoveDeadEdge PROTO((PEDGE));
-extern void     WriteCleanInfo PROTO((void));
-extern void     If1Clean PROTO((void));
+extern void     CombineKports(PNODE);
+extern void     FastCleanGraph(PNODE);
+extern void     OptRemoveDeadNode(PNODE);
+extern void     RemoveDeadEdge(PEDGE);
+extern void     WriteCleanInfo(void);
+extern void     If1Clean(void);
 
 /* if1dope.c */
-extern void     If1Dope PROTO((void));
-extern void     WriteDopeInfo PROTO((void));
+extern void     If1Dope(void);
+extern void     WriteDopeInfo(void);
 
 /* if1explode.c */
-extern void     WriteExplodeInfo PROTO((void));
-extern void     If1Explode PROTO((int));
+extern void     WriteExplodeInfo(void);
+extern void     If1Explode(int);
 
 /* if1fission.c */
-extern void     WriteFissionInfo PROTO((void));
-extern void     If1Fission PROTO((void));
+extern void     WriteFissionInfo(void);
+extern void     If1Fission(void);
 
 /* if1fold.c */
-extern void     OptNormalizeNode PROTO((PNODE));
-extern char     *DoubleToReal PROTO((char*));
-extern void     WriteFoldInfo PROTO((void));
-extern void     If1Fold PROTO((void));
+extern void     OptNormalizeNode(PNODE);
+extern char     *DoubleToReal(char*);
+extern void     WriteFoldInfo(void);
+extern void     If1Fold(void);
 
 /* if1fusion.c */
-extern void     If1DFusion PROTO((void));
-extern void     WriteFusionInfo PROTO((void));
-extern void     If1IFusion PROTO((void));
+extern void     If1DFusion(void);
+extern void     WriteFusionInfo(void);
+extern void     If1IFusion(void);
 
 /* if1gcse.c */
-extern void     WriteGCseInfo PROTO((void));
-extern void     OptRemoveSCses PROTO((PNODE));
-extern void     If1GCse PROTO((void));
+extern void     WriteGCseInfo(void);
+extern void     OptRemoveSCses(PNODE);
+extern void     If1GCse(void);
 
 /* if1inline.c */
-extern void     SpliceInGraph PROTO((PNODE,PNODE));
-extern void     If1Inline PROTO((void));
+extern void     SpliceInGraph(PNODE,PNODE);
+extern void     If1Inline(void);
 
 /* if1invar.c */
-extern int      OptIsEdgeInvariant PROTO((PEDGE));
-extern void     ExposeInvariants PROTO((PNODE,PNODE));
-extern void     AntiMovement PROTO((PNODE));
-extern void     WriteInvarInfo PROTO((void));
-extern void     If1Invar PROTO((void));
+extern int      OptIsEdgeInvariant(PEDGE);
+extern void     ExposeInvariants(PNODE,PNODE);
+extern void     AntiMovement(PNODE);
+extern void     WriteInvarInfo(void);
+extern void     If1Invar(void);
 
 /* if1invert.c */
-extern void     WriteInvertInfo PROTO((void));
-extern void     If1Invert PROTO((void));
+extern void     WriteInvertInfo(void);
+extern void     If1Invert(void);
 
 /* if1move.c */
-extern void     FindAndLinkToSource PROTO((PNODE,PEDGE,PNODE));
-extern void     RemoveNode PROTO((PNODE,PNODE));
-extern void     InsertNode PROTO((PNODE,PNODE));
+extern void     FindAndLinkToSource(PNODE,PEDGE,PNODE);
+extern void     RemoveNode(PNODE,PNODE);
+extern void     InsertNode(PNODE,PNODE);
 
 /* if1normal.c */
-extern void     EliminateDeadFunctions PROTO((void));
-extern void     If1Normalize PROTO((void));
+extern void     EliminateDeadFunctions(void);
+extern void     If1Normalize(void);
 
 /* if1parallel.c */
-extern int      OptIsVecCandidate PROTO((PNODE));
-extern void     WriteConcurInfo PROTO((void));
-extern void     If1Vec PROTO((void));
-extern void     If1Par PROTO((void));
+extern int      OptIsVecCandidate(PNODE);
+extern void     WriteConcurInfo(void);
+extern void     If1Vec(void);
+extern void     If1Par(void);
 
 /* if1pprint.c */
-extern void     If1PPrint PROTO((void));
+extern void     If1PPrint(void);
 
 /* if1reduce.c */
-extern void     If1Reduce PROTO((void));
-extern void     WriteReduceInfo PROTO((void));
+extern void     If1Reduce(void);
+extern void     WriteReduceInfo(void);
 
 /* if1split.c */
-extern void     WriteSplitInfo PROTO((void));
-extern void     If1Split PROTO((void));
+extern void     WriteSplitInfo(void);
+extern void     If1Split(void);
 
 /* if1unroll.c */
-extern void     WriteUnrollInfo PROTO((void));
-extern void     If1Unroll PROTO((void));
+extern void     WriteUnrollInfo(void);
+extern void     If1Unroll(void);
 
 /* util.c */
-extern int      OptIsInvariant PROTO((PNODE));
-extern void     DecodeIndexing PROTO((PNODE));
-extern void     EncodeIndexing PROTO((PNODE,int,int*));
+extern int      OptIsInvariant(PNODE);
+extern void     DecodeIndexing(PNODE);
+extern void     EncodeIndexing(PNODE,int,int*);
 
 /* AssignIDs.c */
-extern void     NewCompoundID PROTO((PNODE));
-extern void     AssignCompoundIDs PROTO((void));
+extern void     NewCompoundID(PNODE);
+extern void     AssignCompoundIDs(void);
 
 /*
  * $Log$

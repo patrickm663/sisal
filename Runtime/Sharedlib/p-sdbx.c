@@ -74,7 +74,7 @@ static int SdbxMonitorCode = SDBX_NONE;
 
 static char *CopyString(char *String)
 {
-  extern POINTER Alloc PROTO((int));
+  extern POINTER Alloc(int);
 
   return( (char *) strcpy( Alloc((int)strlen(String)+1), String ) );
 }

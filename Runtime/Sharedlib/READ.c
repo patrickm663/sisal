@@ -4,37 +4,37 @@ struct Args15;
 struct Args16;
 
 #undef _FATAL
-void         _FATAL PROTO((void *));
+void         _FATAL(void *);
 int RecompileTheModuleDefining_FATAL = 0;
 #undef _READ
-void         _READ PROTO((void *));
+void         _READ(void *);
 int RecompileTheModuleDefining_READ = 0;
 #undef _PIPE
-void         _PIPE PROTO((void *));
+void         _PIPE(void *);
 int RecompileTheModuleDefining_PIPE = 0;
 #undef _STDIN
-void         _STDIN PROTO((void *));
+void         _STDIN(void *);
 int RecompileTheModuleDefining_STDIN = 0;
 #undef _ARGV
-void         _ARGV PROTO((void *));
+void         _ARGV(void *);
 int RecompileTheModuleDefining_ARGV = 0;
 #undef _EXIT
-void         _EXIT PROTO((struct Args15*));
+void         _EXIT(struct Args15*);
 int RecompileTheModuleDefining_EXIT = 0;
 #undef _LSHIFT
-void         _LSHIFT PROTO((struct Args16*));
+void         _LSHIFT(struct Args16*);
 int RecompileTheModuleDefining_LSHIFT = 0;
 #undef _RSHIFT
-void         _RSHIFT PROTO((struct Args16*));
+void         _RSHIFT(struct Args16*);
 int RecompileTheModuleDefining_RSHIFT = 0;
 #undef _BITOR
-void         _BITOR PROTO((struct Args16*));
+void         _BITOR(struct Args16*);
 int RecompileTheModuleDefining_BITOR = 0;
 #undef _BITAND
-void         _BITAND PROTO((struct Args16*));
+void         _BITAND(struct Args16*);
 int RecompileTheModuleDefining_BITAND = 0;
 #undef _BITXOR
-void         _BITXOR PROTO((struct Args16*));
+void         _BITXOR(struct Args16*);
 int RecompileTheModuleDefining_BITXOR = 0;
 
 struct Args12 {   

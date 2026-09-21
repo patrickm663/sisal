@@ -17,9 +17,9 @@
 
 #include "lock-implementation.h"
 
-extern void MyInitLock PROTO((void));
-extern void MyLock PROTO((void));
-extern void MyUnlock PROTO((void));
-extern void MyBarrier PROTO((BARRIER_TYPE *));
+extern void MyInitLock(void);
+extern void MyLock(void);
+extern void MyUnlock(void);
+extern void MyBarrier(BARRIER_TYPE *);
 
 #endif

@@ -88,29 +88,29 @@ extern int agg;
 
 /* ------------------------------------------------------------ */
 /* if2mem.c */
-extern void     PushAtNode PROTO((PNODE));
-extern PNODE    PopAtNode PROTO((void));
-extern PNODE    ReferencePoint PROTO((PNODE,int));
-extern PNODE    MaxNodeInDFO PROTO((PNODE,PNODE,PNODE));
-extern PNODE    MaxSourceInDFO PROTO((PNODE,PEDGE,PEDGE));
-extern void     If2Mem PROTO((void));
+extern void     PushAtNode(PNODE);
+extern PNODE    PopAtNode(void);
+extern PNODE    ReferencePoint(PNODE,int);
+extern PNODE    MaxNodeInDFO(PNODE,PNODE,PNODE);
+extern PNODE    MaxSourceInDFO(PNODE,PEDGE,PEDGE);
+extern void     If2Mem(void);
 
 /* if2level.c */
-extern void     AssignLevelNumbers PROTO((PNODE));
+extern void     AssignLevelNumbers(PNODE);
 
 /* if2size.c */
-extern void     AssignSizes PROTO((PNODE));
+extern void     AssignSizes(PNODE);
 
 /* if2alloc.c */
-extern void     AllocIf2Nodes PROTO((PNODE));
+extern void     AllocIf2Nodes(PNODE);
 
 /* if2clean.c */
-extern void     If2Clean PROTO((void));
+extern void     If2Clean(void);
 
 /* if2pic.c */
-extern void     CountNodesAndEdges PROTO((char*));
-extern void     TraceBuffer PROTO((PNODE,int));
-extern void     WriteIf2memPicture PROTO((void));
-extern void     WriteIf2memWarnings PROTO((void));
+extern void     CountNodesAndEdges(char*);
+extern void     TraceBuffer(PNODE,int);
+extern void     WriteIf2memPicture(void);
+extern void     WriteIf2memWarnings(void);
 
 #endif

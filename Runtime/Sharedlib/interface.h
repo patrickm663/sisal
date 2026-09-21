@@ -38,9 +38,9 @@ struct DimInfo {
   };
 
 extern char *SINFOFile;
-extern void InitDimInfo PROTO((int,int,DIMINFOP,int*));
-extern void OptInitDimInfo PROTO((void));
-extern char* ParseCEscapes PROTO((char*));
-extern void ParseCommandLine PROTO((int,char**));
+extern void InitDimInfo(int,int,DIMINFOP,int*);
+extern void OptInitDimInfo(void);
+extern char* ParseCEscapes(char*);
+extern void ParseCommandLine(int,char**);
 
 #endif

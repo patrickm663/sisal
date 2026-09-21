@@ -18,13 +18,13 @@ struct Args13 { struct ActRec *FirstAR; int Count; POINTER Out1; };
 struct Args14 { struct ActRec *FirstAR; int Count; POINTER In1; POINTER Out1;
                 int Out2; };
 
-extern void _READ  PROTO((void*));
-extern void _STDIN PROTO((void*));
-extern void _PIPE  PROTO((void*));
+extern void _READ(void*);
+extern void _STDIN(void*);
+extern void _PIPE(void*);
 
-extern void InitSisalRunTime PROTO((void));
-extern void StartWorkers PROTO((void));
-extern void StopWorkers PROTO((void));
+extern void InitSisalRunTime(void);
+extern void StartWorkers(void);
+extern void StopWorkers(void);
 
 #define BIG_BYTES (3 * 1024 * 1024 + 12345)   /* well past SLURP_CHUNK */
 

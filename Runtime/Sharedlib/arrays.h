@@ -154,26 +154,26 @@ struct PointerSwapBuffer {
 #endif
   };
 
-extern POINTER  ArrayDuplicatePlus PROTO((POINTER,int));
-extern POINTER  ArrayDuplicate PROTO((POINTER,int));
-extern PHYSP    DoPhysExpand PROTO((POINTER,int));
+extern POINTER  ArrayDuplicatePlus(POINTER,int);
+extern POINTER  ArrayDuplicate(POINTER,int);
+extern PHYSP    DoPhysExpand(POINTER,int);
 
-extern POINTER  ReadBoolVector PROTO((void));
-extern void     WriteBoolVector PROTO((POINTER));
+extern POINTER  ReadBoolVector(void);
+extern void     WriteBoolVector(POINTER);
 
-extern POINTER  ReadCharVector PROTO((void));
-extern void     WriteCharVector PROTO((POINTER));
+extern POINTER  ReadCharVector(void);
+extern void     WriteCharVector(POINTER);
 
-extern POINTER  ReadDoubleVector PROTO((void));
-extern void     WriteDoubleVector PROTO((POINTER));
+extern POINTER  ReadDoubleVector(void);
+extern void     WriteDoubleVector(POINTER);
 
-extern POINTER  ReadIntegerVector PROTO((void));
-extern void     WriteIntegerVector PROTO((POINTER));
+extern POINTER  ReadIntegerVector(void);
+extern void     WriteIntegerVector(POINTER);
 
-extern POINTER  ReadNullVector PROTO((void));
-extern void     WriteNullVector PROTO((POINTER));
+extern POINTER  ReadNullVector(void);
+extern void     WriteNullVector(POINTER);
 
-extern POINTER  ReadRealVector PROTO((void));
-extern void     WriteRealVector PROTO((POINTER));
+extern POINTER  ReadRealVector(void);
+extern void     WriteRealVector(POINTER);
 
 #endif

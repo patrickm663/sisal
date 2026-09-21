@@ -59,34 +59,22 @@
 #define SISAL_BANNER "@host@ SISAL 1.2 (@model@)"
 
 /* ----------------------------------------------- */
-/* Support non-standard support for static forward */
+/* The, static, static and static macros that used to live
+   here existed for compilers that had no prototypes, or that botched static
+   forward declarations (SCO ODT 3.0).  Both are long gone; declarations are
+   now written out directly.                                              */
 /* ----------------------------------------------- */
-#ifndef BAD_STATIC_FORWARD
-#define Static static
-#define Local static
-#define staticforward static
-#else
-#define Static 
-#define Local 
-#define staticforward extern
-#endif
 
-#undef PROTO
-#ifdef HAVE_PROTOTYPES
-#define PROTO(x) x
+/* ----------------------------------------------- */
+/* A function that does not return.  C11 spells this _Noreturn; GCC and
+   Clang understood the attribute well before that.                       */
+/* ----------------------------------------------- */
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+#define SISAL_NORETURN _Noreturn
+#elif defined(__GNUC__)
+#define SISAL_NORETURN __attribute__ ((noreturn))
 #else
-#define PROTO(x) ()
-#endif
-
-#undef PROTO_NORET
-#ifdef HAVE_GCC_ATTR_NORETURN
-#define PROTO_NORET(x) PROTO(x) __attribute__ ((noreturn))
-#else
-#define PROTO_NORET(x) PROTO(x)
-#endif
-
-#ifndef HAVE_CONST
-#define const
+#define SISAL_NORETURN
 #endif
 
 /* ----------------------------------------------- */

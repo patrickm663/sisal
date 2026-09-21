@@ -14,7 +14,7 @@
 
 /* CrayModel */
 
-extern int ProcessorId PROTO((void));
+extern int ProcessorId(void);
 #define GetProcId ProcessorId()
 #define GETPROCID(v) { int x; TSKVALUE(&x); v = x; }
 

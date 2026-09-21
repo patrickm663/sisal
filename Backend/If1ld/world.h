@@ -22,12 +22,12 @@ extern int   monolith;          /* MONOLITHIC PROGRAM MODULE? */
 
 /* ------------------------------------------------------------ */
 /* if1smash.c */
-extern void     LoadSmashTypes PROTO((void));
+extern void     LoadSmashTypes(void);
 
 /* if1names.c */
-extern void     AddToImportList PROTO((PNODE,char*,PINFO));
-extern void     AddToNameList PROTO((PNODE));
-extern void     CheckForUnresolvedNames PROTO((void));
+extern void     AddToImportList(PNODE,char*,PINFO);
+extern void     AddToNameList(PNODE);
+extern void     CheckForUnresolvedNames(void);
 
 /*
  * $Log$

@@ -11,7 +11,7 @@
 
 #include "sisalInfo.h"
 
-extern void foo PROTO((int*));
+extern void foo(int*);
 extern int NumWorkers;
 
 extern void InitSisalRunTime(void);

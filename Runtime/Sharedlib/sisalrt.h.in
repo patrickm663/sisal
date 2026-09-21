@@ -30,10 +30,10 @@
 
 #include "sisalInfo.h"
 
-extern void ShutDownDsa PROTO((void));
-extern void ParseTracerCommand PROTO((char*));
-extern void InitDsa PROTO((int,int));
-extern void InitSignalSystem PROTO((void));
+extern void ShutDownDsa(void);
+extern void ParseTracerCommand(char*);
+extern void InitDsa(int,int);
+extern void InitSignalSystem(void);
 
 extern int sisal_file_io;
 

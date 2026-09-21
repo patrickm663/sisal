@@ -29,24 +29,24 @@ typedef struct sisalc_option {
    charStarQueue** queue;
 } option_t;
 
-extern int defaultTrue PROTO((int,char*,char***, option_t*));
-extern int defaultFalse PROTO((int,char*,char***, option_t*));
-extern int defaultInitialized PROTO((int,char*,char***, option_t*));
-extern int suffixedFile PROTO((int,char*,char***, option_t*));
-extern int fetchStringEqual PROTO((int,char*,char***, option_t*));
-extern int fetchStringNext PROTO((int,char*,char***, option_t*));
-extern int appendQueue PROTO((int,char*,char***, option_t*));
-extern int prefixedOption PROTO((int,char*,char***, option_t*));
-extern int catchAll PROTO((int,char*,char***, option_t*));
+extern int defaultTrue(int,char*,char***, option_t*);
+extern int defaultFalse(int,char*,char***, option_t*);
+extern int defaultInitialized(int,char*,char***, option_t*);
+extern int suffixedFile(int,char*,char***, option_t*);
+extern int fetchStringEqual(int,char*,char***, option_t*);
+extern int fetchStringNext(int,char*,char***, option_t*);
+extern int appendQueue(int,char*,char***, option_t*);
+extern int prefixedOption(int,char*,char***, option_t*);
+extern int catchAll(int,char*,char***, option_t*);
 
-extern int optionHelp PROTO((int,char*,char***, option_t*));
-extern int optionHTML PROTO((int,char*,char***, option_t*));
-extern int optionMAN PROTO((int,char*,char***, option_t*));
+extern int optionHelp(int,char*,char***, option_t*);
+extern int optionHTML(int,char*,char***, option_t*);
+extern int optionMAN(int,char*,char***, option_t*);
 
-extern int overviewOption PROTO((int action,char*,char*** argP, option_t* option));
-extern void setOptionDefaults PROTO((option_t* options));
+extern int overviewOption(int action,char*,char*** argP, option_t* option);
+extern void setOptionDefaults(option_t* options);
 
-extern void exitIfNotFound PROTO((char* bad));
-extern void optionScan PROTO((char* program, int argc, char** argv, option_t* options, void (*handler)(char*)));
+extern void exitIfNotFound(char* bad);
+extern void optionScan(char* program, int argc, char** argv, option_t* options, void (*handler)(char*));
 
 #endif

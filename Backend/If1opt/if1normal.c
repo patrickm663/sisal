@@ -18,8 +18,8 @@
 
 #include "world.h"
 
-static void NormalizeNodes  PROTO((PNODE));
-static void EliminateFanout PROTO((PNODE, PNODE, PNODE, int));
+static void NormalizeNodes(PNODE);
+static void EliminateFanout(PNODE, PNODE, PNODE, int);
 
 static int latnm = 0;            /* COUNT OF LOOPA TEST NODES MOVED       */
 static int fgnm  = 0;            /* COUNT OF FORALL GEN NODES MOVED       */

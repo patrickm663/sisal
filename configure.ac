@@ -340,49 +340,19 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[static shared int x]], [[int y=x;]])],[
 ])
 
 dnl -----------------------------------------------
-dnl Prototypes
+dnl Three probes used to live here, for prototypes, the GCC noreturn
+dnl attribute and const.  All are gone:
+dnl
+dnl   * prototypes and const are C89, and the PROTO() macro that depended on
+dnl     the first has been removed in favour of writing declarations out;
+dnl   * SISAL_NORETURN in sisalInfo.h picks C11 _Noreturn or the GCC
+dnl     attribute directly, so nothing needs to be substituted;
+dnl   * the const probe was inverted.  It compiled "const int x; x = 0;" --
+dnl     an assignment to a const object -- so it only succeeded on a
+dnl     compiler WITHOUT const, HAVE_CONST went undefined everywhere, and
+dnl     sisalInfo.h's "#ifndef HAVE_CONST / #define const" then deleted
+dnl     every const in the tree.
 dnl -----------------------------------------------
-have_prototypes=no
-AC_MSG_CHECKING(for prototypes)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-  extern int foo(int);
-]], [[
-  return foo(10);
-]])],[
-  AC_DEFINE([HAVE_PROTOTYPES],[],[Define if you allow normal C prototypes])
-  have_prototypes=yes
-],[])
-AC_MSG_RESULT($have_prototypes)
-
-dnl -----------------------------------------------
-dnl GCC-style 'noreturn' attribute
-dnl -----------------------------------------------
-have_attr_no_return=no
-AC_MSG_CHECKING(for GCC-style noreturn attribute)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-  extern void fatal() __attribute__ ((noreturn));
-]], [[
-  fatal();
-]])],[
-  AC_DEFINE([HAVE_GCC_ATTR_NORETURN],[],[Define if GCC-style noreturn attribute is supported])
-  have_attr_no_return=yes
-],[])
-AC_MSG_RESULT($have_attr_no_return)
-
-dnl -----------------------------------------------
-dnl const
-dnl -----------------------------------------------
-have_const=no
-AC_MSG_CHECKING(for const)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-]], [[
-  const int x;
-  x = 0;
-]])],[
-  AC_DEFINE([HAVE_CONST],[],[Define if C does not support const keyword])
-  have_const=yes
-],[])
-AC_MSG_RESULT($have_const)
 
 
 # -----------------------------------------------
@@ -447,36 +417,10 @@ fi
 
 
 # -----------------------------------------------
-# Check for bad behavior in compilers
+# The "bad static forward" probe that used to live here was for SCO ODT 3.0,
+# and fed the staticforward macro, which is gone.  It was also an
+# AC_RUN_IFELSE, so it could not work when cross compiling.
 # -----------------------------------------------
-bad_forward=no
-AC_MSG_CHECKING(for bad static forward)
-AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#else
-extern void exit(int);
-#endif
-struct s { int a; int b; };
-static struct s foo;
-void *foobar() {
- static void *random;
- random = &foo;
- return random;
-}
-static struct s foo = { 1, 2 };
-int main(void) {
- exit(!(&foo == foobar()));
-}
-]])],[
-  bad_forward=no
-],[
-  AC_DEFINE([BAD_STATIC_FORWARD],[],[Define if your compiler botches static forward declarations (as it does on SCI ODT 3.0)]) 
-  bad_forward=yes,
-],[
-  bad_forward=no
-])
-AC_MSG_RESULT($bad_forward)
 
 dnl -----------------------------------------------
 dnl Unaccounted for process symbols

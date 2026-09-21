@@ -18,11 +18,11 @@
 
 #include "world.h"
 
-static int IsBIPWellFormed   PROTO((int, PNODE, PEDGE));
-static int IsMAllocInvariant PROTO((PNODE, PNODE));
-static int AreAllReadOnly    PROTO((PNODE, int));
-static void ModifyRedAT      PROTO((PEDGE));
-static int GetBIPType        PROTO((PEDGE));
+static int IsBIPWellFormed(int, PNODE, PEDGE);
+static int IsMAllocInvariant(PNODE, PNODE);
+static int AreAllReadOnly(PNODE, int);
+static void ModifyRedAT(PEDGE);
+static int GetBIPType(PEDGE);
 static char mem[2000];
 static char sptr[2000];
 

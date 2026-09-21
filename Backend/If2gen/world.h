@@ -168,177 +168,177 @@ extern int CodeComments;        /* Show source code lines in code */
 extern int MinSliceThrottle;    /* TRUE==> use minslice, F==> No throttle */
 /* ------------------------------------------------------------ */
 /* if2yank.c */
-extern void     If2Yank1 PROTO((void));
-extern void     If2Yank0 PROTO((void));
-extern void     WriteYankInfo PROTO((void));
+extern void     If2Yank1(void);
+extern void     If2Yank0(void);
+extern void     WriteYankInfo(void);
 
 /* if2temp.c */
-extern char     *MakeName PROTO((char*,char*,int));
-extern PTEMP    GetTemp PROTO((char*,PINFO,int));
-extern void     InitializeSymbolTable PROTO((void));
-extern void     ChangeToAllocated PROTO((PEDGE,PNODE));
-extern void     FreeTemp PROTO((PEDGE));
-extern void     PropagateTemp PROTO((PNODE,int,int,PTEMP));
-extern int      IsTempExported PROTO((PNODE,PTEMP));
-extern int      IsTempImported PROTO((PNODE,PTEMP));
-extern void     PrintLocals PROTO((void));
-extern PNODE    FindCriticalPath PROTO((PNODE,PNODE));
-extern void     AssignTemps PROTO((PNODE));
-extern void     PrintFrameDeallocs PROTO((void));
+extern char     *MakeName(char*,char*,int);
+extern PTEMP    GetTemp(char*,PINFO,int);
+extern void     InitializeSymbolTable(void);
+extern void     ChangeToAllocated(PEDGE,PNODE);
+extern void     FreeTemp(PEDGE);
+extern void     PropagateTemp(PNODE,int,int,PTEMP);
+extern int      IsTempExported(PNODE,PTEMP);
+extern int      IsTempImported(PNODE,PTEMP);
+extern void     PrintLocals(void);
+extern PNODE    FindCriticalPath(PNODE,PNODE);
+extern void     AssignTemps(PNODE);
+extern void     PrintFrameDeallocs(void);
 
 /* if2names.c */
-extern char     *GetCopyFunction PROTO((PINFO));
-extern char     *GetReadFunction PROTO((int));
-extern char     *GetWriteFunction PROTO((int));
-extern char     *GetIncRefCountName PROTO((PINFO));
-extern char     *GetSetRefCountName PROTO((PINFO));
+extern char     *GetCopyFunction(PINFO);
+extern char     *GetReadFunction(int);
+extern char     *GetWriteFunction(int);
+extern char     *GetIncRefCountName(PINFO);
+extern char     *GetSetRefCountName(PINFO);
 
 /* if2preamble.c */
-extern void     PrintFilePrologue PROTO((void));
-extern void     MarkRecursiveFunctions PROTO((void));
-extern void     CheckParallelFunctions PROTO((void));
-extern void     PrintFunctPrologue PROTO((PNODE));
-extern void     PrintFunctEpilogue PROTO((PNODE));
-extern void     PrintFileEpilogue PROTO((void));
+extern void     PrintFilePrologue(void);
+extern void     MarkRecursiveFunctions(void);
+extern void     CheckParallelFunctions(void);
+extern void     PrintFunctPrologue(PNODE);
+extern void     PrintFunctEpilogue(PNODE);
+extern void     PrintFileEpilogue(void);
 
 /* if2smash.c */
-extern void     GenSmashTypes PROTO((void));
+extern void     GenSmashTypes(void);
 
 /* if2print.c */
-extern void     PrintIndentation PROTO((int));
-extern void     PrintTemp PROTO((PEDGE));
-extern void     PrintFldRef PROTO((char*,char*,PEDGE,char*,int));
-extern void     PrintAssgn PROTO((int,PEDGE,PEDGE));
-extern void     PrintFldAssgn PROTO((int,char*,char*,PEDGE,char*,int,PEDGE));
-extern void     PrintMacro PROTO((int,char*,PNODE,char*));
-extern void     PrintSetRefCount PROTO((int,PEDGE,int,int));
-extern void     PrintFreeCall PROTO((int,PEDGE));
-extern void     PrintConsumerModifiers PROTO((int,PNODE));
-extern void     PrintProducerLastModifiers PROTO((int,PNODE));
-extern void     PrintProducerModifiers PROTO((int,PNODE));
-extern int      GenIsIntrinsic PROTO((PNODE));
-extern void     PrintGraph PROTO((int,PNODE));
+extern void     PrintIndentation(int);
+extern void     PrintTemp(PEDGE);
+extern void     PrintFldRef(char*,char*,PEDGE,char*,int);
+extern void     PrintAssgn(int,PEDGE,PEDGE);
+extern void     PrintFldAssgn(int,char*,char*,PEDGE,char*,int,PEDGE);
+extern void     PrintMacro(int,char*,PNODE,char*);
+extern void     PrintSetRefCount(int,PEDGE,int,int);
+extern void     PrintFreeCall(int,PEDGE);
+extern void     PrintConsumerModifiers(int,PNODE);
+extern void     PrintProducerLastModifiers(int,PNODE);
+extern void     PrintProducerModifiers(int,PNODE);
+extern int      GenIsIntrinsic(PNODE);
+extern void     PrintGraph(int,PNODE);
 
 /* if2record.c */
-extern void     PrintUGetTag PROTO((int,PNODE));
-extern void     PrintUElement PROTO((int,PNODE));
-extern void     PrintUBuild PROTO((int,PNODE));
-extern void     PrintRBuild PROTO((int,PNODE));
-extern void     PrintRElements PROTO((int,PNODE));
-extern void     PrintRReplace PROTO((int,PNODE));
-extern void     PrintRecordNoOp PROTO((int,PNODE));
-extern void     PrintBRAStore PROTO((int,PNODE,PNODE));
-extern void     PrintBRBuild PROTO((int,PNODE));
-extern void     PrintBROptAElement PROTO((int,PNODE));
-extern void     PrintBRElements PROTO((int,PNODE));
-extern void     PrintBRReplace PROTO((int,PNODE));
-extern void     PrintUTagTest PROTO((int,PNODE));
+extern void     PrintUGetTag(int,PNODE);
+extern void     PrintUElement(int,PNODE);
+extern void     PrintUBuild(int,PNODE);
+extern void     PrintRBuild(int,PNODE);
+extern void     PrintRElements(int,PNODE);
+extern void     PrintRReplace(int,PNODE);
+extern void     PrintRecordNoOp(int,PNODE);
+extern void     PrintBRAStore(int,PNODE,PNODE);
+extern void     PrintBRBuild(int,PNODE);
+extern void     PrintBROptAElement(int,PNODE);
+extern void     PrintBRElements(int,PNODE);
+extern void     PrintBRReplace(int,PNODE);
+extern void     PrintUTagTest(int,PNODE);
 
 /* if2array.c */
-extern char     *GetSisalInfo PROTO((PNODE,char*));
-extern char     *GetSisalInfoOnEdge PROTO((PEDGE,char*));
-extern void     PrintBoundsCheck PROTO((int,PNODE,PEDGE,PEDGE));
-extern void     PrintRagged PROTO((int,PNODE));
-extern void     PrintPSMemAllocDVI PROTO((int,PNODE));
-extern void     PrintPSScatter PROTO((int,PNODE));
-extern void     PrintPSManager PROTO((int,PNODE,char*));
-extern void     PrintPSFree PROTO((int,PNODE,char*,PNODE));
-extern void     PrintPSAlloc PROTO((int,PNODE,char*));
-extern void     PrintMemAlloc PROTO((int,PNODE));
-extern void     PrintGABase PROTO((int,PNODE));
-extern void     PrintOptAElement PROTO((int,PNODE));
-extern void     PrintArrayMacro PROTO((int,char*,char*,PNODE));
-extern void     PrintAReplace PROTO((int,PNODE));
-extern void     PrintABuild PROTO((int,PNODE));
-extern void     PrintABuildAT PROTO((int,PNODE));
-extern void     PrintAAddHLAT PROTO((int,PNODE));
-extern void     PrintAAddH PROTO((int,PNODE));
-extern void     PrintACatenateAT PROTO((int,PNODE));
-extern void     PrintArrayNoOp PROTO((int,PNODE));
+extern char     *GetSisalInfo(PNODE,char*);
+extern char     *GetSisalInfoOnEdge(PEDGE,char*);
+extern void     PrintBoundsCheck(int,PNODE,PEDGE,PEDGE);
+extern void     PrintRagged(int,PNODE);
+extern void     PrintPSMemAllocDVI(int,PNODE);
+extern void     PrintPSScatter(int,PNODE);
+extern void     PrintPSManager(int,PNODE,char*);
+extern void     PrintPSFree(int,PNODE,char*,PNODE);
+extern void     PrintPSAlloc(int,PNODE,char*);
+extern void     PrintMemAlloc(int,PNODE);
+extern void     PrintGABase(int,PNODE);
+extern void     PrintOptAElement(int,PNODE);
+extern void     PrintArrayMacro(int,char*,char*,PNODE);
+extern void     PrintAReplace(int,PNODE);
+extern void     PrintABuild(int,PNODE);
+extern void     PrintABuildAT(int,PNODE);
+extern void     PrintAAddHLAT(int,PNODE);
+extern void     PrintAAddH(int,PNODE);
+extern void     PrintACatenateAT(int,PNODE);
+extern void     PrintArrayNoOp(int,PNODE);
 
 /* if2select.c */
-extern void     PrintSelect PROTO((int,PNODE));
-extern void     PrintTagCase PROTO((int,PNODE));
+extern void     PrintSelect(int,PNODE);
+extern void     PrintTagCase(int,PNODE);
 
 /* if2loop.c */
-extern void     PrintAStore PROTO((int,PNODE,PNODE));
-extern void     PrintYankedRed PROTO((int,PNODE,char*));
-extern int      AreAllUnitFanout PROTO((PNODE));
-extern void     PrintSumOfTerms PROTO((int,PEDGE));
-extern PEDGE    GetSliceParam PROTO((PEDGE,PNODE));
-extern void     PrintRanges PROTO((PNODE));
-extern void     PrintRangeLow PROTO((PNODE));
-extern void     PrintRangeHigh PROTO((PNODE));
-extern void     PrintSliceTaskInit PROTO((int,PNODE));
-extern void     PrintForall PROTO((int,PNODE));
-extern void     PrintLoop PROTO((int,PNODE));
-extern void     PrintFirstSum PROTO((int,PNODE));
-extern void     PrintTri PROTO((int,PNODE));
-extern void     PrintVMinMax PROTO((int,PNODE,char*));
-extern int      LCMSize PROTO((PNODE));
-extern void     PrintReturnRapUp PROTO((int,PNODE));
+extern void     PrintAStore(int,PNODE,PNODE);
+extern void     PrintYankedRed(int,PNODE,char*);
+extern int      AreAllUnitFanout(PNODE);
+extern void     PrintSumOfTerms(int,PEDGE);
+extern PEDGE    GetSliceParam(PEDGE,PNODE);
+extern void     PrintRanges(PNODE);
+extern void     PrintRangeLow(PNODE);
+extern void     PrintRangeHigh(PNODE);
+extern void     PrintSliceTaskInit(int,PNODE);
+extern void     PrintForall(int,PNODE);
+extern void     PrintLoop(int,PNODE);
+extern void     PrintFirstSum(int,PNODE);
+extern void     PrintTri(int,PNODE);
+extern void     PrintVMinMax(int,PNODE,char*);
+extern int      LCMSize(PNODE);
+extern void     PrintReturnRapUp(int,PNODE);
 
 /* if2aimp.c */
-extern void     NormalizeVectorLoop PROTO((PNODE));
-extern void     AssignNewPortNums PROTO((PNODE,int));
-extern void     If2AImp PROTO((void));
-extern void     WriteIf2AImpInfo PROTO((void));
+extern void     NormalizeVectorLoop(PNODE);
+extern void     AssignNewPortNums(PNODE,int);
+extern void     If2AImp(void);
+extern void     WriteIf2AImpInfo(void);
 
 /* if2opt.c */
-extern void     PrepareGraph PROTO((PNODE));
-extern void     If2Opt PROTO((void));
-extern void     WriteIf2OptInfo PROTO((void));
-extern void     WriteIf2AImpInfo2 PROTO((void));
-extern void     WriteIf2OptInfo2 PROTO((void));
+extern void     PrepareGraph(PNODE);
+extern void     If2Opt(void);
+extern void     WriteIf2OptInfo(void);
+extern void     WriteIf2AImpInfo2(void);
+extern void     WriteIf2OptInfo2(void);
 
 /* if2vector.c */
-extern void     WriteVectorInfo PROTO((void));
-extern void     If2Vectorize PROTO((int));
-extern void     PrintNOVECTOR PROTO((void));
-extern void     PrintVECTOR PROTO((void));
-extern void     PrintASSOC PROTO((void));
-extern void     PrintSAFE PROTO((char*));
+extern void     WriteVectorInfo(void);
+extern void     If2Vectorize(int);
+extern void     PrintNOVECTOR(void);
+extern void     PrintVECTOR(void);
+extern void     PrintASSOC(void);
+extern void     PrintSAFE(char*);
 
 /* if2prebuild.c */
-extern void     GenNormalizeNode PROTO((PNODE));
-extern void     PointerSwap PROTO((PNODE,PNODE));
-extern void     WritePrebuildInfo PROTO((void));
-extern void     OptimizeBIPs PROTO((PNODE));
-extern void     If2Prebuild0 PROTO((void));
-extern void     If2Prebuild1 PROTO((void));
-extern void     If2Prebuild2 PROTO((void));
+extern void     GenNormalizeNode(PNODE);
+extern void     PointerSwap(PNODE,PNODE);
+extern void     WritePrebuildInfo(void);
+extern void     OptimizeBIPs(PNODE);
+extern void     If2Prebuild0(void);
+extern void     If2Prebuild1(void);
+extern void     If2Prebuild2(void);
 
 /* if2fibre.c */
-extern void     PrintReadFibreInputs PROTO((PNODE));
-extern void     PrintTypeWriters PROTO((PNODE));
-extern void     PrintWriteFibreOutputs PROTO((PNODE));
-extern void     PrintWriteFibreInputs PROTO((PNODE));
-extern void     PrintPeek PROTO((int,PNODE));
+extern void     PrintReadFibreInputs(PNODE);
+extern void     PrintTypeWriters(PNODE);
+extern void     PrintWriteFibreOutputs(PNODE);
+extern void     PrintWriteFibreInputs(PNODE);
+extern void     PrintPeek(int,PNODE);
 
 /* if2free.c */
-extern char     *GetFreeName PROTO((PINFO));
-extern void     PrintFreeUtilities PROTO((void));
-extern void     PrintInputDeallocs PROTO((char*,int,PNODE));
-extern void     PrintOutputDeallocs PROTO((int,PNODE));
+extern char     *GetFreeName(PINFO);
+extern void     PrintFreeUtilities(void);
+extern void     PrintInputDeallocs(char*,int,PNODE);
+extern void     PrintOutputDeallocs(int,PNODE);
 
 /* if2interface.c */
-extern void     WriteInterfaceInfo PROTO((void));
-extern int      GetLanguage PROTO((PNODE));
-extern char     *BindInterfaceName PROTO((char*,int,int));
-extern void     PrintInterfaceCall PROTO((int,PNODE,PNODE));
-extern int      GenIsReadOnly PROTO((PNODE,int));
-extern void     PrintInterfaceUtilities PROTO((void));
-extern void     PrintInterface PROTO((PNODE));
+extern void     WriteInterfaceInfo(void);
+extern int      GetLanguage(PNODE);
+extern char     *BindInterfaceName(char*,int,int);
+extern void     PrintInterfaceCall(int,PNODE,PNODE);
+extern int      GenIsReadOnly(PNODE,int);
+extern void     PrintInterfaceUtilities(void);
+extern void     PrintInterface(PNODE);
 
 /* if2sdbx.c */
-extern void     PrintSdbxFunctionList PROTO((void));
-extern void     BuildAndPrintSdbxScope PROTO((PNODE));
-extern void     UpdateSdbxScopeNames PROTO((PNODE));
-extern void     SaveSdbxState PROTO((PNODE));
+extern void     PrintSdbxFunctionList(void);
+extern void     BuildAndPrintSdbxScope(PNODE);
+extern void     UpdateSdbxScopeNames(PNODE);
+extern void     SaveSdbxState(PNODE);
 
 /* if2ureduce.c */
-extern void     PrintUReduceRapUp PROTO((int,PNODE));
-extern void     PrintUReduceUpd PROTO((int,PNODE));
-extern void     PrintUReduceInit PROTO((int,PNODE));
+extern void     PrintUReduceRapUp(int,PNODE);
+extern void     PrintUReduceUpd(int,PNODE);
+extern void     PrintUReduceInit(int,PNODE);
 
 #endif

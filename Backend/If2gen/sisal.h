@@ -303,7 +303,7 @@ static void ArrayDump(POINTER Ptr, char *Name)
 #define OptMinus(x,y,z) x -= z
 #define Minus(x,y,z)    x  = y - z
 
-staticforward int DivByZero PROTO((void)) { return( 0 ); }
+static int DivByZero(void) { return( 0 ); }
 
 #define OptDivZero(x,y,z)  x /= DivByZero()
 #define DivZero(x,y,z)     x  = y / DivByZero()
@@ -1612,7 +1612,7 @@ staticforward int DivByZero PROTO((void)) { return( 0 ); }
 { \
   int  vX; \
   int lX,hX; \
-  extern int w PROTO((void)); \
+  extern int w(void); \
   lX = l; \
   hX = h; \
   vX = v; \

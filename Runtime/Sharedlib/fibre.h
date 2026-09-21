@@ -17,11 +17,11 @@ extern FILE *FibreInFd;
 extern FILE *FibreOutFd;
 extern FILE *PerfFd;
 
-extern void    FibreError PROTO((char*));
-extern int     FibreParse PROTO((int));
+extern void    FibreError(char*);
+extern int     FibreParse(int);
 extern POINTER SisalMainArgs; 
-extern POINTER ReadFibreInputs PROTO((void));;
-extern void    WriteFibreOutputs PROTO((POINTER));;
+extern POINTER ReadFibreInputs(void);;
+extern void    WriteFibreOutputs(POINTER);;
 
 #define PrintIndent \
 {                                                  \

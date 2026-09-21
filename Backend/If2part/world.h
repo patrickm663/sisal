@@ -130,36 +130,36 @@ extern char DefaultStyle;       /* Style of loop parallelism to exploit */
 
 /* ------------------------------------------------------------ */
 /* if2cost.c */
-extern void     ReadCostFile PROTO((char*));
-extern double   NumberOfIterations PROTO((PNODE));
-extern void     If2Cost PROTO((void));
+extern void     ReadCostFile(char*);
+extern double   NumberOfIterations(PNODE);
+extern void     If2Cost(void);
 
 /* if2part.c */
-extern void     If2Part PROTO((void));
+extern void     If2Part(void);
 
 /* if2count.c */
-extern void     PartIf2Count PROTO((void));
+extern void     PartIf2Count(void);
 
 /* if2modules.c */
-extern void     MarkParallelFunctions PROTO((void));
-extern PMDATA   LookupCallee PROTO((char*));
-extern void     ReadModuleDataBase PROTO((void));
-extern void     WriteModuleDataBase PROTO((void));
-extern void     AddModuleStamp PROTO((void));
+extern void     MarkParallelFunctions(void);
+extern PMDATA   LookupCallee(char*);
+extern void     ReadModuleDataBase(void);
+extern void     WriteModuleDataBase(void);
+extern void     AddModuleStamp(void);
 
 /* report.c */
-extern void     ReadReport PROTO((void));
-extern int      UpdatedLoopPragmas PROTO((PNODE,unsigned));
-extern void     PartitionReport PROTO((void));
+extern void     ReadReport(void);
+extern int      UpdatedLoopPragmas(PNODE,unsigned);
+extern void     PartitionReport(void);
 
 /* vector.c */
-extern int      PartIsVecCandidate PROTO((PNODE,char**));
-extern void     VectorSummary PROTO((void));
+extern int      PartIsVecCandidate(PNODE,char**);
+extern void     VectorSummary(void);
 
 /* slice.c */
-extern int      IsSliceCandidate PROTO((PNODE,char**));
+extern int      IsSliceCandidate(PNODE,char**);
 
 /* stream.c */
-extern int      IsStreamTask PROTO((PNODE));
+extern int      IsStreamTask(PNODE);
 
 #endif

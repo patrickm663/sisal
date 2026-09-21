@@ -185,8 +185,8 @@ extern struct SdbxInfo    SdbxState;
 extern struct SdbxInfo    SdbxAction;
 extern char             **SdbxCurrentFunctionList;
 
-extern void SdbxMonitor PROTO((int));
-extern void SdbxHandler PROTO((int));
+extern void SdbxMonitor(int);
+extern void SdbxHandler(int);
 
 
 extern int p_procnum;
@@ -196,38 +196,38 @@ extern struct ActRec  **RListFrontD;
 extern int     Sequential;
 extern int     UsingSdbx;
 
-extern POINTER SharedMalloc PROTO((int));
-extern void    AcquireSharedMemory PROTO((int));
-extern void    ReleaseSharedMemory PROTO((void));
-extern void    StartWorkers PROTO((void));
-extern void    StartWorkersWithEntry PROTO((void (*entry)(void)));
-extern void    StopWorkers PROTO((void));
-extern void    AbortParallel PROTO((void));
+extern POINTER SharedMalloc(int);
+extern void    AcquireSharedMemory(int);
+extern void    ReleaseSharedMemory(void);
+extern void    StartWorkers(void);
+extern void    StartWorkersWithEntry(void (*entry)(void));
+extern void    StopWorkers(void);
+extern void    AbortParallel(void);
 
-extern void    DumpRunTimeInfo PROTO((void));
-extern void    InitSisalRunTime PROTO((void));
+extern void    DumpRunTimeInfo(void);
+extern void    InitSisalRunTime(void);
 
-extern void    Wait PROTO((int));
-extern void    Sync PROTO((struct ActRec*,struct ActRec*));
+extern void    Wait(int);
+extern void    Sync(struct ActRec*,struct ActRec*);
 
-extern void    InitSpawn PROTO((void));
-extern void    SpawnSlices PROTO((int,PCODE ChildCode,POINTER,int,int,int,int));
-extern void    OptSpawnSlices PROTO((struct ActRec*,int));
-extern void    OptSpawnSlicesFast PROTO((struct ActRec*,int));
-extern void    BuildSlices PROTO((int,struct ActRec**,int*,PCODE ChildCode,POINTER,int,int,int,int,int,int));
+extern void    InitSpawn(void);
+extern void    SpawnSlices(int,PCODE ChildCode,POINTER,int,int,int,int);
+extern void    OptSpawnSlices(struct ActRec*,int);
+extern void    OptSpawnSlicesFast(struct ActRec*,int);
+extern void    BuildSlices(int,struct ActRec**,int*,PCODE ChildCode,POINTER,int,int,int,int,int,int);
 
-extern void    EnterWorker PROTO((int));
-extern void    LeaveWorker PROTO((void));
-extern void    InitWorkers PROTO((void));
+extern void    EnterWorker(int);
+extern void    LeaveWorker(void);
+extern void    InitWorkers(void);
 
-extern void    SisalMain PROTO((POINTER));
+extern void    SisalMain(POINTER);
 
-extern void           InitReadyList PROTO((void));
-extern struct ActRec *RListDeQ PROTO((void));
-extern void           RListEnQ PROTO((struct ActRec*,struct ActRec*));
+extern void           InitReadyList(void);
+extern struct ActRec *RListDeQ(void);
+extern void           RListEnQ(struct ActRec*,struct ActRec*);
 
-extern void    StopTimer PROTO((void));
-extern void    StartTimer PROTO((void));
+extern void    StopTimer(void);
+extern void    StartTimer(void);
 
 /* ------------------------------------------------------------ */
 
@@ -277,7 +277,7 @@ struct shared_s
         void    (*Entry_point)();
 };
 
-extern void InitSharedGlobals PROTO((void));
+extern void InitSharedGlobals(void);
 extern int sdebug;
 
 extern struct shared_s SR;
@@ -345,7 +345,7 @@ extern struct WorkerInfo *AllWorkerInfo;
 extern int     OneLevelParallel;
 extern LOCK_TYPE *UtilityLock;
 extern LOCK_TYPE *SUtilityLock;
-extern void (*Entry_point) PROTO((void));
+extern void (*Entry_point)(void);
 #if defined(DIST_DSA)
 extern LOCK_TYPE *Dsa_lock;
 #endif
@@ -353,17 +353,17 @@ extern LOCK_TYPE *Dsa_lock;
 
 /* ------------------------------------------------------------ */
 
-extern void    InitErrorSystem PROTO((void));
-extern int     SisalError PROTO_NORET((char*,char*));
+extern void    InitErrorSystem(void);
+extern SISAL_NORETURN int SisalError(char*,char*);
 
-extern void    DsaInit PROTO((void));
-extern POINTER Alloc PROTO((int));
-extern void    DeAlloc PROTO((POINTER));
-extern void    DoDeAllocWork PROTO((void));
-extern void    DeAllocToBt PROTO((POINTER));
+extern void    DsaInit(void);
+extern POINTER Alloc(int);
+extern void    DeAlloc(POINTER);
+extern void    DoDeAllocWork(void);
+extern void    DeAllocToBt(POINTER);
 
-extern void    FreePointerSwapStorage PROTO((POINTER,POINTER));
-extern POINTER AllocPointerSwapStorage PROTO((POINTER,int));
-extern POINTER SkiAllocPointerSwapStorage PROTO((int,POINTER,int));
+extern void    FreePointerSwapStorage(POINTER,POINTER);
+extern POINTER AllocPointerSwapStorage(POINTER,int);
+extern POINTER SkiAllocPointerSwapStorage(int,POINTER,int);
 
 #endif

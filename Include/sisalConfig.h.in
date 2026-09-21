@@ -11,27 +11,17 @@
 #ifndef SISAL_CONFIG_H
 #define SISAL_CONFIG_H
 
-/* Define if your compiler botches static forward declarations (as it does on
-   SCI ODT 3.0) */
-#undef BAD_STATIC_FORWARD
-
 /* Define if you want debug info for the DSA */
 #undef DEBUG_DSA
 
 /* Define if you choose a distributed DSA model (broken) */
 #undef DIST_DSA
 
-/* Define if C does not support const keyword */
-#undef HAVE_CONST
-
 /* Define to 1 if you have the <fcntl.h> header file. */
 #undef HAVE_FCNTL_H
 
 /* Define to 1 if you have the <float.h> header file. */
 #undef HAVE_FLOAT_H
-
-/* Define if GCC-style noreturn attribute is supported */
-#undef HAVE_GCC_ATTR_NORETURN
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
@@ -44,9 +34,6 @@
 
 /* Define to 1 if you have the <minix/config.h> header file. */
 #undef HAVE_MINIX_CONFIG_H
-
-/* Define if you allow normal C prototypes */
-#undef HAVE_PROTOTYPES
 
 /* Define to 1 if you have the `psignal' function. */
 #undef HAVE_PSIGNAL
