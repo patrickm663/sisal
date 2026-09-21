@@ -69,6 +69,19 @@ static char **P_argv;
 static SHORT P_escapecode;
 static int P_ioresult;
 
+/* Discard the rest of the current input line, including its newline.  This
+   replaces an "fscanf(f, skip-to-newline); getc(f);" pair that was repeated
+   throughout the file: the fscanf form returns a value that has to be checked
+   to keep the compiler quiet, and says far less about what it does. */
+static void P_skipline( FILE *f )
+{
+  int ch;
+
+  while ( (ch = getc( f )) != EOF && ch != '\n' )
+    ;
+}
+
+
 
 static Anyptr __MallocTemp__;
 
@@ -76,7 +89,19 @@ static Anyptr __MallocTemp__;
 /* CANN 1/92 TO ALLOW FOR BIGGER LINE BUFFERS */
 /* #define short int */
 /* cann 5/29/90 */
-#define fread(w,x,y,z) fscanf( z, "%d", w )
+
+/* p2c translated Pascal's binary table reads into fread() calls, but the
+   parse tables are written as whitespace-separated decimal integers, so this
+   has always meant "read one integer".  It shadows the standard fread() with
+   incompatible semantics, which is why the size and count arguments are
+   vestigial.
+ 
+   ReadTableInt also checks the read.  A truncated or corrupt table file used
+   to leave the destination holding whatever happened to be there and let the
+   parser carry on with it, which shows up much later as an unexplained parse
+   failure rather than as a bad table. */
+staticforward void ReadTableInt PROTO(( FILE*, int* ));
+#define fread(w,x,y,z) ReadTableInt( (z), (w) )
 
 
 
@@ -3325,8 +3350,7 @@ stryng *s;
   }
   if (s->len < maxstringchars)
     clearstring(s, s->len + 1, maxstringchars);
-  fscanf(fil, "%*[^\n]");
-  getc(fil);
+  P_skipline(fil);
 }
 
 
@@ -4148,11 +4172,17 @@ stryng *cmdline;
 static void CANN_exit(status)
 int status;
 {
-   static char dummystring[1024];
- if (CANN_source != NULL ) {
+  if (CANN_source != NULL ) {
     fclose(CANN_source);
-    sprintf(dummystring, "rm %s", CANN_source_file );
-    system(dummystring);
+
+    /* This used to build an "rm <file>" string and hand it to system().  The
+       name comes from the source file the user named, so any shell character
+       in it was interpreted; remove() deletes the file directly, needs no
+       shell, and reports whether it worked. */
+    if ( remove(CANN_source_file) != 0 )
+      perror(CANN_source_file);
+
+    CANN_source = NULL;
     }
 
   exit(status);
@@ -8299,10 +8329,9 @@ struct LOC_graphwalk *LINK;
 
   skipblanks(LINK);
   ch = P_peek(stdin);
-  if (ch >= '0' && ch <= '9') {
-    scanf("%d", i);
-    return true;
-  } else
+  if (ch >= '0' && ch <= '9')
+    return scanf("%d", i) == 1;
+  else
     return false;
 }  /* ReadInteger */
 
@@ -8396,8 +8425,7 @@ struct LOC_graphwalk *LINK;
       found = true;
       break;
     }
-    scanf("%*[^\n]");
-    getchar();
+    P_skipline(stdin);
     printf("Command unknown: %.*s\n", maxnamelen, cname);
   }
 }  /* GetValidCommand */
@@ -9629,8 +9657,7 @@ node *start;
       dumpalloutput(cursor, &V);
       break;
     }/* case */
-    scanf("%*[^\n]");
-    getchar();
+    P_skipline(stdin);
   }
   return Result;
 }  /* GraphWalk */
@@ -21950,8 +21977,12 @@ Char *reduceflag_NAMES[] = {
 static void setstep()
 {
   printf("Please enter step count: ");
-  scanf("%d%*[^\n]", &stepcount);
-  getchar();
+  if (scanf("%d", &stepcount) != 1) {
+    printf("Not a number; step count left unchanged.\n");
+    P_skipline(stdin);
+    return;
+  }
+  P_skipline(stdin);
   currentstep = stepcount;
 }
 
@@ -21984,12 +22015,12 @@ static void removebrkpts()
   showbrkpts();
   printf("Enter the breakpoints to be removed:\n");
   while (!P_eoln(stdin)) {
-    scanf("%d", &TEMP);
+    if (scanf("%d", &TEMP) != 1)
+      break;
     rembrkpt = TEMP;
     P_remset(breakpointset, rembrkpt);
   }  /* while */
-  scanf("%*[^\n]");
-  getchar();
+  P_skipline(stdin);
   showbrkpts();
 }  /* RemoveBrkPts */
 
@@ -22002,12 +22033,12 @@ static void addbrkpts()
   showbrkpts();
   printf("Enter the breakpoints to be added:\n");
   while (!P_eoln(stdin)) {
-    scanf("%d", &TEMP);
+    if (scanf("%d", &TEMP) != 1)
+      break;
     newbrkpt = TEMP;
     P_addset(breakpointset, newbrkpt);
   }  /* while */
-  scanf("%*[^\n]");
-  getchar();
+  P_skipline(stdin);
   showbrkpts();
 }  /* AddBrkPts */
 
@@ -22105,8 +22136,11 @@ static void printstack()
   semanticrec *semstack;
 
   printf("Please enter the number of stack items to be printed:\n");
-  scanf("%d%*[^\n]", &i);
-  getchar();
+  if (scanf("%d", &i) != 1) {
+    P_skipline(stdin);
+    return;
+  }
+  P_skipline(stdin);
   semstack = topsemstk;
   while (semstack != NULL && i != 0) {
     printf("** Object is of type : %s\n",
@@ -22815,8 +22849,16 @@ int action, token;
     printf(" 8 : turn sem trace on.        9 : turn trace off.\n");
     printf("10 : enter graphwalker        11 : try to run dump.\n");
     printf("12 : Quit.\n");
-    scanf("%d%*[^\n]", &i);
-    getchar();
+    if (scanf("%d", &i) != 1) {
+      if (feof(stdin) || ferror(stdin))
+        i = 12;                 /* no more input: quit rather than loop */
+      else {
+        P_skipline(stdin);
+        continue;
+      }
+    } else {
+      P_skipline(stdin);
+    }
     switch (i) {
 
     case 0:
@@ -23511,6 +23553,20 @@ stryng inputtoken;
 /* Update: Pat Miller -- ANSI compliance                                  */
 /* Copyright (C) University of California Regents                         */
 /**************************************************************************/
+/**************************************************************************/
+/* LOCAL  **************        ReadTableInt       ************************/
+/**************************************************************************/
+/* PURPOSE:  Read one decimal integer from a parse table file, aborting if  */
+/*           the file is truncated or holds something that is not a number. */
+/**************************************************************************/
+static void ReadTableInt( FILE *tablefile, int *dest )
+{
+  if ( fscanf( tablefile, "%d", dest ) != 1 ) {
+    printf( "Parse tables are truncated or corrupt.\n" );
+    myabort();
+  }
+}
+
 static void readcosts()
 {
   /*-----------------------------------------------------------------
@@ -24295,8 +24351,7 @@ inputbuffer *buffer;
     linenumber++;
     if (listing)
       fprintf(listfile, " %5d: \n", linenumber);
-    fscanf(source, "%*[^\n]");
-    getc(source);
+    P_skipline(source);
   }  /*while*/
   buffer->length = 1;
   buffer->pointer = 1;
@@ -24326,8 +24381,7 @@ inputbuffer *buffer;
     buffer->length++;
   } while (!P_eoln(source));
 
-  fscanf(source, "%*[^\n]");
-  getc(source);
+  P_skipline(source);
 
   if ( buffer->buf[1] == '%' ) {
       txt.len = 0;
@@ -26186,8 +26240,7 @@ struct LOC_pass1 *LINK;
       myabort();
     }
   } while (!P_eoln(infile));
-  fscanf(infile, "%*[^\n]");
-  getc(infile);
+  P_skipline(infile);
   linebuf->length = length;
 }
 
@@ -26638,8 +26691,7 @@ FILE *outfile_;
             break;
           }
           linenum++;
-          fscanf(infile, "%*[^\n]");
-          getc(infile);
+          P_skipline(infile);
           putc('\n', V.outfile);
         }  /*while*/
         if (endoffile) {

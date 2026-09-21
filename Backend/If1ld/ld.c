@@ -381,6 +381,42 @@ static void LoadIF1File(actual,name)
 }
 
 /**************************************************************************/
+/* LOCAL  **************          ReadToken        ************************/
+/**************************************************************************/
+/* PURPOSE:  Read one whitespace-delimited token into Buf, never writing   */
+/*           more than Size bytes.  Returns 1 on success, 0 at end of      */
+/*           input, and -1 if the token did not fit.                       */
+/*                                                                         */
+/*           This exists because fscanf's %s has no bound unless the field */
+/*           width is written into the format string as a literal, which   */
+/*           cannot be spelled in terms of sizeof or a macro like          */
+/*           MAX_PATH.  The unbounded version overflowed its buffer on a   */
+/*           long symbol name.                                             */
+/**************************************************************************/
+static int ReadToken( FILE *F, char *Buf, size_t Size )
+{
+  size_t n = 0;
+  int    c;
+
+  if ( Size == 0 ) return -1;
+
+  do {
+    c = fgetc( F );
+  } while ( c != EOF && isspace( c ) );
+
+  if ( c == EOF ) return 0;
+
+  while ( c != EOF && !isspace( c ) ) {
+    if ( n + 1 >= Size ) return -1;
+    Buf[n++] = (char)c;
+    c = fgetc( F );
+  }
+
+  Buf[n] = '\0';
+  return 1;
+}
+
+/**************************************************************************/
 /* LOCAL  **************         ReadLibrary       ************************/
 /**************************************************************************/
 /* PURPOSE:  ReadLibrary attempts to satisfy unresolved imported functions*/
@@ -421,13 +457,31 @@ static int ReadLibrary(lib,Need)
     /* Scan the Have list (SYMDEF's)                                */
     /* ------------------------------------------------------------ */
     do {
-      fscanf(LIBF," %s",havename);
+      /* ------------------------------------------------------------ */
+      /* A truncated or malformed symbol table used to leave havename  */
+      /* holding whatever the previous iteration read, so this loop    */
+      /* never reached its starred entry and spun forever.             */
+      /* ------------------------------------------------------------ */
+      switch ( ReadToken(LIBF,havename,sizeof(havename)) ) {
+      case 1:
+        break;
+      case 0:
+        (void)fclose(LIBF);
+        return 0;               /* End of archive: nothing more to find */
+      default:
+        (void)fclose(LIBF);
+        Error2("Symbol name too long in archive ",lib);
+        return 0;
+      }
 
       /* ------------------------------------------------------------ */
       /* The symdef line ends with a starred entry                    */
       /* ------------------------------------------------------------ */
       if ( havename[0] == '*' ) {
-        fgets(line,sizeof(line),LIBF);
+        if ( !fgets(line,sizeof(line),LIBF) ) {
+          (void)fclose(LIBF);
+          return 0;
+        }
         break;
       }
 
@@ -452,11 +506,13 @@ static int ReadLibrary(lib,Need)
           Error2("Cannot delete ",tmpfile);
         }
 
+        (void)fclose(LIBF);
         return 1;               /* A load was made */
       }
     } while (1);                /* Keep looking until the star entry */
   }
 
+  (void)fclose(LIBF);
   return 0;                     /* No load was made */
 }
 

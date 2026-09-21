@@ -191,7 +191,13 @@ static void ReadInlineRequests()
             PRINTF(" Expand %s Calls Inline (y/n): ",
                          c->graph->G_NAME );
             ans = '\0';
-            (void)scanf( " %c", &ans );
+
+            /* On EOF -- a closed or redirected stdin -- scanf leaves ans
+               alone and returns immediately, so this used to prompt for
+               every remaining call and silently take each one as a yes.
+               Stop asking instead and keep the default. */
+            if ( scanf( " %c", &ans ) != 1 )
+                return;
 
             if ( ans == 'n' ) {
                 c->InLineFunction   = FALSE;
