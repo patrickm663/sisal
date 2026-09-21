@@ -369,6 +369,8 @@ int Submit(charStarQueue** queueP) {
    int status = 0;
    
    while(*queueP) {
+      if ( argc >= (int)(sizeof(argv)/sizeof(argv[0])) - 1 )
+        compilerError("too many arguments for subprocess");
       argv[argc++] = dequeue(queueP);
       if ( debug || verbose ) fprintf(stderr,"%s ",argv[argc-1]);
    }
@@ -383,8 +385,12 @@ int Submit(charStarQueue** queueP) {
        perror("sisalc");
        exit(1);
      } else if ( pid == 0 ) {
-       execv(argv[0],argv);
-       perror("sisalc");
+       /* execvp, not execv: the compiler phases are invoked by absolute
+          path, but CC= and LD= come from the user and are usually a bare
+          command name to look up on PATH.  With a slash in it execvp
+          behaves exactly as execv did. */
+       execvp(argv[0],argv);
+       perror(argv[0]);
        exit(1);
      } else {
        while( pid != wait(&status) );

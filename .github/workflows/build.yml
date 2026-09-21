@@ -1,0 +1,86 @@
+name: build
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.cc }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        cc: [gcc, clang]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install autotools
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            brew install automake autoconf
+          else
+            sudo apt-get update
+            sudo apt-get install -y automake autoconf
+          fi
+
+      - name: Regenerate the build system
+        run: autoreconf -i
+
+      # No -std=gnu89, -fcommon or -Wno-* here on purpose: the tree is
+      # meant to build clean with the compiler's own defaults, and this
+      # job is what keeps it that way.
+      - name: Configure
+        run: |
+          ./configure --prefix="$HOME/sisal" --disable-fortran \
+                      --enable-warnings CC=${{ matrix.cc }}
+
+      - name: Build
+        run: make -j"$(getconf _NPROCESSORS_ONLN)"
+
+      - name: Fail on old-style definitions
+        run: |
+          make clean >/dev/null
+          make -j"$(getconf _NPROCESSORS_ONLN)" 2>&1 | tee build.log
+          # These two are what stops the tree compiling as C23, so they are
+          # errors here even though the rest of the warning set is advisory.
+          if grep -E 'warning:.*(old-style (function )?definition|strict-prototypes|deprecated-non-prototype)' build.log; then
+            echo "::error::old-style function definitions reintroduced"
+            exit 1
+          fi
+
+      - name: Install
+        run: make install
+
+      # sisalc resolves its tables and runtime relative to the install
+      # prefix, so it cannot run from the build tree; check must follow
+      # install.
+      - name: Test
+        run: make check || { find . -name '*.log' -newer Makefile -exec tail -n 40 {} +; exit 1; }
+
+      - name: Compile and run a program end to end
+        run: |
+          export PATH="$HOME/sisal/bin:$PATH"
+          cat > squares.sis <<'SIS'
+          define Main
+          type IntArray = array [integer];
+          function Main(N: integer returns IntArray)
+            for i in 1, N
+              returns array of i * i
+            end for
+          end function
+          SIS
+          sisalc -o squares squares.sis
+          echo 8 | ./squares | tee out.txt
+          grep -q '1 4 9 16 25 36 49 64' out.txt
+
+      - name: Check the generated C still compiles as C23
+        if: matrix.cc == 'clang'
+        run: |
+          export PATH="$HOME/sisal/bin:$PATH"
+          sisalc -C -w squares.sis
+          clang -std=c2x -fsyntax-only -I"$HOME/sisal/include/sisal" squares.c

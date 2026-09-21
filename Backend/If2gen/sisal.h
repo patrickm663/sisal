@@ -182,13 +182,22 @@ static void ArrayDump(POINTER Ptr, char *Name)
 {
   register ARRAYP Array = (ARRAYP) Ptr;
 
+  /* This header is included by every compiled SISAL program, so its
+     warnings land in front of every user.  Pointers went through %x and
+     %d, which truncates them on any 64-bit target, sizeof went through
+     %d, and the mutex -- a struct on pthreads -- was handed to %d, which
+     is undefined rather than merely wrong.  Its address is what is
+     actually useful here. */
   fprintf( stderr, "TOKEN: (%s,lo=%d,size=%d)\n",
            Name, Array->LoBound, Array->Size   );
-  fprintf( stderr, "Array: 0x%x (%d), sizeof: %d\n",Array,Array,sizeof(*Array));
-  fprintf( stderr, "  LoBound: %d (0x%x)\n",Array->LoBound,Array->LoBound);
-  fprintf( stderr, "  Size: %d (0x%x)\n",Array->Size,Array->Size);
-  fprintf( stderr, "  Phys: 0x%x (%d)\n",Array->Phys,Array->Phys);
-  fprintf( stderr, "  Mutex: %d\n",Array->Mutex);
+  fprintf( stderr, "Array: %p, sizeof: %lu\n",
+           (void*)Array, (unsigned long)sizeof(*Array) );
+  fprintf( stderr, "  LoBound: %d (0x%x)\n",
+           Array->LoBound, (unsigned)Array->LoBound );
+  fprintf( stderr, "  Size: %d (0x%x)\n",
+           Array->Size, (unsigned)Array->Size );
+  fprintf( stderr, "  Phys: %p\n", (void*)Array->Phys );
+  fprintf( stderr, "  Mutex: %p\n", (void*)&Array->Mutex );
   fprintf( stderr, "  RefCount: %d\n",Array->RefCount);
   fprintf( stderr, "  Mutable: %d\n",Array->Mutable);
   fflush(stderr);

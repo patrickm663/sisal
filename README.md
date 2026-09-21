@@ -1,0 +1,141 @@
+# SISAL
+
+SISAL — Streams and Iteration in a Single Assignment Language — is a functional
+language for numerical computing, developed at Lawrence Livermore National
+Laboratory from the mid-1980s. Programs are written without mutable state, and
+the compiler extracts parallelism from the dataflow rather than from
+annotations: a `for` loop over independent work becomes parallel because
+nothing in it can alias.
+
+This is the Sisal 14.1 compiler and runtime. `sisalc` compiles `.sis` source
+through a series of intermediate forms (IF1 and IF2) into C, then hands that to
+your C compiler and links it against the SISAL runtime.
+
+See the [licence](LICENSE.LLNL) and [copyright](COPYRIGHT.1993) for terms.
+
+## Building
+
+You need a C compiler, `make`, and the autotools if you are building from a git
+checkout rather than a release tarball.
+
+```sh
+./configure
+make
+make install          # may need sudo, depending on --prefix
+```
+
+`make install` is not optional: `sisalc` looks for its parse tables, headers
+and runtime library under the install prefix, so it cannot run from the build
+directory. Run the test suite afterwards:
+
+```sh
+make check
+```
+
+A plain `./configure` builds with no warnings on current GCC and Clang. If you
+have seen instructions elsewhere passing `-std=gnu89`, `-fcommon`,
+`-Wno-implicit-function-declaration`, `-Wno-implicit-int`, `-Wno-int-conversion`
+or `LIBS=-lm`, none of those are needed any more.
+
+Useful options:
+
+| Option | Effect |
+| --- | --- |
+| `--prefix=DIR` | Install under `DIR` instead of `/usr/local` |
+| `--disable-fortran` | Skip the Fortran interface if you have no `f77` |
+| `--enable-warnings` | Build with a wider warning set, for working on the code |
+| `CC=...` | Choose the compiler, e.g. `CC=clang` |
+
+### Choosing a C compiler
+
+Whatever compiler `configure` picks is also what `sisalc` will invoke for the C
+it generates, so it decides how fast your SISAL programs run. You can pick a
+different one per compilation:
+
+```sh
+sisalc CC=clang CFLAGS="-O3 -march=native" -o prog prog.sis
+```
+
+Building the whole system with an optimising compiler and aggressive flags is
+worthwhile for numerical work — see
+[patrickm663/sisal-benchmarks](https://github.com/patrickm663/sisal-benchmarks),
+which builds with `zig cc` and reports a transposed 1000×1000 matrix multiply
+at 43 ms, ahead of threaded Julia on the same machine.
+
+## Writing and running a program
+
+```sisal
+% Generate an array of squares
+define Main
+
+type IntArray = array [integer];
+
+function square(x: integer returns integer)
+  x * x
+end function
+
+function Main(N: integer returns IntArray)
+  for i in 1, N
+    returns array of square(i)
+  end for
+end function
+```
+
+Compile it, then feed it its arguments on standard input:
+
+```sh
+sisalc -o squares squares.sis
+echo 8 | ./squares
+```
+
+`sisalc` is quiet on success. Older versions printed a wall of warnings from
+the C compiler on every build — pointers formatted with `%x`, a mutex passed
+to `%d` — which came from the runtime header every generated program includes.
+That header is fixed, so warnings you see now are about your own program.
+
+```
+x86_64-unknown-linux-gnu SISAL 1.2 (PThreads) ?.?
+[ 1,8: 1 4 9 16 25 36 49 64 ]
+```
+
+Input and output use FIBRE, a textual format for SISAL values. A function
+taking two integers reads two whitespace-separated integers; an array argument
+is written `[ lo,hi: v1 v2 ... ]`, the same shape you see in the output.
+
+### Running in parallel
+
+The compiled program takes runtime options of its own. `-usage` lists them all;
+the ones you will want first:
+
+| Option | Effect |
+| --- | --- |
+| `-w<n>` | Use `n` worker threads |
+| `-z` | Suppress the program's output (for timing) |
+| `-r` | Append resource usage to `s.info` |
+| `-gss` | Guided self-scheduling for loops |
+| `-cached` | Cache-oriented loop scheduling |
+| `-strided` | Strided loop scheduling |
+
+```sh
+echo 1000 | ./matmul -w$(nproc) -gss -z
+```
+
+### Compiler options
+
+`sisalc --help` lists everything. `-IF1`, `-OPT`, `-MEM`, `-UP`, `-PART` and
+`-C` each stop after the corresponding stage, which is how you look at what the
+optimiser did; `-keep` retains the intermediates rather than deleting them.
+
+## Examples
+
+- [patrickm663/hello-sisal](https://github.com/patrickm663/hello-sisal) —
+  small programs to start from
+- [patrickm663/sisal-benchmarks](https://github.com/patrickm663/sisal-benchmarks)
+  — matrix multiply, mandelbrot, n-body, STREAM, discounted cash flow, with
+  timings and a container build
+- `Tests/` in this repo — the programs `make check` runs
+
+## Further reading
+
+Raymond's [SISAL page](https://kestrel.nmt.edu/~raymond/software/sisal/sisal.xhtml)
+collects the original manuals and papers.
