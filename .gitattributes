@@ -1,0 +1,8 @@
+# Test fixtures are compared (and in inputio's case, byte-counted) exactly
+# as checked in. Windows' git defaults to converting LF to CRLF on checkout,
+# which would silently change those bytes -- inputio.in is 107 bytes on any
+# Unix checkout and 109 after that conversion, which is exactly what broke
+# the "STDIN agrees with READ" check under CI's first real Windows run.
+Tests/*.in  -text
+Tests/*.ans -text
+Tests/*.dat -text
