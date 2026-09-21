@@ -46,6 +46,16 @@ plain Command Prompt or PowerShell: `configure` is a shell script, and the
 runtime's parallelism is POSIX threads, which MinGW-w64 provides but MSVC does
 not.
 
+**Known limitation:** on macOS (`macos-latest` runners, both GCC and Clang),
+`sisalc`'s frontend fails to parse its own test input at `make check` time --
+a lexer/parser error that shows up only at runtime on real Darwin hardware.
+It does not reproduce on Linux, under QEMU's ARM64 emulation, or under any
+`zig cc` cross-compile targeting Darwin, so it appears to be a genuine
+Darwin libSystem runtime difference rather than an ARM64 or compile-time
+issue; root cause is still open. CI marks the macOS job non-fatal
+(`continue-on-error`) so this doesn't block the rest of the matrix while
+it's investigated.
+
 A plain `./configure` builds with no warnings on current GCC and Clang. If you
 have seen instructions elsewhere passing `-std=gnu89`, `-fcommon`,
 `-Wno-implicit-function-declaration`, `-Wno-implicit-int`, `-Wno-int-conversion`
