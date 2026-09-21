@@ -181,6 +181,47 @@ jobs:
             echo 8 | ./squares | tee out.txt
             grep -q '1 4 9 16 25 36 49 64' out.txt
 
+  openbsd:
+    name: openbsd / gcc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same shape as the FreeBSD job above: no first-party runner, so this
+      # boots a real OpenBSD VM and everything below runs as OpenBSD.
+      - name: Build and test inside an OpenBSD VM
+        uses: vmactions/openbsd-vm@v1
+        with:
+          usesh: true
+          prepare: |
+            pkg_add autoconf automake gmake
+          run: |
+            set -e
+            # OpenBSD keeps every autoconf/automake release installed side by
+            # side under a versioned name and picks between them with these,
+            # rather than a single unversioned autoconf/automake on PATH.
+            export AUTOCONF_VERSION=$(ls /usr/local/bin/autoconf-* | sed 's/.*autoconf-//' | sort -V | tail -1)
+            export AUTOMAKE_VERSION=$(ls /usr/local/bin/automake-* | sed 's/.*automake-//' | sort -V | tail -1)
+            autoreconf -i
+            ./configure --prefix="$HOME/sisal" --disable-fortran
+            gmake -j"$(sysctl -n hw.ncpu)"
+            gmake install
+            gmake check || { find . -name '*.log' -newer Makefile -exec tail -n 40 {} +; exit 1; }
+
+            export PATH="$HOME/sisal/bin:$PATH"
+            cat > squares.sis <<'SIS'
+            define Main
+            type IntArray = array [integer];
+            function Main(N: integer returns IntArray)
+              for i in 1, N
+                returns array of i * i
+              end for
+            end function
+            SIS
+            sisalc -o squares squares.sis
+            echo 8 | ./squares | tee out.txt
+            grep -q '1 4 9 16 25 36 49 64' out.txt
+
   windows:
     name: windows / mingw
     runs-on: windows-latest

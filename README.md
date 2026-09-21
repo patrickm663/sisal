@@ -34,8 +34,8 @@ make check
 
 ### Platforms
 
-CI builds and runs the test suite on Linux, macOS and FreeBSD (GCC and Clang),
-and on Windows under MSYS2/MinGW. There is nothing platform-specific in the
+CI builds and runs the test suite on Linux, macOS, FreeBSD and OpenBSD (GCC
+and Clang), and on Windows under MSYS2/MinGW. There is nothing platform-specific in the
 compiler or generated code; the one genuinely platform-sensitive piece is
 `sisalc` itself, which spawns each compiler phase as a subprocess -- `fork()`
 plus `exec()` everywhere with one, `_spawnvp()` on Windows, which has neither.
