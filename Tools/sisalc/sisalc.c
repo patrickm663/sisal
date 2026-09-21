@@ -16,6 +16,13 @@
 #include "option.h"
 #include "sisalc.h"
 
+#ifdef _WIN32
+/* _spawnvp and _P_WAIT: Windows has no fork(), so Submit() below uses
+   this instead.  <process.h> here is the system header -- this file has
+   no header of its own by that name to collide with. */
+#include <process.h>
+#endif
+
 #define DEFAULT_OUTPUT_NAME "s.out"
 
 /* ----------------------------------------------- */
@@ -365,9 +372,11 @@ void compilerError(char* msg) {
 int Submit(charStarQueue** queueP) {
    char* argv[10240];
    int argc = 0;
-   int pid;
    int status = 0;
-   
+#ifndef _WIN32
+   int pid;
+#endif
+
    while(*queueP) {
       if ( argc >= (int)(sizeof(argv)/sizeof(argv[0])) - 1 )
         compilerError("too many arguments for subprocess");
@@ -380,6 +389,18 @@ int Submit(charStarQueue** queueP) {
    if ( debug ) {
      status = 0;
    } else {
+#ifdef _WIN32
+     /* Windows has no fork(): _spawnvp is CreateProcess plus a wait,
+        rolled into the one call fork+exec+wait were doing here.  Like
+        execvp, the "p" means argv[0] is looked up on PATH when it is a
+        bare name (CC= and LD= usually are); the compiler phases, given
+        by absolute path, are unaffected by that search either way. */
+     status = (int) _spawnvp( _P_WAIT, argv[0], (const char* const*)argv );
+     if ( status == -1 ) {
+       perror(argv[0]);
+       exit(1);
+     }
+#else
      pid = fork();
      if ( pid < 0 ) {
        perror("sisalc");
@@ -395,6 +416,7 @@ int Submit(charStarQueue** queueP) {
      } else {
        while( pid != wait(&status) );
      }
+#endif
    }
    return status;
 }
@@ -404,7 +426,7 @@ static char* generateFilename(char* basis, char* extension, int isFinal) {
    char* dot = 0;
 
    strcpy(newName,basis);
-   dot = rindex(newName,'.');
+   dot = strrchr(newName,'.');  /* rindex() is the BSD spelling; missing on Windows */
    if ( dot ) {
       strcpy(dot,extension);
    } else {
@@ -446,8 +468,11 @@ int main(int argc, char** argv) {
    /* Set important directories                       */
    /* ----------------------------------------------- */
    strcpy(majorVersion,SISAL_VERSION);
-   if ( index(majorVersion,'.') ) {
-      *index(majorVersion,'.') = 0;
+   /* index() is the BSD spelling of strchr(); it does not exist on
+      Windows, and strchr is what every other C library actually calls
+      this. */
+   if ( strchr(majorVersion,'.') ) {
+      *strchr(majorVersion,'.') = 0;
    }
 
    strcpy(binDirectory, SISAL_PATH_LIBEXECDIR);

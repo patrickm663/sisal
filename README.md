@@ -32,6 +32,20 @@ directory. Run the test suite afterwards:
 make check
 ```
 
+### Platforms
+
+CI builds and runs the test suite on Linux, macOS and FreeBSD (GCC and Clang),
+and on Windows under MSYS2/MinGW. There is nothing platform-specific in the
+compiler or generated code; the one genuinely platform-sensitive piece is
+`sisalc` itself, which spawns each compiler phase as a subprocess -- `fork()`
+plus `exec()` everywhere with one, `_spawnvp()` on Windows, which has neither.
+
+Windows needs MSYS2's MinGW64 environment (`pacman -S autoconf automake make
+mingw-w64-x86_64-gcc`, then build from an "MSYS2 MinGW64" shell) rather than a
+plain Command Prompt or PowerShell: `configure` is a shell script, and the
+runtime's parallelism is POSIX threads, which MinGW-w64 provides but MSVC does
+not.
+
 A plain `./configure` builds with no warnings on current GCC and Clang. If you
 have seen instructions elsewhere passing `-std=gnu89`, `-fcommon`,
 `-Wno-implicit-function-declaration`, `-Wno-implicit-int`, `-Wno-int-conversion`

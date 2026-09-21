@@ -142,3 +142,98 @@ jobs:
           sisalc -o squares squares.sis
           echo 8 | ./squares | tee out.txt
           grep -q '1 4 9 16 25 36 49 64' out.txt
+
+
+  freebsd:
+    name: freebsd / gcc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # FreeBSD has no first-party GitHub-hosted runner, so this boots a real
+      # FreeBSD VM on top of the ubuntu-latest host and runs the build inside
+      # it.  Everything from here down executes as FreeBSD, not Linux.
+      - name: Build and test inside a FreeBSD VM
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          prepare: |
+            pkg install -y autoconf automake gmake
+          run: |
+            set -e
+            autoreconf -i
+            ./configure --prefix="$HOME/sisal" --disable-fortran
+            gmake -j"$(sysctl -n hw.ncpu)"
+            gmake install
+            gmake check || { find . -name '*.log' -newer Makefile -exec tail -n 40 {} +; exit 1; }
+
+            export PATH="$HOME/sisal/bin:$PATH"
+            cat > squares.sis <<'SIS'
+            define Main
+            type IntArray = array [integer];
+            function Main(N: integer returns IntArray)
+              for i in 1, N
+                returns array of i * i
+              end for
+            end function
+            SIS
+            sisalc -o squares squares.sis
+            echo 8 | ./squares | tee out.txt
+            grep -q '1 4 9 16 25 36 49 64' out.txt
+
+  windows:
+    name: windows / mingw
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      # A real native build, not a cross-compile: this is what actually
+      # exercises the configure-time probes (sched_yield, the clock-tick
+      # fallback chain) that a cross build can only simulate.  MINGW64 gives
+      # a native x86_64 Windows toolchain plus the usual POSIX build tools.
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            autoconf
+            automake
+            make
+            mingw-w64-x86_64-gcc
+
+      - name: Regenerate the build system
+        run: autoreconf -i
+
+      - name: Configure
+        run: ./configure --prefix="$HOME/sisal" --disable-fortran
+
+      - name: Build
+        run: make -j"$(nproc)"
+
+      - name: Install
+        run: make install
+
+      # sisalc spawns each compiler phase as a subprocess (fork+exec on
+      # POSIX, _spawnvp here), so this is the job that actually exercises
+      # that path on Windows, not just the C library gaps.
+      - name: Test
+        run: make check || { find . -name '*.log' -newer Makefile -exec tail -n 40 {} +; exit 1; }
+
+      - name: Compile and run a program end to end
+        run: |
+          export PATH="$HOME/sisal/bin:$PATH"
+          cat > squares.sis <<'SIS'
+          define Main
+          type IntArray = array [integer];
+          function Main(N: integer returns IntArray)
+            for i in 1, N
+              returns array of i * i
+            end for
+          end function
+          SIS
+          sisalc -o squares squares.sis
+          echo 8 | ./squares | tee out.txt
+          grep -q '1 4 9 16 25 36 49 64' out.txt

@@ -118,7 +118,7 @@ static int matches(char* arg, option_t* option, int* senseP) {
 /* Return string if the name or alternate matches the argument            */
 /**************************************************************************/
 static char* matchEqual(char* arg, option_t* option) {
-   char* equal = index(arg,'=');
+   char* equal = strchr(arg,'=');  /* index() is the BSD spelling; missing on Windows */
    if ( !equal ) return 0; /* No = in argument */
    if ( strncmp(option->name,arg,equal-arg) == 0 ) return equal+1;
    if ( option->alternate && strncmp(option->alternate,arg,equal-arg) == 0 ) return equal+1;

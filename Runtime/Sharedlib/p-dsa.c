@@ -736,7 +736,7 @@ InitDsaCaches(int size, int xft)
      caches[i].lsize = 0;
      caches[i].frwd  = 0;
      caches[i].bkwd  = 0;
-     bzero(&(Private_vars[i]),sizeof(struct dsa_vars_s));
+     memset(&(Private_vars[i]),0,sizeof(struct dsa_vars_s));  /* bzero() is the BSD spelling; missing on Windows */
      }
 
    xfthresh = xft >= 0 ? xft : 0;
