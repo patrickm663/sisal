@@ -31,6 +31,8 @@ AC_ARG_ENABLE(fortran, --disable-fortran   turn off FORTRAN support if you have 
 # Check for C and maybe FORTRAN
 # -----------------------------------------------
 AC_PROG_CC
+dnl AM_PROG_AR is required by automake >= 1.12 before any _LIBRARIES target.
+AM_PROG_AR
 if test "$fortran_enabled" = 1; then
   AC_CHECK_PROGS(F77, fl32 f77 fort77 xlf cf77 g77 f90 xlf90 f2c,noF77)
   if test "$F77" != "noF77"; then
@@ -89,7 +91,19 @@ AC_PROG_LN_S
 # -----------------------------------------------
 # Header checks...
 # -----------------------------------------------
-AC_CONFIG_HEADER(Include/sisalConfig.h)
+AC_CONFIG_HEADERS([Include/sisalConfig.h])
+AH_TOP([/* sisalConfig.h -- generated from configure.ac.
+
+   This header defines the feature-test macros (_GNU_SOURCE and friends) that
+   AC_USE_SYSTEM_EXTENSIONS selects, so it MUST be included before any system
+   header in every translation unit.  glibc's <features.h> is self-guarding:
+   once another header has pulled it in, defining _GNU_SOURCE afterwards has
+   no effect and POSIX/X-Open declarations go missing.  */
+
+#ifndef SISAL_CONFIG_H
+#define SISAL_CONFIG_H])
+AH_BOTTOM([
+#endif /* SISAL_CONFIG_H */])
 AC_HEADER_STDC
 AC_CHECK_HEADERS(unistd.h)
 AC_CHECK_HEADERS(time.h)

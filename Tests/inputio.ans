@@ -1,0 +1,8 @@
+ok   READ empty file (0 bytes)
+ok   READ small file (13 bytes)
+ok   READ large binary file (3158073 bytes)
+ok   PIPE large binary stream (3158073 bytes)
+ok   PIPE zero exit status
+ok   PIPE non-zero exit status
+ok   STDIN agrees with READ (107 bytes)
+all input tests passed

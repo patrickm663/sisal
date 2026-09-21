@@ -2,14 +2,14 @@ SISALC=${bindir}/sisalc
 
 LDADD = $(pkglibdir)/libsisal.a $(pkglibdir)/srt0.o
 
-LDFLAGS += $(parallel_link)
+AM_LDFLAGS = $(parallel_link)
 
 AM_DEFAULT_SOURCE_EXT = .sis
 
 .sis.o:
 	$(SISALC) -w -c $< -o $@
 
-TESTSUITE = three hello 8queens bubble quicksort crypto fromC
+TESTSUITE = three hello 8queens bubble quicksort crypto fromC inputio
 
 check_PROGRAMS = $(TESTSUITE)
 
@@ -17,19 +17,34 @@ fromC_SOURCES = fromC.sis fromCdriver.c
 
 fromC_LDADD = $(pkglibdir)/libsisal.a
 
+# A plain C test of the runtime input builtins; it needs the installed runtime
+# headers, which is also where the .sis tests pick up libsisal.a.
+inputio_SOURCES = inputio.c
+inputio_CPPFLAGS = $(AM_CPPFLAGS) -I$(pkgincludedir)
+inputio_LDADD = $(pkglibdir)/libsisal.a
+
 fromC.$(OBJEXT): fromC.sis
 	$(SISALC) -forC -w -c $(srcdir)/fromC.sis -o $(builddir)/fromC.$(OBJEXT)
 
 dist_check_SCRIPTS = run-test
 
-TESTS_ENVIRONMENT = $(SHELL) $(srcdir)/run-test "$(DIFF)" "$(RM)" "$(srcdir)" "$(builddir)" 
+# run-test wraps each test binary, so it belongs in LOG_COMPILER.  It used to
+# be passed via TESTS_ENVIRONMENT, which the old serial-tests harness ran as a
+# command prefix; under the parallel-tests driver that automake has defaulted
+# to since 1.13, TESTS_ENVIRONMENT sets environment variables only and the
+# wrapper ended up swallowing the test name.
+LOG_COMPILER = $(SHELL) $(srcdir)/run-test
+AM_LOG_FLAGS = "$(DIFF)" "$(RM)" "$(srcdir)" "$(builddir)"
 
 TESTS = $(check_PROGRAMS)
 
 dist_noinst_DATA = ${TESTSUITE:%=%.in} ${TESTSUITE:%=%.ans}
 
-CLEANFILES = ${TESTSUITE:%=%.out} ${TESTSUITE:%=%.out3} ${TESTSUITE:%=%.dif} ${TESTSUITE:%=%.dif3}
+CLEANFILES = ${TESTSUITE:%=%.out} ${TESTSUITE:%=%.out3} ${TESTSUITE:%=%.dif} ${TESTSUITE:%=%.dif3} \
+	inputio-empty.dat inputio-small.dat inputio-big.dat inputio-stdin.dat
 
 answers:
-	for tst in $(TESTS); do $(TESTS_ENVIRONMENT) --answer $(builddir)/$${tst} ; done
+	for tst in $(TESTS); do \
+	  $(LOG_COMPILER) $(AM_LOG_FLAGS) --answer $(builddir)/$${tst} ; \
+	done
 

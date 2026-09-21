@@ -14,6 +14,14 @@
  */
 /**************************************************************************/
 
+/* sisalConfig.h must be the very first thing included in any translation
+   unit: it carries the feature-test macros (_GNU_SOURCE and friends) set by
+   AC_USE_SYSTEM_EXTENSIONS.  glibc's <features.h> is self-guarding, so if any
+   system header -- <pthread.h> below, for instance -- is pulled in ahead of
+   it, the feature set is locked in without the extensions and declarations
+   such as popen(), pclose(), psignal() and isascii() silently go missing. */
+#include "sisalConfig.h"
+
 /* On MacOSX... pthread has to come before signal.h (Steve Fitzgerald) */
 #define @model@Model
 #ifdef PThreadsModel

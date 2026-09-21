@@ -1,9 +1,11 @@
-#include <stdio.h>
 #include "sisalrt.h"
 
 struct Args15;
 struct Args16;
 
+#undef _FATAL
+void         _FATAL PROTO((void *));
+int RecompileTheModuleDefining_FATAL = 0;
 #undef _READ
 void         _READ PROTO((void *));
 int RecompileTheModuleDefining_READ = 0;
@@ -65,8 +67,6 @@ void _ARGV( void* args )
 {
   POINTER val;
   POINTER arg;
-  int i;
-  int j;
   char** p;
   char* q;
 
@@ -82,103 +82,208 @@ void _ARGV( void* args )
   }
 }
 
+/************************************************************************\
+ * Whole-stream input.
+ *
+ * These used to accumulate a stream one byte at a time with fgetc()/AGather().
+ * That is doubly expensive: a locked, bounds-checked macro per byte, and an
+ * array whose capacity grows *arithmetically* (DoPhysExpand adds
+ * ExpHistory*ArrayExpansion cells per expansion), so filling N bytes costs
+ * O(N^1.5) in memmove alone.  Instead we pull the stream into a scratch buffer
+ * with block reads and geometric growth, then build the SISAL array once, at
+ * exactly the right size.  For a regular file the size is known up front and
+ * the whole read is a single fread() into a single allocation.
+\************************************************************************/
+
+#define SLURP_CHUNK (64 * 1024)
+
+/* Upper bound on a file name or pipe command handed over from SISAL. */
+#define PATH_BUFFER_SIZE 4096
+
+/* Build a SISAL character array (lower bound 1) holding Len bytes of Data. */
+static POINTER BuildCharArray( const char *Data, size_t Len )
+{
+  POINTER val;
+  PHYSP   Phys;
+
+  if ( Len > (size_t)INT_MAX ) {
+    FPRINTF( stderr, "SISAL: input of %lu bytes exceeds the maximum array size\n",
+             (unsigned long)Len );
+    exit( 1 );
+  }
+
+  /* Capacity is exactly Len: OptABld sizes to (hi - lo + 1). */
+  OptABld( val, 1, 1, (int)Len, char );
+
+  Phys = ((ARRAYP)val)->Phys;
+  if ( Len != 0 )
+    memcpy( (char*)Phys->Base, Data, Len );
+
+  Phys->Size            = (int)Len;
+  Phys->Free            = 0;
+  ((ARRAYP)val)->Size   = (int)Len;
+
+  return val;
+}
+
+/* Read Fp to end of stream.  What names the source for diagnostics. */
+static POINTER SlurpStream( FILE *Fp, const char *What )
+{
+  char   *buf = NULL;
+  size_t  cap = 0;
+  size_t  len = 0;
+  POINTER val;
+
+#ifdef HAVE_SYS_STAT_H
+  {
+    /* A regular file tells us its length, so size the buffer once and read
+       the lot in a single call.  Anything else (pipe, tty, /proc) reports a
+       size we cannot trust, so fall through to the growing path. */
+    struct stat st;
+    int fd = fileno( Fp );
+
+    if ( fd >= 0 && fstat( fd, &st ) == 0 && S_ISREG( st.st_mode ) &&
+         st.st_size > 0 && (size_t)st.st_size < (size_t)INT_MAX )
+      cap = (size_t)st.st_size + 1;
+  }
+#endif
+
+  if ( cap == 0 )
+    cap = SLURP_CHUNK;
+
+  if ( (buf = (char*) malloc( cap )) == NULL ) {
+    FPRINTF( stderr, "SISAL: out of memory reading %s\n", What );
+    exit( 1 );
+  }
+
+  for ( ;; ) {
+    size_t room = cap - len;
+    size_t got;
+
+    if ( room == 0 ) {
+      char  *grown;
+      size_t want = cap + (cap / 2) + SLURP_CHUNK;   /* geometric growth */
+
+      if ( want <= cap || want > (size_t)INT_MAX ) {
+        FPRINTF( stderr, "SISAL: input from %s exceeds the maximum array size\n",
+                 What );
+        free( buf );
+        exit( 1 );
+      }
+      if ( (grown = (char*) realloc( buf, want )) == NULL ) {
+        FPRINTF( stderr, "SISAL: out of memory reading %s\n", What );
+        free( buf );
+        exit( 1 );
+      }
+      buf  = grown;
+      cap  = want;
+      room = cap - len;
+    }
+
+    got  = fread( buf + len, 1, room, Fp );
+    len += got;
+
+    if ( got < room ) {
+      if ( ferror( Fp ) ) {
+        FPRINTF( stderr, "SISAL: read error on %s\n", What );
+        perror( What );
+        free( buf );
+        exit( 1 );
+      }
+      break;                                          /* clean end of stream */
+    }
+  }
+
+  val = BuildCharArray( buf, len );
+  free( buf );
+  return val;
+}
+
+/* Copy a SISAL character array into a NUL-terminated C string.  SISAL arrays
+   are counted, not NUL-terminated, so this is the only safe way to hand one
+   to fopen()/popen(). */
+static void ArrayToCString( ARRAYP Array, char *Buf, size_t BufSize,
+                            const char *What )
+{
+  size_t size = (Array->Size > 0) ? (size_t)Array->Size : 0;
+
+  if ( size >= BufSize ) {
+    FPRINTF( stderr, "SISAL: %s is %lu bytes, longer than the %lu byte limit\n",
+             What, (unsigned long)size, (unsigned long)(BufSize - 1) );
+    exit( 1 );
+  }
+
+  if ( size != 0 )
+    memcpy( Buf, (char*)(Array->Base + Array->LoBound), size );
+  Buf[size] = '\0';
+}
+
 void _FATAL( void* args )
 {
-  FILE *fp = 0;
-  char buf[4096];
-  POINTER val;
-  ARRAYP filename = (ARRAYP)(((struct Args12*)args)->In1);
-  int i;
-  int c;
-  int size;
+  ARRAYP message = (ARRAYP)(((struct Args12*)args)->In1);
+  int    size    = (message->Size > 0) ? message->Size : 0;
 
-  size = filename->Size;
-
-  fprintf(stderr,"FATAL: %s\n",(char*)(filename->Base+filename->LoBound));
-  exit(1);
+  /* The message is a counted array with no terminator, so bound the print
+     with a precision rather than letting %s run off the end of it. */
+  FPRINTF( stderr, "FATAL: %.*s\n", size,
+           (char*)(message->Base + message->LoBound) );
+  exit( 1 );
 }
 
 void _READ( void* args )
 {
-  FILE *fp = 0;
-  char buf[4096];
-  POINTER val;
-  ARRAYP filename = (ARRAYP)(((struct Args12*)args)->In1);
-  int i;
-  int c;
-  int size;
+  FILE *fp;
+  char  name[PATH_BUFFER_SIZE];
 
-  size = filename->Size;
-  if ( size > 4095 ) size = 4095;
+  ArrayToCString( (ARRAYP)(((struct Args12*)args)->In1),
+                  name, sizeof(name), "file name" );
 
-  strncpy(buf,(char*)(filename->Base+filename->LoBound),size);
-  buf[size] = 0;
-
-  fp = fopen(buf,"r");
-  if ( !fp ) { 
-    fprintf(stderr,"File error: %s\n",buf);
-    perror(buf);
-    exit(1);
+  if ( (fp = fopen( name, "r" )) == NULL ) {
+    FPRINTF( stderr, "SISAL: cannot open file: %s\n", name );
+    perror( name );
+    exit( 1 );
   }
 
-  ABld(val,1,1);
+  ((struct Args12*)args)->Out1 = SlurpStream( fp, name );
 
-  while( (c=fgetc(fp)) != EOF ) {
-    AGather(val,c,char);
+  if ( fclose( fp ) != 0 ) {
+    FPRINTF( stderr, "SISAL: error closing file: %s\n", name );
+    perror( name );
+    exit( 1 );
   }
-  fclose(fp);
-  
-  ((struct Args12*)args)->Out1 = val;
 }
 
 void _PIPE( void* args )
 {
-  FILE *fp = 0;
-  char buf[4096];
-  POINTER val;
-  ARRAYP filename = (ARRAYP)(((struct Args14*)args)->In1);
-  int i;
-  int c;
-  int size;
-  int status;
+  FILE *fp;
+  char  command[PATH_BUFFER_SIZE];
+  int   status;
 
-  size = filename->Size;
-  if ( size > 4095 ) size = 4095;
+  ArrayToCString( (ARRAYP)(((struct Args14*)args)->In1),
+                  command, sizeof(command), "pipe command" );
 
-  strncpy(buf,(char*)(filename->Base+filename->LoBound),size);
-  buf[size] = 0;
-
-  fp = popen(buf,"r");
-  if ( !fp ) { 
-    fprintf(stderr,"Pipe error: %s\n",buf);
-    perror(buf);
-    exit(1);
+  if ( (fp = popen( command, "r" )) == NULL ) {
+    FPRINTF( stderr, "SISAL: cannot run pipe: %s\n", command );
+    perror( command );
+    exit( 1 );
   }
 
-  ABld(val,1,1);
+  ((struct Args14*)args)->Out1 = SlurpStream( fp, command );
 
-  while( (c=fgetc(fp)) != EOF ) {
-    AGather(val,c,char);
+  /* pclose() returns -1 if it could not reap the child; that is distinct from
+     the child exiting non-zero, and used to be discarded silently. */
+  if ( (status = pclose( fp )) == -1 ) {
+    FPRINTF( stderr, "SISAL: error closing pipe: %s\n", command );
+    perror( command );
+    exit( 1 );
   }
-  status = pclose(fp);
-  
-  ((struct Args14*)args)->Out1 = val;
+
   ((struct Args14*)args)->Out2 = status;
 }
 
-
 void _STDIN( void* args )
 {
-  POINTER val;
-  int c;
-
-  ABld(val,1,1);
-
-  while( (c=fgetc(stdin)) != EOF ) {
-    AGather(val,c,char);
-  }
-  
-  ((struct Args13*)args)->Out1 = val;
+  ((struct Args13*)args)->Out1 = SlurpStream( stdin, "standard input" );
 }
 
 

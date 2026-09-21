@@ -1,9 +1,13 @@
+#!/bin/sh
+# Wrapper used as automake's LOG_COMPILER: feeds each test its .in file and
+# diffs the result against the recorded .ans, both serially and under -w3.
+
 DIFF=$1
 RM=$2
 SRCDIR=$3
 BUILDDIR=$4
 
-if [ "$5" == "--answer" ] 
+if [ "$5" = "--answer" ]
 then
   ANSWER="yes"
   TEST=$6

@@ -3,3 +3,6 @@
 
 # autotools
 autom4te.cache/
+
+# autotools backup files
+*~
