@@ -1,5 +1,10 @@
 #include "sisalrt.h"
 
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+#endif
+
 struct Args15;
 struct Args16;
 
@@ -238,7 +243,12 @@ void _READ( void* args )
   ArrayToCString( (ARRAYP)(((struct Args12*)args)->In1),
                   name, sizeof(name), "file name" );
 
-  if ( (fp = fopen( name, "r" )) == NULL ) {
+  /* "rb", not "r": this reads whatever bytes are in the file into a SISAL
+     array, not text.  Text mode on Windows would translate CRLF to LF and
+     treat a stray 0x1A as end of file, silently corrupting or truncating
+     anything that isn't ASCII text -- Unix has no such distinction, so
+     nothing on that side changes by asking for it explicitly here. */
+  if ( (fp = fopen( name, "rb" )) == NULL ) {
     FPRINTF( stderr, "SISAL: cannot open file: %s\n", name );
     perror( name );
     exit( 1 );
@@ -262,7 +272,16 @@ void _PIPE( void* args )
   ArrayToCString( (ARRAYP)(((struct Args14*)args)->In1),
                   command, sizeof(command), "pipe command" );
 
+  /* Same reasoning as _READ's "rb", but popen()'s mode argument isn't
+     fopen()'s: POSIX popen() only ever means binary (no such distinction
+     exists for a pipe there), and glibc's popen() rejects an unrecognized
+     "b" outright (EINVAL) rather than ignoring it, so it can only be
+     added where it is actually meaningful -- Windows' _popen. */
+#ifdef _WIN32
+  if ( (fp = popen( command, "rb" )) == NULL ) {
+#else
   if ( (fp = popen( command, "r" )) == NULL ) {
+#endif
     FPRINTF( stderr, "SISAL: cannot run pipe: %s\n", command );
     perror( command );
     exit( 1 );
@@ -283,6 +302,12 @@ void _PIPE( void* args )
 
 void _STDIN( void* args )
 {
+#ifdef _WIN32
+  /* stdin is already open, so unlike _READ/_PIPE this can't just ask
+     fopen/popen for binary mode -- _setmode is the Windows way to flip an
+     already-open descriptor out of the default CRLF-translating text mode. */
+  _setmode( _fileno( stdin ), _O_BINARY );
+#endif
   ((struct Args13*)args)->Out1 = SlurpStream( stdin, "standard input" );
 }
 
