@@ -75,7 +75,7 @@ assumes no NaNs or infinities. Results can differ from a `baseline` build.
 Building with clang through [Zig](https://ziglang.org) is worth it for
 numerical code. Measured on the benchmarks in
 [patrickm663/sisal-benchmarks](https://github.com/patrickm663/sisal-benchmarks),
-single worker, `zig cc` 0.13 (clang 18) at `--with-tuning=aggressive` against
+single worker, `zig cc` 0.16 (clang 21) at `--with-tuning=aggressive` against
 gcc 13 at `-O2`, on a Xeon with AVX-512:
 
 | benchmark | gcc `-O2` | `zig cc` aggressive | speedup |
