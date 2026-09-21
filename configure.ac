@@ -609,28 +609,6 @@ AM_CPPFLAGS="${AM_CPPFLAGS} -DSISAL_PATH_DATADIR='\"\$(pkgdatadir)\"'"
 AM_CPPFLAGS="${AM_CPPFLAGS} -DSISAL_PATH_INCLUDEDIR='\"\$(pkgincludedir)\"'"
 AM_CPPFLAGS="${AM_CPPFLAGS} -DSISAL_PATH_LIBDIR='\"\$(pkglibdir)\"'"
 
-dnl -----------------------------------------------
-dnl Several of this tree's own headers -- Runtime/Sharedlib/process.h and
-dnl locks.h among them -- share a name with a header the target's own C
-dnl library provides.  -I searches a directory for both "..." and <...>
-dnl includes, so on a host where that collision exists, our own process.h
-dnl was found first and shadowed the real <process.h>, which MinGW's
-dnl <pthread.h> needs internally for _spawnv (breaking essentially every
-dnl translation unit that ends up pulling in pthread.h).  -iquote searches
-dnl a directory only for "..." includes, so our headers are still found by
-dnl our own #include "process.h" while <process.h> from elsewhere in the
-dnl same file resolves to the system's.  This costs nothing on hosts
-dnl without the collision, but it is currently added only where it has
-dnl been confirmed necessary rather than unconditionally everywhere.
-dnl -----------------------------------------------
-case $host_os in
-  mingw* | windows* | cygwin*)
-    for sisal_d in Runtime/Sharedlib "Runtime/${model}Model" Backend/Library; do
-      AM_CPPFLAGS="${AM_CPPFLAGS} -iquote \$(top_srcdir)/$sisal_d"
-    done
-    ;;
-esac
-
 AC_SUBST(AM_CPPFLAGS)
 
 AC_CONFIG_FILES([Makefile

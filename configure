@@ -7670,14 +7670,6 @@ AM_CPPFLAGS="${AM_CPPFLAGS} -DSISAL_PATH_DATADIR='\"\$(pkgdatadir)\"'"
 AM_CPPFLAGS="${AM_CPPFLAGS} -DSISAL_PATH_INCLUDEDIR='\"\$(pkgincludedir)\"'"
 AM_CPPFLAGS="${AM_CPPFLAGS} -DSISAL_PATH_LIBDIR='\"\$(pkglibdir)\"'"
 
-case $host_os in
-  mingw* | windows* | cygwin*)
-    for sisal_d in Runtime/Sharedlib "Runtime/${model}Model" Backend/Library; do
-      AM_CPPFLAGS="${AM_CPPFLAGS} -iquote \$(top_srcdir)/$sisal_d"
-    done
-    ;;
-esac
-
 
 
 ac_config_files="$ac_config_files Makefile Include/sisalPaths.h Include/sisalInfo.h Frontend/Front1/Makefile Backend/Library/Makefile Backend/If1ld/Makefile Backend/If1opt/Makefile Backend/If2gen/Makefile Backend/If2mem/Makefile Backend/If2part/Makefile Backend/If2up/Makefile Runtime/Makefile Runtime/AlliantModel/Makefile Runtime/CrayModel/Makefile Runtime/EncoreModel/Makefile Runtime/IBMPower4Model/Makefile Runtime/PThreadsModel/Makefile Runtime/SequentModel/Makefile Runtime/SerialModel/Makefile Runtime/SGIModel/Makefile Runtime/Sharedlib/sisalrt.h Runtime/Sharedlib/Makefile Runtime/SolarisModel/Makefile Tools/sisalc/Makefile Tests/Makefile"

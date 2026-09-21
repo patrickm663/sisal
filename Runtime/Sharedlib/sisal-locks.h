@@ -1,5 +1,5 @@
-#ifndef LOCKS_H
-#define LOCKS_H
+#ifndef SISAL_LOCKS_H
+#define SISAL_LOCKS_H
 
 /**************************************************************************/
 /* FILE   **************          locks.h          ************************/

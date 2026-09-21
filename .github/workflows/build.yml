@@ -200,12 +200,17 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg_add autoconf automake gmake
+            # Every autoconf/automake release OpenBSD has ever shipped stays
+            # installable side by side, so the bare package name is
+            # ambiguous and pkg_add refuses it outright (installing
+            # nothing, silently, rather than erroring) unless a branch is
+            # picked with %. gmake has no such split, so it needs none.
+            pkg_add autoconf%2.71 automake%1.16 gmake
           run: |
             set -e
-            # OpenBSD keeps every autoconf/automake release installed side by
-            # side under a versioned name and picks between them with these,
-            # rather than a single unversioned autoconf/automake on PATH.
+            # ...and for the same reason, autoreconf needs telling which of
+            # the side-by-side versions to use, since there is no
+            # unversioned autoconf/automake on PATH either.
             export AUTOCONF_VERSION=$(ls /usr/local/bin/autoconf-* | sed 's/.*autoconf-//' | sort -V | tail -1)
             export AUTOMAKE_VERSION=$(ls /usr/local/bin/automake-* | sed 's/.*automake-//' | sort -V | tail -1)
             autoreconf -i

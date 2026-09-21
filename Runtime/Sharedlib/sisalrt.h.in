@@ -37,8 +37,8 @@ extern void InitSignalSystem(void);
 
 extern int sisal_file_io;
 
-#include "locks.h"
-#include "process.h"
+#include "sisal-locks.h"
+#include "sisal-process.h"
 #include "fibre.h"
 #include "arrays.h"
 #include "interface.h"

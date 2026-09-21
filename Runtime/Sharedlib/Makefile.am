@@ -19,7 +19,7 @@ nodist_pkginclude_HEADERS = sisalrt.h \
 	$(top_includedir)/sisalInfo.h
 
 pkginclude_HEADERS = arrays.h fibre.h interface.h \
-	locks.h process.h sisalfli.inc \
+	sisal-locks.h sisal-process.h sisalfli.inc \
 	$(rtmodel_srcdir)/lock-implementation.h \
 	$(rtmodel_srcdir)/process-implementation.h \
 	$(rtmodel_srcdir)/parallelism.h

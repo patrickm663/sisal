@@ -1,5 +1,5 @@
-#ifndef PROCESS_H
-#define PROCESS_H
+#ifndef SISAL_PROCESS_H
+#define SISAL_PROCESS_H
 
 /**************************************************************************/
 /* FILE   **************         process.h         ************************/
