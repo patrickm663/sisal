@@ -1,0 +1,19 @@
+%**************************************************************************%
+%* FILE   **************        wordcount.sis       ************************%
+%**************************************************************************%
+%* Stdlib demo: counts space-separated words. Uses only strings.sis --   *%
+%* proof that a program pulls in just the modules it needs, not the     *%
+%* whole Stdlib.                                                        *%
+%*                                                                        *%
+%*   Stdlib/sisal-cat -o wordcount Stdlib/strings.sis \                  *%
+%*       Stdlib/examples/wordcount.sis --flag=-fileio                    *%
+%*   echo -n "the quick brown fox" | ./wordcount                         *%
+%**************************************************************************%
+
+define Main
+
+function Main(raw: Str returns integer)
+  for w in Str_SplitOnChar(raw, ' ')
+  returns value of sum (if array_size(w) = 0 then 0 else 1 end if)
+  end for
+end function

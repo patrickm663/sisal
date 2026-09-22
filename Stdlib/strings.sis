@@ -1,0 +1,61 @@
+%**************************************************************************%
+%* FILE   **************         strings.sis        ************************%
+%**************************************************************************%
+%* Stdlib module: generic string utilities.                              *%
+%*                                                                        *%
+%* No program-specific concerns (nothing CSV-shaped here) -- this is the  *%
+%* reusable core Examples/csv.sis's Slice/SplitOnChar were factored out   *%
+%* of. Functions are prefixed Str_ because SISAL has no per-file          *%
+%* namespacing: sisal-cat concatenates this into one flat compilation     *%
+%* unit with whatever else it's given, so an unprefixed "Slice" here      *%
+%* could collide with an unrelated "Slice" in another module. See         *%
+%* Stdlib/README.md.                                                      *%
+%**************************************************************************%
+
+define Strings
+
+type Str      = array [character];
+type StrArray = array [Str];
+
+%----------------------------------------------------------------------%
+% Str_Slice: s[lo..hi] inclusive, empty if the range is empty.          %
+%----------------------------------------------------------------------%
+function Str_Slice(s: Str; lo, hi: integer returns Str)
+  if hi < lo then
+    array Str []
+  else
+    for i in lo, hi returns array of s[i] end for
+  end if
+end function
+
+%----------------------------------------------------------------------%
+% Str_SplitOnChar: the fields of line, separated by sep. n+1 boundary   %
+% positions are walked (one past the end counts as a boundary too), so %
+% a trailing separator produces a trailing empty field.                 %
+%----------------------------------------------------------------------%
+function Str_SplitOnChar(line: Str; sep: character returns StrArray)
+  % array_liml/array_limh, not 1/array_size: line is very often itself a
+  % Str_Slice result, and Str_Slice preserves its source's absolute
+  % positions rather than renumbering from 1.
+  let
+    lo := array_liml(line);
+    hi := array_limh(line)
+  in
+    for initial
+      i          := lo - 1;
+      fieldStart := lo;
+      fields     := array StrArray []
+    while i < hi+1 repeat
+      i          := old i + 1;
+      isBoundary := if i = hi+1 then true else line[i] = sep end if;
+      fields     := if isBoundary then
+                      array_addh(old fields, Str_Slice(line, old fieldStart, i-1))
+                    else
+                      old fields
+                    end if;
+      fieldStart := if isBoundary then i+1 else old fieldStart end if
+    returns
+      value of fields
+    end for
+  end let
+end function

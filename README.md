@@ -260,6 +260,12 @@ signature, most likely) -- a genuinely large change to
 `Frontend/Front1/sisal.c`, the biggest and least-tested file in this tree,
 not an extension of the existing module database.
 
+`Stdlib/` is a source-level workaround in the meantime: a script that
+concatenates SISAL modules into one compilation unit before handing it to
+`sisalc`, since a single file with several functions calling each other
+already works. See [Stdlib/README.md](Stdlib/README.md) for how it works
+and what it doesn't give you.
+
 ## Examples
 
 - [patrickm663/hello-sisal](https://github.com/patrickm663/hello-sisal) —

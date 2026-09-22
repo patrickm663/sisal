@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""Concatenate SISAL modules into one compilation unit, then run sisalc.
+
+SISAL's frontend has no import/module keyword and compiles each .sis file as
+a fully independent unit with no cross-file symbol resolution (see the
+"Known limitation" note in the top-level README). What *does* work, because
+every example in this repo already relies on it, is many function
+definitions living in ONE file, calling each other freely, as long as each
+callee is defined (textually) before its first use -- no forward references,
+even within a file -- and there is exactly one `define X` line in the whole
+unit.
+
+This script is that concatenation, done for you: give it your library
+modules in dependency order, followed by the program that uses them, and it
+strips every `define` line except the first, emits one `define Main` unit,
+and hands it to sisalc.
+
+    Stdlib/sisal-cat -o sumlist Stdlib/strings.sis Stdlib/numbers.sis \\
+        Stdlib/examples/sumlist.sis --flag=-fileio
+
+Files are concatenated in the order given, so put a module before anything
+that depends on it, and put the program defining Main last.
+"""
+import argparse
+import os
+import re
+import subprocess
+import sys
+import tempfile
+
+DEFINE_RE = re.compile(r"^\s*define\s+\S+\s*$", re.IGNORECASE)
+
+
+def strip_define(text, path):
+    """Drop the leading `define <Name>` line, skipping blank/comment lines
+    before it. SISAL comments run to end of line and start with %."""
+    lines = text.splitlines(keepends=True)
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped == "" or stripped.startswith("%"):
+            continue
+        if DEFINE_RE.match(line):
+            return "".join(lines[:i] + lines[i + 1 :])
+        sys.exit(f"error: {path}: expected a 'define <Name>' line before the "
+                  f"first statement, found: {line.strip()!r}")
+    sys.exit(f"error: {path}: no 'define <Name>' line found")
+
+
+def main():
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    ap.add_argument(
+        "files",
+        nargs="+",
+        help="modules in dependency order, program with Main last",
+    )
+    ap.add_argument("-o", "--output", required=True, help="passed to sisalc -o")
+    ap.add_argument(
+        "--flag",
+        action="append",
+        default=[],
+        help="extra sisalc flag (repeatable), e.g. --flag=-fileio",
+    )
+    ap.add_argument(
+        "--keep",
+        action="store_true",
+        help="keep the concatenated .sis file even on success",
+    )
+    args = ap.parse_args()
+
+    parts = ["define Main\n\n"]
+    for path in args.files:
+        with open(path) as f:
+            text = f.read()
+        parts.append(f"% ---- from {path} ----\n")
+        parts.append(strip_define(text, path))
+        parts.append("\n")
+    combined = "".join(parts)
+
+    fd, tmp_path = tempfile.mkstemp(suffix=".sis", prefix="sisal-cat-")
+    with os.fdopen(fd, "w") as f:
+        f.write(combined)
+
+    cmd = ["sisalc"] + args.flag + ["-o", args.output, tmp_path]
+    result = subprocess.run(cmd)
+
+    if result.returncode == 0 and not args.keep:
+        os.unlink(tmp_path)
+    else:
+        print(f"concatenated source kept at {tmp_path}", file=sys.stderr)
+
+    sys.exit(result.returncode)
+
+
+if __name__ == "__main__":
+    main()

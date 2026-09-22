@@ -1,0 +1,16 @@
+%**************************************************************************%
+%* FILE   **************         sumlist.sis        ************************%
+%**************************************************************************%
+%* Stdlib demo: sums a comma-separated list of numbers. Uses both         *%
+%* strings.sis (Str_SplitOnChar) and numbers.sis (Num_ParseReal).         *%
+%*                                                                        *%
+%*   Stdlib/sisal-cat -o sumlist Stdlib/strings.sis Stdlib/numbers.sis \  *%
+%*       Stdlib/examples/sumlist.sis --flag=-fileio                      *%
+%*   echo -n "1,2.5,-3,10" | ./sumlist                                    *%
+%**************************************************************************%
+
+define Main
+
+function Main(raw: Str returns real)
+  for f in Str_SplitOnChar(raw, ',') returns value of sum Num_ParseReal(f) end for
+end function

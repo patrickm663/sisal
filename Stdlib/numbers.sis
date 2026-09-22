@@ -1,0 +1,55 @@
+%**************************************************************************%
+%* FILE   **************         numbers.sis        ************************%
+%**************************************************************************%
+%* Stdlib module: number parsing.                                        *%
+%*                                                                        *%
+%* Depends on strings.sis for the Str type -- when concatenating with     *%
+%* sisal-cat, strings.sis must come first: SISAL requires a name be      *%
+%* defined (textually) before its first use, with no forward references, *%
+%* even within one file (see Stdlib/README.md).                          *%
+%**************************************************************************%
+
+define Numbers
+
+function Num_IsDigit(c: character returns boolean)
+  (c >= '0') & (c <= '9')
+end function
+
+%----------------------------------------------------------------------%
+% Num_ParseReal: decimal text (optional leading '-', digits, optional   %
+% '.' and more digits) to a real. No exponents.                        %
+%----------------------------------------------------------------------%
+function Num_ParseReal(field: Str returns real)
+  let
+    lo    := array_liml(field);
+    hi    := array_limh(field);
+    isNeg := (hi >= lo) & (field[lo] = '-');
+    start := if isNeg then lo+1 else lo end if
+  in
+    for initial
+      i        := start - 1;
+      intPart  := 0.0;
+      fracPart := 0.0;
+      fracDiv  := 1.0;
+      seenDot  := false
+    while i < hi repeat
+      i        := old i + 1;
+      c        := field[i];
+      seenDot  := if c = '.' then true else old seenDot end if;
+      digit    := Num_IsDigit(c);
+      intPart  := if (~old seenDot) & digit then
+                    (old intPart) * 10.0 + real(integer(c) - integer('0'))
+                  else
+                    old intPart
+                  end if;
+      fracDiv  := if old seenDot & digit then (old fracDiv) * 10.0 else old fracDiv end if;
+      fracPart := if old seenDot & digit then
+                    (old fracPart) + real(integer(c) - integer('0')) / fracDiv
+                  else
+                    old fracPart
+                  end if
+    returns
+      value of (if isNeg then -(intPart + fracPart) else intPart + fracPart end if)
+    end for
+  end let
+end function
