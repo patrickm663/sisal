@@ -220,6 +220,17 @@ echo 1000 | ./matmul -w$(nproc) -gss -z
 `-C` each stop after the corresponding stage, which is how you look at what the
 optimiser did; `-keep` retains the intermediates rather than deleting them.
 
+Every array read and write is bounds-checked by default, each one costing a
+pair of comparisons plus the error-reporting path they guard. On an
+array-heavy program this is not incidental overhead: profiling a 500×500
+matrix multiply showed bounds checks alone accounting for roughly 60% of
+the instructions executed in the hot loop, and `sisalc -no-bounds` took
+that program from 0.39s to 0.18s, a 2.2x speedup, with identical results.
+`-no-bounds` is worth trying on any array-bound program once it's already
+correct -- an out-of-bounds access becomes undefined behaviour instead of
+a clean `ARRAY SUBSCRIPT VIOLATION` diagnostic, so it trades a safety net
+for speed rather than being free.
+
 ## Examples
 
 - [patrickm663/hello-sisal](https://github.com/patrickm663/hello-sisal) —

@@ -1785,7 +1785,7 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
+  x.Current = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
   x.Next = NULL; \
   w = (POINTER) &(x); \
 }
@@ -1800,8 +1800,8 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
-  x.Next = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
+  x.Current = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
+  x.Next = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
   w = (POINTER) &(x); \
 }
 
@@ -1815,7 +1815,7 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
+  x.Current = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
   x.Next = NULL; \
   w = (POINTER) &(x); \
 }
@@ -1830,8 +1830,8 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
-  x.Next = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
+  x.Current = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
+  x.Next = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
   w = (POINTER) &(x); \
 }
 
@@ -1846,14 +1846,14 @@ static int DivByZero(void) { return( 0 ); }
     x.Info[5] = v5; \
     x.InfoTop = u; \
     x.Temp = NULL; \
-    x.Current = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
+    x.Current = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
     x.Next = NULL; \
     w = (POINTER) &(x); \
   } else if ( x.Info[0] == v0 && x.Info[1] == v1 && x.Info[2] == v2 && \
             x.Info[3] == v3 && x.Info[4] == v4 && x.Info[5] == v5  )  {\
     w = (POINTER) &(x); \
   } else { \
-    FreePointerSwapStorage( &(x), x.Current ); \
+    FreePointerSwapStorage( (POINTER)&(x), x.Current ); \
     x.Info[0] = v0; \
     x.Info[1] = v1; \
     x.Info[2] = v2; \
@@ -1862,7 +1862,7 @@ static int DivByZero(void) { return( 0 ); }
     x.Info[5] = v5; \
     x.InfoTop = u; \
     x.Temp = NULL; \
-    x.Current = AllocPointerSwapStorage( &(x), sizeof( y ) ); \
+    x.Current = AllocPointerSwapStorage( (POINTER)&(x), sizeof( y ) ); \
     x.Next = NULL; \
     w = (POINTER) &(x); \
     } \
@@ -1888,7 +1888,7 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
+  x.Current = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
   x.Next = NULL; \
   w = (POINTER) &(x); \
 }
@@ -1903,8 +1903,8 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
-  x.Next = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
+  x.Current = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
+  x.Next = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
   w = (POINTER) &(x); \
 }
 
@@ -1918,7 +1918,7 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
+  x.Current = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
   x.Next = NULL; \
   w = (POINTER) &(x); \
 }
@@ -1933,8 +1933,8 @@ static int DivByZero(void) { return( 0 ); }
   x.Info[5] = v5; \
   x.InfoTop = u; \
   x.Temp = NULL; \
-  x.Current = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
-  x.Next = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
+  x.Current = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
+  x.Next = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
   w = (POINTER) &(x); \
 }
 
@@ -1949,14 +1949,14 @@ static int DivByZero(void) { return( 0 ); }
     x.Info[5] = v5; \
     x.InfoTop = u; \
     x.Temp = NULL; \
-    x.Current = SkiAllocPointerSwapStorage( vvv, &(x), sizeof( y ) ); \
+    x.Current = SkiAllocPointerSwapStorage( vvv, (POINTER)&(x), sizeof( y ) ); \
     x.Next = NULL; \
     w = (POINTER) &(x); \
   } else if ( x.Info[0] == v0 && x.Info[1] == v1 && x.Info[2] == v2 && \
             x.Info[3] == v3 && x.Info[4] == v4 && x.Info[5] == v5  )  {\
     w = (POINTER) &(x); \
   } else { \
-    FreePointerSwapStorage( &(x), x.Current ); \
+    FreePointerSwapStorage( (POINTER)&(x), x.Current ); \
     x.Info[0] = v0; \
     x.Info[1] = v1; \
     x.Info[2] = v2; \
