@@ -231,6 +231,35 @@ correct -- an out-of-bounds access becomes undefined behaviour instead of
 a clean `ARRAY SUBSCRIPT VIOLATION` diagnostic, so it trades a safety net
 for speed rather than being free.
 
+**Known limitation: no way to split a program across multiple `.sis`
+files.** Each file compiles as a fully independent unit -- there is no
+`import`/`module`/`use` keyword, and one file's `Main` cannot call a
+function defined in another file by name (confirmed directly: pre-compiling
+the callee to `.if1` and linking it in, and passing both files to `sisalc`
+in either order, both fail at the frontend with `Function 'x' is
+undefined`). The only supported way for independently-compiled SISAL code
+to call other independently-compiled SISAL code is through the C FLI
+(`-forC`/`-externC`; see `Tests/modules`), which means going through a
+pointer-based C calling convention rather than a native SISAL call.
+
+The backend does have an internal "module database" (`if2part -X<file>`,
+tested directly: it does write and read a small file recording each
+compile's top-level names), but it isn't what the name suggests. It's
+reachable only by hand-driving `if2part` directly on a `.up` intermediate
+file -- `sisalc` never exposes it, and never passes a `-X` flag through
+to `if2part` (confirmed by reading `Tools/sisalc/if2part.c`'s fixed
+argument list) -- and even then it's read and written entirely within
+`Backend/If2part`, a stage that runs after the frontend (`Frontend/Front1`)
+has already fully parsed and type-checked the whole program. Frontend
+`Function undefined` errors happen before that stage ever runs, so this
+mechanism can't resolve them; it looks like bookkeeping for splitting one
+already-compiled program's generated C across multiple `if2part`/`if2gen`
+invocations, not a cross-file import mechanism. A real module system
+would need new frontend support (forward-declaring an external function's
+signature, most likely) -- a genuinely large change to
+`Frontend/Front1/sisal.c`, the biggest and least-tested file in this tree,
+not an extension of the existing module database.
+
 ## Examples
 
 - [patrickm663/hello-sisal](https://github.com/patrickm663/hello-sisal) —
