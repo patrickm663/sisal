@@ -233,7 +233,12 @@ void WriteCharVector(POINTER val)
   FIBRE_BUF_BEGIN();
 
   if ( JsonOutput ) {
-    if ( FibreStrings && Lo2 == 1 ) {
+    /* No Lo2==1 guard here (unlike the FIBRE branch below): JSON is
+       output-only, so there's no read-back to preserve a non-1 LoBound
+       for. A char array built at some other lower bound -- Slice-style
+       substring helpers are the obvious source, see Examples/csv.sis --
+       is exactly as much a string as one starting at 1. */
+    if ( FibreStrings ) {
       fputc( '"', FibreOutFd );
       for (       ; Lo2 <= HiBound; Lo2++ ) {
         JsonPutChar( *((char*)Base2+Lo2), FibreOutFd );
@@ -244,6 +249,10 @@ void WriteCharVector(POINTER val)
     }
   } else {
     PrintIndent;
+    /* Lo2==1 matters here: ReadCharVector's STRING_START_ case always
+       builds the result at LoBound 1 (ABld(val0,1,1)), so quoting an
+       array with a different LoBound would silently change its bounds
+       on a read back through FIBRE. JSON has no such round trip. */
     if ( FibreStrings && Lo2 == 1 ) {
       fputc( '"', FibreOutFd );
       for (       ; Lo2 <= HiBound; Lo2++ ) {

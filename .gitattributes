@@ -6,3 +6,7 @@
 Tests/*.in  -text
 Tests/*.ans -text
 Tests/*.dat -text
+
+# Same reasoning: csv.sis splits lines on a literal LF (character(10)), so a
+# CRLF-converted checkout would leave a stray \r on every field it parses.
+Examples/*.csv -text

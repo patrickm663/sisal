@@ -1,0 +1,175 @@
+%**************************************************************************%
+%* FILE   **************           csv.sis          ************************%
+%**************************************************************************%
+%* Loading a CSV dataset in SISAL.                                        *%
+%*                                                                        *%
+%* SISAL has no in-language file-open primitive -- the runtime's _READ/  *%
+%* _PIPE/_STDIN builtins (Runtime/Sharedlib/READ.c) exist only for a      *%
+%* hand-written C driver to call (nothing in the frontend resolves those  *%
+%* names from SISAL source). The supported way to get a file's raw bytes *%
+%* into a SISAL program is sisalc's -fileio compile flag: it changes a   *%
+%* character-array parameter of Main from FIBRE's normal quoted-string   *%
+%* input format to a straight slurp of stdin, and a character-array      *%
+%* result to a straight byte dump instead of a quoted FIBRE/JSON string. *%
+%* So "loading a CSV" means redirecting the file at the compiled          *%
+%* program's stdin and doing the actual CSV parsing -- splitting lines,  *%
+%* splitting fields, parsing numbers -- in SISAL:                        *%
+%*                                                                        *%
+%*   sisalc -fileio -o csv csv.sis                                       *%
+%*   ./csv < claims.csv                                                  *%
+%**************************************************************************%
+
+define Main
+
+type Str      = array [character];
+type StrArray = array [Str];
+type Row      = array [real];
+type Table    = array [Row];
+
+%----------------------------------------------------------------------%
+% Slice: s[lo..hi] inclusive, empty if the range is empty. The general  %
+% substring operation everything else here is built from.              %
+%----------------------------------------------------------------------%
+function Slice(s: Str; lo, hi: integer returns Str)
+  if hi < lo then
+    array Str []
+  else
+    for i in lo, hi returns array of s[i] end for
+  end if
+end function
+
+%----------------------------------------------------------------------%
+% SplitOnChar: the fields of line, separated by sep. n+1 boundary       %
+% positions are walked (one past the end counts as a boundary too), so %
+% a trailing separator produces a trailing empty field, same as most    %
+% CSV readers.                                                          %
+%----------------------------------------------------------------------%
+function SplitOnChar(line: Str; sep: character returns StrArray)
+  % array_liml/array_limh, not 1/array_size: line is very often itself a
+  % Slice() result (SplitCSV calling SplitOnChar on a line that came from
+  % splitting on '\n'), and Slice preserves its source's absolute
+  % positions rather than renumbering from 1.
+  let
+    lo := array_liml(line);
+    hi := array_limh(line)
+  in
+    for initial
+      i          := lo - 1;
+      fieldStart := lo;
+      fields     := array StrArray []
+    while i < hi+1 repeat
+      i          := old i + 1;
+      isBoundary := if i = hi+1 then true else line[i] = sep end if;
+      fields     := if isBoundary then
+                      array_addh(old fields, Slice(line, old fieldStart, i-1))
+                    else
+                      old fields
+                    end if;
+      fieldStart := if isBoundary then i+1 else old fieldStart end if
+    returns
+      value of fields
+    end for
+  end let
+end function
+
+function IsDigit(c: character returns boolean)
+  (c >= '0') & (c <= '9')
+end function
+
+%----------------------------------------------------------------------%
+% ParseReal: decimal text (optional leading '-', digits, optional '.'  %
+% and more digits) to a real. No exponents -- not needed for a CSV of  %
+% plain numbers, and skipped to keep this a showcase rather than a      %
+% full number-parsing library.                                         %
+%----------------------------------------------------------------------%
+function ParseReal(field: Str returns real)
+  let
+    lo    := array_liml(field);
+    hi    := array_limh(field);
+    isNeg := (hi >= lo) & (field[lo] = '-');
+    start := if isNeg then lo+1 else lo end if
+  in
+    for initial
+      i        := start - 1;
+      intPart  := 0.0;
+      fracPart := 0.0;
+      fracDiv  := 1.0;
+      seenDot  := false
+    while i < hi repeat
+      i        := old i + 1;
+      c        := field[i];
+      seenDot  := if c = '.' then true else old seenDot end if;
+      digit    := IsDigit(c);
+      intPart  := if (~old seenDot) & digit then
+                    (old intPart) * 10.0 + real(integer(c) - integer('0'))
+                  else
+                    old intPart
+                  end if;
+      fracDiv  := if old seenDot & digit then (old fracDiv) * 10.0 else old fracDiv end if;
+      fracPart := if old seenDot & digit then
+                    (old fracPart) + real(integer(c) - integer('0')) / fracDiv
+                  else
+                    old fracPart
+                  end if
+    returns
+      value of (if isNeg then -(intPart + fracPart) else intPart + fracPart end if)
+    end for
+  end let
+end function
+
+function ParseRow(line: Str returns Row)
+  for f in SplitOnChar(line, ',') returns array of ParseReal(f) end for
+end function
+
+%----------------------------------------------------------------------%
+% ParseCSV: text to a Table, skipping headerLines lines (a CSV header  %
+% row isn't numeric, so ParseReal has nothing sensible to do with it)  %
+% and any blank line (in particular the trailing one a file ending in  %
+% a newline produces).                                                 %
+%----------------------------------------------------------------------%
+function ParseCSV(text: Str; headerLines: integer returns Table)
+  let
+    lines := SplitOnChar(text, character(10));
+    n     := array_size(lines)
+  in
+    for initial
+      i    := headerLines;
+      rows := array Table [];
+      line := array Str []
+    while i < n repeat
+      i    := old i + 1;
+      line := lines[i];
+      rows := if array_size(line) = 0 then old rows
+              else array_addh(old rows, ParseRow(line))
+              end if
+    returns
+      value of rows
+    end for
+  end let
+end function
+
+function NumCols(t: Table returns integer)
+  array_size(t[1])
+end function
+
+function ColumnSum(t: Table; col: integer returns real)
+  for row in t returns value of sum row[col] end for
+end function
+
+function ColumnSums(t: Table returns Row)
+  for c in 1, NumCols(t) returns array of ColumnSum(t, c) end for
+end function
+
+function ColumnMeans(t: Table returns Row)
+  let nrows := real(array_size(t)) in
+    for c in 1, NumCols(t) returns array of ColumnSum(t, c) / nrows end for
+  end let
+end function
+
+function Main(raw: Str returns Table, Row, Row)
+  let
+    t := ParseCSV(raw, 1)
+  in
+    t, ColumnSums(t), ColumnMeans(t)
+  end let
+end function
