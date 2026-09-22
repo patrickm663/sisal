@@ -105,9 +105,20 @@ jobs:
       - name: Install autotools
         run: sudo apt-get update && sudo apt-get install -y automake autoconf
 
-      - uses: mlugg/setup-zig@v1
-        with:
-          version: 0.16.0
+      # mlugg/setup-zig cycles through several third-party mirrors before
+      # falling back to ziglang.org itself, and as of this writing every one
+      # of them -- mirrors and the action's own "official" fallback URL
+      # alike -- is broken (404/502/503), so the job never got past this
+      # step. Downloading directly from ziglang.org's actual release path
+      # sidesteps the whole mirror list; --retry covers a transient blip in
+      # ziglang.org itself, which is the one dependency this can't avoid.
+      - name: Install zig 0.16.0
+        run: |
+          curl --retry 3 --retry-delay 5 --retry-all-errors -fsSL \
+               -o /tmp/zig.tar.xz \
+               "https://ziglang.org/download/0.16.0/zig-x86_64-linux-0.16.0.tar.xz"
+          tar -C /tmp -xf /tmp/zig.tar.xz
+          echo "/tmp/zig-x86_64-linux-0.16.0" >> "$GITHUB_PATH"
 
       - name: Regenerate the build system
         run: autoreconf -i
