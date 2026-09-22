@@ -162,24 +162,39 @@ x86_64-unknown-linux-gnu SISAL 1.2 (PThreads) ?.?
 [ 1,8: 1 4 9 16 25 36 49 64 ]
 ```
 
-Input and output use FIBRE, a textual format for SISAL values. A function
-taking two integers reads two whitespace-separated integers; an array argument
-is written `[ lo,hi: v1 v2 ... ]`, the same shape you see in the output.
+Input uses FIBRE, a textual format for SISAL values: a function taking two
+integers reads two whitespace-separated integers, and an array argument is
+written `[ lo,hi: v1 v2 ... ]`.
 
-Pass `-json` to a compiled program to get its return values as JSON instead:
-a scalar or array of scalars (`integer`, `real`, `double`, `boolean`, `char`
-or `null`) prints as the matching JSON type, arrays and streams as JSON
-arrays (nested arbitrarily deep), and a `char` array as a JSON string when
-FIBRE would also print it as one (turn that off the same way, with
-`-nostrings`). Multiple return values come out as one JSON array holding
-all of them, in order, so the output is always exactly one JSON document.
-Records and unions still print as FIBRE regardless of `-json` -- that part
-of the format isn't implemented yet.
+By default, a compiled program prints its return values as JSON: a scalar
+or array of scalars (`integer`, `real`, `double`, `boolean`, `char` or
+`null`) prints as the matching JSON type, arrays and streams as JSON arrays
+(nested arbitrarily deep), and a `char` array as a JSON string when FIBRE
+would also print it as one (turn that off with `-nostrings`). Multiple
+return values come out as one JSON array holding all of them, in order, so
+the output is always exactly one JSON document. Records and unions still
+print as FIBRE regardless -- that part of the format isn't implemented yet.
 
 ```
-$ echo 8 | ./squares -json
+$ echo 8 | ./squares
 [[1,4,9,16,25,36,49,64]]
 ```
+
+Pass `-fibre` to get output in FIBRE's own syntax instead:
+
+```
+$ echo 8 | ./squares -fibre
+[ 1,8: 1 4 9 16 25 36 49 64 ]
+```
+
+`real` and `double` values, in either format, always print in full decimal
+notation -- never scientific/exponential -- with as many fractional digits
+as the value's own magnitude needs, so very large or very small values
+print exactly rather than as `0.000000` or losing precision to a fixed
+field width. `-fformat`/`-dformat` still let you pick your own `printf`-style
+format string (including scientific notation) for FIBRE output if you want
+it; passing either opts that value's FIBRE output out of the new default
+formatting.
 
 ### Running in parallel
 

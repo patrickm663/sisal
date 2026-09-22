@@ -82,7 +82,7 @@ jobs:
           SIS
           sisalc -o squares squares.sis
           echo 8 | ./squares | tee out.txt
-          grep -q '1 4 9 16 25 36 49 64' out.txt
+          grep -q '\[\[1,4,9,16,25,36,49,64\]\]' out.txt
 
       - name: Check the generated C still compiles as C23
         if: matrix.cc == 'clang'
@@ -158,7 +158,7 @@ jobs:
           SIS
           sisalc -o squares squares.sis
           echo 8 | ./squares | tee out.txt
-          grep -q '1 4 9 16 25 36 49 64' out.txt
+          grep -q '\[\[1,4,9,16,25,36,49,64\]\]' out.txt
 
 
   freebsd:
@@ -196,7 +196,7 @@ jobs:
             SIS
             sisalc -o squares squares.sis
             echo 8 | ./squares | tee out.txt
-            grep -q '1 4 9 16 25 36 49 64' out.txt
+            grep -q '\[\[1,4,9,16,25,36,49,64\]\]' out.txt
 
   openbsd:
     name: openbsd / gcc
@@ -242,7 +242,7 @@ jobs:
             SIS
             sisalc -o squares squares.sis
             echo 8 | ./squares | tee out.txt
-            grep -q '1 4 9 16 25 36 49 64' out.txt
+            grep -q '\[\[1,4,9,16,25,36,49,64\]\]' out.txt
 
   windows:
     name: windows / mingw
@@ -299,4 +299,4 @@ jobs:
           SIS
           sisalc -o squares squares.sis
           echo 8 | ./squares | tee out.txt
-          grep -q '1 4 9 16 25 36 49 64' out.txt
+          grep -q '\[\[1,4,9,16,25,36,49,64\]\]' out.txt

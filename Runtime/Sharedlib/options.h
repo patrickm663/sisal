@@ -121,7 +121,7 @@ if (argv[idx][0] == '-' ) {                                              /* M */
     if ( (++idx) >= argc ) goto OptionError;                             /* t */
                                                                          /*   */
       dformat = ParseCEscapes(argv[idx]);                                /* C */
-                                                                         /* h */
+      dformat_is_default = FALSE;                                        /* h */
       break;                                                             /* a */
     } else if ( argv[idx][2] == 's' && isdigit(argv[idx][3]) ) {         /* n */
                                                                          /* g */
@@ -160,11 +160,21 @@ if (argv[idx][0] == '-' ) {                                              /* M */
     if ( (++idx) >= argc ) goto OptionError;                             /* e */
                                                                          /*   */
       fformat = ParseCEscapes(argv[idx]);                                /* M */
-                                                                         /* a */
+      fformat_is_default = FALSE;                                        /* a */
       break;                                                             /* c */
-    }                                                                    /* h */
-    goto OptionError;                                                    /* i */
-                                                                         /* n */
+    } else if ( strcmp(argv[idx]+1,"fibre") == 0 ) {                     /* h */
+                                                                         /* i */
+  /* ------------------------------------------------------------ */     /* n */
+  /*                            -fibre                             */     /* e */
+  /*     Print program output as FIBRE instead of JSON syntax      */     /*   */
+  /* ------------------------------------------------------------ */     /* G */
+                                                                         /* e */
+      JsonOutput = FALSE;                                                /* n */
+                                                                         /* e */
+      break;                                                             /* r */
+    }                                                                    /* a */
+    goto OptionError;                                                    /* t */
+                                                                         /* e */
    case 'g':                                                             /* e */
     if ( strcmp(argv[idx]+1,"gss") == 0 ) {                              /*   */
                                                                          /* G */

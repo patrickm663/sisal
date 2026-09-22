@@ -29,6 +29,14 @@ char    *cformat        = "'%c' ";
 char    *cformat2       = "'\\%03o' ";
 char    *bformat        = "%c ";
 
+/* fformat/dformat above are only actually used once -fformat/-dformat has
+   set one: by default, real/double now print with FormatFixedDecimal (see
+   vectorIO.c) instead, which -fformat/-dformat couldn't drive themselves
+   (a fixed printf format string can't pick a fractional-digit count from
+   the value's own magnitude the way full decimal precision needs). */
+int     fformat_is_default = TRUE;
+int     dformat_is_default = TRUE;
+
 char  *av [1024];               /* COMMAND LINE OF CURRENT COMPILATION PHASE */
 
 #if defined(NO_STATIC_SHARED)

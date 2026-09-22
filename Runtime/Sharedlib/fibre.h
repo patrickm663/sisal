@@ -66,24 +66,38 @@ extern int JsonOutput;
 #endif
 
 extern char *iformat,*fformat,*dformat,*nformat,*cformat,*cformat2,*bformat;
+extern int  fformat_is_default, dformat_is_default;
 extern void JsonPutChar(char,FILE*);
+extern void FormatFixedDecimal(double,int,char*,size_t);
 
 /* iformat/fformat/dformat/etc are FIBRE's, tunable with -iformat and
    friends and always trailed by a separating space; JSON needs its own
    clean, comma-separated tokens instead, so each Write* picks a format
-   on JsonOutput rather than reusing those. %.9g/%.17g are enough
-   significant digits for float/double to round-trip and never need
-   %e's fixed field width, which would otherwise leave stray spaces
-   inside the JSON number. */
+   on JsonOutput rather than reusing those.
+   WriteInt still uses %d/iformat either way -- integers already print in
+   full precision with no notation ambiguity. WriteFlt/WriteDbl are
+   different: unless the user has picked a custom -fformat/-dformat,
+   both FIBRE and JSON output use FormatFixedDecimal, which always
+   renders in fixed decimal (never scientific) notation with just enough
+   fractional digits for the value's own magnitude -- a fixed %f
+   precision would either waste digits on large values or truncate small
+   ones to all zeros. JSON always uses it, since a user's custom FIBRE
+   format string isn't guaranteed to produce valid JSON anyway. */
 #define WriteInt(x)  {PrintIndent; \
   if ( JsonOutput ) fprintf( FibreOutFd, "%d", x ); \
   else fprintf( FibreOutFd, iformat, x );   }
 #define WriteFlt(x)  {PrintIndent; \
-  if ( JsonOutput ) fprintf( FibreOutFd, "%.9g", (double)(x) ); \
-  else fprintf( FibreOutFd, fformat, x ); }
+  if ( JsonOutput || fformat_is_default ) { \
+    char _fbuf[512]; \
+    FormatFixedDecimal( (double)(x), 9, _fbuf, sizeof(_fbuf) ); \
+    fputs( _fbuf, FibreOutFd ); \
+  } else fprintf( FibreOutFd, fformat, x ); }
 #define WriteDbl(x)  {PrintIndent; \
-  if ( JsonOutput ) fprintf( FibreOutFd, "%.17g", x ); \
-  else fprintf( FibreOutFd, dformat, x );}
+  if ( JsonOutput || dformat_is_default ) { \
+    char _dbuf[512]; \
+    FormatFixedDecimal( (x), 17, _dbuf, sizeof(_dbuf) ); \
+    fputs( _dbuf, FibreOutFd ); \
+  } else fprintf( FibreOutFd, dformat, x );}
 #define WriteNil(x)  {PrintIndent; \
   if ( JsonOutput ) fputs( "null", FibreOutFd ); \
   else fprintf( FibreOutFd, nformat, x );  }

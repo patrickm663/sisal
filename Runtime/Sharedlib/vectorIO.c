@@ -11,10 +11,34 @@
 /**************************************************************************/
 
 #include "sisalrt.h"
+#include <math.h>
 
 int     FibreStrings = TRUE;
 int     sisal_file_io = 0;
-int     JsonOutput = FALSE;
+int     JsonOutput = TRUE;
+
+/* Format val with `sig` significant digits, always in fixed decimal
+   notation (never scientific/exponential). This is the default real/double
+   formatting for both FIBRE and JSON output. Plain "%.*f" alone can't do
+   this: a fixed fractional-digit count either wastes digits on
+   large-magnitude values or truncates small-magnitude ones to all zeros,
+   so the fractional digit count is derived from the value's own magnitude
+   instead of being fixed in advance. */
+void FormatFixedDecimal( double val, int sig, char *buf, size_t bufsize )
+{
+  int frac_digits;
+
+  if ( val == 0.0 || !isfinite(val) ) {
+    snprintf( buf, bufsize, "%.*f", sig > 1 ? sig - 1 : 0, val );
+    return;
+  }
+
+  frac_digits = sig - 1 - (int)floor( log10( fabs( val ) ) );
+  if ( frac_digits < 0 )   frac_digits = 0;
+  if ( frac_digits > 340 ) frac_digits = 340;  /* smallest normal double ~1e-308 */
+
+  snprintf( buf, bufsize, "%.*f", frac_digits, val );
+}
 
 /* Write one byte as JSON string content (no surrounding quotes). Used both
    for a char array printed as a JSON string and, via WriteChar in fibre.h,
