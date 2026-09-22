@@ -238,6 +238,8 @@ for speed rather than being free.
 - [patrickm663/sisal-benchmarks](https://github.com/patrickm663/sisal-benchmarks)
   — matrix multiply, mandelbrot, n-body, STREAM, discounted cash flow, with
   timings and a container build
+- [Examples/](Examples/) in this repo — larger, real-world-shaped programs,
+  not run by `make check`
 - `Tests/` in this repo — the programs `make check` runs
 
 `Benchmarks/run-benchmarks.py` compiles the same programs with two or more

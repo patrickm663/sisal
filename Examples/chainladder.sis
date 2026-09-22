@@ -1,0 +1,143 @@
+%**************************************************************************%
+%* FILE   **************       chainladder.sis      ************************%
+%**************************************************************************%
+%* Chain Ladder loss reserving method, as used in short-term (general/    *%
+%* non-life) insurance to estimate outstanding claim reserves from a     *%
+%* cumulative claims development triangle.                               *%
+%*                                                                        *%
+%* Given a triangle of cumulative paid (or incurred) claims C[i,j], where *%
+%* i is accident year and j is development year, the method:             *%
+%*   1. Computes age-to-age development factors f_j from the volume-     *%
+%*      weighted average of C[i,j+1]/C[i,j] across accident years with   *%
+%*      both diagonals observed.                                         *%
+%*   2. Projects each accident year's incomplete tail forward by         *%
+%*      repeatedly applying the factors, completing the triangle into a  *%
+%*      full square.                                                     *%
+%*   3. Reads the ultimate claims off the last column, and the reserve   *%
+%*      per accident year as ultimate minus the latest observed diagonal.*%
+%**************************************************************************%
+
+define Main
+
+type Row      = array [real];
+type Triangle = array [Row];
+
+%----------------------------------------------------------------------%
+% DevFactor: the age-to-age factor from development year j to j+1,     %
+% using only the n-j accident years for which both C[i,j] and          %
+% C[i,j+1] have actually been observed.                                %
+%----------------------------------------------------------------------%
+function DevFactor(tri: Triangle; n, j: integer returns real)
+  let
+    numerator   := for i in 1, n-j returns value of sum tri[i][j+1] end for;
+    denominator := for i in 1, n-j returns value of sum tri[i][j]   end for
+  in
+    numerator / denominator
+  end let
+end function
+
+function DevFactors(tri: Triangle; n: integer returns Row)
+  for j in 1, n-1
+  returns array of DevFactor(tri, n, j)
+  end for
+end function
+
+%----------------------------------------------------------------------%
+% CompleteRow: fill in one accident year's tail. The first knownCount  %
+% cells are the observed diagonal; each cell after that is the         %
+% previous (possibly already-projected) cell times the matching        %
+% development factor. This has to walk forward sequentially -- cell    %
+% j+1 depends on the just-computed cell j, not on the original         %
+% (unobserved, zero-padded) triangle entry -- so it is a carry-forward %
+% loop rather than an independent-iteration "for ... returns array of".%
+%----------------------------------------------------------------------%
+function CompleteRow(triRow: Row; knownCount, n: integer; factors: Row
+                      returns Row)
+  for initial
+    j      := 1;
+    val    := triRow[1];
+    result := array Row [1: val]
+  while j < n repeat
+    j      := old j + 1;
+    val    := if j <= knownCount then
+                triRow[j]
+              else
+                (old val) * factors[j-1]
+              end if;
+    result := array_addh(old result, val)
+  returns
+    value of result
+  end for
+end function
+
+function CompleteTriangle(tri: Triangle; n: integer; factors: Row
+                           returns Triangle)
+  for i in 1, n
+    knownCount := n - i + 1;
+  returns
+    array of CompleteRow(tri[i], knownCount, n, factors)
+  end for
+end function
+
+function Ultimates(completed: Triangle; n: integer returns Row)
+  for i in 1, n
+  returns array of completed[i][n]
+  end for
+end function
+
+function Reserves(completed, tri: Triangle; n: integer returns Row)
+  for i in 1, n
+    knownCount := n - i + 1;
+  returns
+    array of (completed[i][n] - tri[i][knownCount])
+  end for
+end function
+
+function TotalReserve(reserves: Row returns real)
+  for r in reserves returns value of sum r end for
+end function
+
+%----------------------------------------------------------------------%
+% Main: a synthetic but plausible 10x10 cumulative claims triangle      %
+% (thousands of currency units). Unobserved cells are zero-padded --   %
+% CompleteRow never reads past position knownCount in the original row,%
+% so the padding value is never actually used.                        %
+%----------------------------------------------------------------------%
+function Main(returns Row, Triangle, Row, Row, real)
+
+  let
+    n := 10;
+
+    tri := array Triangle [1:
+      array Row [1: 1001.0, 1855.0, 2423.0, 2779.0, 2970.0,
+                    3025.0, 3050.0, 3060.0, 3064.0, 3066.0 ],
+      array Row [1: 1113.0, 2103.0, 2774.0, 3200.0, 3410.0,
+                    3465.0, 3480.0, 3488.0, 3490.0,    0.0 ],
+      array Row [1: 1265.0, 2433.0, 3200.0, 3650.0, 3870.0,
+                    3945.0, 3960.0, 3968.0,    0.0,    0.0 ],
+      array Row [1: 1490.0, 2833.0, 3700.0, 4200.0, 4450.0,
+                    4530.0, 4550.0,    0.0,    0.0,    0.0 ],
+      array Row [1: 1725.0, 3250.0, 4200.0, 4750.0, 5010.0,
+                    5090.0,    0.0,    0.0,    0.0,    0.0 ],
+      array Row [1: 1900.0, 3550.0, 4550.0, 5100.0, 5380.0,
+                       0.0,    0.0,    0.0,    0.0,    0.0 ],
+      array Row [1: 2100.0, 3900.0, 4950.0, 5500.0,    0.0,
+                       0.0,    0.0,    0.0,    0.0,    0.0 ],
+      array Row [1: 2300.0, 4200.0, 5300.0,    0.0,    0.0,
+                       0.0,    0.0,    0.0,    0.0,    0.0 ],
+      array Row [1: 2500.0, 4550.0,    0.0,    0.0,    0.0,
+                       0.0,    0.0,    0.0,    0.0,    0.0 ],
+      array Row [1: 2700.0,    0.0,    0.0,    0.0,    0.0,
+                       0.0,    0.0,    0.0,    0.0,    0.0 ]
+    ];
+
+    factors   := DevFactors(tri, n);
+    completed := CompleteTriangle(tri, n, factors);
+    ultimates := Ultimates(completed, n);
+    reserves  := Reserves(completed, tri, n);
+    total     := TotalReserve(reserves)
+  in
+    factors, completed, reserves, ultimates, total
+  end let
+
+end function
