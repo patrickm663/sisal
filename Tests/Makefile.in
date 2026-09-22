@@ -102,7 +102,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__EXEEXT_1 = three$(EXEEXT) hello$(EXEEXT) 8queens$(EXEEXT) \
 	bubble$(EXEEXT) quicksort$(EXEEXT) crypto$(EXEEXT) \
-	fromC$(EXEEXT) inputio$(EXEEXT)
+	fromC$(EXEEXT) inputio$(EXEEXT) modules$(EXEEXT)
 8queens_SOURCES = 8queens.sis
 8queens_OBJECTS = 8queens.$(OBJEXT)
 8queens_LDADD = $(LDADD)
@@ -125,6 +125,10 @@ hello_DEPENDENCIES = $(pkglibdir)/libsisal.a $(pkglibdir)/srt0.o
 am_inputio_OBJECTS = inputio-inputio.$(OBJEXT)
 inputio_OBJECTS = $(am_inputio_OBJECTS)
 inputio_DEPENDENCIES = $(pkglibdir)/libsisal.a
+am_modules_OBJECTS = moduleA.$(OBJEXT) moduleB.$(OBJEXT) \
+	modulesdriver.$(OBJEXT)
+modules_OBJECTS = $(am_modules_OBJECTS)
+modules_DEPENDENCIES = $(pkglibdir)/libsisal.a
 quicksort_SOURCES = quicksort.sis
 quicksort_OBJECTS = quicksort.$(OBJEXT)
 quicksort_LDADD = $(LDADD)
@@ -149,7 +153,7 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/Include
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/fromCdriver.Po \
-	./$(DEPDIR)/inputio-inputio.Po
+	./$(DEPDIR)/inputio-inputio.Po ./$(DEPDIR)/modulesdriver.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -168,9 +172,10 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = 8queens.sis bubble.sis crypto.sis $(fromC_SOURCES) hello.sis \
-	$(inputio_SOURCES) quicksort.sis three.sis
+	$(inputio_SOURCES) $(modules_SOURCES) quicksort.sis three.sis
 DIST_SOURCES = 8queens.sis bubble.sis crypto.sis $(fromC_SOURCES) \
-	hello.sis $(inputio_SOURCES) quicksort.sis three.sis
+	hello.sis $(inputio_SOURCES) $(modules_SOURCES) quicksort.sis \
+	three.sis
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -521,7 +526,7 @@ SISALC = ${bindir}/sisalc
 LDADD = $(pkglibdir)/libsisal.a $(pkglibdir)/srt0.o
 AM_LDFLAGS = $(parallel_link)
 AM_DEFAULT_SOURCE_EXT = .sis
-TESTSUITE = three hello 8queens bubble quicksort crypto fromC inputio
+TESTSUITE = three hello 8queens bubble quicksort crypto fromC inputio modules
 fromC_SOURCES = fromC.sis fromCdriver.c
 fromC_LDADD = $(pkglibdir)/libsisal.a
 
@@ -530,6 +535,13 @@ fromC_LDADD = $(pkglibdir)/libsisal.a
 inputio_SOURCES = inputio.c
 inputio_CPPFLAGS = $(AM_CPPFLAGS) -I$(pkgincludedir)
 inputio_LDADD = $(pkglibdir)/libsisal.a
+
+# Two independently compiled SISAL programs (see the comment in
+# moduleA.sis) linked with a hand-written C driver into one binary --
+# regression coverage for multiple -forC translation units coexisting,
+# and for passing a real argument (not just a result) across the FLI.
+modules_SOURCES = moduleA.sis moduleB.sis modulesdriver.c
+modules_LDADD = $(pkglibdir)/libsisal.a
 dist_check_SCRIPTS = run-test
 
 # run-test wraps each test binary, so it belongs in LOG_COMPILER.  It used to
@@ -605,6 +617,10 @@ inputio$(EXEEXT): $(inputio_OBJECTS) $(inputio_DEPENDENCIES) $(EXTRA_inputio_DEP
 	@rm -f inputio$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(inputio_OBJECTS) $(inputio_LDADD) $(LIBS)
 
+modules$(EXEEXT): $(modules_OBJECTS) $(modules_DEPENDENCIES) $(EXTRA_modules_DEPENDENCIES) 
+	@rm -f modules$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(modules_OBJECTS) $(modules_LDADD) $(LIBS)
+
 quicksort$(EXEEXT): $(quicksort_OBJECTS) $(quicksort_DEPENDENCIES) $(EXTRA_quicksort_DEPENDENCIES) 
 	@rm -f quicksort$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(quicksort_OBJECTS) $(quicksort_LDADD) $(LIBS)
@@ -621,6 +637,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fromCdriver.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inputio-inputio.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modulesdriver.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -905,6 +922,13 @@ inputio.log: inputio$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+modules.log: modules$(EXEEXT)
+	@p='modules$(EXEEXT)'; \
+	b='modules'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 .test.log:
 	@p='$<'; \
 	$(am__set_b); \
@@ -1000,6 +1024,7 @@ clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/fromCdriver.Po
 	-rm -f ./$(DEPDIR)/inputio-inputio.Po
+	-rm -f ./$(DEPDIR)/modulesdriver.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1047,6 +1072,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/fromCdriver.Po
 	-rm -f ./$(DEPDIR)/inputio-inputio.Po
+	-rm -f ./$(DEPDIR)/modulesdriver.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -1087,6 +1113,12 @@ uninstall-am:
 
 fromC.$(OBJEXT): fromC.sis
 	$(SISALC) -forC -w -c $(srcdir)/fromC.sis -o $(builddir)/fromC.$(OBJEXT)
+
+moduleA.$(OBJEXT): moduleA.sis
+	$(SISALC) -forC -w -c $(srcdir)/moduleA.sis -o $(builddir)/moduleA.$(OBJEXT)
+
+moduleB.$(OBJEXT): moduleB.sis
+	$(SISALC) -forC -w -c $(srcdir)/moduleB.sis -o $(builddir)/moduleB.$(OBJEXT)
 
 answers:
 	for tst in $(TESTS); do \

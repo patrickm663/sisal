@@ -1,0 +1,15 @@
+%**************************************************************************%
+%* FILE   **************         moduleB.sis        ************************%
+%**************************************************************************%
+%* Copyright (C) University of California Regents                         %
+%**************************************************************************%
+%* Companion to moduleA.sis -- see the comment there.                    *%
+%**************************************************************************%
+
+define DoubleIt
+
+%$entry=DoubleIt
+
+function DoubleIt(x: integer returns integer)
+  x + x
+end function

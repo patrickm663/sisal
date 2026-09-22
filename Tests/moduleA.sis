@@ -1,0 +1,19 @@
+%**************************************************************************%
+%* FILE   **************         moduleA.sis        ************************%
+%**************************************************************************%
+%* Copyright (C) University of California Regents                         %
+%**************************************************************************%
+%* One of two independently-compiled SISAL "programs" (see moduleB.sis)   *%
+%* linked together into a single C-driven binary by modulesdriver.c, to  *%
+%* regression-test that multiple SISAL translation units can coexist in  *%
+%* one executable, and that a real (non-zero-argument) value round-trips *%
+%* across the -forC FLI boundary in both directions.                     *%
+%**************************************************************************%
+
+define Cube
+
+%$entry=Cube
+
+function Cube(x: integer returns integer)
+  x * x * x
+end function

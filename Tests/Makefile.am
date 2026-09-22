@@ -9,7 +9,7 @@ AM_DEFAULT_SOURCE_EXT = .sis
 .sis.o:
 	$(SISALC) -w -c $< -o $@
 
-TESTSUITE = three hello 8queens bubble quicksort crypto fromC inputio
+TESTSUITE = three hello 8queens bubble quicksort crypto fromC inputio modules
 
 check_PROGRAMS = $(TESTSUITE)
 
@@ -25,6 +25,19 @@ inputio_LDADD = $(pkglibdir)/libsisal.a
 
 fromC.$(OBJEXT): fromC.sis
 	$(SISALC) -forC -w -c $(srcdir)/fromC.sis -o $(builddir)/fromC.$(OBJEXT)
+
+# Two independently compiled SISAL programs (see the comment in
+# moduleA.sis) linked with a hand-written C driver into one binary --
+# regression coverage for multiple -forC translation units coexisting,
+# and for passing a real argument (not just a result) across the FLI.
+modules_SOURCES = moduleA.sis moduleB.sis modulesdriver.c
+modules_LDADD = $(pkglibdir)/libsisal.a
+
+moduleA.$(OBJEXT): moduleA.sis
+	$(SISALC) -forC -w -c $(srcdir)/moduleA.sis -o $(builddir)/moduleA.$(OBJEXT)
+
+moduleB.$(OBJEXT): moduleB.sis
+	$(SISALC) -forC -w -c $(srcdir)/moduleB.sis -o $(builddir)/moduleB.$(OBJEXT)
 
 dist_check_SCRIPTS = run-test
 

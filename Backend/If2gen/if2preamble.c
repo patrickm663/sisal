@@ -642,7 +642,16 @@ void PrintFilePrologue(void)
     FPRINTF( output,
             "static int *ModuleValue = &AllCompilesMustUseTheModuleDataBase;\n\n");
   } else if ( IsStamp( PNODBASE ) ) {
-    FPRINTF( output,"int ProvideModuleDataBaseOnAllCompiles;\n\n" );
+    /* PNODBASE means this compile isn't participating in any cross-file
+       module database (no -mdb file was given -- see ReadModuleDataBase in
+       if2modules.c), so nothing ever needs to see this symbol from another
+       translation unit. Emitting it as static keeps two independently
+       compiled SISAL programs (each PNODBASE, the default) linkable into
+       the same binary: under GCC's -fno-common default, two non-static
+       "int x;" tentative definitions of the same name in different TUs are
+       a hard "multiple definition" link error rather than the silent
+       common-symbol merge older compilers gave them. */
+    FPRINTF( output,"static int ProvideModuleDataBaseOnAllCompiles;\n\n" );
   } else if ( IsStamp( MNODBASE ) ) {
     FPRINTF( output,"extern int ProvideModuleDataBaseOnAllCompiles;\n" );
     FPRINTF( output,
