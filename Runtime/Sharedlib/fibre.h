@@ -23,11 +23,17 @@ extern POINTER SisalMainArgs;
 extern POINTER ReadFibreInputs(void);;
 extern void    WriteFibreOutputs(POINTER);;
 
+extern int JsonOutput;
+
+/* No-op in JSON mode: FIBRE's indentation is meaningless there, and JSON
+   output is written compact (see the Write*Vector functions in
+   vectorIO.c, which insert commas instead). */
 #define PrintIndent \
 {                                                  \
   int Counter;                            \
-  for ( Counter = Indent; Counter > 0; Counter-- ) \
-    fprintf( FibreOutFd, " " );                    \
+  if ( !JsonOutput ) \
+    for ( Counter = Indent; Counter > 0; Counter-- ) \
+      fprintf( FibreOutFd, " " );                    \
 }
 
 /* Write*Vector() in vectorIO.c wraps its whole body in one of these: every
@@ -60,15 +66,37 @@ extern void    WriteFibreOutputs(POINTER);;
 #endif
 
 extern char *iformat,*fformat,*dformat,*nformat,*cformat,*cformat2,*bformat;
-#define WriteInt(x)  {PrintIndent; fprintf( FibreOutFd, iformat, x );   }
-#define WriteFlt(x)  {PrintIndent; fprintf( FibreOutFd, fformat, x ); }
-#define WriteDbl(x)  {PrintIndent; fprintf( FibreOutFd, dformat, x );}
-#define WriteNil(x)  {PrintIndent; fprintf( FibreOutFd, nformat, x );  }
+extern void JsonPutChar(char,FILE*);
+
+/* iformat/fformat/dformat/etc are FIBRE's, tunable with -iformat and
+   friends and always trailed by a separating space; JSON needs its own
+   clean, comma-separated tokens instead, so each Write* picks a format
+   on JsonOutput rather than reusing those. %.9g/%.17g are enough
+   significant digits for float/double to round-trip and never need
+   %e's fixed field width, which would otherwise leave stray spaces
+   inside the JSON number. */
+#define WriteInt(x)  {PrintIndent; \
+  if ( JsonOutput ) fprintf( FibreOutFd, "%d", x ); \
+  else fprintf( FibreOutFd, iformat, x );   }
+#define WriteFlt(x)  {PrintIndent; \
+  if ( JsonOutput ) fprintf( FibreOutFd, "%.9g", (double)(x) ); \
+  else fprintf( FibreOutFd, fformat, x ); }
+#define WriteDbl(x)  {PrintIndent; \
+  if ( JsonOutput ) fprintf( FibreOutFd, "%.17g", x ); \
+  else fprintf( FibreOutFd, dformat, x );}
+#define WriteNil(x)  {PrintIndent; \
+  if ( JsonOutput ) fputs( "null", FibreOutFd ); \
+  else fprintf( FibreOutFd, nformat, x );  }
 
 #define WriteChar(x) \
 {                                              \
   PrintIndent;                                 \
-  if ( ((x) < ' ') || ((x) > '~') )            \
+  if ( JsonOutput ) {                          \
+    fputc( '"', FibreOutFd );                  \
+    JsonPutChar( (x), FibreOutFd );            \
+    fputc( '"', FibreOutFd );                  \
+  }                                            \
+  else if ( ((x) < ' ') || ((x) > '~') )            \
     fprintf( FibreOutFd, cformat2, (x) & 0xff);\
   else if ( (x) == '\\' )                      \
     fprintf( FibreOutFd, "'\\\\'\n" );         \
@@ -79,7 +107,9 @@ extern char *iformat,*fformat,*dformat,*nformat,*cformat,*cformat2,*bformat;
 }
 
 #define WriteBool(x) \
-  {PrintIndent; fprintf( FibreOutFd, bformat, (x)? 'T' : 'F' );}
+  {PrintIndent; \
+   if ( JsonOutput ) fputs( (x) ? "true" : "false", FibreOutFd ); \
+   else fprintf( FibreOutFd, bformat, (x)? 'T' : 'F' );}
 
 #define ReadInt(x)  {FibreParse( INT_ );    x = FibreInt; }
 #define ReadFlt(x)  {FibreParse( FLOAT_ );  x = FibreFlt; }

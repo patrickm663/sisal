@@ -146,6 +146,47 @@ static void PrintWriteArray(int indent, char *src, PINFO i)
   PrintIndentation( indent );
   FPRINTF( output, "  ARRAYP arr = (ARRAYP) %s;\n", src );
 
+  SPRINTF( buf, "(((%s*)Base%d)[Lo%d])", i->A_ELEM->tname, indent, indent );
+
+  /* This is the array-of-non-scalar case: the six Write*Vector functions
+     in vectorIO.c only handle a scalar element type, so an array whose
+     elements are themselves arrays, records or unions gets its write
+     code generated fresh here instead. Same JSON treatment as those --
+     a plain comma-separated array, no FIBRE header/indent -- applied at
+     the one place that knows this array's bounds and element writer. */
+  PrintIndentation( indent );
+  FPRINTF( output, "  if ( JsonOutput ) {\n" );
+
+  PrintIndentation( indent );
+  FPRINTF( output, "    Lo%d = arr->LoBound;\n", indent );
+  PrintIndentation( indent );
+  FPRINTF( output, "    Base%d = arr->Base;\n", indent );
+  PrintIndentation( indent );
+  FPRINTF( output, "    HiBound = Lo%d + arr->Size - 1;\n", indent );
+  PrintIndentation( indent );
+  FPRINTF( output, "    fputc( '[', FibreOutFd );\n" );
+  PrintIndentation( indent );
+  FPRINTF( output, "    for ( /* NOTHING */; Lo%d <= HiBound; Lo%d++ ) {\n",
+           indent, indent                                               );
+  PrintIndentation( indent );
+  FPRINTF( output, "      if ( Lo%d > arr->LoBound ) fputc( ',', FibreOutFd );\n",
+           indent );
+
+  if ( i->A_ELEM->LibNames || i->A_ELEM->touch1 || i->A_ELEM->touch2 ) {
+    PrintIndentation( indent+6 );
+    FPRINTF( output, "%s( %s );\n", i->A_ELEM->wname, buf );
+    }
+  else
+    PrintWriteOp( indent+6, buf, i->A_ELEM );
+
+  PrintIndentation( indent );
+  FPRINTF( output, "      }\n" );
+  PrintIndentation( indent );
+  FPRINTF( output, "    fputc( ']', FibreOutFd );\n" );
+
+  PrintIndentation( indent );
+  FPRINTF( output, "  } else {\n" );
+
   PrintIndentation( indent );
   FPRINTF( output, "  PrintIndent;\n" );
 
@@ -153,8 +194,8 @@ static void PrintWriteArray(int indent, char *src, PINFO i)
   FPRINTF( output, "Lo%d = arr->LoBound;\n", indent );
 
   PrintIndentation( indent );
-  FPRINTF( output, 
-     "  fprintf( FibreOutFd, \"[ %%d,%%d:\", Lo%d, Lo%d+(arr->Size)-1 );\n", 
+  FPRINTF( output,
+     "  fprintf( FibreOutFd, \"[ %%d,%%d:\", Lo%d, Lo%d+(arr->Size)-1 );\n",
      indent, indent );
 
 /* PRINT REFERENCE COUNTS FOR DEBUG */
@@ -173,11 +214,9 @@ static void PrintWriteArray(int indent, char *src, PINFO i)
 
   PrintIndentation( indent );
   FPRINTF( output, "  HiBound = Lo%d + arr->Size - 1;\n", indent );
-  
-  SPRINTF( buf, "(((%s*)Base%d)[Lo%d])", i->A_ELEM->tname, indent, indent );
 
   PrintIndentation( indent );
-  FPRINTF( output, "  for ( /* NOTHING */; Lo%d <= HiBound; Lo%d++ ) {\n", 
+  FPRINTF( output, "  for ( /* NOTHING */; Lo%d <= HiBound; Lo%d++ ) {\n",
            indent, indent                                               );
 
   /* WAS THE ROUTINE PRINTED? */
@@ -200,6 +239,9 @@ static void PrintWriteArray(int indent, char *src, PINFO i)
   PrintIndentation( indent );
 
   FPRINTF( output, "  fprintf( FibreOutFd, \"]\\n\" );\n" );
+
+  PrintIndentation( indent );
+  FPRINTF( output, "  }\n" );
 
   PrintIndentation( indent );
   FPRINTF( output, "}\n" );
@@ -805,8 +847,19 @@ void PrintWriteFibreOutputs(PNODE f)
 
   FPRINTF( output, "  /* Set file I/O flag for input... */\n");
   FPRINTF( output, "  sisal_file_io = %d;\n",stream_io);
+  /* JSON has exactly one top-level document per output, and this loop is
+     the only place that knows how many return values there are, so this
+     is also the only place that can wrap them into one: a JSON array of
+     the (possibly one) values, same as the array/stream writers in
+     vectorIO.c wrap their own elements. The wname branch below (records
+     and unions) is untouched and still prints FIBRE regardless of
+     JsonOutput -- JSON support doesn't extend inside those yet. */
+  FPRINTF( output, "  if ( JsonOutput ) fputc( '[', FibreOutFd );\n" );
   for ( c = 1, i = mi->F_OUT; i != NULL; i = i->L_NEXT, c++ ) {
     SPRINTF( buf, "(p->Out%d)", c );
+
+    if ( c > 1 )
+      FPRINTF( output, "  if ( JsonOutput ) fputc( ',', FibreOutFd );\n" );
 
     if ( i->L_SUB->LibNames || i->L_SUB->touch1 ) {
       FPRINTF( output, "  %s( %s );\n", i->L_SUB->wname, buf );
@@ -814,6 +867,7 @@ void PrintWriteFibreOutputs(PNODE f)
       PrintWriteOp( 2, buf, i->L_SUB );
     }
   }
+  FPRINTF( output, "  if ( JsonOutput ) fputc( ']', FibreOutFd );\n" );
   FPRINTF( output, "  sisal_file_io = previous_io_state;\n");
   FPRINTF( output, "}\n" );
 }

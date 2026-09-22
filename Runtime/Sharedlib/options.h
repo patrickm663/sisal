@@ -209,6 +209,20 @@ if (argv[idx][0] == '-' ) {                                              /* M */
     }                                                                    /* e */
     goto OptionError;                                                    /* d */
                                                                          /*   */
+   case 'j':
+    if ( strcmp(argv[idx]+1,"json") == 0 ) {
+
+  /* ------------------------------------------------------------ */
+  /*                             -json                             */
+  /*      Print program output as JSON instead of FIBRE syntax    */
+  /* ------------------------------------------------------------ */
+
+      JsonOutput = TRUE;
+
+      break;
+    }
+    goto OptionError;
+
    case 'l':                                                             /* D */
     if ( argv[idx][2] == 's' && isdigit(argv[idx][3]) ) {                /* o */
                                                                          /*   */

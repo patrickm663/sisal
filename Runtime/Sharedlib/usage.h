@@ -14,6 +14,7 @@
 /* a */  "-gss                  Use guided self scheduling algorithm instead of block slicing",
 /* t */  "-help                *Same as -usage",
 /* e */  "-iformat <formatstring> Change the default integer output format",
+         "-json                 Print program output as JSON instead of FIBRE syntax",
 /* d */  "-ls<num>              Set the default slice count to <num>",
 /*   */  "-m                    Indicate the master process on distributed processors.",
 /* D */  "-nb                  *Do not bind parallel work",

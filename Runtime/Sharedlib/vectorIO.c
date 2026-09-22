@@ -14,6 +14,46 @@
 
 int     FibreStrings = TRUE;
 int     sisal_file_io = 0;
+int     JsonOutput = FALSE;
+
+/* Write one byte as JSON string content (no surrounding quotes). Used both
+   for a char array printed as a JSON string and, via WriteChar in fibre.h,
+   for a lone char or a char array *not* being printed as a string -- same
+   escaping either way, so callers agree on which bytes need one. */
+void JsonPutChar( char c, FILE *fp )
+{
+  switch ( c ) {
+    case '"' : fputs( "\\\"", fp ); break;
+    case '\\': fputs( "\\\\", fp ); break;
+    case '\b': fputs( "\\b",  fp ); break;
+    case '\f': fputs( "\\f",  fp ); break;
+    case '\n': fputs( "\\n",  fp ); break;
+    case '\r': fputs( "\\r",  fp ); break;
+    case '\t': fputs( "\\t",  fp ); break;
+    default:
+      if ( isascii((unsigned char)c) && isprint((unsigned char)c) )
+        fputc( c, fp );
+      else
+        fprintf( fp, "\\u%04x", (unsigned char)c & 0xff );
+  }
+}
+
+/* Shared body for the five scalar-vector JSON branches below: a plain
+   comma-separated JSON array, no indentation or bounds header (those are
+   FIBRE-only). WriteCharVector uses WriteChar directly instead, since it
+   also has the string-vs-array-of-chars case to handle. */
+#define WriteJsonVector(elemtype, WriteFn) \
+{ \
+  Lo2 = arr->LoBound; \
+  Base2 = arr->Base; \
+  HiBound = Lo2 + arr->Size - 1; \
+  fputc( '[', FibreOutFd ); \
+  for ( ; Lo2 <= HiBound; Lo2++ ) { \
+    if ( Lo2 > arr->LoBound ) fputc( ',', FibreOutFd ); \
+    WriteFn( (((elemtype*)Base2)[Lo2]) ); \
+  } \
+  fputc( ']', FibreOutFd ); \
+}
 
 #define GenericReadArray(scalartype,reader,term)\
 { \
@@ -76,30 +116,34 @@ void WriteBoolVector(POINTER val)
 
   FIBRE_BUF_BEGIN();
 
-  PrintIndent;
-  Lo2 = arr->LoBound;
-  fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
-  saveIndent = Indent;
+  if ( JsonOutput ) {
+    WriteJsonVector(char, WriteBool);
+  } else {
+    PrintIndent;
+    Lo2 = arr->LoBound;
+    fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
+    saveIndent = Indent;
 #ifdef VERBOSE
-  fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
-  Indent++;
+    fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
+    Indent++;
 #else
-  Indent = 0;
-  fprintf( FibreOutFd, " " );
+    Indent = 0;
+    fprintf( FibreOutFd, " " );
 #endif
 
-  Indent++;
-  Base2 = arr->Base;
-  HiBound = Lo2 + arr->Size - 1;
-  for ( ; Lo2 <= HiBound; Lo2++ ) {
-    WriteBool( (((char*)Base2)[Lo2]) );
-  }
+    Indent++;
+    Base2 = arr->Base;
+    HiBound = Lo2 + arr->Size - 1;
+    for ( ; Lo2 <= HiBound; Lo2++ ) {
+      WriteBool( (((char*)Base2)[Lo2]) );
+    }
 
-  Indent = saveIndent;
+    Indent = saveIndent;
 #ifdef VERBOSE
-  PrintIndent;
+    PrintIndent;
 #endif
-  fprintf( FibreOutFd, "]\n" );
+    fprintf( FibreOutFd, "]\n" );
+  }
 
   FIBRE_BUF_END();
 }
@@ -164,50 +208,62 @@ void WriteCharVector(POINTER val)
 
   FIBRE_BUF_BEGIN();
 
-  PrintIndent;
-  if ( FibreStrings && Lo2 == 1 ) {
-    fputc( '"', FibreOutFd );
-    for (       ; Lo2 <= HiBound; Lo2++ ) {
-      c = *((char*)Base2+Lo2);
-      if ( isascii(c) && isprint(c) ) {
-        if ( c == '"' ) {
-          fputs( "\\\"",FibreOutFd);
-        } else if ( c == '\\' ) {
-          fputs( "\\\\",FibreOutFd);
-        } else { 
-          fputc( c, FibreOutFd );
-        }
-      } else {
-        switch ( c ) {
-        case '\b': fputs( "\\b", FibreOutFd ); break;
-        case '\n': fputs( "\\n", FibreOutFd ); break;
-        case '\f': fputs( "\\f", FibreOutFd ); break;
-        case '\r': fputs( "\\r", FibreOutFd ); break;
-        case '\t': fputs( "\\t", FibreOutFd ); break;
-        default:
-          fprintf( FibreOutFd,"\\%03o", c & 0xff);
+  if ( JsonOutput ) {
+    if ( FibreStrings && Lo2 == 1 ) {
+      fputc( '"', FibreOutFd );
+      for (       ; Lo2 <= HiBound; Lo2++ ) {
+        JsonPutChar( *((char*)Base2+Lo2), FibreOutFd );
+      }
+      fputc( '"', FibreOutFd );
+    } else {
+      WriteJsonVector(char, WriteChar);
+    }
+  } else {
+    PrintIndent;
+    if ( FibreStrings && Lo2 == 1 ) {
+      fputc( '"', FibreOutFd );
+      for (       ; Lo2 <= HiBound; Lo2++ ) {
+        c = *((char*)Base2+Lo2);
+        if ( isascii(c) && isprint(c) ) {
+          if ( c == '"' ) {
+            fputs( "\\\"",FibreOutFd);
+          } else if ( c == '\\' ) {
+            fputs( "\\\\",FibreOutFd);
+          } else {
+            fputc( c, FibreOutFd );
+          }
+        } else {
+          switch ( c ) {
+          case '\b': fputs( "\\b", FibreOutFd ); break;
+          case '\n': fputs( "\\n", FibreOutFd ); break;
+          case '\f': fputs( "\\f", FibreOutFd ); break;
+          case '\r': fputs( "\\r", FibreOutFd ); break;
+          case '\t': fputs( "\\t", FibreOutFd ); break;
+          default:
+            fprintf( FibreOutFd,"\\%03o", c & 0xff);
+          }
         }
       }
-    }
-    fputc( '"', FibreOutFd );
-  } else {
-    fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
+      fputc( '"', FibreOutFd );
+    } else {
+      fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
 #ifdef VERBOSE
-    fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
+      fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
 #else
-    fprintf( FibreOutFd, " " );
+      fprintf( FibreOutFd, " " );
 #endif
 
-    Indent++;
-    for (       ; Lo2 <= HiBound; Lo2++ ) {
-      WriteChar( *((char*)Base2+Lo2) );
-    }
+      Indent++;
+      for (       ; Lo2 <= HiBound; Lo2++ ) {
+        WriteChar( *((char*)Base2+Lo2) );
+      }
 
-    Indent--;
-    PrintIndent;
-    fputc( ']', FibreOutFd );
+      Indent--;
+      PrintIndent;
+      fputc( ']', FibreOutFd );
+    }
+    fputc( '\n', FibreOutFd );
   }
-  fputc( '\n', FibreOutFd );
 
   FIBRE_BUF_END();
 }
@@ -244,30 +300,34 @@ void WriteDoubleVector(POINTER val)
 
   FIBRE_BUF_BEGIN();
 
-  PrintIndent;
-  Lo2 = arr->LoBound;
-  fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
-  saveIndent = Indent;
+  if ( JsonOutput ) {
+    WriteJsonVector(double, WriteDbl);
+  } else {
+    PrintIndent;
+    Lo2 = arr->LoBound;
+    fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
+    saveIndent = Indent;
 #ifdef VERBOSE
-  fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
-  Indent++;
+    fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
+    Indent++;
 #else
-  Indent = 0;
-  fprintf( FibreOutFd, " " );
+    Indent = 0;
+    fprintf( FibreOutFd, " " );
 #endif
 
-  Indent++;
-  Base2 = arr->Base;
-  HiBound = Lo2 + arr->Size - 1;
-  for ( ; Lo2 <= HiBound; Lo2++ ) {
-    WriteDbl( (((double*)Base2)[Lo2]) );
-  }
+    Indent++;
+    Base2 = arr->Base;
+    HiBound = Lo2 + arr->Size - 1;
+    for ( ; Lo2 <= HiBound; Lo2++ ) {
+      WriteDbl( (((double*)Base2)[Lo2]) );
+    }
 
-  Indent = saveIndent;
+    Indent = saveIndent;
 #ifdef VERBOSE
-  PrintIndent;
+    PrintIndent;
 #endif
-  fprintf( FibreOutFd, "]\n" );
+    fprintf( FibreOutFd, "]\n" );
+  }
 
   FIBRE_BUF_END();
 }
@@ -304,29 +364,33 @@ void WriteIntegerVector(POINTER val)
 
     FIBRE_BUF_BEGIN();
 
-    PrintIndent;
-    Lo2 = arr->LoBound;
-    fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
-    saveIndent = Indent;
+    if ( JsonOutput ) {
+      WriteJsonVector(int, WriteInt);
+    } else {
+      PrintIndent;
+      Lo2 = arr->LoBound;
+      fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
+      saveIndent = Indent;
 #ifdef VERBOSE
-    fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
-    Indent++;
+      fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
+      Indent++;
 #else
-    Indent = 0;
-    fprintf( FibreOutFd, " " );
+      Indent = 0;
+      fprintf( FibreOutFd, " " );
 #endif
 
-    Base2 = arr->Base;
-    HiBound = Lo2 + arr->Size - 1;
-    for ( ; Lo2 <= HiBound; Lo2++ ) {
-      WriteInt( (((int*)Base2)[Lo2]) );
-      }
+      Base2 = arr->Base;
+      HiBound = Lo2 + arr->Size - 1;
+      for ( ; Lo2 <= HiBound; Lo2++ ) {
+        WriteInt( (((int*)Base2)[Lo2]) );
+        }
 
-    Indent = saveIndent;
+      Indent = saveIndent;
 #ifdef VERBOSE
-    PrintIndent;
+      PrintIndent;
 #endif
-    fprintf( FibreOutFd, "]\n" );
+      fprintf( FibreOutFd, "]\n" );
+    }
 
     FIBRE_BUF_END();
 }
@@ -363,30 +427,34 @@ void WriteNullVector(POINTER val)
 
   FIBRE_BUF_BEGIN();
 
-  PrintIndent;
-  Lo2 = arr->LoBound;
-  fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
-  saveIndent = Indent;
+  if ( JsonOutput ) {
+    WriteJsonVector(char, WriteNil);
+  } else {
+    PrintIndent;
+    Lo2 = arr->LoBound;
+    fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
+    saveIndent = Indent;
 #ifdef VERBOSE
-  fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
-  Indent++;
+    fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
+    Indent++;
 #else
-  Indent = 0;
-  fprintf( FibreOutFd, " " );
+    Indent = 0;
+    fprintf( FibreOutFd, " " );
 #endif
 
-  Indent++;
-  Base2 = arr->Base;
-  HiBound = Lo2 + arr->Size - 1;
-  for ( ; Lo2 <= HiBound; Lo2++ ) {
-    WriteNil( (((char*)Base2)[Lo2]) );
-  }
+    Indent++;
+    Base2 = arr->Base;
+    HiBound = Lo2 + arr->Size - 1;
+    for ( ; Lo2 <= HiBound; Lo2++ ) {
+      WriteNil( (((char*)Base2)[Lo2]) );
+    }
 
-  Indent = saveIndent;
+    Indent = saveIndent;
 #ifdef VERBOSE
-  PrintIndent;
+    PrintIndent;
 #endif
-  fprintf( FibreOutFd, "]\n" );
+    fprintf( FibreOutFd, "]\n" );
+  }
 
   FIBRE_BUF_END();
 }
@@ -423,30 +491,34 @@ void WriteRealVector(POINTER val)
 
   FIBRE_BUF_BEGIN();
 
-  PrintIndent;
-  Lo2 = arr->LoBound;
-  fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
-  saveIndent = Indent;
+  if ( JsonOutput ) {
+    WriteJsonVector(float, WriteFlt);
+  } else {
+    PrintIndent;
+    Lo2 = arr->LoBound;
+    fprintf( FibreOutFd, "[ %d,%d:", Lo2, Lo2+(arr->Size)-1 );
+    saveIndent = Indent;
 #ifdef VERBOSE
-  fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
-  Indent++;
+    fprintf( FibreOutFd, " # DRC=%d PRC=%d\n", arr->RefCount, arr->Phys->RefCount );
+    Indent++;
 #else
-  Indent = 0;
-  fprintf( FibreOutFd, " " );
+    Indent = 0;
+    fprintf( FibreOutFd, " " );
 #endif
 
-  Indent++;
-  Base2 = arr->Base;
-  HiBound = Lo2 + arr->Size - 1;
-  for ( ; Lo2 <= HiBound; Lo2++ ) {
-    WriteFlt( (((float*)Base2)[Lo2]) );
-  }
+    Indent++;
+    Base2 = arr->Base;
+    HiBound = Lo2 + arr->Size - 1;
+    for ( ; Lo2 <= HiBound; Lo2++ ) {
+      WriteFlt( (((float*)Base2)[Lo2]) );
+    }
 
-  Indent = saveIndent;
+    Indent = saveIndent;
 #ifdef VERBOSE
-  PrintIndent;
+    PrintIndent;
 #endif
-  fprintf( FibreOutFd, "]\n" );
+    fprintf( FibreOutFd, "]\n" );
+  }
 
   FIBRE_BUF_END();
 }
